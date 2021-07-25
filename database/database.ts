@@ -3,13 +3,16 @@ import mongoose from "mongoose";
 let database: mongoose.Connection;
 
 export const connect = () => {
+  if (database) {
+    return;
+  } 
     mongoose.connect("mongodb://127.0.0.1:27017/athletics", {
         useNewUrlParser: true,
         useFindAndModify: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
     });
-    
+
     database = mongoose.connection;
     
     database.once("open", async () => {
