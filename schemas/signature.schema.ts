@@ -1,6 +1,6 @@
-import * as Mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-const SignatureSchema = new Mongoose.Schema({
+const SignatureSchema = new Schema({
     name: {
         type: String,
         required: true,

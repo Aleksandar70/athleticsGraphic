@@ -184,4 +184,4 @@ const CompetitorSchema = new mongoose.Schema({
 //     findByBib,
 // }
 
-// export default CompetitorSchema;
+export default CompetitorSchema;
