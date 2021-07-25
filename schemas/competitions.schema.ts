@@ -1,98 +1,94 @@
 import { Schema } from "mongoose";
 
-const CompetitorSchema = new Schema({
-    competitionId: {
-        type: Object,
-        required: true,
-    },
-    ageGroup: {
+const CompetitionsSchema = new Schema({
+    address: {
         type: String,
         required: false,
-        default: "",
     },
-    checkedIn: {
-        type: Boolean,
-        required: true,
-        default: false,
+    basicDescription: {
+        type: String,
+        required: false,
     },
-    competitorId: {
+    contactDetails: {
+        type: String,
+        required: false,
+    }, 
+    country: {
         type: String,
         required: true,
         default: "",
     },
-    dateOfBirth: {
-        type: String,
-        required: false,
-        default: "",
-    },
-    event: {
-        type: String,
-        required: false,
-        default: "",
-    },
-    firstName: {
+    date: {
         type: String,
         required: true,
         default: "",
     },
-    flagUrl: {
+    englishName: {
         type: String,
         required: false,
-        default: "",
     },
-    gender: {
-        type: String,
-        required: false,
-        default: "",
-    },
-    lastName: {
+    finishDate: {
         type: String,
         required: true,
         default: "",
     },
-    nonScorer: {
-        type: Boolean,
-        required: false,
-        default: false,
+    fullName: {
+        type: String,
+        required: true,
+        default: "",
     },
-    numbered: {
-        type: Boolean,
-        required: false,
-        default: false,
+    id: {
+        type: String,
+        required: true,
+        default: "",
     },
-    otAthleteId: {
+    latitude: {
+        type: Number,
+        required: false,
+    },
+    longitude: {
+        type: Number,
+        required: false,
+    },
+    organiser: {
         type: String,
         required: false,
         default: "",
     },
-    sortAgeGroup: {
+    resultsLink: {
+        type: String,
+        required: false,
+    },
+    scoringSystem: {
         type: String,
         required: false,
         default: "",
     },
-    sortBib: {
+    shortName: {
+        type: String,
+        required: false,
+        default: "",
+    },
+    slug: {
+        type: String,
+        required: false,
+        default: "",
+    },
+    teamTypes: {
+        type: String,
+        required: false,
+        default: "",
+    },
+    type: {
+        type: String,
+        required: false,
+        default: "",
+    },
+    year: {
         type: Number,
         required: true,
-    },
-    teamId: {
-        type: String,
-        required: false,
-    },
-    teamName: {
-        type: String,
-        required: false,
-        default: "",
-    },
-    pb: {
-        type: String,
-        required: false,
-        default: "",
-    },
-    age: {
-        type: String,
-        required: false,
-        default: "",
+        default: 2021,
     },
 });
 
-export default CompetitorSchema;
+export default CompetitionsSchema;

@@ -23,3 +23,10 @@ export const connect = () => {
       console.log("Error connecting to database");
     });
 };
+
+export const disconnect = () => {
+  if (!database) {
+    return;
+  }
+  mongoose.disconnect();
+};
