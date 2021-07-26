@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const ResultsSchema = new Schema({
+const ResultSchema = new Schema({
     competitorId: {
         type: Object,
         required: true,
@@ -340,4 +340,4 @@ const ResultsSchema = new Schema({
     },
 });
 
-export default ResultsSchema;
+export default ResultSchema;

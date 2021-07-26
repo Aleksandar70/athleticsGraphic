@@ -1,5 +1,5 @@
 import { model } from "mongoose";
 import { IEventDocument } from "../types/event.types";
-import EventsSchema from "../schemas/events.schema";
+import EventSchema from "../schemas/event.schema";
   
-export const EventModel = model<IEventDocument>("event", EventsSchema);
+export const EventModel = model<IEventDocument>("event", EventSchema);

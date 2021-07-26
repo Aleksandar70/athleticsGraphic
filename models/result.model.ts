@@ -1,5 +1,5 @@
 import { model } from "mongoose";
 import { IResultDocument } from "../types/result.types";
-import ResultsSchema from "../schemas/results.schema";
+import ResultSchema from "../schemas/result.schema";
   
-export const ResultModel = model<IResultDocument>("result", ResultsSchema);
+export const ResultModel = model<IResultDocument>("result", ResultSchema);

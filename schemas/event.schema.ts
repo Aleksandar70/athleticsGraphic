@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const EventsSchema = new Schema({
+const EventSchema = new Schema({
     competitionId: {
         type: Object,
         required: true,
@@ -127,4 +127,4 @@ const EventsSchema = new Schema({
     },
 });
 
-export default EventsSchema;
+export default EventSchema;

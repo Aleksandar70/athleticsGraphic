@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const CompetitionsSchema = new Schema({
+const CompetitionSchema = new Schema({
     address: {
         type: String,
         required: false,
@@ -91,4 +91,4 @@ const CompetitionsSchema = new Schema({
     },
 });
 
-export default CompetitionsSchema;
+export default CompetitionSchema;

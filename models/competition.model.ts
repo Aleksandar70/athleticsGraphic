@@ -1,5 +1,5 @@
 import { model } from "mongoose";
 import { ICompetitionDocument } from "../types/competition.types";
-import CompetitionsSchema from "../schemas/competitions.schema";
+import CompetitionSchema from "../schemas/competition.schema";
 
-export const CompetitionModel = model<ICompetitionDocument>("competition", CompetitionsSchema);
+export const CompetitionModel = model<ICompetitionDocument>("competition", CompetitionSchema);
