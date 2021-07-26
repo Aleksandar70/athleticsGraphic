@@ -1,4 +1,5 @@
 import { Document, Model } from "mongoose";
+
 export interface ICompetitor {
     competitionId: Object,
     ageGroup: String,

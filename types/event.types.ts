@@ -1,4 +1,5 @@
 import { Document, Model } from "mongoose";
+
 export interface IEvent {
     competitionId: Object,
     ageGroups: Array<String>,

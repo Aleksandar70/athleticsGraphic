@@ -1,4 +1,5 @@
 import { Document, Model } from "mongoose";
+
 export interface IResult {
     competitorId: Object;
     day: Number;

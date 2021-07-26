@@ -1,4 +1,5 @@
 import { Document, Model } from "mongoose";
+
 export interface ICompetition {
     address: String,
     basicDescription: String,
@@ -8,7 +9,6 @@ export interface ICompetition {
     englishName: String,
     finishDate: String,
     fullName: String,
-    id: String,
     latitude: String,
     longitude: String,
     organiser: String,
