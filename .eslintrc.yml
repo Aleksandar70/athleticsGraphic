@@ -17,6 +17,9 @@ parser: "@typescript-eslint/parser"
 settings:
   svelte3/typescript: true
 
+parserOptions:
+  project: tsconfig.json
+
 extends:
   - "eslint:recommended"
   - "plugin:@typescript-eslint/recommended"
