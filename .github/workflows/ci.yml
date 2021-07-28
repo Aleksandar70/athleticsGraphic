@@ -10,6 +10,10 @@ jobs:
   analyze_frontend:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./
+
     strategy:
       matrix:
         node-version: [15.x]
