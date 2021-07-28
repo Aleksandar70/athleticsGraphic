@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "outDir": "build",
+    "strict": true,
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true
+  },
+
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
