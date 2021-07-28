@@ -13,6 +13,6 @@ app.get("*", async (_, res) =>
 );
 
 app.use(cors());
-app.use(express.static("public"));
+app.use(express.static("../public"));
 
 app.listen(port, () => console.log(`Server is up at port ${port}`));
