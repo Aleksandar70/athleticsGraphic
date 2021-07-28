@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 let database: mongoose.Connection;
 
-export const connectDatabase = () => {
+export const connectDatabase = (): void => {
   if (database) {
     return;
   }
@@ -24,7 +24,7 @@ export const connectDatabase = () => {
   });
 };
 
-export const disconnect = () => {
+export const disconnect = (): void => {
   if (!database) {
     return;
   }
