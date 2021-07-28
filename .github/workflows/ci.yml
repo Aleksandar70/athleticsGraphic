@@ -22,23 +22,23 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       # FE tasks
-      - name: Installing Dependencies on FE
-      - working-directory: ./
+        name: Installing Dependencies on FE
+        working-directory: ./
       - run: npm install
-      - name: Running lint on FE
-      - working-directory: ./
+        name: Running lint on FE
+        working-directory: ./
       - run: npm run lint --if-present
-      - name: Building FE project
-      - working-directory: ./
+        name: Building FE project
+        working-directory: ./
       - run: npm run build --if-present
 
       # BE tasks
-      - name: Installing Dependencies on BE
-      - working-directory: ./backend
+        name: Installing Dependencies on BE
+        working-directory: ./backend
       - run: npm install
-      - name: Running lint on BE
-      - working-directory: ./backend
+        name: Running lint on BE
+        working-directory: ./backend
       - run: npm run lint --if-present
-      - name: Building BE project
-      - working-directory: ./backend
+        name: Building BE project
+        working-directory: ./backend
       - run: npm run build --if-present
