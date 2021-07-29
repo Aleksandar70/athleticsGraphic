@@ -34,10 +34,12 @@ const RUN_1500M_M = `${OPEN_TRACK_API}${RUN_1500M_M_ID}/`;
 const RUN_60MH_F = `${OPEN_TRACK_API}${RUN_60MH_F_ID}/`;
 const RUN_60MH_M = `${OPEN_TRACK_API}${RUN_60MH_M_ID}/`;
 
-const getOpenTrackData = async (url: string): Promise<OpenTrackData | void> => {
+export const getOpenTrackData = async (): Promise<OpenTrackData> => {
   const openTrackData: OpenTrackData = {} as OpenTrackData;
   try {
-    const response: AxiosResponse<any> = await axios.get(url);
+    const response: AxiosResponse<any> = await axios.get(
+      `${RUN_60M_M}/1/1/json?nocache=1`
+    );
     const responseData = response.data;
     openTrackData.data = responseData;
     openTrackData.results = responseData.results;

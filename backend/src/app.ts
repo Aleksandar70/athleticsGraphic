@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 5001;
 
 app.get("*", async (_, res) =>
-  res.sendFile(path.resolve(__dirname, "../public", "index.html"))
+  res.sendFile(path.resolve(__dirname, "../../public", "index.html"))
 );
 
 app.use(cors());
