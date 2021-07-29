@@ -12,5 +12,6 @@
   },
 
   "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  // TODO - remove "src/api/openTrack.ts" from excluded after all its variables are used
+  "exclude": ["node_modules", "src/api/openTrack.ts"]
 }
