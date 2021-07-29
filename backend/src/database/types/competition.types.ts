@@ -1,25 +1,25 @@
 import type { Document, Model } from "mongoose";
 
 export interface ICompetition {
-  address: String;
-  basicDescription: String;
-  contactDetails: String;
-  country: String;
-  date: String;
-  englishName: String;
-  finishDate: String;
-  fullName: String;
-  latitude: String;
-  longitude: String;
-  organiser: String;
-  resultsLink: String;
-  scoringSystem: String;
-  shortName: String;
-  slug: String;
-  teamTypes: String;
-  type: String;
-  year: Number;
+  address: string;
+  basicDescription: string;
+  contactDetails: string;
+  country: string;
+  date: string;
+  englishName: string;
+  finishDate: string;
+  fullName: string;
+  latitude: string;
+  longitude: string;
+  organiser: string;
+  resultsLink: string;
+  scoringSystem: string;
+  shortName: string;
+  slug: string;
+  teamTypes: string;
+  type: string;
+  year: number;
 }
 
 export interface ICompetitionDocument extends ICompetition, Document {}
-export interface ICompetitionModel extends Model<ICompetitionDocument> {}
+export type ICompetitionModel = Model<ICompetitionDocument>;

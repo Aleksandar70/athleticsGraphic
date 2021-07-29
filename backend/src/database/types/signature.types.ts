@@ -6,4 +6,4 @@ export interface ISignature {
 }
 
 export interface ISignatureDocument extends ISignature, Document {}
-export interface ISignatureModel extends Model<ISignatureDocument> {}
+export type ISignatureModel = Model<ISignatureDocument>;
