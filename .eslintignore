@@ -1,3 +1,4 @@
 node_modules
 /public/build/
+backend
 rollup.config.js
