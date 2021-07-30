@@ -1,7 +1,6 @@
 import type { IResultDocument } from "../src/database/types/result.types";
 import { ResultModel } from "../src/models/result.model";
 
-//working
 export async function createResult(basicData, result) {
     const existingResults = await ResultModel.find({ day: basicData.day, eventId: basicData.event_id, heat: basicData.heat, round: basicData.round, bib: result.bib });
     if (existingResults.length != 0) {
@@ -23,7 +22,7 @@ export async function createResult(basicData, result) {
 
 
     //TODO: Call CompetitorModel.findCompetitorByBib(bib) and take id from competitor
-    const competitorId = "competitor.competitorId"; 
+    const competitorId = "competitor.competitorId";
 
     const newResult = ResultModel.create({
         competitorId,
@@ -43,16 +42,14 @@ export async function createResult(basicData, result) {
     return newResult;
 }
 
-//working
 export async function getResults(): Promise<IResultDocument[]> {
     return await ResultModel.find();
 }
 
-//working
 export async function getResultsByEventId(eventId) {
     const results = await ResultModel.find({ eventId: eventId });
     if (results.length !== 0) {
         return results;
-    } 
+    }
     return null;
 }

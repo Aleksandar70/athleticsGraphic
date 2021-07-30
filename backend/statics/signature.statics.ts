@@ -1,7 +1,6 @@
 import type { ISignatureDocument } from "../src/database/types/signature.types";
 import { SignatureModel } from "../src/models/signature.model";
 
-//working
 export async function createNewSignature(
   {
     name,
@@ -16,7 +15,6 @@ export async function createNewSignature(
   }
 }
 
-//working
 export async function getSignatures(): Promise<ISignatureDocument[]> {
   return await SignatureModel.find();
 }

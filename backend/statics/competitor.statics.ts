@@ -1,5 +1,5 @@
 import { CompetitorModel } from "../src/models/competitor.model";
-//working
+
 export async function createCompetitor(competition_id, competitor) {
     const competitors = await CompetitorModel.find({ competitionId: competition_id, competitorId: competitor.competitorId }).exec();
     if (competitors.length !== 0) {

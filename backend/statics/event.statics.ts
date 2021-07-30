@@ -1,7 +1,6 @@
 import type { IEventDocument } from "../src/database/types/event.types";
 import { EventModel } from "../src/models/event.model";
 
-//working
 export async function createEvent(competition_id, event): Promise<IEventDocument> {
     const events = await EventModel.find({ competitionId: competition_id, eventCode: event.eventCode, eventId: event.eventId }).exec();
     if (events.length !== 0) {
@@ -31,12 +30,10 @@ export async function createEvent(competition_id, event): Promise<IEventDocument
     return newEvent;
 }
 
-//working
 export async function getEvents(): Promise<IEventDocument[]> {
     return await EventModel.find({});
 }
 
-//working
 export async function editEvent(id, name, time, note) {
     const event = await EventModel.findById(id).exec();
     if (event != null) {

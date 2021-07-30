@@ -14,6 +14,6 @@ export interface ISignatureModel extends Model<ISignatureDocument> {
       title,
     }: { name: string; title: string}
   ) => Promise<ISignatureDocument>;
-  getSignatures: (this: ISignatureModel) => Promise<ISignatureDocument[]>;
+  getSignatures: () => Promise<ISignatureDocument[]>;
 }
 

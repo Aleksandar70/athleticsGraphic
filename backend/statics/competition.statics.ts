@@ -1,5 +1,5 @@
 import { CompetitionModel } from "../src/models/competition.model";
-//working
+
 export async function createCompetition(competition) {
     const competitions = await CompetitionModel.find({ id: competition.id }).exec();
     if (competitions.length !== 0) {
@@ -23,7 +23,6 @@ export async function createCompetition(competition) {
     return newCompetition;
 }
 
-//working
 export async function findCompetitionById(competitionId) {
     const competitions = await CompetitionModel.find({ _id: competitionId }).exec();
     if (competitions.length !== 0) {
