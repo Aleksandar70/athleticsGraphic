@@ -5,12 +5,12 @@ export async function createCompetition(competition) {
     if (competitions.length !== 0) {
         return competitions[0];
     }
-    let country = competition.country == null ? "" : competition.country;
-    let date = competition.date == null ? "" : competition.date;
-    let finishDate = competition.finishDate == null ? "" : competition.finishDate;
-    let fullName = competition.fullName == null ? "" : competition.fullName;
-    let id = competition.id == null ? "" : competition.id;
-    let year = competition.year == null ? 2020 : competition.year;
+    const country = competition.country == null ? "" : competition.country;
+    const date = competition.date == null ? "" : competition.date;
+    const finishDate = competition.finishDate == null ? "" : competition.finishDate;
+    const fullName = competition.fullName == null ? "" : competition.fullName;
+    const id = competition.id == null ? "" : competition.id;
+    const year = competition.year == null ? 2020 : competition.year;
 
     const newCompetition = CompetitionModel.create({
         country,

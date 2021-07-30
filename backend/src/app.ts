@@ -21,8 +21,33 @@ app.use(cors());
 app.use(express.static("../public"));
 
 app.listen(port, () => console.log(`Server is up at port ${port}`));
+// const competitor = {
+//   "_id": "60fc0b0f06ae5258a455c321",
+//   "ageGroup": "",
+//   "checkedIn": false,
+//   "competitorId": "10",
+//   "dateOfBirth": "1993-06-13",
+//   "event": "T05",
+//   "firstName": "MITKO",
+//   "flagUrl": "//files.opentrack.run/live/countryflags/ioc/BUL.svg",
+//   "gender": "M",
+//   "lastName": "TSENOV",
+//   "nonScorer": false,
+//   "numbered": false,
+//   "otAthleteId": "57a24e39-147f-44ac-b3df-d9d63d8a3120",
+//   "sortAgeGroup": "3-",
+//   "teamName": "",
+//   "pb": "3:44.86",
+//   "age": "28",
+//   "competitionId": "60fc0b0f06ae5258a455c31e",
+//   "sortBib": 10,
+//   "teamId": "BUL",
+//   "__v": 0
+// }
 
-// console.log("CompetitorModel.findCompetitorByBib() ", CompetitorModel.findCompetitorByBib(101));
+// console.log("CompetitorModel.findCompetitorByBib() ", CompetitorModel.createCompetitor("60fc0b0f06ae5258a455c31e", competitor));
+
+console.log("CompetitorModel.findCompetitorByBib() ", CompetitorModel.findCompetitorByBib(101));
 
 // const competition = {
 //   "_id" : "60fc0b0f06ae5258a455c31e",

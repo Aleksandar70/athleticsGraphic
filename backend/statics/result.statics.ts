@@ -8,22 +8,22 @@ export async function createResult(basicData, result) {
         return existingResults[0];
     }
 
-    let day = basicData.day == null ? 1 : basicData.day;
-    let eventId = basicData.event_id == null ? "" : basicData.event_id;
-    let eventName = basicData.event_name == null ? "" : basicData.event_name;
-    let resultsStatus = basicData.results_status == null ? "" : basicData.results_status;
-    let round = basicData.round == null ? 0 : basicData.round;
-    let showAthleteDetails = basicData.show_athlete_details == null ? false : basicData.show_athlete_details;
-    let showPartials = basicData.show_partials == null ? false : basicData.show_partials;
-    let showPoints = basicData.show_points == null ? false : basicData.show_points;
-    let status = basicData.status == null ? "" : basicData.status;
-    let bib = result.bib == null ? 0 : result.bib;
-    let points = result.points == null ? 0 : result.points;
-    let heat = basicData.heat == null ? 0 : basicData.heat;
+    const day = basicData.day == null ? 1 : basicData.day;
+    const eventId = basicData.event_id == null ? "" : basicData.event_id;
+    const eventName = basicData.event_name == null ? "" : basicData.event_name;
+    const resultsStatus = basicData.results_status == null ? "" : basicData.results_status;
+    const round = basicData.round == null ? 0 : basicData.round;
+    const showAthleteDetails = basicData.show_athlete_details == null ? false : basicData.show_athlete_details;
+    const showPartials = basicData.show_partials == null ? false : basicData.show_partials;
+    const showPoints = basicData.show_points == null ? false : basicData.show_points;
+    const status = basicData.status == null ? "" : basicData.status;
+    const bib = result.bib == null ? 0 : result.bib;
+    const points = result.points == null ? 0 : result.points;
+    const heat = basicData.heat == null ? 0 : basicData.heat;
 
 
     //TODO: Call CompetitorModel.findCompetitorByBib(bib) and take id from competitor
-    let competitorId = "competitor.competitorId"; 
+    const competitorId = "competitor.competitorId"; 
 
     const newResult = ResultModel.create({
         competitorId,

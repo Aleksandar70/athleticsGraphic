@@ -7,15 +7,15 @@ export async function createEvent(competition_id, event): Promise<IEventDocument
     if (events.length !== 0) {
         return events[0];
     }
-    let competitionId = competition_id;
-    let ageGroups = event.ageGroups == null ? [] : event.ageGroups;
-    let category = event.category == null ? "" : event.category;
-    let day = event.day == null ? 0 : event.day;
-    let eventCode = event.eventCode == null ? "" : event.eventCode;
-    let eventId = event.eventId == null ? "" : event.eventId;
-    let genders = event.genders == null ? "" : event.genders;
-    let name = event.name == null ? "" : event.name;
-    let r1Time = event.r1Time == null ? "" : event.r1Time;
+    const competitionId = competition_id;
+    const ageGroups = event.ageGroups == null ? [] : event.ageGroups;
+    const category = event.category == null ? "" : event.category;
+    const day = event.day == null ? 0 : event.day;
+    const eventCode = event.eventCode == null ? "" : event.eventCode;
+    const eventId = event.eventId == null ? "" : event.eventId;
+    const genders = event.genders == null ? "" : event.genders;
+    const name = event.name == null ? "" : event.name;
+    const r1Time = event.r1Time == null ? "" : event.r1Time;
 
     const newEvent = EventModel.create({
         competitionId,
