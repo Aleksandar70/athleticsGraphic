@@ -24,11 +24,8 @@ export async function createCompetitor(competition_id, competitor) {
     return newCompetitor;
 }
 
-//NOT WORKING!
 export async function findCompetitorByBib(bib) {
     const competitors = await CompetitorModel.find({ sortBib: bib }).exec();
-    console.log("competitors ", competitors.length);
-    console.log("competitor ", competitors[0]);
     if (competitors.length !== 0) {
         return competitors[0];
     }
