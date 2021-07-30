@@ -22,5 +22,7 @@ export interface ICompetitor {
   age: string;
 }
 
-export interface ICompetitorDocument extends ICompetitor, Document {}
-export type ICompetitorModel = Model<ICompetitorDocument>;
+export interface ICompetitorDocument extends ICompetitor, Document { }
+export interface ICompetitorModel extends Model<ICompetitorDocument> {
+  findCompetitorByBib: (bib: number) => Promise<ICompetitorDocument[]>;
+}

@@ -1,9 +1,11 @@
-import type { ICompetitionDocument, ICompetitionModel } from "../src/database/types/competition.types";
+import { CompetitorModel } from "../src/models/competitor.model";
 
-export async function findCompetitionById(this: ICompetitionModel, competitionId) : Promise<ICompetitionDocument[]> {
-    return await this.find({id: competitionId}).exec();
-}
-
-export async function findOne(this: ICompetitionModel) {
-    return await this.findOne().exec();
+//NOT WORKING!
+export async function findCompetitorByBib(bib) {
+    let competitors = await CompetitorModel.find({ sortBib: bib }).exec();
+    console.log("competitors ", competitors.length);
+    if (competitors.length !== 0) {
+        return competitors[0];
+    }
+    return null;
 }

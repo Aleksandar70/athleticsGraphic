@@ -21,5 +21,8 @@ export interface ICompetition {
   year: number;
 }
 
-export interface ICompetitionDocument extends ICompetition, Document {}
-export type ICompetitionModel = Model<ICompetitionDocument>;
+export interface ICompetitionDocument extends ICompetition, Document { }
+export interface ICompetitionModel extends Model<ICompetitionDocument> {
+  createCompetition: (competition) => Promise<ICompetitionDocument>;
+  findCompetitionById: (competitionId: string) => Promise<ICompetitionDocument[]>;
+}

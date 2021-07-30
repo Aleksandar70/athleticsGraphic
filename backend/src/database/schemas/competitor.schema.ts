@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { findCompetitorByBib } from "../../../statics/competitor.statics";
 
 const CompetitorSchema = new Schema({
   competitionId: {
@@ -94,5 +95,7 @@ const CompetitorSchema = new Schema({
     default: "",
   },
 });
+
+CompetitorSchema.statics.findCompetitorByBib = findCompetitorByBib;
 
 export default CompetitorSchema;

@@ -9,18 +9,14 @@ export async function createNewSignature(
   }: { name: string; title: string }
 ): Promise<ISignatureDocument> {
   const signature = await SignatureModel.findOne({ name });
-  console.log("found signature ", signature);
   if (signature) {
     return signature;
   } else {
-    const newSig = SignatureModel.create({ name, title });
-    console.log("newSig ", newSig);
-    return newSig;
+    return SignatureModel.create({ name, title });
   }
 }
+
 //working
 export async function getSignatures(): Promise<ISignatureDocument[]> {
-  const signatures = await SignatureModel.find();
-  console.log("signatures ", signatures);
-    return signatures;
+  return await SignatureModel.find();
 }
