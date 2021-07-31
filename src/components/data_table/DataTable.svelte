@@ -1,64 +1,27 @@
 <script lang="ts">
-  import { ascending, descending } from "d3-array";
-  export let headers;
-  export let rows;
+  import {
+    SortDirection,
+    changeSortDirection,
+    sortByColumn,
+  } from "./sort.helper.ts";
 
-  $: sortStatus = [];
-  $: sortDirection = "ascending";
-  $: sortNumber = rows[0].map((d) => !isNaN(d));
+  export let headers: string[];
+  export let rows: TableType[][];
 
-  function updateSortStatus(column, index) {
-    headers.forEach((d) => {
-      sortStatus[d] = "none";
-    });
+  let sortDirection = SortDirection.ASCENDING;
 
-    sortDirection === "ascending"
-      ? (sortDirection = "descending")
-      : (sortDirection = "ascending");
-    sortStatus[column] = sortDirection;
-  }
+  const updateSortDirection = (columnIndex: number): void => {
+    sortDirection = changeSortDirection(sortDirection);
+    sortBy = columnIndex;
+  };
 
-  $: headers.forEach((d) => {
-    sortStatus[d] = "none";
-  });
-
-  $: sortBy = "none";
+  $: sortBy = null;
 
   $: sortedRows = rows;
 
-  $: if (sortBy !== "none" && sortNumber[sortBy] === false) {
-    console.log(sortBy);
-    if (sortDirection === "ascending")
-      sortedRows = rows.sort((a, b) =>
-        ascending(a[sortBy].toLowerCase(), b[sortBy].toLowerCase())
-      );
-    else
-      sortedRows = rows.sort((a, b) =>
-        descending(a[sortBy].toLowerCase(), b[sortBy].toLowerCase())
-      );
+  $: if (sortBy !== null) {
+    sortedRows = sortByColumn(rows, sortBy, sortDirection);
   }
-
-  $: if (sortBy !== "none" && sortNumber[sortBy] === true) {
-    if (sortDirection === "ascending")
-      sortedRows = rows.sort((a, b) => ascending(a[sortBy], b[sortBy]));
-    else sortedRows = rows.sort((a, b) => descending(a[sortBy], b[sortBy]));
-  }
-
-  // let vals = [];
-
-  // let ascending = true;
-
-  // $: sort = (column) => {
-  //   data.sort((a, b) => {
-  //     var nameA = a.name.toUpperCase();
-  //     var nameB = b.name.toUpperCase();
-  //     return ascending
-  //       ? nameA.localeCompare(nameB)
-  //       : nameB.localeCompare(nameA);
-  //   });
-  //   ascending = !ascending;
-  //   vals = convert();
-  // };
 
   function deleteRow(rowToBeDeleted) {
     data = data.filter((row) => row != rowToBeDeleted);
@@ -68,15 +31,7 @@
 <table class="result-data">
   <tr>
     {#each headers as column, i (column)}
-      <th
-        aria-sort={sortStatus[column]}
-        role="columnheader"
-        scope="col"
-        on:click={() => {
-          sortBy = i;
-          updateSortStatus(column, i);
-        }}>{column}</th
-      >
+      <th on:click={() => updateSortDirection(i)}>{column}</th>
     {/each}
   </tr>
   {#each sortedRows as row}
