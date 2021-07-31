@@ -1,5 +1,5 @@
-import type { ISignatureDocument } from "../src/database/types/signature.types";
-import { SignatureModel } from "../src/models/signature.model";
+import type { ISignatureDocument } from "../database/types/signature.types";
+import { SignatureModel } from "../models/signature.model";
 
 export async function createNewSignature(
   {

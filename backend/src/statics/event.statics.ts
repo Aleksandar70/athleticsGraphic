@@ -1,5 +1,5 @@
-import type { IEventDocument } from "../src/database/types/event.types";
-import { EventModel } from "../src/models/event.model";
+import type { IEventDocument } from "../database/types/event.types";
+import { EventModel } from "../models/event.model";
 
 export async function createEvent(competition_id, event): Promise<IEventDocument> {
     const events = await EventModel.find({ competitionId: competition_id, eventCode: event.eventCode, eventId: event.eventId }).exec();

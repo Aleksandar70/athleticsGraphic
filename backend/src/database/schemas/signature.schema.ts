@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { getSignatures, createNewSignature } from "../../../statics/signature.statics";
+import { getSignatures, createNewSignature } from "../../statics/signature.statics";
 
 const SignatureSchema = new Schema({
   name: {

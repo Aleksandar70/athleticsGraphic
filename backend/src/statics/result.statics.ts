@@ -1,5 +1,5 @@
-import type { IResultDocument } from "../src/database/types/result.types";
-import { ResultModel } from "../src/models/result.model";
+import type { IResultDocument } from "../database/types/result.types";
+import { ResultModel } from "../models/result.model";
 
 export async function createResult(basicData, result) {
     const existingResults = await ResultModel.find({ day: basicData.day, eventId: basicData.event_id, heat: basicData.heat, round: basicData.round, bib: result.bib });
@@ -44,6 +44,7 @@ export async function createResult(basicData, result) {
 }
 
 export async function getResults(): Promise<IResultDocument[]> {
+    console.log(await ResultModel.find())
     return await ResultModel.find();
 }
 

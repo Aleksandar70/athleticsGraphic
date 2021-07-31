@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { findCompetitorByBib, createCompetitor } from "../../../statics/competitor.statics";
+import { findCompetitorByBib, createCompetitor } from "../../statics/competitor.statics";
 
 const CompetitorSchema = new Schema({
   competitionId: {

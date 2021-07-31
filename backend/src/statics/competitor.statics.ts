@@ -1,4 +1,4 @@
-import { CompetitorModel } from "../src/models/competitor.model";
+import { CompetitorModel } from "../models/competitor.model";
 
 export async function createCompetitor(competition_id, competitor) {
     const competitors = await CompetitorModel.find({ competitionId: competition_id, competitorId: competitor.competitorId }).exec();
