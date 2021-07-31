@@ -8,23 +8,18 @@
   export let headers: string[];
   export let rows: TableType[][];
 
-  let sortDirection = SortDirection.ASCENDING;
+  let sortDirection = SortDirection.DESCENDING;
+  let sortBy = null;
 
   const updateSortDirection = (columnIndex: number): void => {
     sortDirection = changeSortDirection(sortDirection);
     sortBy = columnIndex;
   };
 
-  $: sortBy = null;
-
   $: sortedRows = rows;
 
   $: if (sortBy !== null) {
     sortedRows = sortByColumn(rows, sortBy, sortDirection);
-  }
-
-  function deleteRow(rowToBeDeleted) {
-    data = data.filter((row) => row != rowToBeDeleted);
   }
 </script>
 
