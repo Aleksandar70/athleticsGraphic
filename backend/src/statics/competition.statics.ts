@@ -1,4 +1,4 @@
-import { CompetitionModel } from "../src/models/competition.model";
+import { CompetitionModel } from "../models/competition.model";
 
 export async function createCompetition(competition) {
     const competitions = await CompetitionModel.find({ id: competition.id }).exec();
