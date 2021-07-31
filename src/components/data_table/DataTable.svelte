@@ -5,12 +5,10 @@
     sortByColumn,
   } from "./sort.helper";
 
-  import type { TableType } from "./table.helper";
-
   import "./table.style.css";
 
   export let headers: Array<string>;
-  export let rows: Array<Array<TableType>>;
+  export let rows: Array<Array<string>>;
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;

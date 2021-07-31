@@ -1,5 +1,4 @@
 import { ascending, descending } from "d3-array";
-import type { TableType } from "./table.helper";
 
 export enum SortDirection {
   ASCENDING,
@@ -11,13 +10,13 @@ export const changeSortDirection = (direction: SortDirection): SortDirection =>
     ? SortDirection.DESCENDING
     : SortDirection.ASCENDING;
 
-export const sortByColumn = <K extends keyof TableType>(
-  rows: Array<Array<K>>,
+export const sortByColumn = (
+  rows: Array<Array<string>>,
   index: number,
   sortDirection: SortDirection
-): Array<Array<K>> => {
+): Array<Array<string>> => {
   const isNumericValue = !isNaN(Number(rows?.[0][index]));
-  return rows.sort((a: K[], b: K[]) => {
+  return rows.sort((a: string[], b: string[]) => {
     const firstValue = isNumericValue
       ? a[index]
       : a[index].toString().toLowerCase();
