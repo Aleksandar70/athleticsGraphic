@@ -2,18 +2,21 @@
   import DataTable from "./components/data_table/DataTable.svelte";
   import { tempGetData } from "../backend/src/api/openTrack";
 
-  const columns = ["First Name", "Last Name", "Bib"];
+  let columns = [];
 
   let data;
 
   const getData = async () => {
     const fetchedData = await tempGetData();
     data = fetchedData.results;
+    columns = Object.keys(data[0]).map((val) =>
+      val.replaceAll("_", " ").toUpperCase()
+    );
   };
 
   getData();
 
-  $: tableData = data?.map((d) => [d.first_name, d.last_name, d.bib]);
+  $: tableData = data?.map((d) => Object.keys(d).map((key) => [d[key]]));
 </script>
 
 {#if data}
