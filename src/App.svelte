@@ -25,7 +25,7 @@
   </div>
 {/if}
 
-<style lang="scss">
+<style>
   .data-table {
     display: grid;
     place-items: center;

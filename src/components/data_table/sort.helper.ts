@@ -11,28 +11,21 @@ export const changeSortDirection = (direction: SortDirection): SortDirection =>
     ? SortDirection.DESCENDING
     : SortDirection.ASCENDING;
 
-export const sortByColumn = (
-  rows: TableType[][],
+export const sortByColumn = <K extends keyof TableType>(
+  rows: Array<Array<K>>,
   index: number,
   sortDirection: SortDirection
-): TableType[][] => {
-  if (typeof rows?.[0][index] === "string") {
-    return rows.sort((a: string[], b: string[]) => {
-      return sortValues(
-        a[index].toLocaleLowerCase(),
-        b[index].toLocaleLowerCase(),
-        sortDirection
-      );
-    });
-  }
-  return rows.sort((a: number[], b: number[]) => {
-    return sortValues(a[index], b[index], sortDirection);
+): Array<Array<K>> => {
+  const isNumericValue = !isNaN(Number(rows?.[0][index]));
+  return rows.sort((a: K[], b: K[]) => {
+    const firstValue = isNumericValue
+      ? a[index]
+      : a[index].toString().toLowerCase();
+    const secondValue = isNumericValue
+      ? b[index]
+      : b[index].toString().toLowerCase();
+    return sortDirection === SortDirection.ASCENDING
+      ? ascending(firstValue, secondValue)
+      : descending(firstValue, secondValue);
   });
 };
-
-const sortValues = (
-  a: TableType,
-  b: TableType,
-  direction: SortDirection
-): number =>
-  direction === SortDirection.ASCENDING ? ascending(a, b) : descending(a, b);
