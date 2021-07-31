@@ -2,11 +2,13 @@
   import DataTable from "./components/data_table/DataTable.svelte";
   import { tempGetData } from "../backend/src/api/openTrack";
 
-  let columns = [];
+  import "./app.style.css";
 
-  let data;
+  let columns: Array<string>;
 
-  const getData = async () => {
+  let data: Array<Record<string, unknown>>;
+
+  const getTableData = async (): void => {
     const fetchedData = await tempGetData();
     data = fetchedData.results;
     columns = Object.keys(data[0]).map((val) =>
@@ -14,7 +16,7 @@
     );
   };
 
-  getData();
+  getTableData();
 
   $: tableData = data?.map((d) => Object.keys(d).map((key) => [d[key]]));
 </script>
@@ -24,10 +26,3 @@
     <DataTable headers={columns} rows={tableData} />
   </div>
 {/if}
-
-<style>
-  .data-table {
-    display: grid;
-    place-items: center;
-  }
-</style>

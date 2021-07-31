@@ -5,6 +5,8 @@
     sortByColumn,
   } from "./sort.helper";
 
+  import { isFlag, getAltName } from "./flag.helper";
+
   import "./table.style.css";
 
   export let headers: Array<string>;
@@ -34,7 +36,17 @@
   {#each sortedRows as row}
     <tr>
       {#each row as value}
-        <td contenteditable="true" bind:innerHTML={value} />
+        {#if isFlag(value)}
+          <td contenteditable="true" spellcheck="false"
+            ><img class="flag" alt={getAltName(value)} src={value} /></td
+          >
+        {:else}
+          <td
+            contenteditable="true"
+            spellcheck="false"
+            bind:innerHTML={value}
+          />
+        {/if}
       {/each}
     </tr>
   {/each}

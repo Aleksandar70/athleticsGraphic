@@ -20,6 +20,10 @@
   color: #fff;
   padding: 1em;
 }
+.flag {
+  width: 90px;
+  height: 60px;
+}
 .result-data th:first-child {
   display: table-cell;
   text-align: center;
