@@ -82,4 +82,5 @@ export interface IResultModel extends Model<IResultDocument> {
   createResult: (basicData, result) => Promise<IResultDocument>;
   getResults: () => Promise<IResultDocument[]>;
   getResultsByEventId: (eventId: string) => Promise<IResultDocument[]>;
+  getResultsByHeat: () => Promise<IResultDocument[]>;
 }

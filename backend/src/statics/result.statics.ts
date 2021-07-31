@@ -55,3 +55,14 @@ export async function getResultsByEventId(eventId) {
     }
     return null;
 }
+
+export async function getResultsByHeat(eventId, heat, round, order) {
+    const results = await ResultModel.find({ eventId: eventId, heat: heat, round: round }).sort(order).populate("competitorId").exec();
+
+    if (results.length !== 0) {
+        return results;
+    } else {
+        return null;
+    }
+
+}
