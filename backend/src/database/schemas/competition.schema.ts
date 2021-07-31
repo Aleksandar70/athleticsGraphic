@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { createCompetition, findCompetitionById } from "../../statics/competition.statics";
 
 const CompetitionSchema = new Schema({
   address: {
@@ -90,5 +91,8 @@ const CompetitionSchema = new Schema({
     default: 2021,
   },
 });
+
+CompetitionSchema.statics.createCompetition = createCompetition;
+CompetitionSchema.statics.findCompetitionById = findCompetitionById;
 
 export default CompetitionSchema;
