@@ -34,7 +34,7 @@ const RUN_1500M_M = `${OPEN_TRACK_API}${RUN_1500M_M_ID}/`;
 const RUN_60MH_F = `${OPEN_TRACK_API}${RUN_60MH_F_ID}/`;
 const RUN_60MH_M = `${OPEN_TRACK_API}${RUN_60MH_M_ID}/`;
 
-const getOpenTrackData = async (url: string): Promise<OpenTrackData | void> => {
+const getOpenTrackData = async (url: string): Promise<OpenTrackData> => {
   const openTrackData: OpenTrackData = {} as OpenTrackData;
   try {
     const response: AxiosResponse<any> = await axios.get(url);
@@ -47,3 +47,6 @@ const getOpenTrackData = async (url: string): Promise<OpenTrackData | void> => {
     console.error(err);
   }
 };
+
+export const tempGetData = async () =>
+  getOpenTrackData(`${RUN_60M_M}1/1/json?nocache=1`);
