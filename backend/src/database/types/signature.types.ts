@@ -6,4 +6,13 @@ export interface ISignature {
 }
 
 export interface ISignatureDocument extends ISignature, Document {}
-export type ISignatureModel = Model<ISignatureDocument>;
+export interface ISignatureModel extends Model<ISignatureDocument> {
+  createNewSignature: (
+    this: ISignatureModel,
+    {
+      name,
+      title,
+    }: { name: string; title: string}
+  ) => Promise<ISignatureDocument>;
+  getSignatures: () => Promise<ISignatureDocument[]>;
+}

@@ -77,5 +77,9 @@ export interface IResult {
   result20: string;
 }
 
-export interface IResultDocument extends IResult, Document {}
-export type IResultModel = Model<IResultDocument>;
+export interface IResultDocument extends IResult, Document { }
+export interface IResultModel extends Model<IResultDocument> {
+  createResult: (basicData, result) => Promise<IResultDocument>;
+  getResults: () => Promise<IResultDocument[]>;
+  getResultsByEventId: (eventId: string) => Promise<IResultDocument[]>;
+}

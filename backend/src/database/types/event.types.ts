@@ -28,5 +28,9 @@ export interface IEvent {
   note: string;
 }
 
-export interface IEventDocument extends IEvent, Document {}
-export type IEventModel = Model<IEventDocument>;
+export interface IEventDocument extends IEvent, Document { }
+export interface IEventModel extends Model<IEventDocument> {
+  createEvent: (competitionId, event) => Promise<IEventDocument>;
+  getEvents: () => Promise<IEventDocument[]>;
+  editEvent: (id, name, time, note) => Promise<IEventDocument[]>;
+}

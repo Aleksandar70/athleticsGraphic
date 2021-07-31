@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { getResults, createResult, getResultsByEventId } from "../../statics/result.statics";
 
 const ResultSchema = new Schema({
   competitorId: {
@@ -339,5 +340,9 @@ const ResultSchema = new Schema({
     default: "",
   },
 });
+
+ResultSchema.statics.createResult = createResult;
+ResultSchema.statics.getResults = getResults;
+ResultSchema.statics.getResultsByEventId = getResultsByEventId;
 
 export default ResultSchema;
