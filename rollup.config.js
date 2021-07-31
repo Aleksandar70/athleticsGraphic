@@ -61,7 +61,7 @@ export default {
 		}),
 		commonjs(),
 		typescript({
-			rootDir: './src',
+			rootDirs: ['./src', './backend/src/api'],
 			sourceMap: !production,
 			inlineSources: !production
 		}),

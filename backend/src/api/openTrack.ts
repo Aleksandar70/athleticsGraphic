@@ -38,7 +38,7 @@ export const getOpenTrackData = async (): Promise<OpenTrackData> => {
   const openTrackData: OpenTrackData = {} as OpenTrackData;
   try {
     const response: AxiosResponse<any> = await axios.get(
-      `${RUN_60M_M}/1/1/json?nocache=1`
+      `${RUN_60M_M}1/1/json?nocache=1`
     );
     const responseData = response.data;
     openTrackData.data = responseData;
