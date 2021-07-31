@@ -8,11 +8,7 @@ export async function createNewSignature(
   }: { name: string; title: string }
 ): Promise<ISignatureDocument> {
   const signature = await SignatureModel.findOne({ name });
-  if (signature) {
-    return signature;
-  } else {
-    return SignatureModel.create({ name, title });
-  }
+  return signature ?? SignatureModel.create({ name, title });
 }
 
 export async function getSignatures(): Promise<ISignatureDocument[]> {

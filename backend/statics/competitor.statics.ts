@@ -5,12 +5,12 @@ export async function createCompetitor(competition_id, competitor) {
     if (competitors.length !== 0) {
         return competitors[0];
     }
-
+    const EMPTY_STRING = "";
     const competitionId = competition_id;
-    const checkedIn = competitor.checkedIn == null ? false : competitor.checkedIn;
-    const competitorId = competitor.competitorId == null ? "" : competitor.competitorId;
-    const firstName = competitor.firstName == null ? "" : competitor.firstName;
-    const lastName = competitor.lastName == null ? "" : competitor.lastName;
+    const checkedIn = competitor.checkedIn ?? false;
+    const competitorId = competitor.competitorId ?? EMPTY_STRING;
+    const firstName = competitor.firstName ?? EMPTY_STRING;
+    const lastName = competitor.lastName ?? EMPTY_STRING;
     const sortBib = competitor.sortBib == null ? 0 : parseInt(competitor.sortBib);
 
     const newCompetitor = CompetitorModel.create({

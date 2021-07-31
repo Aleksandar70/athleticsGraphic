@@ -6,19 +6,20 @@ export async function createResult(basicData, result) {
     if (existingResults.length != 0) {
         return existingResults[0];
     }
-
-    const day = basicData.day == null ? 1 : basicData.day;
-    const eventId = basicData.event_id == null ? "" : basicData.event_id;
-    const eventName = basicData.event_name == null ? "" : basicData.event_name;
-    const resultsStatus = basicData.results_status == null ? "" : basicData.results_status;
-    const round = basicData.round == null ? 0 : basicData.round;
-    const showAthleteDetails = basicData.show_athlete_details == null ? false : basicData.show_athlete_details;
-    const showPartials = basicData.show_partials == null ? false : basicData.show_partials;
-    const showPoints = basicData.show_points == null ? false : basicData.show_points;
-    const status = basicData.status == null ? "" : basicData.status;
-    const bib = result.bib == null ? 0 : result.bib;
-    const points = result.points == null ? 0 : result.points;
-    const heat = basicData.heat == null ? 0 : basicData.heat;
+    const EMPTY_STRING = "";
+    const ZERO_VALUE = 0;
+    const day = basicData.day ?? 1;
+    const eventId = basicData.event_id ?? EMPTY_STRING;
+    const eventName = basicData.event_name ?? EMPTY_STRING;
+    const resultsStatus = basicData.results_status ?? EMPTY_STRING;
+    const round = basicData.round ?? ZERO_VALUE;
+    const showAthleteDetails = basicData.show_athlete_details ?? false;;
+    const showPartials = basicData.show_partials ?? false;;
+    const showPoints = basicData.show_points ?? false;
+    const status = basicData.status ?? EMPTY_STRING;
+    const bib = result.bib ?? ZERO_VALUE;
+    const points = result.points ?? ZERO_VALUE;
+    const heat = basicData.heat ?? ZERO_VALUE;
 
 
     //TODO: Call CompetitorModel.findCompetitorByBib(bib) and take id from competitor
