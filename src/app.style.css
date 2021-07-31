@@ -1,0 +1,4 @@
+.data-table {
+  display: grid;
+  place-items: center;
+}
