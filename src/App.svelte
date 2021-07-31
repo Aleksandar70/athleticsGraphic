@@ -1,13 +1,13 @@
 <script lang="ts">
   import DataTable from "./components/data_table/DataTable.svelte";
-  import { getOpenTrackData } from "../backend/src/api/openTrack";
+  import { tempGetData } from "../backend/src/api/openTrack";
 
   const columns = ["First Name", "Last Name", "Bib"];
 
   let data;
 
   const getData = async () => {
-    const fetchedData = await getOpenTrackData();
+    const fetchedData = await tempGetData();
     data = fetchedData.results;
   };
 
