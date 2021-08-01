@@ -4,67 +4,38 @@
     changeSortDirection,
     sortByColumn,
   } from "./sort.helper";
-  import { hideColumn, getEmptyColumns } from "./table.helper";
+  import {
+    hideColumn,
+    getEmptyColumns,
+    getTableData,
+    getColumnData,
+  } from "./table.helper";
 
   import { isFlag, getAltName } from "./flag.helper";
 
   import "./table.style.css";
 
   export let fields: Array<string>;
-  export let rows: Array<Array<string>>;
+  export let tableData: Array<Array<string>>;
 
-  $: headers = getColumnData(fields);
-
-  $: tableData = getData(rows);
-
-  let emptyColumns = getEmptyColumns(rows);
-
-  const getData = (rows) => {
-    const dataSize = rows.length;
-    const tableData = rows.map((row) => {
-      return row.map((field, idx) => ({
-        value: field,
-        show: setIsShown(emptyColumns, idx, dataSize),
-        id: idx,
-      }));
-    });
-    return tableData;
-  };
-
-  const getColumnData = (fields) => {
-    const dataSize = rows.length;
-    const tableColumns = fields.map((data, idx) => ({
-      id: idx,
-      value: data,
-      show: setIsShown(emptyColumns, idx, dataSize),
-    }));
-    return tableColumns;
-  };
-
-  const setIsShown = (
-    emptyColumns: Map<number, number>,
-    idx: number,
-    limit: number
-  ): boolean => {
-    if (!emptyColumns.has(idx)) {
-      return true;
-    }
-
-    return emptyColumns.get(idx) < limit;
-  };
+  let emptyColumns = getEmptyColumns(tableData);
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;
+
+  $: headers = getColumnData(fields, emptyColumns, tableData.length);
+
+  $: rows = getTableData(tableData, emptyColumns);
 
   const updateSortDirection = (columnIndex: number): void => {
     sortDirection = changeSortDirection(sortDirection);
     sortBy = columnIndex;
   };
 
-  $: sortedRows = tableData;
+  $: sortedRows = rows;
 
   $: if (sortBy !== null) {
-    sortedRows = sortByColumn(tableData, sortBy, sortDirection);
+    sortedRows = sortByColumn(rows, sortBy, sortDirection);
   }
 </script>
 
@@ -74,7 +45,7 @@
       type="checkbox"
       on:change={() => {
         field.show = !field.show;
-        tableData = hideColumn(field, tableData);
+        rows = hideColumn(field, rows);
       }}
       value={field.value}
       checked={field.show}

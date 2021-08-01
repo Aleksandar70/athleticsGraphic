@@ -1,7 +1,7 @@
 <script lang="ts">
   import DataTable from "./components/data_table/DataTable.svelte";
   import {
-    getTableData,
+    fetchData,
     getColumns,
     parseTableData,
   } from "./components/data_table/table.helper";
@@ -11,12 +11,12 @@
 </script>
 
 <div class="data-table">
-  {#await getTableData()}
+  {#await fetchData()}
     <h1>Fetching...</h1>
   {:then tableData}
     <DataTable
       fields={getColumns(tableData)}
-      rows={parseTableData(tableData)}
+      tableData={parseTableData(tableData)}
     />
   {:catch error}
     <h1>There was some issue fetching data.</h1>

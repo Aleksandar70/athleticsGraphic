@@ -1,6 +1,6 @@
 import { tempGetData } from "../../../backend/src/api/openTrack";
 
-export const getTableData = async (): Promise<Record<string, unknown>[]> => {
+export const fetchData = async (): Promise<Record<string, unknown>[]> => {
   const fetchedData = await tempGetData();
   return fetchedData.results;
 };
@@ -40,4 +40,43 @@ export const getEmptyColumns = (
     });
   });
   return emptyColumns;
+};
+
+export const getTableData = (
+  rows: Array<Array<string>>,
+  emptyColumns: Map<number, number>
+): Array<Array<Record<string, unknown>>> => {
+  const tableData = rows.map((row) => {
+    return row.map((field, idx) => ({
+      value: field,
+      show: setFiledVisibility(emptyColumns, idx, rows.length),
+      id: idx,
+    }));
+  });
+  return tableData;
+};
+
+export const getColumnData = (
+  fields: Array<string>,
+  emptyColumns: Map<number, number>,
+  dataSize: number
+): Array<Record<string, unknown>> => {
+  const tableColumns = fields.map((data, idx) => ({
+    id: idx,
+    value: data,
+    show: setFiledVisibility(emptyColumns, idx, dataSize),
+  }));
+  return tableColumns;
+};
+
+const setFiledVisibility = (
+  emptyColumns: Map<number, number>,
+  idx: number,
+  limit: number
+): boolean => {
+  if (!emptyColumns.has(idx)) {
+    return true;
+  }
+
+  return emptyColumns.get(idx) < limit;
 };
