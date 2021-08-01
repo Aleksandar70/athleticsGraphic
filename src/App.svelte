@@ -15,7 +15,7 @@
     <h1>Fetching...</h1>
   {:then tableData}
     <DataTable
-      headers={getColumns(tableData)}
+      fields={getColumns(tableData)}
       rows={parseTableData(tableData)}
     />
   {:catch error}
