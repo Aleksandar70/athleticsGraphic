@@ -18,11 +18,8 @@ export const hideColumn = (
   data: Array<Array<Record<string, unknown>>>
 ): Array<Array<Record<string, unknown>>> => {
   data.forEach((record) => {
-    record.forEach((el) => {
-      if (el.id === field.id) {
-        el.show = !el.show;
-      }
-    });
+    const rec = record.find((element) => element.id === field.id);
+    rec.show = !rec.show;
   });
   return data;
 };
