@@ -11,20 +11,22 @@ export const changeSortDirection = (direction: SortDirection): SortDirection =>
     : SortDirection.ASCENDING;
 
 export const sortByColumn = (
-  rows: Array<Array<string>>,
+  rows: Array<Array<Record<string, string>>>,
   index: number,
   sortDirection: SortDirection
-): Array<Array<string>> => {
-  const isNumericValue = !isNaN(Number(rows?.[0][index]));
-  return rows.sort((a: string[], b: string[]) => {
-    const firstValue = isNumericValue
-      ? a[index]
-      : a[index].toString().toLowerCase();
-    const secondValue = isNumericValue
-      ? b[index]
-      : b[index].toString().toLowerCase();
-    return sortDirection === SortDirection.ASCENDING
-      ? ascending(firstValue, secondValue)
-      : descending(firstValue, secondValue);
-  });
+): Array<Array<Record<string, string>>> => {
+  const isNumericValue = !isNaN(Number(rows?.[0][index]?.value));
+  return rows.sort(
+    (a: Record<string, string>[], b: Record<string, string>[]) => {
+      const firstValue = isNumericValue
+        ? a[index].value
+        : a[index].value.toString().toLowerCase();
+      const secondValue = isNumericValue
+        ? b[index].value
+        : b[index].value.toString().toLowerCase();
+      return sortDirection === SortDirection.ASCENDING
+        ? ascending(firstValue, secondValue)
+        : descending(firstValue, secondValue);
+    }
+  );
 };

@@ -19,7 +19,7 @@
     show: true,
   }));
 
-  let tableData = rows.map((row) =>
+  $: tableData = rows.map((row) =>
     row.map((field, idx) => ({ value: field, show: true, id: idx }))
   );
 
@@ -31,10 +31,10 @@
     sortBy = columnIndex;
   };
 
-  $: sortedRows = rows;
+  $: sortedRows = tableData;
 
   $: if (sortBy !== null) {
-    sortedRows = sortByColumn(rows, sortBy, sortDirection);
+    sortedRows = sortByColumn(tableData, sortBy, sortDirection);
   }
 </script>
 
@@ -61,7 +61,7 @@
       {/if}
     {/each}
   </tr>
-  {#each tableData as row}
+  {#each sortedRows as row}
     <tr>
       {#each row as data}
         {#if data.show}
