@@ -12,3 +12,17 @@ export const getColumns = (data: Record<string, unknown>[]): Array<string> =>
 
 export const parseTableData = (data: Record<string, unknown>[]): unknown[][] =>
   data?.map((d) => Object.keys(d).map((key) => [d[key]]));
+
+export const hideColumn = (
+  field: Record<string, unknown>,
+  data: Array<Array<Record<string, unknown>>>
+): Array<Array<Record<string, unknown>>> => {
+  data.forEach((record) => {
+    record.forEach((el) => {
+      if (el.id === field.id) {
+        el.show = !el.show;
+      }
+    });
+  });
+  return data;
+};

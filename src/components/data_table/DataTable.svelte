@@ -4,6 +4,7 @@
     changeSortDirection,
     sortByColumn,
   } from "./sort.helper";
+  import { hideColumn } from "./table.helper";
 
   import { isFlag, getAltName } from "./flag.helper";
 
@@ -21,20 +22,6 @@
   let tableData = rows.map((row) =>
     row.map((field, idx) => ({ value: field, show: true, id: idx }))
   );
-
-  const checked = (field) => {
-    let fieldsToHide = [];
-    let tempData = tableData;
-    tempData.forEach((data) => {
-      data.forEach((el) => {
-        if (el.id === field.id) {
-          el.show = !el.show;
-        }
-      });
-    });
-    tableData = tempData;
-    console.log(tableData);
-  };
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;
@@ -57,7 +44,7 @@
       type="checkbox"
       on:change={() => {
         field.show = !field.show;
-        checked(field);
+        tableData = hideColumn(field, tableData);
       }}
       value={field.value}
       checked={field.show}
