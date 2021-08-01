@@ -2,7 +2,7 @@
   "extends": "@tsconfig/svelte/tsconfig.json",
 
   "compilerOptions": {
-    "lib": ["ESNext.String"]
+    "lib": ["ESNext.String", "DOM"]
   },
 
   "include": ["src/**/*", "backend/**/*"],

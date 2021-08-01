@@ -5,7 +5,7 @@ export const fetchData = async (): Promise<Record<string, unknown>[]> => {
   return fetchedData.results;
 };
 
-export const getColumns = (data: Record<string, unknown>[]): Array<string> =>
+export const parseHeaderData = (data: Record<string, unknown>[]): string[] =>
   Object.keys(data?.[0])?.map((val: string) =>
     val.replaceAll("_", " ").toUpperCase()
   );
@@ -15,8 +15,8 @@ export const parseTableData = (data: Record<string, unknown>[]): unknown[][] =>
 
 export const hideColumn = (
   field: Record<string, unknown>,
-  data: Array<Array<Record<string, unknown>>>
-): Array<Array<Record<string, unknown>>> => {
+  data: Record<string, unknown>[][]
+): Record<string, unknown>[][] => {
   data.forEach((record) => {
     const rec = record.find((element) => element.id === field.id);
     rec.show = !rec.show;
@@ -24,9 +24,7 @@ export const hideColumn = (
   return data;
 };
 
-export const getEmptyColumns = (
-  rows: Array<Array<string>>
-): Map<number, number> => {
+export const getEmptyColumns = (rows: string[][]): Map<number, number> => {
   const emptyColumns = new Map<number, number>();
   rows.forEach((row) => {
     row.forEach((val, i) => {
@@ -43,9 +41,9 @@ export const getEmptyColumns = (
 };
 
 export const getTableData = (
-  rows: Array<Array<string>>,
+  rows: string[][],
   emptyColumns: Map<number, number>
-): Array<Array<Record<string, unknown>>> => {
+): Record<string, unknown>[][] => {
   const tableData = rows.map((row) => {
     return row.map((field, idx) => ({
       value: field,
@@ -56,11 +54,11 @@ export const getTableData = (
   return tableData;
 };
 
-export const getColumnData = (
-  fields: Array<string>,
+export const getHeaderData = (
+  fields: string[],
   emptyColumns: Map<number, number>,
   dataSize: number
-): Array<Record<string, unknown>> => {
+): Record<string, unknown>[] => {
   const tableColumns = fields.map((data, idx) => ({
     id: idx,
     value: data,

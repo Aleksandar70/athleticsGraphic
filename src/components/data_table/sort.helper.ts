@@ -11,10 +11,10 @@ export const changeSortDirection = (direction: SortDirection): SortDirection =>
     : SortDirection.ASCENDING;
 
 export const sortByColumn = (
-  rows: Array<Array<Record<string, string>>>,
+  rows: Record<string, string>[][],
   index: number,
   sortDirection: SortDirection
-): Array<Array<Record<string, string>>> => {
+): Record<string, string>[][] => {
   const isNumericValue = !isNaN(Number(rows?.[0][index]?.value));
   return rows.sort(
     (a: Record<string, string>[], b: Record<string, string>[]) => {

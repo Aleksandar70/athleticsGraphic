@@ -33,7 +33,9 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "d3-array": "^3.0.1",
+    "fontawesome-svelte": "^2.0.1",
     "sirv-cli": "^1.0.0"
   }
 }
