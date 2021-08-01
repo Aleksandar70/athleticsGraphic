@@ -23,3 +23,21 @@ export const hideColumn = (
   });
   return data;
 };
+
+export const getEmptyColumns = (
+  rows: Array<Array<string>>
+): Map<number, number> => {
+  const emptyColumns = new Map<number, number>();
+  rows.forEach((row) => {
+    row.forEach((val, i) => {
+      if (val.toString() === "") {
+        if (emptyColumns.has(i)) {
+          emptyColumns.set(i, emptyColumns.get(i) + 1);
+        } else {
+          emptyColumns.set(i, 1);
+        }
+      }
+    });
+  });
+  return emptyColumns;
+};

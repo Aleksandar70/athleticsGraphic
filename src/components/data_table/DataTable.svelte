@@ -4,7 +4,7 @@
     changeSortDirection,
     sortByColumn,
   } from "./sort.helper";
-  import { hideColumn } from "./table.helper";
+  import { hideColumn, getEmptyColumns } from "./table.helper";
 
   import { isFlag, getAltName } from "./flag.helper";
 
@@ -13,15 +13,45 @@
   export let fields: Array<string>;
   export let rows: Array<Array<string>>;
 
-  $: headers = fields.map((data, i) => ({
-    id: i,
-    value: data,
-    show: true,
-  }));
+  $: headers = getColumnData(fields);
 
-  $: tableData = rows.map((row) =>
-    row.map((field, idx) => ({ value: field, show: true, id: idx }))
-  );
+  $: tableData = getData(rows);
+
+  let emptyColumns = getEmptyColumns(rows);
+
+  const getData = (rows) => {
+    const dataSize = rows.length;
+    const tableData = rows.map((row) => {
+      return row.map((field, idx) => ({
+        value: field,
+        show: setIsShown(emptyColumns, idx, dataSize),
+        id: idx,
+      }));
+    });
+    return tableData;
+  };
+
+  const getColumnData = (fields) => {
+    const dataSize = rows.length;
+    const tableColumns = fields.map((data, idx) => ({
+      id: idx,
+      value: data,
+      show: setIsShown(emptyColumns, idx, dataSize),
+    }));
+    return tableColumns;
+  };
+
+  const setIsShown = (
+    emptyColumns: Map<number, number>,
+    idx: number,
+    limit: number
+  ): boolean => {
+    if (!emptyColumns.has(idx)) {
+      return true;
+    }
+
+    return emptyColumns.get(idx) < limit;
+  };
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;
