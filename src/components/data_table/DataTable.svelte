@@ -9,8 +9,8 @@
 
   import "./table.style.css";
 
-  export let headerData: string[] = [];
-  export let rowData: string[][] = [];
+  export let headerData: Record<string, string>[] = [];
+  export let rowData: Record<string, string>[][];
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;

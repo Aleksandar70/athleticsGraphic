@@ -46,7 +46,7 @@ export const getTableData = (
 ): Record<string, unknown>[][] => {
   const tableData = rows.map((row) => {
     return row.map((field, idx) => ({
-      value: field,
+      value: field.toString(),
       show: setFiledVisibility(emptyColumns, idx, rows.length),
       id: idx,
     }));
