@@ -1,5 +1,8 @@
 import { Schema } from "mongoose";
-import { getResults, createResult, getResultsByEventId, getResultsByHeat, updateRunResult } from "../../statics/result.statics";
+import {
+  getResults, createResult, getResultsByEventId,
+  getResultsByHeat, updateRunResult, semiOverwriteResult, updateHorizontalResult, updateVerticalResult
+} from "../../statics/result.statics";
 
 const ResultSchema = new Schema({
   competitorId: {
@@ -346,5 +349,8 @@ ResultSchema.statics.getResults = getResults;
 ResultSchema.statics.getResultsByEventId = getResultsByEventId;
 ResultSchema.statics.getResultsByHeat = getResultsByHeat;
 ResultSchema.statics.updateRunResult = updateRunResult;
+ResultSchema.statics.semiOverwriteResult = semiOverwriteResult;
+ResultSchema.statics.updateHorizontalResult = updateHorizontalResult;
+ResultSchema.statics.updateVerticalResult = updateVerticalResult;
 
 export default ResultSchema;

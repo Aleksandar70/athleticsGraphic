@@ -45,6 +45,7 @@ export const getOpenTrackData = async (url: string): Promise<OpenTrackData> => {
     return openTrackData;
   } catch (err) {
     console.error(err);
+    return err;
   }
 };
 //TODO: REMOVE THIS.
