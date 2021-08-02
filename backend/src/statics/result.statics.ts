@@ -66,3 +66,16 @@ export async function getResultsByHeat(eventId, heat, round, order) {
     }
 
 }
+
+export async function updateRunResult(resultId, performance, place) {
+    const result = await ResultModel.findById(resultId).exec();
+    if (result !== null) {
+        result.performance = performance;
+        if (place !== "") {
+            result.place = parseInt(place);
+        }
+
+        return await result.save();
+    }
+    return null;
+}

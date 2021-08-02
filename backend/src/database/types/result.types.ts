@@ -79,8 +79,9 @@ export interface IResult {
 
 export interface IResultDocument extends IResult, Document { }
 export interface IResultModel extends Model<IResultDocument> {
-  createResult: (basicData, result) => Promise<IResultDocument>;
+  createResult: (responseData, result) => Promise<IResultDocument>;
   getResults: () => Promise<IResultDocument[]>;
   getResultsByEventId: (eventId: string) => Promise<IResultDocument[]>;
-  getResultsByHeat: () => Promise<IResultDocument[]>;
+  getResultsByHeat: (eventId, heat, round, order) => Promise<IResultDocument[]>;
+  updateRunResult: (resultId, performance, place) => Promise<IResultDocument>;
 }
