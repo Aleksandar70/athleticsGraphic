@@ -1,10 +1,3 @@
-export const isFlag = (value: Array<string>): boolean => {
-  const stringValue = value.toString();
-  return stringValue.includes("flag") && stringValue.endsWith(".svg");
-};
+export const isFlag = (value: string): boolean => value.includes("flag") && value.endsWith(".svg");
 
-export const getAltName = (value: Array<string>): string => {
-  if (isFlag(value)) {
-    return value.toString().match(/([^\\/]+$)/gm)?.[0];
-  }
-};
+export const getAltName = (value: string): string => value.match(/([^\\/]+$)/gm)?.[0];

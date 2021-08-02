@@ -17,7 +17,7 @@ export interface IResult {
   unitCode: string;
   heat: number;
   heatName: string;
-  heights: Array<string>;
+  heights: string[];
   bib: number;
   athlonPoints: string;
   catpos: number;
@@ -77,7 +77,7 @@ export interface IResult {
   result20: string;
 }
 
-export interface IResultDocument extends IResult, Document { }
+export interface IResultDocument extends IResult, Document {}
 export interface IResultModel extends Model<IResultDocument> {
   createResult: (basicData, result) => Promise<IResultDocument>;
   getResults: () => Promise<IResultDocument[]>;

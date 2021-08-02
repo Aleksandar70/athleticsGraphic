@@ -1,5 +1,5 @@
 export interface OpenTrackData {
   data: Record<string, unknown>;
-  results: Array<Record<string, unknown>>;
-  trials: Array<Record<string, unknown>>;
+  results: Record<string, unknown>[];
+  trials: Record<string, unknown>[];
 }

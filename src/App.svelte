@@ -1,23 +1,14 @@
 <script lang="ts">
-  import DataTable from "./components/data_table/DataTable.svelte";
-  import {
-    getTableData,
-    getColumns,
-    parseTableData,
-  } from "./components/data_table/table.helper";
-  import { tempGetData } from "../backend/src/api/openTrack";
-
+  import Canvas from "./components/canvas/Canvas.svelte";
+  import { fetchData } from "./components/data_table/table.helper";
   import "./app.style.css";
 </script>
 
-<div class="data-table">
-  {#await getTableData()}
+<div class="app">
+  {#await fetchData()}
     <h1>Fetching...</h1>
   {:then tableData}
-    <DataTable
-      headers={getColumns(tableData)}
-      rows={parseTableData(tableData)}
-    />
+    <Canvas {tableData} />
   {:catch error}
     <h1>There was some issue fetching data.</h1>
   {/await}
