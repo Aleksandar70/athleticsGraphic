@@ -1,7 +1,6 @@
 <script lang="ts">
   import Canvas from "./components/canvas/Canvas.svelte";
   import { fetchData } from "./components/data_table/table.helper";
-  import { tempGetData } from "../backend/src/api/openTrack";
   import "./app.style.css";
 </script>
 

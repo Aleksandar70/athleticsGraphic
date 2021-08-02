@@ -3,7 +3,6 @@
   import ColumnDisplayOptions from "../column_display_options/ColumnDisplayOptions.svelte";
   import Modal, { getModal } from "../modal/Modal.svelte";
   import {
-    fetchData,
     parseHeaderData,
     parseTableData,
     getEmptyColumns,
