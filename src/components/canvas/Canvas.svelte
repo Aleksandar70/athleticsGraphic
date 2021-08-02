@@ -1,5 +1,6 @@
 <script>
   import DataTable from "../data_table/DataTable.svelte";
+  import { UIText } from "../../../constants/ui_text";
   import ColumnDisplayOptions from "../column_display_options/ColumnDisplayOptions.svelte";
   import Modal, { getModal } from "../modal/Modal.svelte";
   import {
@@ -27,6 +28,6 @@
   <Modal>
     <ColumnDisplayOptions bind:headerData bind:rowData />
   </Modal>
-  <button on:click={() => getModal().open()}>Add / Remove Columns</button>
+  <button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</button>
   <DataTable {headerData} {rowData} />
 </div>
