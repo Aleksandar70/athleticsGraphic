@@ -44,7 +44,6 @@ export async function createResult(basicData, result) {
 }
 
 export async function getResults(): Promise<IResultDocument[]> {
-    console.log(await ResultModel.find())
     return await ResultModel.find();
 }
 

@@ -9,8 +9,8 @@
 
   import "./table.style.css";
 
-  export let headers: Array<string>;
-  export let rows: Array<Array<string>>;
+  export let headerData: Record<string, string>[] = [];
+  export let rowData: Record<string, string>[][];
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;
@@ -20,32 +20,40 @@
     sortBy = columnIndex;
   };
 
-  $: sortedRows = rows;
+  $: sortedRows = rowData;
 
   $: if (sortBy !== null) {
-    sortedRows = sortByColumn(rows, sortBy, sortDirection);
+    sortedRows = sortByColumn(rowData, sortBy, sortDirection);
   }
 </script>
 
 <table class="result-data">
   <tr>
-    {#each headers as column, i (column)}
-      <th on:click={() => updateSortDirection(i)}>{column}</th>
+    {#each headerData as column, i}
+      {#if column.show}
+        <th on:click={() => updateSortDirection(i)}>{column.value}</th>
+      {/if}
     {/each}
   </tr>
   {#each sortedRows as row}
     <tr>
-      {#each row as value}
-        {#if isFlag(value)}
-          <td contenteditable="true" spellcheck="false"
-            ><img class="flag" alt={getAltName(value)} src={value} /></td
-          >
-        {:else}
-          <td
-            contenteditable="true"
-            spellcheck="false"
-            bind:innerHTML={value}
-          />
+      {#each row as data}
+        {#if data.show}
+          {#if isFlag(data.value)}
+            <td contenteditable="true" spellcheck="false"
+              ><img
+                class="flag"
+                alt={getAltName(data.value)}
+                src={data.value}
+              /></td
+            >
+          {:else}
+            <td
+              contenteditable="true"
+              spellcheck="false"
+              bind:innerHTML={data.value}
+            />
+          {/if}
         {/if}
       {/each}
     </tr>
