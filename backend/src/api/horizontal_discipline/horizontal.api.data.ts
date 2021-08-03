@@ -25,7 +25,7 @@ export const getHorizontalResult = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        horizontalEvent + heat + "/" + round + "/json?nocache=1"
+        horizontalEvent + heat + "/" + round + Constants.JSON_NOCACHE
       );
       const results = responseData.results;
       if (gType === Constants.GTYPE_REMOTE) {

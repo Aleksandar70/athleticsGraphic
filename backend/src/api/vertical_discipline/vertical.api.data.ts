@@ -25,7 +25,7 @@ export const getVerticalResult = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        verticalEvent + heat + "/" + round + "/json?nocache=1"
+        verticalEvent + heat + "/" + round + Constants.JSON_NOCACHE
       );
       const results = responseData.results;
       if (gType === Constants.GTYPE_LOCAL) {

@@ -2,7 +2,7 @@ import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants } from "../../../../constants/constants";
 
-const getRunningResults = async function (
+export const getRunningResults = async function (
   req,
   res,
   next,
@@ -22,29 +22,24 @@ const getRunningResults = async function (
         round,
         order
       );
-      console.log("existingResults ", existingResults);
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        runEvent + round + "/" + heat + "/json?nocache=1"
+        runEvent + round + "/" + heat + Constants.JSON_NOCACHE
       );
-      console.log("responseData ", responseData);
       const results = responseData.results;
-      console.log("results ", results);
       for (let i = 0; i < results.length; i++) {
-        const result = await ResultModel.createResult(
+        await ResultModel.createResult(
           responseData,
           results[i],
           responseData.trials
         );
-        console.log(result);
       }
       const existingResults = await ResultModel.getResultsByHeat(
         runEventId,
         heat,
         round
       );
-      console.log("existingResults ", existingResults);
       return res.status(201).json(existingResults);
     }
   } catch (err) {
