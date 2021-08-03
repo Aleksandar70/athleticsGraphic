@@ -322,7 +322,6 @@ export async function semiOverwriteResult(responseData, result, trials) {
       result19 == "" ? existingResult.result19 : result19;
     existingResult.result20 =
       result20 == "" ? existingResult.result20 : result20;
-    console.log("existingResult.save() ", existingResult);
     return await existingResult.save();
   }
 }

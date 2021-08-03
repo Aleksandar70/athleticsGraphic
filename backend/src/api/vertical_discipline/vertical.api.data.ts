@@ -2,7 +2,7 @@ import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants } from "../../../../constants/constants";
 
-const getVerticalResult = async function (
+export const getVerticalResult = async function (
   req,
   res,
   next,
@@ -15,7 +15,7 @@ const getVerticalResult = async function (
   const order = req.body.order ?? "bib";
 
   try {
-    if (gType === "local") {
+    if (gType === Constants.GTYPE_LOCAL) {
       const existingResults = await ResultModel.getResultsByHeat(
         verticalEventId,
         heat,
@@ -39,7 +39,7 @@ const getVerticalResult = async function (
       } else if (gType === Constants.GTYPE_SEMI) {
         for (let i = 0; i < results.length; i++) {
           await ResultModel.semiOverwriteResult(
-            responseData,
+            responseData.data,
             results[i],
             responseData.trials
           );
