@@ -2,7 +2,7 @@ import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants } from "../../../../constants/constants";
 
-const getHorizontalResult = async function (
+export const getHorizontalResult = async function (
   req,
   res,
   next,
@@ -25,12 +25,11 @@ const getHorizontalResult = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        horizontalEventId + heat + "/" + round + "/json?nocache=1"
+        horizontalEvent + heat + "/" + round + "/json?nocache=1"
       );
       const results = responseData.results;
       if (gType === Constants.GTYPE_REMOTE) {
         for (let i = 0; i < results.length; i++) {
-          console.log("Result.results[i] ", results[i]);
           await ResultModel.createResult(
             responseData,
             results[i],
@@ -40,7 +39,7 @@ const getHorizontalResult = async function (
       } else if (gType === Constants.GTYPE_SEMI) {
         for (let i = 0; i < results.length; i++) {
           await ResultModel.semiOverwriteResult(
-            responseData,
+            responseData.data,
             results[i],
             responseData.trials
           );
