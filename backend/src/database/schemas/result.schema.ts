@@ -1,7 +1,13 @@
 import { Schema } from "mongoose";
 import {
-  getResults, createResult, getResultsByEventId,
-  getResultsByHeat, updateRunResult, semiOverwriteResult, updateHorizontalResult, updateVerticalResult
+  getResults,
+  createResult,
+  getResultsByEventId,
+  getResultsByHeat,
+  updateRunResult,
+  semiOverwriteResult,
+  updateHorizontalResult,
+  updateVerticalResult,
 } from "../../statics/result.statics";
 
 const ResultSchema = new Schema({
