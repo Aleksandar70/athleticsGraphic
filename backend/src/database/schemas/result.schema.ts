@@ -1,5 +1,9 @@
 import { Schema } from "mongoose";
-import { getResults, createResult, getResultsByEventId } from "../../statics/result.statics";
+import {
+  getResults,
+  createResult,
+  getResultsByEventId,
+} from "../../statics/result.statics";
 
 const ResultSchema = new Schema({
   competitorId: {
