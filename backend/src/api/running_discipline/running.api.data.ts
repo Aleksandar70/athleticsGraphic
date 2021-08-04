@@ -47,13 +47,13 @@ export const getRunningResults = async function (
   }
 };
 
-const saveRun = async function (req, res, next) {
+const saveRunninResult = async function (req, res, next) {
   const resultId = req.body.resultId;
   const performance = req.body.performance;
   const place = req.body.place;
 
   try {
-    const existingResults = await ResultModel.updateRunResult(
+    const existingResults = await ResultModel.updateRunningResult(
       resultId,
       performance,
       place

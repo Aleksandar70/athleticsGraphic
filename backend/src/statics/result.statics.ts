@@ -56,12 +56,14 @@ export async function getResultsByEventId(eventId) {
   const results = await ResultModel.find({ eventId: eventId });
   return results.length !== 0 ? results : null;
 }
+
 export async function getResultsByHeat(eventId, heat, round, order) {
   const results = await ResultModel.find({
     eventId: eventId,
     heat: heat,
     round: round,
   });
+  //TODO: Explore this logic
   // .sort(order)
   // .populate("competitorId")
   // .exec();
@@ -71,19 +73,7 @@ export async function getResultsByHeat(eventId, heat, round, order) {
   return null;
 }
 
-export async function updateRunResult(resultId, performance, place) {
-  const result = await ResultModel.findById(resultId).exec();
-  if (result !== null) {
-    result.performance = performance;
-    if (place !== "") {
-      result.place = parseInt(place);
-    }
-
-    return await result.save();
-  }
-  return null;
-}
-
+//TODO: Refactor this function
 export async function semiOverwriteResult(responseData, result, trials) {
   let heights = responseData.heights ?? [];
   let bib = result.bib ?? 0;
@@ -356,6 +346,7 @@ export async function updateHorizontalResult(
   return null;
 }
 
+//TODO: Refactor this function
 export async function updateVerticalResult(
   resultId,
   first,
@@ -481,6 +472,19 @@ export async function updateVerticalResult(
       result.result19 = fifth;
       result.result20 = sixth;
     }
+    return await result.save();
+  }
+  return null;
+}
+
+export async function updateRunningResult(resultId, performance, place) {
+  const result = await ResultModel.findById(resultId).exec();
+  if (result !== null) {
+    result.performance = performance;
+    if (place !== "") {
+      result.place = parseInt(place);
+    }
+
     return await result.save();
   }
   return null;

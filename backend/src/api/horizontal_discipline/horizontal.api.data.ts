@@ -57,7 +57,7 @@ export const getHorizontalResult = async function (
   }
 };
 
-const saveHorizontal = async function (req, res, next) {
+const saveHorizontalResult = async function (req, res, next) {
   const resultId = req.body.resultId;
   const first = req.body.first;
   const second = req.body.second;

@@ -88,7 +88,7 @@ export interface IResultModel extends Model<IResultDocument> {
     round,
     order?
   ) => Promise<IResultDocument[]>;
-  updateRunResult: (resultId, performance, place) => Promise<IResultDocument>;
+  updateRunningResult: (resultId, performance, place) => Promise<IResultDocument>;
   semiOverwriteResult: (
     responseData,
     result,

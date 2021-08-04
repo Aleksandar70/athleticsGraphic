@@ -4,7 +4,7 @@ import {
   createResult,
   getResultsByEventId,
   getResultsByHeat,
-  updateRunResult,
+  updateRunningResult,
   semiOverwriteResult,
   updateHorizontalResult,
   updateVerticalResult,
@@ -354,9 +354,9 @@ ResultSchema.statics.createResult = createResult;
 ResultSchema.statics.getResults = getResults;
 ResultSchema.statics.getResultsByEventId = getResultsByEventId;
 ResultSchema.statics.getResultsByHeat = getResultsByHeat;
-ResultSchema.statics.updateRunResult = updateRunResult;
 ResultSchema.statics.semiOverwriteResult = semiOverwriteResult;
 ResultSchema.statics.updateHorizontalResult = updateHorizontalResult;
 ResultSchema.statics.updateVerticalResult = updateVerticalResult;
+ResultSchema.statics.updateRunningResult = updateRunningResult;
 
 export default ResultSchema;

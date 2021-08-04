@@ -57,7 +57,7 @@ export const getVerticalResult = async function (
   }
 };
 
-const saveVertical = async function (req, res, next) {
+const saveVerticalResult = async function (req, res, next) {
   const resultId = req.body.resultId;
   const first = req.body.first;
   const second = req.body.second;
