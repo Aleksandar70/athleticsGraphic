@@ -1,6 +1,6 @@
 import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
-import { Constants } from "../../../../constants/constants";
+import { Constants, GTYPE } from "../../../../constants/constants";
 
 export const getRunningResults = async function (
   req,
@@ -15,7 +15,7 @@ export const getRunningResults = async function (
   const order = req.body.order ?? "bib";
 
   try {
-    if (gType === Constants.GTYPE_LOCAL) {
+    if (gType === GTYPE.LOCAL) {
       const existingResults = await ResultModel.getResultsByHeat(
         runEventId,
         heat,
@@ -25,7 +25,7 @@ export const getRunningResults = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        runEvent + round + "/" + heat + Constants.JSON_NOCACHE
+        `${runEvent}${heat}"/"${round}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
       for (let i = 0; i < results.length; i++) {

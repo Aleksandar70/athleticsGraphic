@@ -1,21 +1,21 @@
 import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
-import { Constants } from "../../../../constants/constants";
+import { Constants, GTYPE } from "../../../../constants/constants";
 
-export const getVerticalResult = async function (
+export const getVerticalResult = async (
   req,
   res,
   next,
   verticalEventId,
   verticalEvent
-) {
+) => {
   const gType = req.body.gType;
   const heat = req.body.heat;
   const round = req.body.round;
   const order = req.body.order ?? "bib";
 
   try {
-    if (gType === Constants.GTYPE_LOCAL) {
+    if (gType === GTYPE.LOCAL) {
       const existingResults = await ResultModel.getResultsByHeat(
         verticalEventId,
         heat,
@@ -25,10 +25,10 @@ export const getVerticalResult = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        verticalEvent + heat + "/" + round + Constants.JSON_NOCACHE
+        `${verticalEvent}${heat}"/"${round}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
-      if (gType === Constants.GTYPE_LOCAL) {
+      if (gType === GTYPE.REMOTE) {
         for (let i = 0; i < results.length; i++) {
           await ResultModel.createResult(
             responseData,
@@ -36,7 +36,7 @@ export const getVerticalResult = async function (
             responseData.trials
           );
         }
-      } else if (gType === Constants.GTYPE_SEMI) {
+      } else if (gType === GTYPE.SEMI) {
         for (let i = 0; i < results.length; i++) {
           await ResultModel.semiOverwriteResult(
             responseData.data,
@@ -57,7 +57,7 @@ export const getVerticalResult = async function (
   }
 };
 
-const saveVerticalResult = async function (req, res, next) {
+const saveVerticalResult = async (req, res, next) => {
   const resultId = req.body.resultId;
   const first = req.body.first;
   const second = req.body.second;

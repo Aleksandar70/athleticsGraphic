@@ -1,6 +1,6 @@
 import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
-import { Constants } from "../../../../constants/constants";
+import { Constants, GTYPE } from "../../../../constants/constants";
 
 export const getHorizontalResult = async function (
   req,
@@ -15,7 +15,7 @@ export const getHorizontalResult = async function (
   const order = req.body.order ?? "bib";
 
   try {
-    if (gType === Constants.GTYPE_LOCAL) {
+    if (gType === GTYPE.LOCAL) {
       const existingResults = await ResultModel.getResultsByHeat(
         horizontalEventId,
         heat,
@@ -25,10 +25,10 @@ export const getHorizontalResult = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        horizontalEvent + heat + "/" + round + Constants.JSON_NOCACHE
+        `${horizontalEvent}${heat}"/"${round}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
-      if (gType === Constants.GTYPE_REMOTE) {
+      if (gType === GTYPE.REMOTE) {
         for (let i = 0; i < results.length; i++) {
           await ResultModel.createResult(
             responseData,
@@ -36,7 +36,7 @@ export const getHorizontalResult = async function (
             responseData.trials
           );
         }
-      } else if (gType === Constants.GTYPE_SEMI) {
+      } else if (gType === GTYPE.SEMI) {
         for (let i = 0; i < results.length; i++) {
           await ResultModel.semiOverwriteResult(
             responseData.data,
