@@ -75,12 +75,12 @@ export async function getResultsByHeat(eventId, heat, round, order) {
 
 //TODO: Refactor this function
 export async function semiOverwriteResult(responseData, result, trials) {
-  let heights = responseData.heights ?? [];
-  let bib = result.bib ?? 0;
-  let athlonPoints = result.athlon_points ?? Constants.EMPTY_STRING;
-  let catpos = result.catpos ?? 0;
-  let order = result.order ?? 0;
-  let performance = result.performance ?? Constants.EMPTY_STRING;
+  const heights = responseData.heights ?? [];
+  const bib = result.bib ?? 0;
+  const athlonPoints = result.athlon_points ?? Constants.EMPTY_STRING;
+  const catpos = result.catpos ?? 0;
+  const order = result.order ?? 0;
+  const performance = result.performance ?? Constants.EMPTY_STRING;
   let place = result.place ?? 100;
   if (performance == Constants.PERFORMANCE_DNF) {
     place = 97;
@@ -90,10 +90,10 @@ export async function semiOverwriteResult(responseData, result, trials) {
     place = 99;
   }
 
-  let points = result.points ?? 0;
-  let startTime = result.start_time ?? Constants.EMPTY_STRING;
-  let finishTime = result.finish_time ?? Constants.EMPTY_STRING;
-  let rawTime = result.raw_time ?? Constants.EMPTY_STRING;
+  const points = result.points ?? 0;
+  const startTime = result.start_time ?? Constants.EMPTY_STRING;
+  const finishTime = result.finish_time ?? Constants.EMPTY_STRING;
+  const rawTime = result.raw_time ?? Constants.EMPTY_STRING;
 
   // const competitor = await CompetitorModel.findByBib(bib);
 
@@ -244,7 +244,7 @@ export async function semiOverwriteResult(responseData, result, trials) {
   // .populate("competitorId")
   // .exec();
   if (existingResults.length !== 0) {
-    let existingResult = existingResults[0];
+    const existingResult = existingResults[0];
     existingResult.athlonPoints = athlonPoints;
     existingResult.catpos = catpos;
     existingResult.order = order;
@@ -364,7 +364,7 @@ export async function updateVerticalResult(
     if (place !== "") {
       result.place = parseInt(place);
     }
-    let heights = result.heights.length;
+    const heights = result.heights.length;
 
     if (heights < 7) {
       result.result1 = first;
@@ -484,7 +484,6 @@ export async function updateRunningResult(resultId, performance, place) {
     if (place !== "") {
       result.place = parseInt(place);
     }
-
     return await result.save();
   }
   return null;
