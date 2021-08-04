@@ -30,7 +30,7 @@ export const getVerticalResult = async (
       if (gType === GTYPE.REMOTE) {
         for (const result of results) {
           await ResultModel.createResult(
-            responseData,
+            responseData.data,
             result,
             responseData.trials
           );
