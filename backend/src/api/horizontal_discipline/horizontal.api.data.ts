@@ -29,18 +29,18 @@ export const getHorizontalResult = async function (
       );
       const results = responseData.results;
       if (gType === GTYPE.REMOTE) {
-        for (let i = 0; i < results.length; i++) {
+        for (const result of results) {
           await ResultModel.createResult(
             responseData,
-            results[i],
+            result,
             responseData.trials
           );
         }
       } else if (gType === GTYPE.SEMI) {
-        for (let i = 0; i < results.length; i++) {
+        for (const result of results) {
           await ResultModel.semiOverwriteResult(
             responseData.data,
-            results[i],
+            result,
             responseData.trials
           );
         }

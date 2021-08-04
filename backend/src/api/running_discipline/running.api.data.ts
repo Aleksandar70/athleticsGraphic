@@ -28,10 +28,10 @@ export const getRunningResults = async function (
         `${runEvent}${round}"/"${heat}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
-      for (let i = 0; i < results.length; i++) {
+      for (const result of results) {
         await ResultModel.createResult(
           responseData,
-          results[i],
+          result,
           responseData.trials
         );
       }
