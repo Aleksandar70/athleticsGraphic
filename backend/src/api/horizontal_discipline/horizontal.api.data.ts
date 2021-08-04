@@ -1,14 +1,13 @@
 import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants, GTYPE } from "../../../../constants/constants";
-
-export const getHorizontalResult = async function (
+//working
+export const getHorizontalResult = async (
   req,
   res,
-  next,
   horizontalEventId,
   horizontalEvent
-) {
+) => {
   const gType = req.body.gType;
   const heat = req.body.heat;
   const round = req.body.round;
@@ -25,13 +24,13 @@ export const getHorizontalResult = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        `${horizontalEvent}${round}"/"${heat}${Constants.JSON_NOCACHE}`
+        `${horizontalEvent}${round}/${heat}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
       if (gType === GTYPE.REMOTE) {
         for (const result of results) {
-          await ResultModel.createResult(
-            responseData,
+          const res = await ResultModel.createResult(
+            responseData.data,
             result,
             responseData.trials
           );
@@ -45,6 +44,7 @@ export const getHorizontalResult = async function (
           );
         }
       }
+
       const existingResults = await ResultModel.getResultsByHeat(
         horizontalEventId,
         heat,
@@ -53,11 +53,12 @@ export const getHorizontalResult = async function (
       return res.status(201).json(existingResults);
     }
   } catch (err) {
-    next(err);
+    console.log(err);
+    return err;
   }
 };
 
-const saveHorizontalResult = async function (req, res, next) {
+const saveHorizontalResult = async (req, res) => {
   const resultId = req.body.resultId;
   const first = req.body.first;
   const second = req.body.second;
@@ -67,7 +68,6 @@ const saveHorizontalResult = async function (req, res, next) {
   const sixth = req.body.sixth;
   const performance = req.body.performance;
   const place = req.body.place;
-
   try {
     const existingResults = await ResultModel.updateHorizontalResult(
       resultId,
@@ -82,6 +82,7 @@ const saveHorizontalResult = async function (req, res, next) {
     );
     return res.status(201).json(existingResults);
   } catch (err) {
-    next(err);
+    console.log(err);
+    return err;
   }
 };

@@ -2,13 +2,13 @@ import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants, GTYPE } from "../../../../constants/constants";
 
-export const getRunningResults = async function (
+export const getRunningResults = async (
   req,
   res,
   next,
   runEventId,
   runEvent
-) {
+) => {
   const gType = req.body.gType;
   const heat = req.body.heat;
   const round = req.body.round;
@@ -25,7 +25,7 @@ export const getRunningResults = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        `${runEvent}${round}"/"${heat}${Constants.JSON_NOCACHE}`
+        `${runEvent}${round}/${heat}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
       for (const result of results) {
@@ -47,7 +47,7 @@ export const getRunningResults = async function (
   }
 };
 
-const saveRunninResult = async function (req, res, next) {
+const saveRunninResult = async (req, res, next) => {
   const resultId = req.body.resultId;
   const performance = req.body.performance;
   const place = req.body.place;

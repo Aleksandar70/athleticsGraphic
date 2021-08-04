@@ -314,6 +314,7 @@ export async function semiOverwriteResult(responseData, result, trials) {
       result20 == "" ? existingResult.result20 : result20;
     return await existingResult.save();
   }
+  return null;
 }
 
 export async function updateHorizontalResult(

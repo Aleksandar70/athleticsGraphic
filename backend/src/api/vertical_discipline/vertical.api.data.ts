@@ -5,7 +5,6 @@ import { Constants, GTYPE } from "../../../../constants/constants";
 export const getVerticalResult = async (
   req,
   res,
-  next,
   verticalEventId,
   verticalEvent
 ) => {
@@ -25,7 +24,7 @@ export const getVerticalResult = async (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        `${verticalEvent}${round}"/"${heat}${Constants.JSON_NOCACHE}`
+        `${verticalEvent}${round}/${heat}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
       if (gType === GTYPE.REMOTE) {
@@ -53,7 +52,7 @@ export const getVerticalResult = async (
       return res.status(201).json(existingResults);
     }
   } catch (err) {
-    next(err);
+    console.log(err);
   }
 };
 
