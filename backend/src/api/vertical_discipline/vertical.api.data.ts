@@ -25,14 +25,14 @@ export const getVerticalResult = async (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        `${verticalEvent}${heat}"/"${round}${Constants.JSON_NOCACHE}`
+        `${verticalEvent}${round}"/"${heat}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
       if (gType === GTYPE.REMOTE) {
-        for (let i = 0; i < results.length; i++) {
+        for (const result of results) {
           await ResultModel.createResult(
             responseData,
-            results[i],
+            result,
             responseData.trials
           );
         }

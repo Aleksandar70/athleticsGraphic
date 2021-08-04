@@ -25,7 +25,7 @@ export const getRunningResults = async function (
       return res.status(201).json(existingResults);
     } else {
       const responseData = await getOpenTrackData(
-        `${runEvent}${heat}"/"${round}${Constants.JSON_NOCACHE}`
+        `${runEvent}${round}"/"${heat}${Constants.JSON_NOCACHE}`
       );
       const results = responseData.results;
       for (let i = 0; i < results.length; i++) {
