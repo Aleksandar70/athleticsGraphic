@@ -13,8 +13,7 @@ export async function createResult(responseData, result, trials) {
   });
   // .populate("competitorId").exec();
   if (existingResults.length != 0) {
-    let existingResult = existingResults[0];
-    return await existingResult.save();
+    return await existingResults[0].save();
   }
 
   const day = responseData.day ?? 1;
