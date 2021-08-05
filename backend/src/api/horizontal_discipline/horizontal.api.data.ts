@@ -29,7 +29,7 @@ export const getHorizontalResult = async (
       const results = responseData.results;
       if (gType === GTYPE.REMOTE) {
         for (const result of results) {
-          const res = await ResultModel.createResult(
+          await ResultModel.createResult(
             responseData.data,
             result,
             responseData.trials

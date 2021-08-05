@@ -2,30 +2,33 @@ import { Constants } from "../../../constants/constants";
 import type { IResultDocument } from "../database/types/result.types";
 import { ResultModel } from "../models/result.model";
 
-export async function createResult(basicData, result, trials) {
+//TODO: Refactor method
+export async function createResult(responseData, result, trials) {
   const existingResults = await ResultModel.find({
-    day: basicData.day,
-    eventId: basicData.event_id,
-    heat: basicData.heat,
-    round: basicData.round,
+    day: responseData.day,
+    eventId: responseData.event_id,
+    heat: responseData.heat,
+    round: responseData.round,
     bib: result.bib,
   });
+  // .populate("competitorId").exec();
   if (existingResults.length != 0) {
-    return existingResults[0];
+    let existingResult = existingResults[0];
+    return await existingResult.save();
   }
 
-  const day = basicData.day ?? 1;
-  const eventId = basicData.event_id ?? Constants.EMPTY_STRING;
-  const eventName = basicData.event_name ?? Constants.EMPTY_STRING;
-  const resultsStatus = basicData.results_status ?? Constants.EMPTY_STRING;
-  const round = basicData.round ?? 0;
-  const showAthleteDetails = basicData.show_athlete_details ?? false;
-  const showPartials = basicData.show_partials ?? false;
-  const showPoints = basicData.show_points ?? false;
-  const status = basicData.status ?? Constants.EMPTY_STRING;
+  const day = responseData.day ?? 1;
+  const eventId = responseData.event_id ?? Constants.EMPTY_STRING;
+  const eventName = responseData.event_name ?? Constants.EMPTY_STRING;
+  const resultsStatus = responseData.results_status ?? Constants.EMPTY_STRING;
+  const round = responseData.round ?? 0;
+  const showAthleteDetails = responseData.show_athlete_details ?? false;
+  const showPartials = responseData.show_partials ?? false;
+  const showPoints = responseData.show_points ?? false;
+  const status = responseData.status ?? Constants.EMPTY_STRING;
   const bib = result.bib ?? 0;
   const points = result.points ?? 0;
-  const heat = basicData.heat ?? 0;
+  const heat = responseData.heat ?? 0;
 
   //TODO: Call CompetitorModel.findCompetitorByBib(bib) and take id from competitor
   const competitorId = "competitor.competitorId";
@@ -54,6 +57,7 @@ export async function getResults(): Promise<IResultDocument[]> {
 
 export async function getResultsByEventId(eventId) {
   const results = await ResultModel.find({ eventId: eventId });
+  //.populate("competitorId").exec();
   return results.length !== 0 ? results : null;
 }
 
@@ -67,10 +71,7 @@ export async function getResultsByHeat(eventId, heat, round, order) {
   // .sort(order)
   // .populate("competitorId")
   // .exec();
-  if (results.length !== 0) {
-    return results;
-  }
-  return null;
+  return results.length !== 0 ? results : null;
 }
 
 //TODO: Refactor this function

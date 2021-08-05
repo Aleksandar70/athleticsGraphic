@@ -81,6 +81,7 @@ const saveVerticalResult = async (req, res, next) => {
     );
     return res.status(201).json(existingResults);
   } catch (err) {
-    next(err);
+    console.log(err);
+    return err;
   }
 };
