@@ -2,18 +2,11 @@ import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants, GTYPE } from "../../../../constants/constants";
 
-export const getRunningResults = async (
-  req,
-  res,
-  next,
-  runEventId,
-  runEvent
-) => {
+export const getRunningResults = async (req, res, runEventId, runEvent) => {
   const gType = req.body.gType;
   const heat = req.body.heat;
   const round = req.body.round;
   const order = req.body.order ?? "bib";
-
   try {
     if (gType === GTYPE.LOCAL) {
       const existingResults = await ResultModel.getResultsByHeat(
@@ -30,7 +23,7 @@ export const getRunningResults = async (
       const results = responseData.results;
       for (const result of results) {
         await ResultModel.createResult(
-          responseData,
+          responseData.data,
           result,
           responseData.trials
         );
@@ -43,7 +36,8 @@ export const getRunningResults = async (
       return res.status(201).json(existingResults);
     }
   } catch (err) {
-    next(err);
+    console.log(err);
+    return err;
   }
 };
 
