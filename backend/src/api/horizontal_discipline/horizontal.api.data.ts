@@ -1,7 +1,7 @@
 import { ResultModel } from "../../models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants, GTYPE } from "../../../../constants/constants";
-//working
+
 export const getHorizontalResult = async (
   req,
   res,
