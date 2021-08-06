@@ -96,7 +96,6 @@ export async function semiOverwriteResult(responseData, result, trials) {
   const rawTime = result.raw_time ?? Constants.EMPTY_STRING;
 
   // const competitor = await CompetitorModel.findByBib(bib);
-
   // let competitorId = competitor._id;
 
   let round1 = "";
@@ -345,114 +344,7 @@ export async function updateVerticalResult(results) {
     if (results.place !== "") {
       result.place = parseInt(results.place);
     }
-    const heights = result.heights.length;
-
-    if (heights < 7) {
-      result.result1 = results.first;
-      result.result2 = results.second;
-      result.result3 = results.third;
-      result.result4 = results.fourth;
-      result.result5 = results.fifth;
-      result.result6 = results.sixth;
-    } else if (heights === 7) {
-      result.result2 = results.first;
-      result.result3 = results.second;
-      result.result4 = results.third;
-      result.result5 = results.fourth;
-      result.result6 = results.fifth;
-      result.result7 = results.sixth;
-    } else if (heights === 8) {
-      result.result3 = results.first;
-      result.result4 = results.second;
-      result.result5 = results.third;
-      result.result6 = results.fourth;
-      result.result7 = results.fifth;
-      result.result8 = results.sixth;
-    } else if (heights === 9) {
-      result.result4 = results.first;
-      result.result5 = results.second;
-      result.result6 = results.third;
-      result.result7 = results.fourth;
-      result.result8 = results.fifth;
-      result.result9 = results.sixth;
-    } else if (heights === 10) {
-      result.result5 = results.first;
-      result.result6 = results.second;
-      result.result7 = results.third;
-      result.result8 = results.fourth;
-      result.result9 = results.fifth;
-      result.result10 = results.sixth;
-    } else if (heights === 11) {
-      result.result6 = results.first;
-      result.result7 = results.second;
-      result.result8 = results.third;
-      result.result9 = results.fourth;
-      result.result10 = results.fifth;
-      result.result11 = results.sixth;
-    } else if (heights === 12) {
-      result.result7 = results.first;
-      result.result8 = results.second;
-      result.result9 = results.third;
-      result.result10 = results.fourth;
-      result.result11 = results.fifth;
-      result.result12 = results.sixth;
-    } else if (heights === 13) {
-      result.result8 = results.first;
-      result.result9 = results.second;
-      result.result10 = results.third;
-      result.result11 = results.fourth;
-      result.result12 = results.fifth;
-      result.result13 = results.sixth;
-    } else if (heights === 14) {
-      result.result9 = results.first;
-      result.result10 = results.second;
-      result.result11 = results.third;
-      result.result12 = results.fourth;
-      result.result13 = results.fifth;
-      result.result14 = results.sixth;
-    } else if (heights === 15) {
-      result.result10 = results.first;
-      result.result11 = results.second;
-      result.result12 = results.third;
-      result.result13 = results.fourth;
-      result.result14 = results.fifth;
-      result.result15 = results.sixth;
-    } else if (heights === 16) {
-      result.result11 = results.first;
-      result.result12 = results.second;
-      result.result13 = results.third;
-      result.result14 = results.fourth;
-      result.result15 = results.fifth;
-      result.result16 = results.sixth;
-    } else if (heights === 17) {
-      result.result12 = results.first;
-      result.result13 = results.second;
-      result.result14 = results.third;
-      result.result15 = results.fourth;
-      result.result16 = results.fifth;
-      result.result17 = results.sixth;
-    } else if (heights === 18) {
-      result.result13 = results.first;
-      result.result14 = results.second;
-      result.result15 = results.third;
-      result.result16 = results.fourth;
-      result.result17 = results.fifth;
-      result.result18 = results.sixth;
-    } else if (heights === 19) {
-      result.result14 = results.first;
-      result.result15 = results.second;
-      result.result16 = results.third;
-      result.result17 = results.fourth;
-      result.result18 = results.fifth;
-      result.result19 = results.sixth;
-    } else if (heights === 20) {
-      result.result15 = results.first;
-      result.result16 = results.second;
-      result.result17 = results.third;
-      result.result18 = results.fourth;
-      result.result19 = results.fifth;
-      result.result20 = results.sixth;
-    }
+    populateResultsComparingToHeights(results, result);
     return await result.save();
   }
   return null;
@@ -468,4 +360,15 @@ export async function updateRunningResult(results) {
     return await result.save();
   }
   return null;
+}
+
+function populateResultsComparingToHeights(results, result) {
+  const heights = result.heights.length;
+  const i = heights < 7 ? 6 : heights;
+  result[`result${i}`] = results.sixth;
+  result[`result${i - 1}`] = results.fifth;
+  result[`result${i - 2}`] = results.fourth;
+  result[`result${i - 3}`] = results.third;
+  result[`result${i - 4}`] = results.second;
+  result[`result${i - 5}`] = results.first;
 }
