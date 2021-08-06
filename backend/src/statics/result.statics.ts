@@ -317,30 +317,20 @@ export async function semiOverwriteResult(responseData, result, trials) {
   return null;
 }
 
-export async function updateHorizontalResult(
-  resultId,
-  first,
-  second,
-  third,
-  fourth,
-  fifth,
-  sixth,
-  performance,
-  place
-) {
-  const result = await ResultModel.findById(resultId).exec();
+export async function updateHorizontalResult(results) {
+  const result = await ResultModel.findById(results.resultId).exec();
   if (result != null) {
-    result.performance = performance;
-    if (place !== "") {
-      result.place = parseInt(place);
+    result.performance = results.performance;
+    if (results.place !== "") {
+      result.place = parseInt(results.place);
     }
 
-    result.round1 = first;
-    result.round2 = second;
-    result.round3 = third;
-    result.round4 = fourth;
-    result.round5 = fifth;
-    result.round6 = sixth;
+    result.round1 = results.first;
+    result.round2 = results.second;
+    result.round3 = results.third;
+    result.round4 = results.fourth;
+    result.round5 = results.fifth;
+    result.round6 = results.sixth;
 
     return await result.save();
   }
@@ -348,142 +338,132 @@ export async function updateHorizontalResult(
 }
 
 //TODO: Refactor this function
-export async function updateVerticalResult(
-  resultId,
-  first,
-  second,
-  third,
-  fourth,
-  fifth,
-  sixth,
-  performance,
-  place
-) {
-  const result = await ResultModel.findById(resultId).exec();
+export async function updateVerticalResult(results) {
+  const result = await ResultModel.findById(results.resultId).exec();
   if (result != null) {
-    result.performance = performance;
-    if (place !== "") {
-      result.place = parseInt(place);
+    result.performance = results.performance;
+    if (results.place !== "") {
+      result.place = parseInt(results.place);
     }
     const heights = result.heights.length;
 
     if (heights < 7) {
-      result.result1 = first;
-      result.result2 = second;
-      result.result3 = third;
-      result.result4 = fourth;
-      result.result5 = fifth;
-      result.result6 = sixth;
+      result.result1 = results.first;
+      result.result2 = results.second;
+      result.result3 = results.third;
+      result.result4 = results.fourth;
+      result.result5 = results.fifth;
+      result.result6 = results.sixth;
     } else if (heights === 7) {
-      result.result2 = first;
-      result.result3 = second;
-      result.result4 = third;
-      result.result5 = fourth;
-      result.result6 = fifth;
-      result.result7 = sixth;
+      result.result2 = results.first;
+      result.result3 = results.second;
+      result.result4 = results.third;
+      result.result5 = results.fourth;
+      result.result6 = results.fifth;
+      result.result7 = results.sixth;
     } else if (heights === 8) {
-      result.result3 = first;
-      result.result4 = second;
-      result.result5 = third;
-      result.result6 = fourth;
-      result.result7 = fifth;
-      result.result8 = sixth;
+      result.result3 = results.first;
+      result.result4 = results.second;
+      result.result5 = results.third;
+      result.result6 = results.fourth;
+      result.result7 = results.fifth;
+      result.result8 = results.sixth;
     } else if (heights === 9) {
-      result.result4 = first;
-      result.result5 = second;
-      result.result6 = third;
-      result.result7 = fourth;
-      result.result8 = fifth;
-      result.result9 = sixth;
+      result.result4 = results.first;
+      result.result5 = results.second;
+      result.result6 = results.third;
+      result.result7 = results.fourth;
+      result.result8 = results.fifth;
+      result.result9 = results.sixth;
     } else if (heights === 10) {
-      result.result5 = first;
-      result.result6 = second;
-      result.result7 = third;
-      result.result8 = fourth;
-      result.result9 = fifth;
-      result.result10 = sixth;
+      result.result5 = results.first;
+      result.result6 = results.second;
+      result.result7 = results.third;
+      result.result8 = results.fourth;
+      result.result9 = results.fifth;
+      result.result10 = results.sixth;
     } else if (heights === 11) {
-      result.result6 = first;
-      result.result7 = second;
-      result.result8 = third;
-      result.result9 = fourth;
-      result.result10 = fifth;
-      result.result11 = sixth;
+      result.result6 = results.first;
+      result.result7 = results.second;
+      result.result8 = results.third;
+      result.result9 = results.fourth;
+      result.result10 = results.fifth;
+      result.result11 = results.sixth;
     } else if (heights === 12) {
-      result.result7 = first;
-      result.result8 = second;
-      result.result9 = third;
-      result.result10 = fourth;
-      result.result11 = fifth;
-      result.result12 = sixth;
+      result.result7 = results.first;
+      result.result8 = results.second;
+      result.result9 = results.third;
+      result.result10 = results.fourth;
+      result.result11 = results.fifth;
+      result.result12 = results.sixth;
     } else if (heights === 13) {
-      result.result8 = first;
-      result.result9 = second;
-      result.result10 = third;
-      result.result11 = fourth;
-      result.result12 = fifth;
-      result.result13 = sixth;
+      result.result8 = results.first;
+      result.result9 = results.second;
+      result.result10 = results.third;
+      result.result11 = results.fourth;
+      result.result12 = results.fifth;
+      result.result13 = results.sixth;
     } else if (heights === 14) {
-      result.result9 = first;
-      result.result10 = second;
-      result.result11 = third;
-      result.result12 = fourth;
-      result.result13 = fifth;
-      result.result14 = sixth;
+      result.result9 = results.first;
+      result.result10 = results.second;
+      result.result11 = results.third;
+      result.result12 = results.fourth;
+      result.result13 = results.fifth;
+      result.result14 = results.sixth;
     } else if (heights === 15) {
-      result.result10 = first;
-      result.result11 = second;
-      result.result12 = third;
-      result.result13 = fourth;
-      result.result14 = fifth;
-      result.result15 = sixth;
+      result.result10 = results.first;
+      result.result11 = results.second;
+      result.result12 = results.third;
+      result.result13 = results.fourth;
+      result.result14 = results.fifth;
+      result.result15 = results.sixth;
     } else if (heights === 16) {
-      result.result11 = first;
-      result.result12 = second;
-      result.result13 = third;
-      result.result14 = fourth;
-      result.result15 = fifth;
-      result.result16 = sixth;
+      result.result11 = results.first;
+      result.result12 = results.second;
+      result.result13 = results.third;
+      result.result14 = results.fourth;
+      result.result15 = results.fifth;
+      result.result16 = results.sixth;
     } else if (heights === 17) {
-      result.result12 = first;
-      result.result13 = second;
-      result.result14 = third;
-      result.result15 = fourth;
-      result.result16 = fifth;
-      result.result17 = sixth;
+      result.result12 = results.first;
+      result.result13 = results.second;
+      result.result14 = results.third;
+      result.result15 = results.fourth;
+      result.result16 = results.fifth;
+      result.result17 = results.sixth;
     } else if (heights === 18) {
-      result.result13 = first;
-      result.result14 = second;
-      result.result15 = third;
-      result.result16 = fourth;
-      result.result17 = fifth;
-      result.result18 = sixth;
+      result.result13 = results.first;
+      result.result14 = results.second;
+      result.result15 = results.third;
+      result.result16 = results.fourth;
+      result.result17 = results.fifth;
+      result.result18 = results.sixth;
     } else if (heights === 19) {
-      result.result14 = first;
-      result.result15 = second;
-      result.result16 = third;
-      result.result17 = fourth;
-      result.result18 = fifth;
-      result.result19 = sixth;
+      result.result14 = results.first;
+      result.result15 = results.second;
+      result.result16 = results.third;
+      result.result17 = results.fourth;
+      result.result18 = results.fifth;
+      result.result19 = results.sixth;
     } else if (heights === 20) {
-      result.result15 = first;
-      result.result16 = second;
-      result.result17 = third;
-      result.result18 = fourth;
-      result.result19 = fifth;
-      result.result20 = sixth;
+      result.result15 = results.first;
+      result.result16 = results.second;
+      result.result17 = results.third;
+      result.result18 = results.fourth;
+      result.result19 = results.fifth;
+      result.result20 = results.sixth;
     }
     return await result.save();
   }
   return null;
 }
 
-export async function updateRunningResult(resultId, performance, place) {
-  const result = await ResultModel.findById(resultId).exec();
+export async function updateRunningResult(results) {
+  const result = await ResultModel.findById(results.resultId).exec();
   if (result !== null) {
-    result.performance = performance;
-    if (place !== "") {
-      result.place = parseInt(place);
+    result.performance = results.performance;
+    if (results.place !== "") {
+      result.place = parseInt(results.place);
     }
     return await result.save();
   }

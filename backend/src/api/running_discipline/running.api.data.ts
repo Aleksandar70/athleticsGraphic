@@ -16,43 +16,34 @@ export const getRunningResults = async (req, res, runEventId, runEvent) => {
         order
       );
       return res.status(201).json(existingResults);
-    } else {
-      const responseData = await getOpenTrackData(
-        `${runEvent}${round}/${heat}${Constants.JSON_NOCACHE}`
-      );
-      const results = responseData.results;
-      for (const result of results) {
-        await ResultModel.createResult(
-          responseData.data,
-          result,
-          responseData.trials
-        );
-      }
-      const existingResults = await ResultModel.getResultsByHeat(
-        runEventId,
-        heat,
-        round
-      );
-      return res.status(201).json(existingResults);
     }
+    const responseData = await getOpenTrackData(
+      `${runEvent}${round}/${heat}${Constants.JSON_NOCACHE}`
+    );
+    const results = responseData.results;
+    for (const result of results) {
+      await ResultModel.createResult(
+        responseData.data,
+        result,
+        responseData.trials
+      );
+    }
+    const existingResults = await ResultModel.getResultsByHeat(
+      runEventId,
+      heat,
+      round
+    );
+    return res.status(201).json(existingResults);
   } catch (err) {
     console.log(err);
     return err;
   }
 };
 
-const saveRunninResult = async (req, res, next) => {
-  const resultId = req.body.resultId;
-  const performance = req.body.performance;
-  const place = req.body.place;
-
+const saveRunningResult = async (req, res) => {
+  const results: IRunningResult = req.body;
   try {
-    const existingResults = await ResultModel.updateRunningResult(
-      resultId,
-      performance,
-      place
-    );
-
+    const existingResults = await ResultModel.updateRunningResult(results);
     return res.status(201).json(existingResults);
   } catch (err) {
     console.log(err);

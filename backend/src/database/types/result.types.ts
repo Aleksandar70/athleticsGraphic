@@ -88,32 +88,12 @@ export interface IResultModel extends Model<IResultDocument> {
     round,
     order?
   ) => Promise<IResultDocument[]>;
-  updateRunningResult: (resultId, performance, place) => Promise<IResultDocument>;
+  updateRunningResult: (results) => Promise<IResultDocument>;
   semiOverwriteResult: (
     responseData,
     result,
     trials
   ) => Promise<IResultDocument>;
-  updateHorizontalResult: (
-    resultId,
-    first,
-    second,
-    third,
-    fourth,
-    fifth,
-    sixth,
-    performance,
-    place
-  ) => Promise<IResultDocument>;
-  updateVerticalResult: (
-    resultId,
-    first,
-    second,
-    third,
-    fourth,
-    fifth,
-    sixth,
-    performance,
-    place
-  ) => Promise<IResultDocument>;
+  updateHorizontalResult: (results) => Promise<IResultDocument>;
+  updateVerticalResult: (results) => Promise<IResultDocument>;
 }
