@@ -1,4 +1,5 @@
 node_modules
 build
 
-src/api/openTrack.ts
+src/api
+src/database

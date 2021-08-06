@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import {
   createCompetition,
   findCompetitionById,
-} from "../../statics/competition.statics";
+} from "../statics/competition.statics";
 
 const CompetitionSchema = new Schema({
   address: {

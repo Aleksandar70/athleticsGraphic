@@ -10,8 +10,7 @@
     "allowSyntheticDefaultImports": true,
     "removeComments": true
   },
-
-  "include": ["src/**/*"],
+  "include": ["src/app.ts"],
   // TODO - remove "src/api/openTrack.ts" from excluded after all its variables are used
-  "exclude": ["node_modules", "src/api/openTrack.ts"]
+  "exclude": ["node_modules", "src/api/*", "src/database/*"]
 }

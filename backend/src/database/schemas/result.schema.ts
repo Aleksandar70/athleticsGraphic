@@ -3,7 +3,12 @@ import {
   getResults,
   createResult,
   getResultsByEventId,
-} from "../../statics/result.statics";
+  getResultsByHeat,
+  updateRunningResult,
+  semiOverwriteResult,
+  updateHorizontalResult,
+  updateVerticalResult,
+} from "../statics/result.statics";
 
 const ResultSchema = new Schema({
   competitorId: {
@@ -348,5 +353,10 @@ const ResultSchema = new Schema({
 ResultSchema.statics.createResult = createResult;
 ResultSchema.statics.getResults = getResults;
 ResultSchema.statics.getResultsByEventId = getResultsByEventId;
+ResultSchema.statics.getResultsByHeat = getResultsByHeat;
+ResultSchema.statics.semiOverwriteResult = semiOverwriteResult;
+ResultSchema.statics.updateHorizontalResult = updateHorizontalResult;
+ResultSchema.statics.updateVerticalResult = updateVerticalResult;
+ResultSchema.statics.updateRunningResult = updateRunningResult;
 
 export default ResultSchema;

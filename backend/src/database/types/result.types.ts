@@ -1,4 +1,5 @@
 import type { Document, Model } from "mongoose";
+import type { IHorizontalResult, IRunningResult, IVerticalResult } from "../../api/interfaces/interfaces";
 
 export interface IResult {
   competitorId: Record<string, unknown>;
@@ -79,7 +80,23 @@ export interface IResult {
 
 export interface IResultDocument extends IResult, Document {}
 export interface IResultModel extends Model<IResultDocument> {
-  createResult: (basicData, result) => Promise<IResultDocument>;
+  createResult: (responseData, result, trials) => Promise<IResultDocument>;
   getResults: () => Promise<IResultDocument[]>;
   getResultsByEventId: (eventId: string) => Promise<IResultDocument[]>;
+  getResultsByHeat: (
+    eventId,
+    heat,
+    round,
+    order?
+  ) => Promise<IResultDocument[]>;
+  updateRunningResult: (results: IRunningResult) => Promise<IResultDocument>;
+  semiOverwriteResult: (
+    responseData,
+    result,
+    trials
+  ) => Promise<IResultDocument>;
+  updateHorizontalResult: (
+    results: IHorizontalResult
+  ) => Promise<IResultDocument>;
+  updateVerticalResult: (results: IVerticalResult) => Promise<IResultDocument>;
 }

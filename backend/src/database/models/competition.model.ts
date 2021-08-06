@@ -2,8 +2,8 @@ import { model } from "mongoose";
 import type {
   ICompetitionDocument,
   ICompetitionModel,
-} from "../database/types/competition.types";
-import CompetitionSchema from "../database/schemas/competition.schema";
+} from "../types/competition.types";
+import CompetitionSchema from "../schemas/competition.schema";
 
 export const CompetitionModel = model<ICompetitionDocument>(
   "competition",
