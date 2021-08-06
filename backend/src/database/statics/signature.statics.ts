@@ -1,4 +1,4 @@
-import type { ISignatureDocument } from "../database/types/signature.types";
+import type { ISignatureDocument } from "../types/signature.types";
 import { SignatureModel } from "../models/signature.model";
 
 export async function createNewSignature({

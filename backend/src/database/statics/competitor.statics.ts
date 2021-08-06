@@ -1,5 +1,5 @@
-import { Constants } from "../../../constants/constants";
-import { CompetitorModel } from "../models/competitor.model";
+import { Constants } from "../../../../constants/constants";
+import { CompetitorModel } from "../../models/competitor.model";
 
 export async function createCompetitor(competition_id, competitor) {
   const competitors = await CompetitorModel.find({

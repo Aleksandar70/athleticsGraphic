@@ -1,5 +1,5 @@
-import { Constants } from "../../../constants/constants";
-import type { IResultDocument } from "../database/types/result.types";
+import { Constants } from "../../../../constants/constants";
+import type { IResultDocument } from "../types/result.types";
 import { ResultModel } from "../models/result.model";
 
 //TODO: Refactor method
