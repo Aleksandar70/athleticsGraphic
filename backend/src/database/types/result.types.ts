@@ -1,4 +1,5 @@
 import type { Document, Model } from "mongoose";
+import type { IHorizontalResult, IRunningResult, IVerticalResult } from "../../api/interfaces/interfaces";
 
 export interface IResult {
   competitorId: Record<string, unknown>;

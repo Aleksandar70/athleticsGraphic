@@ -8,7 +8,7 @@ import {
   semiOverwriteResult,
   updateHorizontalResult,
   updateVerticalResult,
-} from "../../statics/result.statics";
+} from "../statics/result.statics";
 
 const ResultSchema = new Schema({
   competitorId: {

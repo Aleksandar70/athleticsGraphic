@@ -1,6 +1,7 @@
-import { ResultModel } from "../../models/result.model";
+import { ResultModel } from "../../database/models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants, GTYPE } from "../../../../constants/constants";
+import type { IRunningResult } from "../interfaces/interfaces";
 
 export const getRunningResults = async (req, res, runEventId, runEvent) => {
   const gType = req.body.gType;

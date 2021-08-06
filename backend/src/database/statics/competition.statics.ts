@@ -1,4 +1,4 @@
-import { Constants } from "../../../constants/constants";
+import { Constants } from "../../../../constants/constants";
 import { CompetitionModel } from "../models/competition.model";
 
 export async function createCompetition(competition) {

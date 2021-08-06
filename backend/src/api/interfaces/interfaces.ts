@@ -1,4 +1,4 @@
-interface IDirectionResult {
+export interface IDirectionResult {
   resultId;
   first;
   second;
@@ -10,10 +10,10 @@ interface IDirectionResult {
   place;
 }
 
-interface IHorizontalResult extends IDirectionResult {}
+export interface IHorizontalResult extends IDirectionResult {}
 
-interface IVerticalResult extends IDirectionResult {}
-interface IRunningResult {
+export interface IVerticalResult extends IDirectionResult {}
+export interface IRunningResult {
   resultId;
   performance;
   place;

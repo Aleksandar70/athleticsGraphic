@@ -1,6 +1,7 @@
-import { ResultModel } from "../../models/result.model";
+import { ResultModel } from "../../database/models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants, GTYPE } from "../../../../constants/constants";
+import type { IHorizontalResult } from "../interfaces/interfaces";
 
 export const getHorizontalResult = async (
   req,
