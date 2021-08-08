@@ -1,10 +1,3 @@
-import { tempGetData } from "../../../backend/src/api/openTrack";
-
-export const fetchData = async (): Promise<Record<string, unknown>[]> => {
-  const fetchedData = await tempGetData();
-  return fetchedData.results;
-};
-
 export const parseHeaderData = (data: Record<string, unknown>[]): string[] =>
   Object.keys(data?.[0])?.map((val: string) =>
     val.replaceAll("_", " ").toUpperCase()

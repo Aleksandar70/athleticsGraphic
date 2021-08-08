@@ -1,15 +1,22 @@
 <script lang="ts">
   import Canvas from "./components/canvas/Canvas.svelte";
-  import { fetchData } from "./components/data_table/table.helper";
+  import { onMount } from "svelte";
+  import { getResults } from "./utils/apiUtils";
   import "./app.style.css";
+
+  let posts = [];
+
+  onMount(async () => {
+    const requestData: IResultParams = { gType: "remote", heat: 1, round: 1 }
+    const res = await getResults(requestData);
+    posts = res.data;
+  }); 
 </script>
 
 <div class="app">
-  {#await fetchData()}
-    <h1>Fetching...</h1>
-  {:then tableData}
-    <Canvas {tableData} />
-  {:catch error}
-    <h1>There was some issue fetching data.</h1>
-  {/await}
+  {#if posts.length === 0}
+    <h1>Loading...</h1>
+  {:else}
+    <Canvas tableData={posts} />
+  {/if}
 </div>

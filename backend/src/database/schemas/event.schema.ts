@@ -1,5 +1,4 @@
 import { Schema } from "mongoose";
-import { createEvent, getEvents, editEvent } from "../statics/event.statics";
 
 const EventSchema = new Schema({
   competitionId: {
@@ -127,9 +126,5 @@ const EventSchema = new Schema({
     default: "",
   },
 });
-
-EventSchema.statics.createEvent = createEvent;
-EventSchema.statics.getEvents = getEvents;
-EventSchema.statics.editEvent = editEvent;
 
 export default EventSchema;
