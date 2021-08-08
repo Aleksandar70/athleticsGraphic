@@ -12,7 +12,7 @@ import {
 } from "../../database/repository/result.repo";
 
 export const getHorizontalResult = async (
-  params,
+  params: IResultParams,
   horizontalEventId: string,
   horizontalEvent: string
 ) => {
