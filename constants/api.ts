@@ -1,3 +1,5 @@
+
+export const SERVER_URL = "http://localhost:5001/";
 export abstract class OpenTrack {
   static readonly OPEN_TRACK_API =
     "https://data.opentrack.run/en-gb/x/2021/SRB/srbopenindoor/event/";
