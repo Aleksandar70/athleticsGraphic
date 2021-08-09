@@ -4,6 +4,8 @@
   import { getResults } from "./api/result.api";
   import type { IResultParams } from "../backend/src/api/interfaces/interfaces";
   import "./app.style.css";
+  import Header from "./components/Header.svelte";
+  import Footer from "./components/Footer.svelte";
 
   let posts: Record<string, unknown>[] = [];
 
@@ -11,9 +13,9 @@
     const requestData: IResultParams = { gType: "remote", heat: 1, round: 1 };
     posts = await getResults(requestData);
   });
-
 </script>
 
+<Header />
 <div class="app">
   {#if posts.length === 0}
     <h1>Loading...</h1>
@@ -21,3 +23,4 @@
     <Canvas tableData={posts} />
   {/if}
 </div>
+<Footer/>
