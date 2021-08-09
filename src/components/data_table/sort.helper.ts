@@ -1,4 +1,5 @@
 import { ascending, descending } from "d3-array";
+import type { RowData, TableData } from "../../types";
 
 export enum SortDirection {
   ASCENDING,
@@ -11,22 +12,20 @@ export const changeSortDirection = (direction: SortDirection): SortDirection =>
     : SortDirection.ASCENDING;
 
 export const sortByColumn = (
-  rows: Record<string, string>[][],
+  rows: TableData,
   index: number,
   sortDirection: SortDirection
-): Record<string, string>[][] => {
+): TableData => {
   const isNumericValue = !isNaN(Number(rows?.[0][index]?.value));
-  return rows.sort(
-    (a: Record<string, string>[], b: Record<string, string>[]) => {
-      const firstValue = isNumericValue
-        ? a[index].value
-        : a[index].value.toString().toLowerCase();
-      const secondValue = isNumericValue
-        ? b[index].value
-        : b[index].value.toString().toLowerCase();
-      return sortDirection === SortDirection.ASCENDING
-        ? ascending(firstValue, secondValue)
-        : descending(firstValue, secondValue);
-    }
-  );
+  return rows.sort((a: RowData, b: RowData) => {
+    const firstValue = isNumericValue
+      ? (a[index].value as number)
+      : (a[index].value.toString().toLowerCase() as string);
+    const secondValue = isNumericValue
+      ? (b[index].value as number)
+      : (b[index].value.toString().toLowerCase() as string);
+    return sortDirection === SortDirection.ASCENDING
+      ? ascending(firstValue, secondValue)
+      : descending(firstValue, secondValue);
+  });
 };
