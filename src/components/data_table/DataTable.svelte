@@ -6,11 +6,12 @@
   } from "./sort.helper";
 
   import { isFlag, getAltName } from "./flag.helper";
+  import type { HeaderData, TableData } from "../../types";
 
   import "./table.style.css";
 
-  export let headerData: Record<string, string>[] = [];
-  export let rowData: Record<string, string>[][];
+  export let headerData: HeaderData;
+  export let rowData: TableData;
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;

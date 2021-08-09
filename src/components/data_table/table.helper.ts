@@ -1,22 +1,20 @@
 import { tempGetData } from "../../../backend/src/api/openTrack";
+import type { FieldData, HeaderData, RawData, TableData } from "../../types";
 
 export const fetchData = async (): Promise<Record<string, unknown>[]> => {
   const fetchedData = await tempGetData();
   return fetchedData.results;
 };
 
-export const parseHeaderData = (data: Record<string, unknown>[]): string[] =>
+export const parseTableData = (data: RawData): unknown[][] =>
+  data?.map((d) => Object.keys(d).map((key) => [d[key]]));
+
+export const parseHeaderData = (data: HeaderData): string[] =>
   Object.keys(data?.[0])?.map((val: string) =>
     val.replaceAll("_", " ").toUpperCase()
   );
 
-export const parseTableData = (data: Record<string, unknown>[]): unknown[][] =>
-  data?.map((d) => Object.keys(d).map((key) => [d[key]]));
-
-export const hideColumn = (
-  field: Record<string, unknown>,
-  data: Record<string, unknown>[][]
-): Record<string, unknown>[][] => {
+export const hideColumn = (field: FieldData, data: TableData): TableData => {
   data.forEach((record) => {
     const rec = record.find((element) => element.id === field.id);
     rec.show = !rec.show;
@@ -24,7 +22,7 @@ export const hideColumn = (
   return data;
 };
 
-export const getEmptyColumns = (rows: string[][]): Map<number, number> => {
+export const getEmptyColumns = (rows: TableData): Map<number, number> => {
   const emptyColumns = new Map<number, number>();
   rows.forEach((row) => {
     row.forEach((val, i) => {
@@ -43,7 +41,7 @@ export const getEmptyColumns = (rows: string[][]): Map<number, number> => {
 export const getTableData = (
   rows: string[][],
   emptyColumns: Map<number, number>
-): Record<string, unknown>[][] => {
+): TableData => {
   const tableData = rows.map((row) => {
     return row.map((field, idx) => ({
       value: field.toString(),
@@ -58,7 +56,7 @@ export const getHeaderData = (
   fields: string[],
   emptyColumns: Map<number, number>,
   dataSize: number
-): Record<string, unknown>[] => {
+): HeaderData => {
   const tableColumns = fields.map((data, idx) => ({
     id: idx,
     value: data,
