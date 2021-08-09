@@ -13,7 +13,7 @@
 
   import "./canvas.style.css";
 
-  export let tableData = [];
+  export let tableData;
 
   let headers = parseHeaderData(tableData);
   let rows = parseTableData(tableData);

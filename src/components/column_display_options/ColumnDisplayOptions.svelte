@@ -1,8 +1,8 @@
 <script>
   import { hideColumn } from "../data_table/table.helper";
 
-  export let headerData = [];
-  export let rowData = [];
+  export let headerData;
+  export let rowData;
 </script>
 
 <div class="fields-data">
