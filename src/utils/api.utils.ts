@@ -5,7 +5,7 @@ import { SERVER_URL } from "../../constants/api";
 export const getRequest = async (
   params: IResultParams,
   path: string
-): Promise<AxiosResponse<unknown>> => {
+): Promise<AxiosResponse<Record<string, unknown>[]>> => {
   const response = await axios.get(`${SERVER_URL}${path}`, {
     params: params,
   });

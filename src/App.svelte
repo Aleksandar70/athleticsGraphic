@@ -5,13 +5,13 @@
   import type { IResultParams } from "../backend/src/api/interfaces/interfaces";
   import "./app.style.css";
 
-  let posts = [];
+  let posts: Record<string, unknown>[] = [];
 
   onMount(async () => {
     const requestData: IResultParams = { gType: "remote", heat: 1, round: 1 };
-    const res = await getResults(requestData);
-    posts = res.data;
+    posts = await getResults(requestData);
   });
+
 </script>
 
 <div class="app">
