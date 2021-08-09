@@ -367,3 +367,12 @@ function populateResultsComparingToHeights(results, result) {
   result[`result${i - 4}`] = results.second;
   result[`result${i - 5}`] = results.first;
 }
+
+export const updateTable = async (params) => {
+  console.log("params.resultId ", params.resultId);//undefined 3
+  const result = await ResultModel.findById(params.resultId).exec();
+  if (result !== null) {
+    return await result.save();
+  }
+  return null;
+};

@@ -10,5 +10,6 @@ const port = process.env.PORT || 5001;
 
 app.use(cors());
 app.use("/result", ResultRouter);
+app.use("/resultUpdate", ResultRouter);
 
 app.listen(port, () => console.log(`Server is up at port ${port}`));

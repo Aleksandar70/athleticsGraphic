@@ -10,6 +10,7 @@
     getTableData,
     getHeaderData,
   } from "../data_table/table.helper";
+  import { updateTable } from "../../api/result.api";
 
   import "./canvas.style.css";
 
@@ -30,4 +31,5 @@
   </Modal>
   <button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</button>
   <DataTable {headerData} {rowData} />
+  <button on:click={() => updateTable(rowData)}>{UIText.TABLE_UPDATE}</button>
 </div>

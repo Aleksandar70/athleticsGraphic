@@ -11,3 +11,14 @@ export const getRequest = async (
   });
   return response;
 };
+
+export const postRequest = async (
+  params,
+  path: string
+): Promise<AxiosResponse<Record<string, unknown>[]>> => {
+  const response = await axios.post(`${SERVER_URL}${path}`, {
+    params: params,
+  });
+  console.log("response ", response);
+  return response;
+};
