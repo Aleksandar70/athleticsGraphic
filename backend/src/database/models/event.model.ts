@@ -6,6 +6,6 @@ import type {
 import EventSchema from "../schemas/event.schema";
 
 export const EventModel = model<IEventDocument>(
-  "event",
+  "events",
   EventSchema
 ) as IEventModel;

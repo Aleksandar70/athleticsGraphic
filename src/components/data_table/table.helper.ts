@@ -1,10 +1,4 @@
-import { tempGetData } from "../../../backend/src/api/openTrack";
 import type { FieldData, HeaderData, RawData, TableData } from "../../types";
-
-export const fetchData = async (): Promise<Record<string, unknown>[]> => {
-  const fetchedData = await tempGetData();
-  return fetchedData.results;
-};
 
 export const parseTableData = (data: RawData): unknown[][] =>
   data?.map((d) => Object.keys(d).map((key) => [d[key]]));

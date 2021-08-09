@@ -1,7 +1,7 @@
 import { Constants } from "../../../../constants/constants";
 import { CompetitionModel } from "../models/competition.model";
 
-export async function createCompetition(competition) {
+export const createCompetition = async (competition) => {
   const competitions = await CompetitionModel.find({
     id: competition.id,
   }).exec();
@@ -25,9 +25,9 @@ export async function createCompetition(competition) {
     year,
   });
   return newCompetition;
-}
+};
 
-export async function findCompetitionById(competitionId) {
+export const findCompetitionById = async (competitionId) => {
   const competitions = await CompetitionModel.find({
     _id: competitionId,
   }).exec();
@@ -35,4 +35,4 @@ export async function findCompetitionById(competitionId) {
     return competitions[0];
   }
   return null;
-}
+};

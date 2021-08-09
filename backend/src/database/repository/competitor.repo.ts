@@ -1,7 +1,7 @@
 import { Constants } from "../../../../constants/constants";
 import { CompetitorModel } from "../models/competitor.model";
 
-export async function createCompetitor(competition_id, competitor) {
+export const createCompetitor = async (competition_id, competitor) => {
   const competitors = await CompetitorModel.find({
     competitionId: competition_id,
     competitorId: competitor.competitorId,
@@ -27,12 +27,12 @@ export async function createCompetitor(competition_id, competitor) {
     sortBib,
   });
   return newCompetitor;
-}
+};
 
-export async function findCompetitorByBib(bib) {
+export const findCompetitorByBib = async (bib) => {
   const competitors = await CompetitorModel.find({ sortBib: bib }).exec();
   if (competitors.length !== 0) {
     return competitors[0];
   }
   return null;
-}
+};

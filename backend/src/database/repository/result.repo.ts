@@ -2,8 +2,7 @@ import { Constants } from "../../../../constants/constants";
 import type { IResultDocument } from "../types/result.types";
 import { ResultModel } from "../models/result.model";
 
-//TODO: Refactor method
-export async function createResult(responseData, result, trials) {
+export const createResult = async (responseData, result, trials) => {
   const existingResults = await ResultModel.find({
     day: responseData.day,
     eventId: responseData.event_id,
@@ -12,7 +11,7 @@ export async function createResult(responseData, result, trials) {
     bib: result.bib,
   });
   // .populate("competitorId").exec();
-  if (existingResults.length != 0) {
+  if (existingResults?.length != 0) {
     return await existingResults[0].save();
   }
 
@@ -48,33 +47,29 @@ export async function createResult(responseData, result, trials) {
     heat,
   });
   return newResult;
-}
+};
 
-export async function getResults(): Promise<IResultDocument[]> {
+export const getResults = async (): Promise<IResultDocument[]> => {
   return await ResultModel.find();
-}
+};
 
-export async function getResultsByEventId(eventId) {
+export const getResultsByEventId = async (eventId) => {
   const results = await ResultModel.find({ eventId: eventId });
   //.populate("competitorId").exec();
   return results.length !== 0 ? results : null;
-}
+};
 
-export async function getResultsByHeat(eventId, heat, round, order) {
+export const getResultsByHeat = async (eventId, heat, round) => {
   const results = await ResultModel.find({
     eventId: eventId,
     heat: heat,
     round: round,
   });
-  //TODO: Explore this logic
-  // .sort(order)
-  // .populate("competitorId")
-  // .exec();
   return results.length !== 0 ? results : null;
-}
+};
 
 //TODO: Refactor this function
-export async function semiOverwriteResult(responseData, result, trials) {
+export const semiOverwriteResult = async (responseData, result, trials) => {
   const heights = responseData.heights ?? [];
   const bib = result.bib ?? 0;
   const athlonPoints = result.athlon_points ?? Constants.EMPTY_STRING;
@@ -314,9 +309,9 @@ export async function semiOverwriteResult(responseData, result, trials) {
     return await existingResult.save();
   }
   return null;
-}
+};
 
-export async function updateHorizontalResult(results) {
+export const updateHorizontalResult = async (results) => {
   const result = await ResultModel.findById(results.resultId).exec();
   if (result != null) {
     result.performance = results.performance;
@@ -334,10 +329,10 @@ export async function updateHorizontalResult(results) {
     return await result.save();
   }
   return null;
-}
+};
 
 //TODO: Refactor this function
-export async function updateVerticalResult(results) {
+export const updateVerticalResult = async (results) => {
   const result = await ResultModel.findById(results.resultId).exec();
   if (result != null) {
     result.performance = results.performance;
@@ -348,9 +343,9 @@ export async function updateVerticalResult(results) {
     return await result.save();
   }
   return null;
-}
+};
 
-export async function updateRunningResult(results) {
+export const updateRunningResult = async (results) => {
   const result = await ResultModel.findById(results.resultId).exec();
   if (result !== null) {
     result.performance = results.performance;
@@ -360,7 +355,7 @@ export async function updateRunningResult(results) {
     return await result.save();
   }
   return null;
-}
+};
 
 function populateResultsComparingToHeights(results, result) {
   const heights = result.heights.length;

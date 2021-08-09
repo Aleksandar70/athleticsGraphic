@@ -1,17 +1,17 @@
 import type { ISignatureDocument } from "../types/signature.types";
 import { SignatureModel } from "../models/signature.model";
 
-export async function createNewSignature({
+export const createNewSignature = async ({
   name,
   title,
 }: {
   name: string;
   title: string;
-}): Promise<ISignatureDocument> {
+}): Promise<ISignatureDocument> => {
   const signature = await SignatureModel.findOne({ name });
   return signature ?? SignatureModel.create({ name, title });
-}
+};
 
-export async function getSignatures(): Promise<ISignatureDocument[]> {
+export const getSignatures = async (): Promise<ISignatureDocument[]> => {
   return await SignatureModel.find();
-}
+};

@@ -28,7 +28,7 @@ npm install
 npm run start
 ```
 
-Navigate to http://localhost:5001
+Navigate to http://localhost:5000
 
 ## Linting
 

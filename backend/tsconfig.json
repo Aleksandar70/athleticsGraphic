@@ -6,11 +6,10 @@
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "allowSyntheticDefaultImports": true,
     "removeComments": true
   },
-  "include": ["src/app.ts"],
-  // TODO - remove "src/api/openTrack.ts" from excluded after all its variables are used
-  "exclude": ["node_modules", "src/api/*", "src/database/*"]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }
