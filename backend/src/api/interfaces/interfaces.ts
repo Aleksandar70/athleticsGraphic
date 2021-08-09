@@ -27,7 +27,7 @@ export interface IOpenTrackData {
 
 export interface IResultParams {
   gType: string;
-  heat: string;
-  round: string;
+  heat: number;
+  round: number;
   order?: string;
 }

@@ -6,6 +6,6 @@ import type {
 import SignatureSchema from "../schemas/signature.schema";
 
 export const SignatureModel = model<ISignatureDocument>(
-  "signature",
+  "signatures",
   SignatureSchema
 ) as ISignatureModel;

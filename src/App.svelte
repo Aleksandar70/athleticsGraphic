@@ -2,6 +2,7 @@
   import Canvas from "./components/canvas/Canvas.svelte";
   import { onMount } from "svelte";
   import { getResults } from "./api/result.api";
+  import type { IResultParams } from "../backend/src/api/interfaces/interfaces";
   import "./app.style.css";
 
   let posts = [];

@@ -6,7 +6,7 @@ export const connectDatabase = (): void => {
   if (database) {
     return;
   }
-  mongoose.connect("mongodb://127.0.0.1:27017/Athletics", {
+  mongoose.connect("mongodb://127.0.0.1:27017/athletics", {
     useNewUrlParser: true,
     useFindAndModify: true,
     useUnifiedTopology: true,

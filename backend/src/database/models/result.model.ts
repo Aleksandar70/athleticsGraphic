@@ -6,6 +6,6 @@ import type {
 import ResultSchema from "../schemas/result.schema";
 
 export const ResultModel = model<IResultDocument>(
-  "result",
+  "results",
   ResultSchema
 ) as IResultModel;

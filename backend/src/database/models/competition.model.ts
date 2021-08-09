@@ -6,6 +6,6 @@ import type {
 import CompetitionSchema from "../schemas/competition.schema";
 
 export const CompetitionModel = model<ICompetitionDocument>(
-  "competition",
+  "competitions",
   CompetitionSchema
 ) as ICompetitionModel;

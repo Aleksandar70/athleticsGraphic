@@ -6,6 +6,6 @@ import type {
 import CompetitorSchema from "../schemas/competitor.schema";
 
 export const CompetitorModel = model<ICompetitorDocument>(
-  "competitor",
+  "competitors",
   CompetitorSchema
 ) as ICompetitorModel;
