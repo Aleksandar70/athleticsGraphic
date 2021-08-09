@@ -2,10 +2,10 @@ import { Constants } from "../../../../constants/constants";
 import type { IEventDocument } from "../types/event.types";
 import { EventModel } from "../models/event.model";
 
-export async function createEvent(
+export const createEvent = async (
   competition_id,
   event
-): Promise<IEventDocument> {
+): Promise<IEventDocument> => {
   const events = await EventModel.find({
     competitionId: competition_id,
     eventCode: event.eventCode,
@@ -38,13 +38,13 @@ export async function createEvent(
     r1Time,
   });
   return newEvent;
-}
+};
 
-export async function getEvents(): Promise<IEventDocument[]> {
+export const getEvents = async (): Promise<IEventDocument[]> => {
   return await EventModel.find({});
-}
+};
 
-export async function editEvent(id, name, time, note) {
+export const editEvent = async (id, name, time, note) => {
   const event = await EventModel.findById(id).exec();
   if (event != null) {
     event.name = name;
@@ -53,4 +53,4 @@ export async function editEvent(id, name, time, note) {
     return await event.save();
   }
   return null;
-}
+};

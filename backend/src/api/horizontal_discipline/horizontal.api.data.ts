@@ -1,57 +1,45 @@
-import { ResultModel } from "../../database/models/result.model";
 import { getOpenTrackData } from "../openTrack";
 import { Constants, GTYPE } from "../../../../constants/constants";
-import type { IHorizontalResult } from "../interfaces/interfaces";
+import type {
+  IHorizontalResult,
+  IResultParams,
+} from "../interfaces/interfaces";
+import {
+  createResult,
+  getResultsByHeat,
+  semiOverwriteResult,
+  updateHorizontalResult,
+} from "../../database/repository/result.repo";
 
 export const getHorizontalResult = async (
-  req,
-  res,
-  horizontalEventId,
-  horizontalEvent
+  params: IResultParams,
+  horizontalEventId: string,
+  horizontalEvent: string
 ) => {
-  const gType = req.body.gType;
-  const heat = req.body.heat;
-  const round = req.body.round;
-  const order = req.body.order ?? "bib";
+  const { gType, heat, round } = params;
 
   try {
     if (gType === GTYPE.LOCAL) {
-      const existingResults = await ResultModel.getResultsByHeat(
-        horizontalEventId,
-        heat,
-        round,
-        order
-      );
-      return res.status(201).json(existingResults);
+      return await getResultsByHeat(horizontalEventId, heat, round);
     }
     const responseData = await getOpenTrackData(
       `${horizontalEvent}${round}/${heat}${Constants.JSON_NOCACHE}`
     );
+
+    const createOrOverwriteResult =
+      gType === GTYPE.REMOTE ? createResult : semiOverwriteResult;
+
     const results = responseData.results;
-    if (gType === GTYPE.REMOTE) {
-      for (const result of results) {
-        await ResultModel.createResult(
-          responseData.data,
-          result,
-          responseData.trials
-        );
-      }
-    } else if (gType === GTYPE.SEMI) {
-      for (const result of results) {
-        await ResultModel.semiOverwriteResult(
-          responseData.data,
-          result,
-          responseData.trials
-        );
-      }
+
+    for (const result of results) {
+      await createOrOverwriteResult(
+        responseData.data,
+        result,
+        responseData.trials
+      );
     }
 
-    const existingResults = await ResultModel.getResultsByHeat(
-      horizontalEventId,
-      heat,
-      round
-    );
-    return res.status(201).json(existingResults);
+    return results;
   } catch (err) {
     console.log(err);
     return err;
@@ -61,7 +49,7 @@ export const getHorizontalResult = async (
 const saveHorizontalResult = async (req, res) => {
   const results: IHorizontalResult = req.body;
   try {
-    const existingResults = await ResultModel.updateHorizontalResult(results);
+    const existingResults = await updateHorizontalResult(results);
     return res.status(201).json(existingResults);
   } catch (err) {
     console.log(err);
