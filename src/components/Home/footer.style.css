@@ -1,11 +1,14 @@
 .footer {
   padding: 40px;
   text-align: center;
+  position: fixed;
+  padding: 10px 10px 0px 10px;
+  bottom: 0;
+  width: 100%;
 }
 .copyright {
   color: #aaa;
   font-size: 14px;
-  display: inline-block;
   padding: 20px;
   border-top: 1px solid #ddd;
 }

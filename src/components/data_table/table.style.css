@@ -17,6 +17,8 @@
 .flag {
   width: 28px;
   height: 20px;
+  font-size: xx-small;
+  overflow: hidden;
 }
 .result-data th:first-child {
   display: table-cell;
