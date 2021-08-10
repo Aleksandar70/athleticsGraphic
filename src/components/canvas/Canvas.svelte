@@ -10,17 +10,12 @@
 
   export let tableData;
 
-  let headerData = [];
-  let rowData = [];
-
-  $: if (tableData?.length > 0) {
-    headerData = getHeaderData(tableData);
-    rowData = getTableData(tableData);
-  }
+  $: headerData = getHeaderData(tableData);
+  $: rowData = getTableData(tableData);
 </script>
 
 <div class="canvas">
-  {#if headerData.length > 0 && rowData.length > 0}
+  {#if headerData?.length > 0 && rowData?.length > 0}
     <Modal>
       <ColumnDisplayOptions bind:headerData bind:rowData />
     </Modal>
