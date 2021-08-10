@@ -14,13 +14,12 @@
     posts = await getResults(requestData);
   });
 </script>
-
-<Header />
 <div class="app">
   {#if posts.length === 0}
     <h1>Loading...</h1>
   {:else}
+    <Header />
     <Canvas tableData={posts} />
+    <Footer />
   {/if}
 </div>
-<Footer/>
