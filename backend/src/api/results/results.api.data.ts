@@ -1,29 +1,26 @@
 import { getOpenTrackData } from "../openTrack";
-import { Constants, GTYPE } from "../../../../constants/constants";
+import { GTYPE } from "../../../../global/constants/constants";
 import type {
   IHorizontalResult,
   IResultParams,
-} from "../interfaces/interfaces";
+} from "../../../../global/interfaces";
 import {
   createResult,
   getResultsByHeat,
   semiOverwriteResult,
   updateHorizontalResult,
 } from "../../database/repository/result.repo";
+import { OpenTrack } from "../../../../global/constants/api";
 
-export const getHorizontalResult = async (
-  params: IResultParams,
-  horizontalEventId: string,
-  horizontalEvent: string
-) => {
-  const { gType, heat, round } = params;
+export const getResultForEvent = async (params: IResultParams) => {
+  const { eventId, gType, heat = 1, round = 1 } = params;
 
   try {
     if (gType === GTYPE.LOCAL) {
-      return await getResultsByHeat(horizontalEventId, heat, round);
+      return await getResultsByHeat(eventId, heat, round);
     }
     const responseData = await getOpenTrackData(
-      `${horizontalEvent}${round}/${heat}${Constants.JSON_NOCACHE}`
+      `${OpenTrack.OPEN_TRACK_API_EVENT}/${eventId}/${round}/${heat}${OpenTrack.JSON_NOCACHE}`
     );
 
     const createOrOverwriteResult =

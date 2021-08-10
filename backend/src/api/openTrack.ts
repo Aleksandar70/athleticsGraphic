@@ -1,9 +1,14 @@
 /* eslint-disable */
 
 import axios, { AxiosResponse } from "axios";
-import type { IOpenTrackData } from "./interfaces/interfaces";
+import type {
+  IOpenTrackData,
+  IOpenTrackEventData,
+} from "../../../global/interfaces";
 
-export const getOpenTrackData = async (url: string): Promise<IOpenTrackData> => {
+export const getOpenTrackData = async (
+  url: string
+): Promise<IOpenTrackData> => {
   const openTrackData: IOpenTrackData = {} as IOpenTrackData;
   try {
     const response: AxiosResponse<any> = await axios.get(url);
@@ -17,3 +22,27 @@ export const getOpenTrackData = async (url: string): Promise<IOpenTrackData> => 
     return err;
   }
 };
+
+export const getOpenTrackEventData = async (
+  url: string
+): Promise<IOpenTrackEventData[]> => {
+  const eventData: IOpenTrackEventData[] = [] as IOpenTrackEventData[];
+  try {
+    const response: AxiosResponse<any> = await axios.get(url);
+    const responseData = response.data;
+    responseData.events.forEach((event) => eventData.push(unwrap(event)));
+    return eventData;
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+
+const unwrap = ({ eventId, name, genders, status, rounds, r1Time }) => ({
+  eventId,
+  name,
+  genders,
+  status,
+  rounds,
+  r1Time,
+});

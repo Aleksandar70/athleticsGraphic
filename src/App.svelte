@@ -1,23 +1,19 @@
 <script lang="ts">
-  import Canvas from "./components/canvas/Canvas.svelte";
+  import { Router, navigate, links, Route } from "svelte-routing";
   import { onMount } from "svelte";
-  import { getResults } from "./api/result.api";
-  import type { IResultParams } from "../backend/src/api/interfaces/interfaces";
+  import EventPage from "./components/pages/event_page/EventPage.svelte";
+  import ResultPage from "./components/pages/result_page/ResultPage.svelte";
+
   import "./app.style.css";
 
-  let posts: Record<string, unknown>[] = [];
-
-  onMount(async () => {
-    const requestData: IResultParams = { gType: "remote", heat: 1, round: 1 };
-    posts = await getResults(requestData);
-  });
-
+  onMount(() => navigate("/"));
 </script>
 
-<div class="app">
-  {#if posts.length === 0}
-    <h1>Loading...</h1>
-  {:else}
-    <Canvas tableData={posts} />
-  {/if}
+<div class="app" use:links>
+  <Router url="http://localhost:5000/">
+    <Route path="/"><EventPage /></Route>
+    <Route path="/results/:eventId" let:params>
+      <ResultPage eventId={params.eventId} />
+    </Route>
+  </Router>
 </div>

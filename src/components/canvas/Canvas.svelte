@@ -1,6 +1,6 @@
 <script>
   import DataTable from "../data_table/DataTable.svelte";
-  import { UIText } from "../../../constants/ui_text";
+  import { UIText } from "../../../global/constants/ui_text";
   import ColumnDisplayOptions from "../column_display_options/ColumnDisplayOptions.svelte";
   import Modal, { getModal } from "../modal/Modal.svelte";
   import {
@@ -14,6 +14,7 @@
   import "./canvas.style.css";
 
   export let tableData;
+  export let links = {};
 
   let headers = parseHeaderData(tableData);
   let rows = parseTableData(tableData);
@@ -21,7 +22,7 @@
   let emptyColumns = getEmptyColumns(rows);
 
   let headerData = getHeaderData(headers, emptyColumns, tableData.length);
-  let rowData = getTableData(rows, emptyColumns);
+  let rowData = getTableData(rows, emptyColumns, links);
 </script>
 
 <div class="canvas">

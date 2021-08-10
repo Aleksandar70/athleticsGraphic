@@ -1,4 +1,4 @@
-import { Constants } from "../../../../constants/constants";
+import { Constants } from "../../../../global/constants/constants";
 import type { IEventDocument } from "../types/event.types";
 import { EventModel } from "../models/event.model";
 

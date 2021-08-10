@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import type { IResultParams } from "../../backend/src/api/interfaces/interfaces";
-import { SERVER_URL } from "../../constants/api";
+import type { IResultParams } from "../../global/interfaces";
+import { SERVER_URL } from "../../global/constants/api";
 
 export const getRequest = async (
-  params: IResultParams,
-  path: string
+  path: string,
+  params?: IResultParams
 ): Promise<AxiosResponse<Record<string, unknown>[]>> => {
   const response = await axios.get(`${SERVER_URL}${path}`, {
     params: params,

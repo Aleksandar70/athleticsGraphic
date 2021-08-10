@@ -5,6 +5,6 @@
     "lib": ["ESNext.String", "DOM"]
   },
 
-  "include": ["src/**/*", "backend/**/*", "constants/**/*"],
-  "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
+  "include": ["src/**/*", "global/**/*"],
+  "exclude": ["node_modules/*", "__sapper__/*", "public/*", "backend/**/*"]
 }
