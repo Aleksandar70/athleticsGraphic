@@ -2,12 +2,20 @@
   import Canvas from "../../../components/canvas/Canvas.svelte";
   import { onMount } from "svelte";
   import { getEventData } from "../../../api/event.api";
+  import Spinner from "../../spinner/Spinner.svelte";
+  import "./eventpage.style.css";
 
-  $: event = [];
+  $: tableData = [];
 
   onMount(async () => {
-    event = await getEventData();
+    tableData = await getEventData();
   });
 </script>
 
-<Canvas tableData={event} />
+<div class="event-page">
+  {#if tableData?.length > 0}
+    <Canvas {tableData} />
+  {:else}
+    <Spinner />
+  {/if}
+</div>
