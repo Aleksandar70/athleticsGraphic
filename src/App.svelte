@@ -4,8 +4,8 @@
   import { getResults } from "./api/result.api";
   import type { IResultParams } from "../backend/src/api/interfaces/interfaces";
   import "./app.style.css";
-  import Header from "./components/Header.svelte";
-  import Footer from "./components/Footer.svelte";
+  import Header from "./components/Home/Header.svelte";
+  import Footer from "./components/Home/Footer.svelte";
 
   let posts: Record<string, unknown>[] = [];
 
