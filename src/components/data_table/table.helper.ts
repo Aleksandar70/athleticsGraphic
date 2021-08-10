@@ -48,11 +48,10 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
   return fielsLinks;
 };
 
-export const getTableData = (
-  rows: string[][],
-  emptyColumns: Map<number, number>,
-  links?: Map<string, string>
-): TableData => {
+export const getTableData = (rawData: RawData): TableData => {
+  const rows = parseTableData(rawData);
+  const emptyColumns = getEmptyColumns(rows as TableData);
+  const links = getFieldLinks(rawData);
   const tableData = rows?.map((row) => {
     return row.map((field, idx) => ({
       value: field.toString(),
@@ -64,15 +63,13 @@ export const getTableData = (
   return tableData;
 };
 
-export const getHeaderData = (
-  fields: string[],
-  emptyColumns: Map<number, number>,
-  dataSize: number
-): HeaderData => {
-  const tableColumns = fields?.map((data, idx) => ({
+export const getHeaderData = (tableData: RawData): HeaderData => {
+  const headers = parseHeaderData(tableData);
+  const emptyColumns = getEmptyColumns(parseTableData(tableData) as TableData);
+  const tableColumns = headers?.map((data, idx) => ({
     id: idx,
     value: data,
-    show: setFiledVisibility(emptyColumns, idx, dataSize),
+    show: setFiledVisibility(emptyColumns, idx, tableData.length),
   }));
   return tableColumns;
 };
