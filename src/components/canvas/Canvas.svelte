@@ -5,6 +5,7 @@
   import Modal, { getModal } from "../modal/Modal.svelte";
   import {
     parseHeaderData,
+    getFieldLinks,
     parseTableData,
     getEmptyColumns,
     getTableData,
@@ -14,21 +15,25 @@
   import "./canvas.style.css";
 
   export let tableData;
-  export let links = {};
 
-  let headers = parseHeaderData(tableData);
-  let rows = parseTableData(tableData);
+  $: headers = parseHeaderData(tableData);
+  $: rows = parseTableData(tableData);
 
-  let emptyColumns = getEmptyColumns(rows);
+  $: emptyColumns = getEmptyColumns(rows);
+  $: links = getFieldLinks(tableData);
 
-  let headerData = getHeaderData(headers, emptyColumns, tableData.length);
-  let rowData = getTableData(rows, emptyColumns, links);
+  $: headerData = getHeaderData(headers, emptyColumns, tableData.length);
+  $: rowData = getTableData(rows, emptyColumns, links);
 </script>
 
-<div class="canvas">
-  <Modal>
-    <ColumnDisplayOptions bind:headerData bind:rowData />
-  </Modal>
-  <button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</button>
-  <DataTable {headerData} {rowData} />
-</div>
+{#if headerData && rowData}
+  <div class="canvas">
+    <Modal>
+      <ColumnDisplayOptions bind:headerData bind:rowData />
+    </Modal>
+    <button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</button>
+    <DataTable {headerData} {rowData} />
+  </div>
+{:else}
+  <h1>Loading...</h1>
+{/if}
