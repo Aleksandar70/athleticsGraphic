@@ -10,6 +10,6 @@
     "allowSyntheticDefaultImports": true,
     "removeComments": true
   },
-  "include": ["src", "../global/interfaces.ts", "../interfaces.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
