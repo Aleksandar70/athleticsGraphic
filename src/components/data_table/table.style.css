@@ -4,24 +4,19 @@
   background: #fff;
   color: #024457;
   border-radius: 10px;
-  border: 1px solid #167f92;
-}
-.result-data tr {
-  border: 1px solid #d9e4e6;
 }
 .result-data tr:nth-child(odd) {
   background-color: #eaf3f3;
 }
 .result-data th {
   display: none;
-  border: 1px solid #fff;
   background-color: #167f92;
   color: #fff;
-  padding: 1em;
+  padding: 3px;
 }
 .flag {
-  width: 90px;
-  height: 60px;
+  width: 28px;
+  height: 20px;
 }
 .result-data th:first-child {
   display: table-cell;
@@ -45,7 +40,6 @@
 }
 .result-data td:first-child {
   display: table-cell;
-  border-right: 1px solid #d9e4e6;
 }
 @media (min-width: 480px) {
   .result-data td {
@@ -60,6 +54,6 @@
   .result-data th,
   .result-data td {
     display: table-cell;
-    padding: 1em;
+    padding: 3px;
   }
 }

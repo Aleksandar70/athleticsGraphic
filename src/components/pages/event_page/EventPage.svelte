@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Router, Link, Route } from "svelte-routing";
   import Canvas from "../../canvas/Canvas.svelte";
   import { onMount } from "svelte";
   import { getFieldLinks } from "../../data_table/table.helper";
@@ -19,6 +18,6 @@
   {#if event.length === 0}
     <h1>Loading...</h1>
   {:else}
-  <Canvas tableData={event} {links} />
+    <Canvas tableData={event} {links} />
   {/if}
 </div>
