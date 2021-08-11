@@ -1,5 +1,8 @@
 import axios, { AxiosResponse } from "axios";
-import type { IResultParams, ITableData } from "../../backend/src/api/interfaces/interfaces";
+import type {
+  IResultParams,
+  ITableData,
+} from "../../backend/src/api/interfaces/interfaces";
 import { SERVER_URL } from "../../constants/api";
 
 export const getRequest = async (
@@ -13,10 +16,10 @@ export const getRequest = async (
 };
 
 export const putRequest = async (
-  params: ITableData,
+  body: ITableData,
   path: string
 ): Promise<AxiosResponse<Record<string, unknown>[]>> => {
-  const response = await axios.put(`${SERVER_URL}${path}`, params);
+  const response = await axios.put(`${SERVER_URL}${path}`, body);
   console.log("response: ", response);
   return response;
 };

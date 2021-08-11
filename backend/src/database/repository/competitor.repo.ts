@@ -31,20 +31,20 @@ export const createCompetitor = async (competition_id, competitor) => {
 
 export const findCompetitorByBib = async (bib) => {
   const competitors = await CompetitorModel.find({ sortBib: bib }).exec();
-  console.log("competitors ", competitors);
   if (competitors.length !== 0) {
     return competitors[0];
   }
   return null;
 };
 
-export const updateCompetitors = async (params) => {
-  for (const param of params) {
-    console.log("param.bib: ", param.bib);
-    const competitor = await findCompetitorByBib(param.bib);
-    console.log("competitor: ", competitor);
-    if (competitor !== null) {
-      return await competitor;
+export const updateCompetitors = async (competitors) => {
+  for (const competitor of competitors) {
+    let competitorDB = await findCompetitorByBib(competitor.bib);
+    if (competitorDB !== null) {
+      competitorDB.firstName = competitor.first_name;
+      competitorDB.lastName = competitor.last_name;
+      console.log("competitorDB: ", competitorDB);
+      return await competitorDB.save();
     }
   }
   return null;
