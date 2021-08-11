@@ -1,6 +1,6 @@
 import express from "express";
 import { OpenTrack } from "../../../../constants/api";
-import { updateTable } from "../../database/repository/result.repo";
+import { updateTable } from "../../database/repository/competitor.repo";
 import { getHorizontalResult } from "../horizontal_discipline/horizontal.api.data";
 import type { IResultParams, ITableData } from "../interfaces/interfaces";
 
@@ -18,7 +18,6 @@ router.get("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
   const params: ITableData = req.body;
-  console.log("paramsMoje: ", params);
   const val = await updateTable(params);
   return await res.status(200).json(val);
 });

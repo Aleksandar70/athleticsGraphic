@@ -10,7 +10,7 @@
     getTableData,
     getHeaderData,
   } from "../data_table/table.helper";
-  import { updateTable } from "../../api/result.api";
+  import { updateCompetitors } from "../../api/competitor.api";
 
   import "./canvas.style.css";
 
@@ -31,5 +31,5 @@
   </Modal>
   <button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</button>
   <DataTable {headerData} {rowData} />
-  <button on:click={() => updateTable(tableData)}>{UIText.TABLE_UPDATE}</button>
+  <button on:click={() => updateCompetitors(tableData)}>{UIText.TABLE_UPDATE}</button>
 </div>

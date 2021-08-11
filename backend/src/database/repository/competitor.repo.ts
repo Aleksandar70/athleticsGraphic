@@ -31,8 +31,20 @@ export const createCompetitor = async (competition_id, competitor) => {
 
 export const findCompetitorByBib = async (bib) => {
   const competitors = await CompetitorModel.find({ sortBib: bib }).exec();
+  console.log("competitors ", competitors);
   if (competitors.length !== 0) {
     return competitors[0];
+  }
+  return null;
+};
+
+export const updateTable = async (params) => {
+  //for loop
+  const competitor = await findCompetitorByBib(params[0].bib);
+  console.log("competitor: ", competitor);
+  if (competitor !== null) {
+
+    return await competitor;
   }
   return null;
 };
