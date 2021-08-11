@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import axios, { AxiosResponse } from "axios";
 import type {
   IOpenTrackData,
