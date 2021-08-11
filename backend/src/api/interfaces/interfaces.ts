@@ -31,3 +31,16 @@ export interface IResultParams {
   round: number;
   order?: string;
 }
+
+export interface ITableData {
+  advancement: string;
+  age_group: string;
+  athlon_points: string;
+  bib: string;
+  date_of_birth: string;
+  flag: string;
+  gender: string;
+  last_name: string;
+  performance: string;
+  team_name: string;
+}

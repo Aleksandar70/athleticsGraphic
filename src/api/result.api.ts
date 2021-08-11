@@ -1,4 +1,7 @@
-import type { IResultParams } from "../../backend/src/api/interfaces/interfaces";
+import type {
+  IResultParams,
+  ITableData,
+} from "../../backend/src/api/interfaces/interfaces";
 import { getRequest, postRequest } from "../utils/api.utils";
 
 export const getResults = async (
@@ -9,9 +12,8 @@ export const getResults = async (
 };
 
 export const updateTable = async (
-  params
+  params: ITableData
 ): Promise<Record<string, unknown>[]> => {
-  console.log("params ", params);
   const rawResults = await postRequest(params, "resultUpdate");
   return rawResults.data;
 };

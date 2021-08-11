@@ -369,10 +369,10 @@ function populateResultsComparingToHeights(results, result) {
 }
 
 export const updateTable = async (params) => {
-  console.log("params.resultId ", params.resultId);//undefined 3
-  const result = await ResultModel.findById(params.resultId).exec();
+  console.log("params update table: ", params);//undefined 3
+  const result = await ResultModel.getResultsByHeat(params.event_id, params.round, params.heat);
   if (result !== null) {
-    return await result.save();
+    return await result;
   }
   return null;
 };
