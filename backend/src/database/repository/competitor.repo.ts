@@ -38,13 +38,14 @@ export const findCompetitorByBib = async (bib) => {
   return null;
 };
 
-export const updateTable = async (params) => {
-  //for loop
-  const competitor = await findCompetitorByBib(params[0].bib);
-  console.log("competitor: ", competitor);
-  if (competitor !== null) {
-
-    return await competitor;
+export const updateCompetitors = async (params) => {
+  for (const param of params) {
+    console.log("param.bib: ", param.bib);
+    const competitor = await findCompetitorByBib(param.bib);
+    console.log("competitor: ", competitor);
+    if (competitor !== null) {
+      return await competitor;
+    }
   }
   return null;
 };
