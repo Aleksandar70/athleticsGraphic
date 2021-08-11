@@ -32,6 +32,6 @@
   <button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</button>
   <DataTable {headerData} {rowData} />
   <button on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
-    >{UIText.TABLE_UPDATE}</button
+    >{UIText.TABLE_SAVE}</button
   >
 </div>
