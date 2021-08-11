@@ -20,6 +20,5 @@ export const putRequest = async (
   path: string
 ): Promise<AxiosResponse<Record<string, unknown>[]>> => {
   const response = await axios.put(`${SERVER_URL}${path}`, body);
-  console.log("response: ", response);
   return response;
 };

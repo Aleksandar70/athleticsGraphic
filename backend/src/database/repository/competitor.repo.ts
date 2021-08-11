@@ -39,11 +39,14 @@ export const findCompetitorByBib = async (bib) => {
 
 export const updateCompetitors = async (competitors) => {
   for (const competitor of competitors) {
-    let competitorDB = await findCompetitorByBib(10);
+    let competitorDB = await findCompetitorByBib(competitor.bib);
     if (competitorDB !== null) {
       competitorDB.firstName = competitor.first_name;
       competitorDB.lastName = competitor.last_name;
-      console.log("competitorDB: ", competitorDB);
+      competitorDB.dateOfBirth = competitor.date_of_birth;
+      competitorDB.gender = competitor.gender;
+      competitorDB.pb = competitor.pb;
+      competitorDB.teamName = competitor.team_name;
       return await competitorDB.save();
     }
   }
