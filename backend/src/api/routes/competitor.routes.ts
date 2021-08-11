@@ -1,6 +1,6 @@
 import express from "express";
 import { updateCompetitors } from "../../database/repository/competitor.repo";
-import { ITableData } from "../interfaces/interfaces";
+import type { ITableData } from "../interfaces/interfaces";
 
 const routerCompetitor = express.Router();
 
