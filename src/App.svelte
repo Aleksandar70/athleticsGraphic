@@ -5,17 +5,18 @@
   import ResultPage from "./components/pages/result_page/ResultPage.svelte";
   import Header from "./components/Home/Header.svelte";
   import Footer from "./components/Home/Footer.svelte";
+  import { Paths } from "../global/constants/api";
 
   import "./app.style.css";
 
-  onMount(() => navigate("/"));
+  onMount(() => navigate(Paths.ROOT_PATH));
 </script>
 
 <div class="app">
   <Header />
-  <Router url="http://localhost:5000/">
-    <Route path="/"><EventPage /></Route>
-    <Route path="/results/:eventId" let:params>
+  <Router url={Paths.CLIENT_URL}>
+    <Route path={Paths.ROOT_PATH}><EventPage /></Route>
+    <Route path="{Paths.RESULTS_PATH}/:eventId" let:params>
       <ResultPage eventId={params.eventId} />
     </Route>
   </Router>

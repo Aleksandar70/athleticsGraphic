@@ -1,4 +1,16 @@
-export const SERVER_URL = "http://localhost:5001/";
+export abstract class Paths {
+  static readonly SERVER_PORT = 5001;
+  static readonly SERVER_URL = `http://localhost:${Paths.SERVER_PORT}/`;
+  static readonly CLIENT_URL = "http://localhost:5000/";
+  static readonly ROOT_PATH = "/";
+
+  static readonly RESULTS = "results";
+  static readonly RESULTS_PATH = `${Paths.ROOT_PATH}${Paths.RESULTS}`;
+
+  static readonly EVENTS = "events";
+  static readonly EVENTS_PATH = `${Paths.ROOT_PATH}${Paths.EVENTS}`;
+}
+
 export abstract class OpenTrack {
   static readonly OPEN_TRACK_API =
     "https://data.opentrack.run/en-gb/x/2021/SRB/srbopenindoor";
