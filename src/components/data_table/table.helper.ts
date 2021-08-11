@@ -1,10 +1,5 @@
 import type { FieldData, HeaderData, RawData, TableData } from "../../types";
 
-declare global {
-  interface ObjectConstructor {
-    fromEntries(xs: [string | number | symbol, any][]): object;
-  }
-}
 export const parseTableData = (data: RawData): unknown[][] =>
   data?.map((d) => Object.keys(d).map((key) => [d[key]]));
 

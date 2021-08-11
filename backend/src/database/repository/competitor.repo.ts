@@ -39,7 +39,7 @@ export const findCompetitorByBib = async (bib) => {
 
 export const updateCompetitors = async (competitors) => {
   for (const competitor of competitors) {
-    let competitorDB = await findCompetitorByBib(competitor.bib);
+    const competitorDB = await findCompetitorByBib(competitor.bib);
     if (competitorDB !== null) {
       competitorDB.firstName = competitor.first_name;
       competitorDB.lastName = competitor.last_name;
