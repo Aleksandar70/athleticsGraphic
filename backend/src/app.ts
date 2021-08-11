@@ -13,6 +13,6 @@ const port = process.env.PORT || 5001;
 app.use(json());
 app.use(cors());
 app.use("/result", ResultRouter);
-app.use("/resultUpdate", CompetitorRouter);
+app.use("/competitorUpdate", CompetitorRouter);
 
 app.listen(port, () => console.log(`Server is up at port ${port}`));
