@@ -16,10 +16,9 @@ router.get("/", async (req, res) => {
   return await res.status(200).json(val);
 });
 
-router.post("/", async (req, res) => {
-  console.log("reqMoje", req); //{} 1
-  const params: ITableData = req.query;
-  console.log("paramsNestooo: ", params); //{} 2
+router.put("/", async (req, res) => {
+  const params: ITableData = req.body;
+  console.log("paramsMoje: ", params);
   const val = await updateTable(params);
   return await res.status(200).json(val);
 });

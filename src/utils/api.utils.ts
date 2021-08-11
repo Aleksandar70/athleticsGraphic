@@ -12,14 +12,11 @@ export const getRequest = async (
   return response;
 };
 
-export const postRequest = async (
+export const putRequest = async (
   params: ITableData,
   path: string
 ): Promise<AxiosResponse<Record<string, unknown>[]>> => {
-  console.log("paramsMojeee: ", params);//dobro je
-  const response = await axios.post(`${SERVER_URL}${path}`, {
-    params: params,
-  });
+  const response = await axios.put(`${SERVER_URL}${path}`, params);
   console.log("response: ", response);
   return response;
 };
