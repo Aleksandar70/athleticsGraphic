@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --no-clear",
+    "start": "sirv public --no-clear --single",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx,.svelte",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },

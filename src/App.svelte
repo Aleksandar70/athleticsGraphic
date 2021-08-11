@@ -9,7 +9,7 @@
 
   import "./app.style.css";
 
-  onMount(() => navigate(Paths.ROOT_PATH));
+  onMount(() => navigate(window.location.pathname));
 </script>
 
 <div class="app">
