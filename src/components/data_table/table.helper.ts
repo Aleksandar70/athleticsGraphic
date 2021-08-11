@@ -70,3 +70,13 @@ const setFiledVisibility = (
 
   return emptyColumns.get(idx) < limit;
 };
+
+export const getUpdatedTable = (tableData, rowData) => {
+  const keys = Object.keys(tableData[0]);
+  const updatedValues = rowData.map((row) => row.map((field) => field.value));
+
+  const updatedTable = updatedValues.map((values) =>
+    Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]))
+  );
+  return updatedTable;
+};

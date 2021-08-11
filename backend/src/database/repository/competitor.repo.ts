@@ -36,3 +36,19 @@ export const findCompetitorByBib = async (bib) => {
   }
   return null;
 };
+
+export const updateCompetitors = async (competitors) => {
+  for (const competitor of competitors) {
+    const competitorDB = await findCompetitorByBib(competitor.bib);
+    if (competitorDB !== null) {
+      competitorDB.firstName = competitor.first_name;
+      competitorDB.lastName = competitor.last_name;
+      competitorDB.dateOfBirth = competitor.date_of_birth;
+      competitorDB.gender = competitor.gender;
+      competitorDB.pb = competitor.pb;
+      competitorDB.teamName = competitor.team_name;
+      return await competitorDB.save();
+    }
+  }
+  return null;
+};
