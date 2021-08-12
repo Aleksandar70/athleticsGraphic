@@ -10,9 +10,15 @@
   } from "../data_table/table.helper";
   import "./canvas.style.css";
   import { updateCompetitors } from "../../api/competitor.api";
-  import { Button, Dropdown } from "sveltestrap";
+  import { GTYPE } from "../../../global/constants/constants";
 
-  let dropdownTrigger;
+  import {
+    ButtonDropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownToggle,
+    Button,
+  } from "sveltestrap";
   export let tableData;
 
   let headerData = getHeaderData(tableData);
@@ -23,24 +29,21 @@
   <Modal>
     <ColumnDisplayOptions bind:headerData bind:rowData />
   </Modal>
-  <Dropdown triggerElement={dropdownTrigger}>
-    <Button
-      type="button"
-      class="btn btn-secondary dropdown-toggle"
-      bind:this={dropdownTrigger}
-    >
-      Dropdown
-    </Button>
-    <div slot="DropdownMenu">
-      <Button class="dropdown-item" type="button">Action</Button>
-      <Button class="dropdown-item" type="button">Another action</Button>
-      <Button class="dropdown-item" type="button">Something else here</Button>
-    </div>
-  </Dropdown>
-  <Button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</Button>
+  <ButtonDropdown>
+    <DropdownToggle color="primary" caret>{UIText.SOURCES}</DropdownToggle>
+    <DropdownMenu>
+      <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
+      <DropdownItem>{GTYPE.LOCAL}</DropdownItem>
+      <DropdownItem>{GTYPE.REMOTE}</DropdownItem>
+      <DropdownItem>{GTYPE.SEMI}</DropdownItem>
+    </DropdownMenu>
+  </ButtonDropdown>
+  <Button on:click={() => getModal().open()} color="primary"
+    >{UIText.COLUMN_TOGGLE}</Button
+  >
   <DataTable {headerData} {rowData} />
   <Button
     on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
-    >{UIText.TABLE_SAVE}</Button
+    color="primary">{UIText.TABLE_SAVE}</Button
   >
 </div>
