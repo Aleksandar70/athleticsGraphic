@@ -1,24 +1,21 @@
 import axios, { AxiosResponse } from "axios";
-import type {
-  IResultParams,
-  ITableData,
-} from "../../backend/src/api/interfaces/interfaces";
-import { SERVER_URL } from "../../constants/api";
+import type { IResultParams, ITableData } from "../../global/interfaces";
+import { Paths } from "../../global/constants/api";
 
 export const getRequest = async (
-  params: IResultParams,
-  path: string
+  path: string,
+  params?: IResultParams
 ): Promise<AxiosResponse<Record<string, unknown>[]>> => {
-  const response = await axios.get(`${SERVER_URL}${path}`, {
+  const response = await axios.get(`${Paths.SERVER_URL}${path}`, {
     params: params,
   });
   return response;
 };
 
 export const putRequest = async (
-  body: ITableData,
-  path: string
+  path: string,
+  body: ITableData[]
 ): Promise<AxiosResponse<Record<string, unknown>[]>> => {
-  const response = await axios.put(`${SERVER_URL}${path}`, body);
+  const response = await axios.put(`${Paths.SERVER_URL}${path}`, body);
   return response;
 };

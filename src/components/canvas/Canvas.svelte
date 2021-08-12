@@ -1,12 +1,9 @@
 <script>
   import DataTable from "../data_table/DataTable.svelte";
-  import { UIText } from "../../../constants/ui_text";
+  import { UIText } from "../../../global/constants/ui_text";
   import ColumnDisplayOptions from "../column_display_options/ColumnDisplayOptions.svelte";
   import Modal, { getModal } from "../modal/Modal.svelte";
   import {
-    parseHeaderData,
-    parseTableData,
-    getEmptyColumns,
     getTableData,
     getHeaderData,
     getUpdatedTable,
@@ -16,13 +13,8 @@
 
   export let tableData;
 
-  let headers = parseHeaderData(tableData);
-  let rows = parseTableData(tableData);
-
-  let emptyColumns = getEmptyColumns(rows);
-
-  let headerData = getHeaderData(headers, emptyColumns, tableData.length);
-  let rowData = getTableData(rows, emptyColumns);
+  let headerData = getHeaderData(tableData);
+  let rowData = getTableData(tableData);
 </script>
 
 <div class="canvas">
@@ -31,7 +23,8 @@
   </Modal>
   <button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</button>
   <DataTable {headerData} {rowData} />
-  <button on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
+  <button
+    on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
     >{UIText.TABLE_SAVE}</button
   >
 </div>

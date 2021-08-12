@@ -1,5 +1,5 @@
 import { ascending, descending } from "d3-array";
-import type { RowData, TableData } from "../../types";
+import type { RowData, TableData } from "../../../global/types";
 
 export enum SortDirection {
   ASCENDING,

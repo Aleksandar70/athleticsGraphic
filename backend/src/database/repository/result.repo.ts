@@ -1,4 +1,4 @@
-import { Constants } from "../../../../constants/constants";
+import { Constants } from "../../../../global/constants/constants";
 import type { IResultDocument } from "../types/result.types";
 import { ResultModel } from "../models/result.model";
 

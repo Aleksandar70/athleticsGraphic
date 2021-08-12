@@ -1,12 +1,20 @@
-import type { FieldData, HeaderData, RawData, TableData } from "../../types";
+import type {
+  FieldData,
+  HeaderData,
+  RawData,
+  TableData,
+} from "../../../global/types";
 
 export const parseTableData = (data: RawData): unknown[][] =>
   data?.map((d) => Object.keys(d).map((key) => [d[key]]));
 
-export const parseHeaderData = (data: HeaderData): string[] =>
-  Object.keys(data?.[0])?.map((val: string) =>
-    val.replaceAll("_", " ").toUpperCase()
-  );
+export const parseHeaderData = (data: HeaderData): string[] => {
+  if (data?.length > 0) {
+    return Object.keys(data?.[0])?.map((val: string) =>
+      val.replaceAll("_", " ").toUpperCase()
+    );
+  }
+};
 
 export const hideColumn = (field: FieldData, data: TableData): TableData => {
   data.forEach((record) => {
@@ -18,7 +26,7 @@ export const hideColumn = (field: FieldData, data: TableData): TableData => {
 
 export const getEmptyColumns = (rows: TableData): Map<number, number> => {
   const emptyColumns = new Map<number, number>();
-  rows.forEach((row) => {
+  rows?.forEach((row) => {
     row.forEach((val, i) => {
       if (val.toString() === "") {
         if (emptyColumns.has(i)) {
@@ -32,29 +40,36 @@ export const getEmptyColumns = (rows: TableData): Map<number, number> => {
   return emptyColumns;
 };
 
-export const getTableData = (
-  rows: string[][],
-  emptyColumns: Map<number, number>
-): TableData => {
-  const tableData = rows.map((row) => {
+export const getFieldLinks = (rows: RawData): Map<string, string> => {
+  const fielsLinks = new Map<string, string>();
+  rows?.forEach((data: Record<string, string>) => {
+    fielsLinks.set(data.name, data.eventId);
+  });
+  return fielsLinks;
+};
+
+export const getTableData = (rawData: RawData): TableData => {
+  const rows = parseTableData(rawData);
+  const emptyColumns = getEmptyColumns(rows as TableData);
+  const links = getFieldLinks(rawData);
+  const tableData = rows?.map((row) => {
     return row.map((field, idx) => ({
       value: field.toString(),
       show: setFiledVisibility(emptyColumns, idx, rows.length),
+      link: links?.get(field.toString()),
       id: idx,
     }));
   });
   return tableData;
 };
 
-export const getHeaderData = (
-  fields: string[],
-  emptyColumns: Map<number, number>,
-  dataSize: number
-): HeaderData => {
-  const tableColumns = fields.map((data, idx) => ({
+export const getHeaderData = (tableData: RawData): HeaderData => {
+  const headers = parseHeaderData(tableData);
+  const emptyColumns = getEmptyColumns(parseTableData(tableData) as TableData);
+  const tableColumns = headers?.map((data, idx) => ({
     id: idx,
     value: data,
-    show: setFiledVisibility(emptyColumns, idx, dataSize),
+    show: setFiledVisibility(emptyColumns, idx, tableData.length),
   }));
   return tableColumns;
 };

@@ -4,9 +4,10 @@
     changeSortDirection,
     sortByColumn,
   } from "./sort.helper";
+  import { Link } from "svelte-routing";
 
   import { isFlag, getAltName } from "./flag.helper";
-  import type { HeaderData, TableData } from "../../types";
+  import type { HeaderData, TableData } from "../../../global/types";
 
   import "./table.style.css";
 
@@ -21,10 +22,13 @@
     sortBy = columnIndex;
   };
 
-  $: sortedRows = rowData;
+  $: sortedRows = rowData as Record<string, string>[][];
 
   $: if (sortBy !== null) {
-    sortedRows = sortByColumn(rowData, sortBy, sortDirection);
+    sortedRows = sortByColumn(rowData, sortBy, sortDirection) as Record<
+      string,
+      string
+    >[][];
   }
 </script>
 
@@ -41,13 +45,15 @@
       {#each row as data}
         {#if data.show}
           {#if isFlag(data.value)}
-            <td contenteditable="true" spellcheck="false"
-              ><img
+            <td>
+              <img
                 class="flag"
                 alt={getAltName(data.value)}
                 src={data.value}
               /></td
             >
+          {:else if data.link}
+            <td><Link to={`/results/${data.link}`}>{data.value}</Link></td>
           {:else}
             <td
               contenteditable="true"
