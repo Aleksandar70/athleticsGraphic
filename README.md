@@ -35,3 +35,6 @@ Navigate to http://localhost:5000
 Both frontend and backend have their own linting commands to assure code quality.
 
 To run lint, go to either FE or BE directory and run `npm run lint`
+
+## Bootstrap v5
+https://sveltestrap.js.org/?path=/story/components--get-started
