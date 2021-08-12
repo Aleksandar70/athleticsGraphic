@@ -10,6 +10,7 @@
   import type { HeaderData, TableData } from "../../../global/types";
 
   import "./table.style.css";
+  import { Paths } from "../../../global/constants/api";
 
   export let headerData: HeaderData;
   export let rowData: TableData;
@@ -53,7 +54,10 @@
               /></td
             >
           {:else if data.link}
-            <td><Link to={`/results/${data.link}`}>{data.value}</Link></td>
+            <td
+              ><Link to={`${Paths.EVENTS_PATH}/${data.link}`}>{data.value}</Link
+              ></td
+            >
           {:else}
             <td
               contenteditable="true"

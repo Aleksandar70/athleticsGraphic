@@ -1,95 +1,88 @@
 import { Schema } from "mongoose";
 
-const CompetitorSchema = new Schema({
-  competitorId: {
+const UnitSchema = new Schema({
+  day: {
+    type: Number,
+    required: false,
+    default: -1,
+  },
+  eventId: {
     type: String,
     required: false,
     default: "",
   },
-  nationalId: {
-    type: String,
-    required: false,
-  },
-  firstName: {
+  eventName: {
     type: String,
     required: false,
     default: "",
   },
-  lastName: {
+  heat: {
+    type: Number,
+    required: false,
+    default: -1,
+  },
+  heatName: {
     type: String,
     required: false,
     default: "",
   },
-  gender: {
+  heights: {
+    type: Array,
+    required: false,
+    default: [],
+  },
+  initialHeight: {
     type: String,
     required: false,
     default: "",
   },
-  dateOfBirth: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  teamId: {
-    type: String,
-    required: false,
-  },
-  nonScorer: {
+  overrideCeScores: {
     type: Boolean,
     required: false,
     default: false,
   },
-  // eventsEntered
-  numbered: {
+  overridePlaces: {
     type: Boolean,
     required: false,
     default: false,
   },
-  sortEventCode: {
+  results: [{ type: Schema.Types.ObjectId, ref: "results" }],
+  resultsStatus: {
     type: String,
     required: false,
+    default: "",
   },
-  sortBib: {
+  round: {
+    type: Number,
+    required: false,
+    default: -1,
+  },
+  scheduledStartTime: {
     type: String,
     required: false,
+    default: "",
   },
-  sortAgeGroup: {
-    type: String,
-    required: false,
-  },
-  checkedIn: {
+  showAthleteDetails: {
     type: Boolean,
     required: false,
     default: false,
   },
-  nationality: {
-    type: String,
+  showPartials: {
+    type: Boolean,
     required: false,
+    default: false,
   },
-  // notablePerformances
-  event: {
-    type: String,
+  showPoints: {
+    type: Boolean,
     required: false,
+    default: false,
   },
-  pb: {
-    type: String,
-    required: false,
-  },
-  sb: {
-    type: String,
-    required: false,
-  },
-  // eventEntered
-  flagUrl: {
+  status: {
     type: String,
     required: false,
     default: "",
   },
-  teamName: {
-    type: String,
-    required: false,
-    default: "",
-  },
+  trials: [{ type: Schema.Types.ObjectId, ref: "trials" }],
 });
 
-export default CompetitorSchema;
+export default UnitSchema;

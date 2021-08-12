@@ -1,46 +1,71 @@
 import axios, { AxiosResponse } from "axios";
-import type {
-  IOpenTrackData,
-  IOpenTrackEventData,
-} from "../../../global/interfaces";
+import { OpenTrack } from "../../../global/constants/api";
 
-export const getOpenTrackData = async (
-  url: string
-): Promise<IOpenTrackData> => {
-  const openTrackData: IOpenTrackData = {} as IOpenTrackData;
+export interface IOTCompetitionData {
+  competitionData;
+  copetitorsData;
+  eventsData;
+}
+
+export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
   try {
-    const response: AxiosResponse<any> = await axios.get(url);
-    const responseData = response.data;
-    openTrackData.data = responseData;
-    openTrackData.results = responseData.results;
-    openTrackData.trials = responseData.trials;
-    return openTrackData;
+    const otCompetitionData: AxiosResponse<any> = await axios.get(
+      `${OpenTrack.OPEN_TRACK_API}${OpenTrack.JSON_NOCACHE}`
+    );
+    const competitionData = otCompetitionData.data;
+    return {
+      competitionData: unwrapCompetition(competitionData),
+      copetitorsData: competitionData.competitors,
+      eventsData: competitionData.events,
+    };
   } catch (err) {
     console.error(err);
     return err;
   }
 };
 
-export const getOpenTrackEventData = async (
-  url: string
-): Promise<IOpenTrackEventData[]> => {
-  const eventData: IOpenTrackEventData[] = [] as IOpenTrackEventData[];
-  try {
-    const response: AxiosResponse<any> = await axios.get(url);
-    const responseData = response.data;
-    responseData.events.forEach((event) => eventData.push(unwrap(event)));
-    return eventData;
-  } catch (err) {
-    console.error(err);
-    return err;
-  }
-};
-
-const unwrap = ({ eventId, name, genders, status, rounds, r1Time }) => ({
-  eventId,
-  name,
-  genders,
-  status,
-  rounds,
-  r1Time,
+const unwrapCompetition = ({
+  address,
+  city,
+  contactDetails,
+  country,
+  date,
+  englishName,
+  finishDate,
+  fullName,
+  id,
+  latitude,
+  longitude,
+  organiser,
+  // relayTeams
+  shortName,
+  slug,
+  teamTypes,
+  // teams
+  type,
+  // venue
+  website,
+  year,
+}) => ({
+  address,
+  city,
+  contactDetails,
+  country,
+  date,
+  englishName,
+  finishDate,
+  fullName,
+  id,
+  latitude,
+  longitude,
+  organiser,
+  // relayTeams
+  shortName,
+  slug,
+  teamTypes,
+  // teams
+  type,
+  // venue
+  website,
+  year,
 });

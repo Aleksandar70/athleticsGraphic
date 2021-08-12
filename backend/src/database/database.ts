@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { OpenTrack } from "../../../global/constants/api";
 
 let database: mongoose.Connection;
 
@@ -6,12 +7,15 @@ export const connectDatabase = (): void => {
   if (database) {
     return;
   }
-  mongoose.connect("mongodb://127.0.0.1:27017/athletics", {
-    useNewUrlParser: true,
-    useFindAndModify: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  });
+  mongoose.connect(
+    `mongodb://127.0.0.1:27017/athletics-${OpenTrack.COMPETITION_ID}${OpenTrack.COMPETITION_YEAR}`,
+    {
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    }
+  );
 
   database = mongoose.connection;
 

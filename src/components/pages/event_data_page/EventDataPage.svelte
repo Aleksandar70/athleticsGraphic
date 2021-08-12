@@ -1,9 +1,9 @@
 <script>
   import { onMount } from "svelte";
   import Canvas from "../../canvas/Canvas.svelte";
-  import { getResults } from "../../../api/result.api";
+  import { getEventData } from "../../../api/event.api";
   import Spinner from "../../spinner/Spinner.svelte";
-  import "./resultpage.style.css";
+  import "./eventdatapage.style.css";
 
   export let eventId;
 
@@ -14,7 +14,7 @@
       eventId: eventId,
       gType: "remote",
     };
-    tableData = await getResults(requestData);
+    tableData = await getEventData(requestData);
   });
 </script>
 
