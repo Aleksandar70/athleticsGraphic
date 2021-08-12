@@ -4,6 +4,7 @@
   import { getResults } from "../../../api/result.api";
   import Spinner from "../../spinner/Spinner.svelte";
   import "./resultpage.style.css";
+  import { getContext } from "svelte";
 
   export let eventId;
 
@@ -12,7 +13,7 @@
   onMount(async () => {
     const requestData = {
       eventId: eventId,
-      gType: selectedSource,
+      gType: getContext('selectedSource'),
     };
     tableData = await getResults(requestData);
   });

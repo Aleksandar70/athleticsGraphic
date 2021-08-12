@@ -143,7 +143,7 @@ export const semiOverwriteResult = async (responseData, result, trials) => {
   let result20 = "";
 
   if (trials !== null) {
-    for (let i = 0; i < trials.length; i++) {
+    for (let i = 0; i < trials?.length; i++) {
       if (trials[i].bib === bib) {
         if (trials[i].round === 1) {
           round1 = trials[i].result;

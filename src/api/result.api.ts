@@ -5,7 +5,6 @@ import { getRequest } from "../utils/api.utils";
 export const getResults = async (
   params: IResultParams
 ): Promise<Record<string, unknown>[]> => {
-  console.log("params: ", params);
   const rawResults = await getRequest(Paths.RESULTS, params);
   return rawResults.data;
 };
