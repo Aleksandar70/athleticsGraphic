@@ -5,7 +5,7 @@
     sortByColumn,
   } from "./sort.helper";
   import { Link } from "svelte-routing";
-
+  import { Table } from 'sveltestrap';
   import { isFlag, getAltName } from "./flag.helper";
   import type { HeaderData, TableData } from "../../../global/types";
 
@@ -32,7 +32,7 @@
   }
 </script>
 
-<table class="result-data">
+<Table class="result-data">
   <tr>
     {#each headerData as column, i}
       {#if column.show}
@@ -65,4 +65,4 @@
       {/each}
     </tr>
   {/each}
-</table>
+</Table>
