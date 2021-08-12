@@ -12,7 +12,7 @@
   onMount(async () => {
     const requestData = {
       eventId: eventId,
-      gType: "remote",
+      gType: selectedSource,
     };
     tableData = await getResults(requestData);
   });

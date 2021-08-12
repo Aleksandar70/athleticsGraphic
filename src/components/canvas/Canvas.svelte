@@ -19,19 +19,25 @@
     Button,
   } from "sveltestrap";
   export let tableData;
-
+  export let selectedSource = GTYPE.REMOTE;
   let headerData = getHeaderData(tableData);
   let rowData = getTableData(tableData);
 </script>
 
 <div class="dropdownButton">
   <ButtonDropdown>
-    <DropdownToggle caret>{UIText.SOURCES}</DropdownToggle>
+    <DropdownToggle caret>{selectedSource}</DropdownToggle>
     <DropdownMenu>
       <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
-      <DropdownItem>{GTYPE.LOCAL}</DropdownItem>
-      <DropdownItem>{GTYPE.REMOTE}</DropdownItem>
-      <DropdownItem>{GTYPE.SEMI}</DropdownItem>
+      <DropdownItem on:click={() => (selectedSource = GTYPE.LOCAL)}
+        >{GTYPE.LOCAL}</DropdownItem
+      >
+      <DropdownItem on:click={() => (selectedSource = GTYPE.REMOTE)}
+        >{GTYPE.REMOTE}</DropdownItem
+      >
+      <DropdownItem on:click={() => (selectedSource = GTYPE.SEMI)}
+        >{GTYPE.SEMI}</DropdownItem
+      >
     </DropdownMenu>
   </ButtonDropdown>
 </div>
