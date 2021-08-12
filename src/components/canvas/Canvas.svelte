@@ -18,13 +18,11 @@
     DropdownToggle,
     Button,
   } from "sveltestrap";
-  import { setContext } from 'svelte'
 
   export let tableData;
   export let selectedSource = GTYPE.REMOTE;
   let headerData = getHeaderData(tableData);
   let rowData = getTableData(tableData);
-  setContext('selectedSource', selectedSource)
 </script>
 
 <div class="dropdownButton">
