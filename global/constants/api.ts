@@ -9,6 +9,9 @@ export abstract class Paths {
 
   static readonly EVENTS = "events";
   static readonly EVENTS_PATH = `${Paths.ROOT_PATH}${Paths.EVENTS}`;
+
+  static readonly COMPETITOR = "competitor";
+  static readonly COMPETITOR_PATH = `${Paths.ROOT_PATH}${Paths.COMPETITOR}`;
 }
 
 export abstract class OpenTrack {

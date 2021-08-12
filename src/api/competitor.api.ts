@@ -1,9 +1,10 @@
-import type { ITableData } from "../../backend/src/api/interfaces/interfaces";
+import { Paths } from "../../global/constants/api";
+import type { ITableData } from "../../global/interfaces";
 import { putRequest } from "../utils/api.utils";
 
 export const updateCompetitors = async (
-  competitors: ITableData
+  competitors: ITableData[]
 ): Promise<Record<string, unknown>[]> => {
-  const updatedCompetitors = await putRequest(competitors, "competitorUpdate");
+  const updatedCompetitors = await putRequest(Paths.COMPETITOR, competitors);
   return updatedCompetitors.data;
 };
