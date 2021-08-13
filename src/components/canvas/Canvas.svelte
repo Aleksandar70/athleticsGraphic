@@ -11,7 +11,6 @@
   import "./canvas.style.css";
   import { updateCompetitors } from "../../api/competitor.api";
   import { Button } from "sveltestrap";
-  import Dropdown from "../dropdown/Dropdown.svelte";
 
   export let tableData;
   export let defaultColumns;

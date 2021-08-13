@@ -13,6 +13,7 @@
   const valueChange = async (selectedSource) => {
     await updateConfig({ dataSource: selectedSource });
     dataSource.set(selectedSource);
+    location.reload();
   };
 </script>
 

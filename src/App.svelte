@@ -5,7 +5,6 @@
   import EventCompetitors from "./components/pages/event_competitors_page/EventCompetitorsPage.svelte";
   import Header from "./components/Home/Header.svelte";
   import Footer from "./components/Home/Footer.svelte";
-  import Dropdown from "./components/dropdown/Dropdown.svelte";
   import { Paths } from "../global/constants/api";
   import { getConfig } from "./api/config.api";
   import { dataSource } from "./config.store";

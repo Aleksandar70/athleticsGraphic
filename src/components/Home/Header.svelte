@@ -1,7 +1,7 @@
 <script>
   import { navigate } from "svelte-routing";
   import { Paths } from "../../../global/constants/api";
-  import Dropdown from "../dropdown/Dropdown.svelte";
+  import SourceDropdown from "../source_dropdown/SourceDropdown.svelte";
   import "./header.style.css";
 </script>
 
@@ -13,5 +13,5 @@
       alt="Elegra Logo"
     />
   </h1>
-  <Dropdown />
+  <SourceDropdown />
 </div>
