@@ -37,7 +37,9 @@
   <tr>
     {#each headerData as column, i}
       {#if column.show}
-        <th on:click={() => updateSortDirection(i)}>{column.value}</th>
+        <th class="header-text" on:click={() => updateSortDirection(i)}
+          >{column.value}</th
+        >
       {/if}
     {/each}
   </tr>
