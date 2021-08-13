@@ -3,6 +3,7 @@
     "outDir": "build",
     "strict": true,
     "esModuleInterop": true,
+    "noResolve": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
