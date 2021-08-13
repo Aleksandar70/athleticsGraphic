@@ -1,8 +1,23 @@
 import { EventModel } from "../database/models/event.model";
 import { getEvents } from "../database/repository/event.repo";
 import { getOTCompetitionData } from "./opentrack";
+import { GTYPE } from "../../../global/constants/constants";
 
-export const getEventsRemote = async () => {
+export const getAllEvents = async (gType: string) => {
+  switch (gType.toLowerCase()) {
+    case GTYPE.LOCAL: {
+      return getEventsLocal();
+    }
+    case GTYPE.REMOTE: {
+      return getEventsRemote();
+    }
+    case GTYPE.SEMI: {
+      return getEventsSemi();
+    }
+  }
+};
+
+const getEventsRemote = async () => {
   const { eventsData } = await getOTCompetitionData();
   for await (const data of eventsData) {
     EventModel.findOneAndUpdate({ eventId: data.eventId }, data);
@@ -10,7 +25,7 @@ export const getEventsRemote = async () => {
   return getEvents();
 };
 
-export const getEventsSemi = async () => {
+const getEventsSemi = async () => {
   const { eventsData } = await getOTCompetitionData();
   for await (const data of eventsData) {
     EventModel.findOneAndUpdate({ eventId: data.eventId }, data, {
@@ -20,4 +35,4 @@ export const getEventsSemi = async () => {
   return getEvents();
 };
 
-export const getEventsLocal = () => getEvents();
+const getEventsLocal = () => getEvents();
