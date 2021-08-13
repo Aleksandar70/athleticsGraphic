@@ -3,11 +3,11 @@ import { OpenTrack } from "../../../global/constants/api";
 
 let database: mongoose.Connection;
 
-export const connectDatabase = (): void => {
+export const connectDatabase = async (): Promise<void> => {
   if (database) {
     return;
   }
-  mongoose.connect(
+  const db = await mongoose.connect(
     `mongodb://127.0.0.1:27017/athletics-${OpenTrack.COMPETITION_ID}${OpenTrack.COMPETITION_YEAR}`,
     {
       useNewUrlParser: true,
@@ -16,16 +16,6 @@ export const connectDatabase = (): void => {
       useCreateIndex: true,
     }
   );
-
-  database = mongoose.connection;
-
-  database.once("open", async () => {
-    console.log("Connected to database");
-  });
-
-  database.on("error", () => {
-    console.log("Error connecting to database");
-  });
 };
 
 export const disconnect = (): void => {
