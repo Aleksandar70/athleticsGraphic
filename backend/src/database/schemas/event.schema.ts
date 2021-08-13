@@ -1,13 +1,9 @@
 import { Schema } from "mongoose";
 
 const EventSchema = new Schema({
-  competitionId: {
-    type: Object,
-    required: true,
-  },
   ageGroups: {
     type: Array,
-    required: true,
+    required: false,
     default: [],
   },
   cachedCount: {
@@ -17,7 +13,7 @@ const EventSchema = new Schema({
   },
   category: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   ceScoreFormula: {
@@ -37,22 +33,22 @@ const EventSchema = new Schema({
   },
   day: {
     type: Number,
-    required: true,
+    required: false,
     default: 0,
   },
   eventCode: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   eventId: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   genders: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   heatTimeCalculation: {
@@ -72,12 +68,12 @@ const EventSchema = new Schema({
   },
   name: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   r1Time: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   r2Day: {
@@ -110,6 +106,11 @@ const EventSchema = new Schema({
     required: false,
     default: "",
   },
+  showFormGuide: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   status: {
     type: String,
     required: false,
@@ -120,11 +121,7 @@ const EventSchema = new Schema({
     required: false,
     default: "",
   },
-  note: {
-    type: String,
-    required: false,
-    default: "",
-  },
+  units: [{ type: Schema.Types.ObjectId, ref: "units" }],
 });
 
 export default EventSchema;

@@ -20,9 +20,10 @@
   } from "sveltestrap";
 
   export let tableData;
-  export let selectedSource = GTYPE.REMOTE;
-  let headerData = getHeaderData(tableData);
-  let rowData = getTableData(tableData);
+  export let defaultColumns;
+
+  let headerData = getHeaderData(tableData, defaultColumns);
+  let rowData = getTableData(tableData, defaultColumns);
 </script>
 
 <div class="dropdownButton">

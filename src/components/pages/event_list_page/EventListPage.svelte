@@ -1,9 +1,10 @@
 <script lang="ts">
-  import Canvas from "../../../components/canvas/Canvas.svelte";
+  import Canvas from "../../canvas/Canvas.svelte";
   import { onMount } from "svelte";
   import { getEventData } from "../../../api/event.api";
   import Spinner from "../../spinner/Spinner.svelte";
-  import "./eventpage.style.css";
+  import "./eventlistpage.style.css";
+  import { defaultEventColumns } from "../../../../global/defaults";
 
   $: tableData = [];
 
@@ -14,7 +15,7 @@
 
 <div class="event-page">
   {#if tableData?.length > 0}
-    <Canvas {tableData} />
+    <Canvas {tableData} defaultColumns={defaultEventColumns} />
   {:else}
     <Spinner />
   {/if}
