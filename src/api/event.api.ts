@@ -1,10 +1,14 @@
 import { Paths } from "../../global/constants/api";
-import type { IResultParams } from "../../global/interfaces";
 import { getRequest } from "../utils/api.utils";
 
-export const getEventData = async (
-  params?: IResultParams
+export const getEventData = async (): Promise<Record<string, unknown>[]> => {
+  const response = await getRequest(`${Paths.EVENTS}`);
+  return response.data;
+};
+
+export const getEventCompetitors = async (
+  eventId: string
 ): Promise<Record<string, unknown>[]> => {
-  const response = await getRequest(Paths.EVENTS, params);
+  const response = await getRequest(`${Paths.EVENTS}/${eventId}`);
   return response.data;
 };

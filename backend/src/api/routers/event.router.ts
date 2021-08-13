@@ -1,4 +1,5 @@
 import express from "express";
+import { findCompetitorsForEvent } from "../../database/repository/competitor.repo";
 import { getEventsLocal } from "../events.api";
 
 const router = express.Router();
@@ -8,13 +9,10 @@ router.get("/", async (_, res) => {
   return await res.status(200).json(events);
 });
 
-// todo : fix server side table data call
-
 router.get("/:eventId", async (req, res) => {
-  console.log("eventId =>ss ");
   const { eventId } = req.params;
-  console.log("eventId => ", eventId);
-  return await res.status(200).json(eventId);
+  const competitors = await findCompetitorsForEvent(eventId);
+  return await res.status(200).json(competitors);
 });
 
 export default router;
