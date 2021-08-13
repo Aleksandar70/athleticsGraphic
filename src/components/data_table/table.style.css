@@ -15,10 +15,9 @@
   padding: 3px;
 }
 .flag {
-  width: 28px;
-  height: 20px;
+  width: 34px;
+  height: 23px;
   font-size: xx-small;
-  overflow: hidden;
 }
 .result-data th:first-child {
   display: table-cell;

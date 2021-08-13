@@ -1,56 +1,132 @@
-import { Constants } from "../../../../global/constants/constants";
-import type { IEventDocument } from "../types/event.types";
 import { EventModel } from "../models/event.model";
+import { ResultModel } from "../models/result.model";
+import { TrialModel } from "../models/trial.model";
+import { UnitModel } from "../models/unit.model";
 
-export const createEvent = async (
-  competition_id,
-  event
-): Promise<IEventDocument> => {
-  const events = await EventModel.find({
-    competitionId: competition_id,
-    eventCode: event.eventCode,
-    eventId: event.eventId,
-  }).exec();
+export const createEvents = async (events): Promise<void> => {
+  if ((await EventModel.countDocuments()) > 0) return;
 
-  if (events.length !== 0) {
-    return events[0];
+  const eventModels: any[] = [];
+  for (const event of events) {
+    const _units = event.units;
+
+    const unitModels: any[] = [];
+
+    for (const _unit of _units) {
+      const _results = _unit.results;
+      const _trials = _unit.trials;
+
+      const results = await ResultModel.insertMany(_results);
+      const trials = await TrialModel.insertMany(_trials);
+
+      const unitModel = new UnitModel({
+        results: results.map((result) => result._id),
+        trials: trials.map((trial) => trial._id),
+        ...unwrapUnit(_unit),
+      });
+
+      unitModels.push(unitModel);
+    }
+
+    const units = await UnitModel.insertMany(unitModels);
+
+    const eventModel = new EventModel({
+      units: units.map((unit) => unit._id),
+      ...unwrapEvent(event),
+    });
+
+    eventModels.push(eventModel);
   }
 
-  const competitionId = competition_id;
-  const ageGroups = event.ageGroups ?? [];
-  const category = event.category ?? Constants.EMPTY_STRING;
-  const day = event.day ?? 0;
-  const eventCode = event.eventCode ?? Constants.EMPTY_STRING;
-  const eventId = event.eventId ?? Constants.EMPTY_STRING;
-  const genders = event.genders ?? Constants.EMPTY_STRING;
-  const name = event.name ?? Constants.EMPTY_STRING;
-  const r1Time = event.r1Time ?? Constants.EMPTY_STRING;
-
-  const newEvent = EventModel.create({
-    competitionId,
-    ageGroups,
-    category,
-    day,
-    eventCode,
-    eventId,
-    genders,
-    name,
-    r1Time,
-  });
-  return newEvent;
+  await EventModel.insertMany(eventModels);
 };
 
-export const getEvents = async (): Promise<IEventDocument[]> => {
-  return await EventModel.find({});
-};
+export const getEvents = () => EventModel.find();
 
-export const editEvent = async (id, name, time, note) => {
-  const event = await EventModel.findById(id).exec();
-  if (event != null) {
-    event.name = name;
-    event.r1Time = time;
-    event.note = note;
-    return await event.save();
-  }
-  return null;
-};
+const unwrapEvent = ({
+  ageGroups,
+  cachedCount,
+  category,
+  ceScoreFormula,
+  cutAfterRound,
+  cutSurvivors,
+  day,
+  eventCode,
+  eventId,
+  genders,
+  heatTimeCalculation,
+  lanes,
+  maxFieldAttempts,
+  name,
+  r1Time,
+  r2Day,
+  r3Day,
+  reorderLastRound,
+  requireCallroomOverride,
+  rounds,
+  seedingMethod,
+  showFormGuide,
+  status,
+  teamTypes,
+}) => ({
+  ageGroups,
+  cachedCount,
+  category,
+  ceScoreFormula,
+  cutAfterRound,
+  cutSurvivors,
+  day,
+  eventCode,
+  eventId,
+  genders,
+  heatTimeCalculation,
+  lanes,
+  maxFieldAttempts,
+  name,
+  r1Time,
+  r2Day,
+  r3Day,
+  reorderLastRound,
+  requireCallroomOverride,
+  rounds,
+  seedingMethod,
+  showFormGuide,
+  status,
+  teamTypes,
+});
+
+const unwrapUnit = ({
+  day,
+  eventId,
+  eventName,
+  heat,
+  heatName,
+  heights,
+  initialHeight,
+  overrideCeScores,
+  overridePlaces,
+  resultsStatus,
+  round,
+  scheduledStartTime,
+  showAthleteDetails,
+  showPartials,
+  showPoints,
+  status,
+}) => ({
+  day,
+  eventId,
+  eventName,
+  heat,
+  heatName,
+  heights,
+  initialHeight,
+  overrideCeScores,
+  overridePlaces,
+  resultsStatus,
+  round,
+  scheduledStartTime,
+  showAthleteDetails,
+  showPartials,
+  showPoints,
+  status,
+});

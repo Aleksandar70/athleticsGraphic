@@ -1,30 +1,24 @@
-import type { Document, Model } from "mongoose";
-
 export interface ICompetition {
   address: string;
-  basicDescription: string;
+  city: string;
   contactDetails: string;
   country: string;
   date: string;
   englishName: string;
+  // events
   finishDate: string;
   fullName: string;
-  latitude: string;
-  longitude: string;
+  id: string;
+  latitude: number;
+  longitude: number;
   organiser: string;
-  resultsLink: string;
-  scoringSystem: string;
+  // relayTeams
   shortName: string;
   slug: string;
   teamTypes: string;
+  // teams
   type: string;
+  // venue
+  website: string;
   year: number;
-}
-
-export interface ICompetitionDocument extends ICompetition, Document {}
-export interface ICompetitionModel extends Model<ICompetitionDocument> {
-  createCompetition: (competition) => Promise<ICompetitionDocument>;
-  findCompetitionById: (
-    competitionId: string
-  ) => Promise<ICompetitionDocument[]>;
 }

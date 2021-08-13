@@ -5,7 +5,7 @@ const CompetitionSchema = new Schema({
     type: String,
     required: false,
   },
-  basicDescription: {
+  city: {
     type: String,
     required: false,
   },
@@ -15,31 +15,32 @@ const CompetitionSchema = new Schema({
   },
   country: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   date: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   englishName: {
     type: String,
     required: false,
   },
+  // events
   finishDate: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   fullName: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   id: {
     type: String,
-    required: true,
+    required: false,
     default: "",
   },
   latitude: {
@@ -55,15 +56,7 @@ const CompetitionSchema = new Schema({
     required: false,
     default: "",
   },
-  resultsLink: {
-    type: String,
-    required: false,
-  },
-  scoringSystem: {
-    type: String,
-    required: false,
-    default: "",
-  },
+  // relayTeams
   shortName: {
     type: String,
     required: false,
@@ -84,10 +77,20 @@ const CompetitionSchema = new Schema({
     required: false,
     default: "",
   },
+  // venue
+  website: {
+    type: String,
+    required: false,
+  },
   year: {
     type: Number,
-    required: true,
+    required: false,
     default: 2021,
+  },
+  yeah: {
+    type: Number,
+    required: false,
+    default: 22,
   },
 });
 
