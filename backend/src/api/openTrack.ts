@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { OpenTrack } from "../../../global/constants/api";
 
-export interface IOTCompetitionData {
+interface IOTCompetitionData {
   competitionData;
   copetitorsData;
   eventsData;
