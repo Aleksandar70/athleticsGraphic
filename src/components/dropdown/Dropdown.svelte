@@ -5,7 +5,7 @@
     DropdownMenu,
     DropdownToggle,
   } from "sveltestrap";
-  import { GTYPE } from "../../../global/constants/constants";
+  import { SOURCE } from "../../../global/constants/constants";
   import { UIText } from "../../../global/constants/ui_text";
   import { updateConfig } from "../../api/config.api";
   import { dataSource } from "../../config.store";
@@ -21,14 +21,14 @@
     <DropdownToggle caret>{$dataSource}</DropdownToggle>
     <DropdownMenu>
       <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
-      <DropdownItem on:click={() => valueChange(GTYPE.LOCAL)}
-        >{GTYPE.LOCAL}</DropdownItem
+      <DropdownItem on:click={() => valueChange(SOURCE.LOCAL)}
+        >{SOURCE.LOCAL}</DropdownItem
       >
-      <DropdownItem on:click={() => valueChange(GTYPE.REMOTE)}
-        >{GTYPE.REMOTE}</DropdownItem
+      <DropdownItem on:click={() => valueChange(SOURCE.REMOTE)}
+        >{SOURCE.REMOTE}</DropdownItem
       >
-      <DropdownItem on:click={() => valueChange(GTYPE.SEMI)}
-        >{GTYPE.SEMI}</DropdownItem
+      <DropdownItem on:click={() => valueChange(SOURCE.SEMI)}
+        >{SOURCE.SEMI}</DropdownItem
       >
     </DropdownMenu>
   </ButtonDropdown>

@@ -7,7 +7,7 @@ export abstract class Constants {
   static readonly DEFAULT_COMPETITION_YEAR: number = 2021;
 }
 
-export enum GTYPE {
+export enum SOURCE {
   LOCAL = "local",
   REMOTE = "remote",
   SEMI = "semi",

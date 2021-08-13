@@ -10,3 +10,8 @@ export const updateConfig = async (config) => {
 };
 
 export const getConfig = () => ConfigModel.find();
+
+export const getDataSource = async () => {
+  const config = await getConfig();
+  return config?.[0]?.dataSource;
+};

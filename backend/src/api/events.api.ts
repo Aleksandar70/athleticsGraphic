@@ -1,17 +1,17 @@
 import { EventModel } from "../database/models/event.model";
 import { getEvents } from "../database/repository/event.repo";
 import { getOTCompetitionData } from "./opentrack.api";
-import { GTYPE } from "../../../global/constants/constants";
+import { SOURCE } from "../../../global/constants/constants";
 
-export const getAllEvents = async (gType: string) => {
-  switch (gType.toLowerCase()) {
-    case GTYPE.LOCAL: {
+export const getAllEvents = async (source: string) => {
+  switch (source.toLowerCase()) {
+    case SOURCE.LOCAL: {
       return getEventsLocal();
     }
-    case GTYPE.REMOTE: {
+    case SOURCE.REMOTE: {
       return getEventsRemote();
     }
-    case GTYPE.SEMI: {
+    case SOURCE.SEMI: {
       return getEventsSemi();
     }
   }
