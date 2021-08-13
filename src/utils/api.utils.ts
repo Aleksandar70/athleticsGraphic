@@ -14,8 +14,8 @@ export const getRequest = async (
 
 export const putRequest = async (
   path: string,
-  body: ITableData[]
-): Promise<AxiosResponse<Record<string, unknown>[]>> => {
+  body: any
+): Promise<AxiosResponse<any>> => {
   const response = await axios.put(`${Paths.SERVER_URL}${path}`, body);
   return response;
 };

@@ -10,39 +10,17 @@
   } from "../data_table/table.helper";
   import "./canvas.style.css";
   import { updateCompetitors } from "../../api/competitor.api";
-  import { GTYPE } from "../../../global/constants/constants";
-  import {
-    ButtonDropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Button,
-  } from "sveltestrap";
+  import { Button } from "sveltestrap";
+  import Dropdown from "../dropdown/Dropdown.svelte";
 
   export let tableData;
   export let defaultColumns;
-  export let selectedSource = GTYPE.REMOTE;
+
   let headerData = getHeaderData(tableData, defaultColumns);
   let rowData = getTableData(tableData, defaultColumns);
 </script>
 
-<div class="dropdownButton">
-  <ButtonDropdown>
-    <DropdownToggle caret>{selectedSource}</DropdownToggle>
-    <DropdownMenu>
-      <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
-      <DropdownItem on:click={() => (selectedSource = GTYPE.LOCAL)}
-        >{GTYPE.LOCAL}</DropdownItem
-      >
-      <DropdownItem on:click={() => (selectedSource = GTYPE.REMOTE)}
-        >{GTYPE.REMOTE}</DropdownItem
-      >
-      <DropdownItem on:click={() => (selectedSource = GTYPE.SEMI)}
-        >{GTYPE.SEMI}</DropdownItem
-      >
-    </DropdownMenu>
-  </ButtonDropdown>
-</div>
+<Dropdown />
 <div class="canvas">
   <Modal>
     <ColumnDisplayOptions bind:headerData bind:rowData />
