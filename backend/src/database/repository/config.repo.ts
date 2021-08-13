@@ -1,3 +1,4 @@
+import { IConfig } from "../../../../global/interfaces";
 import { ConfigModel } from "../models/config.model";
 
 export const createDefaultConfig = async (): Promise<void> => {
@@ -5,11 +6,11 @@ export const createDefaultConfig = async (): Promise<void> => {
   ConfigModel.create({});
 };
 
-export const updateConfig = async (config) => {
+export const updateConfig = async (config: IConfig): Promise<void> => {
   await ConfigModel.updateMany({}, { $set: config });
 };
 
-export const getConfig = () => ConfigModel.find();
+export const getConfig = (): IConfig[] => ConfigModel.find();
 
 export const getDataSource = async () => {
   const config = await getConfig();

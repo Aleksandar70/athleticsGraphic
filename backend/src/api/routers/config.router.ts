@@ -1,4 +1,5 @@
 import express from "express";
+import { IConfig } from "../../../../global/interfaces";
 import { updateConfig, getConfig } from "../../database/repository/config.repo";
 
 const router = express.Router();
@@ -9,7 +10,7 @@ router.get("/", async (_, res) => {
 });
 
 router.put("/", async (req, res) => {
-  const config = req.body;
+  const config: IConfig = req.body;
   const val = await updateConfig(config);
   return await res.status(200).json(val);
 });
