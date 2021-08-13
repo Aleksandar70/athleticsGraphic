@@ -9,6 +9,7 @@ const CompetitorSchema = new Schema({
   nationalId: {
     type: String,
     required: false,
+    default: "",
   },
   firstName: {
     type: String,
@@ -33,6 +34,7 @@ const CompetitorSchema = new Schema({
   teamId: {
     type: String,
     required: false,
+    default: "",
   },
   nonScorer: {
     type: Boolean,
@@ -48,14 +50,17 @@ const CompetitorSchema = new Schema({
   sortEventCode: {
     type: String,
     required: false,
+    default: "",
   },
   sortBib: {
     type: String,
     required: false,
+    default: "",
   },
   sortAgeGroup: {
     type: String,
     required: false,
+    default: "",
   },
   checkedIn: {
     type: Boolean,
@@ -65,19 +70,23 @@ const CompetitorSchema = new Schema({
   nationality: {
     type: String,
     required: false,
+    default: "",
   },
   // notablePerformances
   event: {
     type: String,
     required: false,
+    default: "",
   },
   pb: {
     type: String,
     required: false,
+    default: "",
   },
   sb: {
     type: String,
     required: false,
+    default: "",
   },
   // eventEntered
   flagUrl: {

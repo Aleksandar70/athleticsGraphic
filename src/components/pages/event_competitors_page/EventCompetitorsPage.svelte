@@ -4,6 +4,7 @@
   import { getEventCompetitors } from "../../../api/event.api";
   import Spinner from "../../spinner/Spinner.svelte";
   import "./eventcompetitorspage.style.css";
+  import { defaultEventCompetitorsColumns } from "../../../../global/defaults";
 
   export let eventId;
 
@@ -16,7 +17,7 @@
 
 <div class="result-page">
   {#if tableData?.length > 0}
-    <Canvas {tableData} />
+    <Canvas {tableData} defaultColumns={defaultEventCompetitorsColumns} />
   {:else}
     <Spinner />
   {/if}

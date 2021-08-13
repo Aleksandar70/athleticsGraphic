@@ -4,6 +4,7 @@
   import { getEventData } from "../../../api/event.api";
   import Spinner from "../../spinner/Spinner.svelte";
   import "./eventlistpage.style.css";
+  import { defaultEventColumns } from "../../../../global/defaults";
 
   $: tableData = [];
 
@@ -14,7 +15,7 @@
 
 <div class="event-page">
   {#if tableData?.length > 0}
-    <Canvas {tableData} />
+    <Canvas {tableData} defaultColumns={defaultEventColumns} />
   {:else}
     <Spinner />
   {/if}

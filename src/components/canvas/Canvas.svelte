@@ -12,9 +12,10 @@
   import { updateCompetitors } from "../../api/competitor.api";
 
   export let tableData;
+  export let defaultColumns;
 
-  let headerData = getHeaderData(tableData);
-  let rowData = getTableData(tableData);
+  let headerData = getHeaderData(tableData, defaultColumns);
+  let rowData = getTableData(tableData, defaultColumns);
 </script>
 
 <div class="canvas">
