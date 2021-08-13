@@ -9,7 +9,6 @@
   export let eventId;
 
   $: tableData = [];
-  let selectedSource = GTYPE.REMOTE;
 
   onMount(async () => {
     tableData = await getEventCompetitors(eventId);

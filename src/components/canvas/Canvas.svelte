@@ -21,7 +21,7 @@
 
   export let tableData;
   export let defaultColumns;
-
+  export let selectedSource = GTYPE.REMOTE;
   let headerData = getHeaderData(tableData, defaultColumns);
   let rowData = getTableData(tableData, defaultColumns);
 </script>
