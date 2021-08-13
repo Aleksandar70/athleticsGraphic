@@ -20,7 +20,6 @@
   let rowData = getTableData(tableData, defaultColumns);
 </script>
 
-<Dropdown />
 <div class="canvas">
   <Modal>
     <ColumnDisplayOptions bind:headerData bind:rowData />

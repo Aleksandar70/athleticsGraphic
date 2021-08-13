@@ -43,6 +43,10 @@ export interface IResultParams {
   order?: string;
 }
 
+export interface IConfig {
+  dataSource: string;
+}
+
 export interface ITableData {
   advancement: string;
   age_group: string;
