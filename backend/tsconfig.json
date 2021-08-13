@@ -8,8 +8,7 @@
     "noImplicitThis": true,
     "noUnusedLocals": false,
     "allowSyntheticDefaultImports": true,
-    "removeComments": true,
-    "types": ["node"]
+    "removeComments": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

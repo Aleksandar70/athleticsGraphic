@@ -1,6 +1,6 @@
 import { EventModel } from "../database/models/event.model";
 import { getEvents } from "../database/repository/event.repo";
-import { getOTCompetitionData } from "./opentrack";
+import { getOTCompetitionData } from "./opentrack.api";
 import { GTYPE } from "../../../global/constants/constants";
 
 export const getAllEvents = async (gType: string) => {
