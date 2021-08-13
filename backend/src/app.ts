@@ -5,7 +5,7 @@ import EventRouter from "./api/routers/event.router";
 import CompetitorRouter from "./api/routers/competitor.router";
 import { Paths } from "../../global/constants/api";
 import { json } from "body-parser";
-import { getOTCompetitionData } from "./api/opentrack";
+import { getOTCompetitionData } from "../src/api/opentrack";
 import { createCompetition } from "./database/repository/competition.repo";
 import { createCompetitors } from "./database/repository/competitor.repo";
 import { createEvents } from "./database/repository/event.repo";
