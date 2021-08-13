@@ -21,7 +21,7 @@ export const findCompetitorsForEvent = async (eventId: string) => {
 
   if (source === SOURCE.REMOTE) {
     for (const competitor of competitorsData) {
-      await CompetitorModel.updateOne(
+      await CompetitorModel.replaceOne(
         {
           competitorId: competitor.competitorId,
         },
