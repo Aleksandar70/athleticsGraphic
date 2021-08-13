@@ -2,17 +2,19 @@ import { EventModel } from "../database/models/event.model";
 import { getEvents } from "../database/repository/event.repo";
 import { getOTCompetitionData } from "./opentrack.api";
 import { SOURCE } from "../../../global/constants/constants";
+import { getDataSource } from "../database/repository/config.repo";
 
-export const getAllEvents = async (source: string) => {
+export const getAllEvents = async () => {
+  const source = await getDataSource();
   switch (source.toLowerCase()) {
     case SOURCE.LOCAL: {
-      return getEventsLocal();
+      return await getEventsLocal();
     }
     case SOURCE.REMOTE: {
-      return getEventsRemote();
+      return await getEventsRemote();
     }
     case SOURCE.SEMI: {
-      return getEventsSemi();
+      return await getEventsSemi();
     }
   }
 };

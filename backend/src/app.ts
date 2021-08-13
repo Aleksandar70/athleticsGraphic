@@ -18,7 +18,7 @@ connectDatabase()
     await createDefaultConfig();
     const otCompetitionData = await getOTCompetitionData();
     createCompetition(otCompetitionData.competitionData);
-    await createCompetitors(otCompetitionData.copetitorsData);
+    await createCompetitors(otCompetitionData.competitorsData);
     await createEvents(otCompetitionData.eventsData);
   })
   .catch((_) => console.log("Error connecting to database"));

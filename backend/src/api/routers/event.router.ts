@@ -6,7 +6,7 @@ import { getAllEvents } from "../events.api";
 const router = express.Router();
 
 router.get("/", async (_, res) => {
-  const events = await getAllEvents(await getDataSource());
+  const events = await getAllEvents();
   return await res.status(200).json(events);
 });
 
