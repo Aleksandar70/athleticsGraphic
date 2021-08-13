@@ -3,7 +3,7 @@ import { OpenTrack } from "../../../global/constants/api";
 
 interface IOTCompetitionData {
   competitionData;
-  copetitorsData;
+  competitorsData;
   eventsData;
 }
 
@@ -15,7 +15,7 @@ export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
     const competitionData = otCompetitionData.data;
     return {
       competitionData: unwrapCompetition(competitionData),
-      copetitorsData: competitionData.competitors,
+      competitorsData: competitionData.competitors,
       eventsData: competitionData.events,
     };
   } catch (err) {

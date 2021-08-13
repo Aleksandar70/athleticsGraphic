@@ -10,6 +10,7 @@
   } from "../data_table/table.helper";
   import "./canvas.style.css";
   import { updateCompetitors } from "../../api/competitor.api";
+  import { Button } from "sveltestrap";
 
   export let tableData;
   export let defaultColumns;
@@ -22,10 +23,10 @@
   <Modal>
     <ColumnDisplayOptions bind:headerData bind:rowData />
   </Modal>
-  <button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</button>
+  <Button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</Button>
   <DataTable {headerData} {rowData} />
-  <button
+  <Button
     on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
-    >{UIText.TABLE_SAVE}</button
+    >{UIText.TABLE_SAVE}</Button
   >
 </div>

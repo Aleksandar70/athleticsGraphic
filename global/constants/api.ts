@@ -12,6 +12,9 @@ export abstract class Paths {
 
   static readonly COMPETITOR = "competitor";
   static readonly COMPETITOR_PATH = `${Paths.ROOT_PATH}${Paths.COMPETITOR}`;
+
+  static readonly CONFIG = "config";
+  static readonly CONFIG_PATH = `${Paths.ROOT_PATH}${Paths.CONFIG}`;
 }
 
 export abstract class OpenTrack {

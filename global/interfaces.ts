@@ -37,10 +37,14 @@ export interface IOpenTrackEventData {
 
 export interface IResultParams {
   eventId: string;
-  gType: string;
+  source: string;
   heat?: number;
   round?: number;
   order?: string;
+}
+
+export interface IConfig {
+  dataSource: string;
 }
 
 export interface ITableData {
