@@ -36,7 +36,6 @@ export const getTableData = (
       id: key,
     }));
   });
-  console.log("rows -> ", tableData);
   return tableData;
 };
 

@@ -4,6 +4,8 @@ import { ITableData } from "../../../../global/interfaces";
 
 const routerCompetitor = express.Router();
 
+// TODO: FIX THIS
+
 routerCompetitor.put("/", async (req, res) => {
   // const competitors: ITableData = req.body;
   // const val = await updateCompetitors(competitors);
