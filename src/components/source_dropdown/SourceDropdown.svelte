@@ -27,14 +27,17 @@
   <DropdownMenu class="data-source--dropdown">
     <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
     <DropdownItem
+      class="source-item"
       active={isActive(SOURCE.LOCAL)}
       on:click={() => valueChange(SOURCE.LOCAL)}>{SOURCE.LOCAL}</DropdownItem
     >
     <DropdownItem
+      class="source-item"
       active={isActive(SOURCE.REMOTE)}
       on:click={() => valueChange(SOURCE.REMOTE)}>{SOURCE.REMOTE}</DropdownItem
     >
     <DropdownItem
+      class="source-item"
       active={isActive(SOURCE.SEMI)}
       on:click={() => valueChange(SOURCE.SEMI)}>{SOURCE.SEMI}</DropdownItem
     >

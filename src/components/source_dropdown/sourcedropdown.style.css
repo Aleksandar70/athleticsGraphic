@@ -2,3 +2,12 @@
   background-color: #fff9ec !important;
   color: black;
 }
+
+.source-item.active,
+.source-item:active {
+  background-color: #c48262 !important;
+}
+
+.source-item:hover {
+  background-color: #ffd4c1 !important;
+}
