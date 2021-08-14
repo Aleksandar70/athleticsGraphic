@@ -1,8 +1,7 @@
-<script>
+<script lang="ts">
   import DataTable from "../data_table/DataTable.svelte";
   import { UIText } from "../../../global/constants/ui_text";
-  import ColumnDisplayOptions from "../column_display_options/ColumnDisplayOptions.svelte";
-  import Modal, { getModal } from "../modal/Modal.svelte";
+  import ColumnDisplayOptionsModal from "../column_display_options/ColumnDisplayOptions.svelte";
   import {
     getTableData,
     getHeaderData,
@@ -20,10 +19,7 @@
 </script>
 
 <div class="canvas">
-  <Modal>
-    <ColumnDisplayOptions bind:headerData bind:rowData />
-  </Modal>
-  <Button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</Button>
+  <ColumnDisplayOptionsModal bind:headerData bind:rowData />
   <DataTable {headerData} {rowData} />
   <Button
     on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
