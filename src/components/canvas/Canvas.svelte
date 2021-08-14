@@ -8,7 +8,6 @@
     search,
   } from "../data_table/table.helper";
   import "./canvas.style.css";
-  import { updateCompetitors } from "../../api/competitor.api";
   import { Button, Input } from "sveltestrap";
   import type { ISearch } from "../../../global/interfaces";
 
