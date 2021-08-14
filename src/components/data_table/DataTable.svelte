@@ -7,12 +7,12 @@
   import { Link } from "svelte-routing";
   import { Table } from "sveltestrap";
   import { isFlag, getAltName } from "./flag.helper";
-  import type { HeaderData, TableData } from "../../../global/types";
+  import type { Headers, TableData } from "../../../global/types";
 
   import "./table.style.css";
   import { Paths } from "../../../global/constants/api";
 
-  export let headerData: HeaderData;
+  export let headerData: Headers;
   export let rowData: TableData;
 
   let sortDirection = SortDirection.DESCENDING;
@@ -23,13 +23,10 @@
     sortBy = columnIndex;
   };
 
-  $: sortedRows = rowData as Record<string, string>[][];
+  $: sortedRows = rowData;
 
   $: if (sortBy !== null) {
-    sortedRows = sortByColumn(rowData, sortBy, sortDirection) as Record<
-      string,
-      string
-    >[][];
+    sortedRows = sortByColumn(rowData, sortBy, sortDirection);
   }
 </script>
 

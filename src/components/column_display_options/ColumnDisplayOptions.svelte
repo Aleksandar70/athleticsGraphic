@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Icon from "svelte-awesome/components/Icon.svelte";
-  import { eye, toggleOn, toggleOff } from "svelte-awesome/icons";
+  import Fa from "svelte-fa";
+  import { faEye } from "@fortawesome/free-solid-svg-icons";
   import {
     Button,
     Modal,
@@ -9,7 +9,7 @@
     ModalHeader,
   } from "sveltestrap";
   import { UIText } from "../../../global/constants/ui_text";
-  import type { Headers, TableData } from "../../../global/types";
+  import type { HeaderField, Headers, TableData } from "../../../global/types";
   import { hideColumn } from "../data_table/table.helper";
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
@@ -21,7 +21,7 @@
 
   const toggle = () => (isOpen = !isOpen);
 
-  const toggleColumn = (field) => {
+  const toggleColumn = (field: HeaderField) => {
     field.show = !field.show;
     rowData = hideColumn(field, rowData);
     return field;
@@ -44,4 +44,4 @@
     <Button on:click={toggle}>{UIText.CLOSE}</Button>
   </ModalFooter>
 </Modal>
-<Button on:click={() => toggle()}><Icon data={eye} /></Button>
+<Button on:click={() => toggle()}><Fa icon={faEye} /></Button>

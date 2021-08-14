@@ -10,9 +10,10 @@
   import "./canvas.style.css";
   import { Button, Input } from "sveltestrap";
   import type { ISearch } from "../../../global/interfaces";
+  import type { RawData } from "../../../global/types";
 
-  export let tableData;
-  export let defaultColumns;
+  export let tableData: RawData;
+  export let defaultColumns: string[];
   export let setSearch: ISearch = { enable: false };
 
   const rows = getTableData(tableData, defaultColumns);
@@ -20,12 +21,9 @@
   let headerData = getHeaderData(tableData, defaultColumns);
   let rowData = rows;
 
-  const doSearch = (event) =>
-    (rowData = search(
-      (event.target as HTMLInputElement).value,
-      setSearch.key,
-      rows
-    ));
+  const doSearch = (target: EventTarget) => {
+    rowData = search((target as HTMLInputElement).value, setSearch.key, rows);
+  };
 </script>
 
 <div class="canvas">
@@ -35,7 +33,7 @@
       type="search"
       bsSize="sm"
       placeholder="🔎 Search by {setSearch.key}"
-      on:input={(event) => doSearch(event)}
+      on:input={(event) => doSearch(event.target)}
     />
   {/if}
   <DataTable {headerData} {rowData} />
