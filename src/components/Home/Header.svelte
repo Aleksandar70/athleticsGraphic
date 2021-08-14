@@ -5,13 +5,13 @@
   import "./header.style.css";
 </script>
 
-<div class="header">
-  <h1>
-    <img
-      on:click={() => navigate(Paths.ROOT_PATH)}
-      src="/img/ElegraLogo.png"
-      alt="Elegra Logo"
-    />
-  </h1>
-  <SourceDropdown />
-</div>
+<header class="header">
+  <img
+    on:click={() => navigate(Paths.ROOT_PATH)}
+    src="/img/logo.png"
+    alt="Elegra Logo"
+  />
+  <div class="options">
+    <SourceDropdown />
+  </div>
+</header>

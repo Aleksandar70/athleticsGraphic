@@ -1,8 +1,4 @@
-.dropdown-button {
-  line-height: 12px;
-  width: 18px;
-  font-size: 8pt;
-  font-family: tahoma;
-  margin-top: 1px;
-  margin-right: 2px;
+.data-source--dropdown {
+  background-color: #fff9ec !important;
+  color: black;
 }
