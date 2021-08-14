@@ -4,3 +4,7 @@
   padding: 25px 0;
   height: 100%;
 }
+
+.input-search {
+  width: 230px !important;
+}

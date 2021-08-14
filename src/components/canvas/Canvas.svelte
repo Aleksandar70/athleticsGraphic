@@ -33,6 +33,7 @@
 <div class="canvas">
   {#if setSearch.enable}
     <Input
+      class="input-search"
       type="search"
       bsSize="sm"
       placeholder="🔎 Search by {setSearch.key}"
