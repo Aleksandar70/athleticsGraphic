@@ -1,13 +1,13 @@
 .data-source--dropdown {
-  background-color: #fff9ec !important;
+  background-color: var(--main-light) !important;
   color: black;
 }
 
 .source-item.active,
 .source-item:active {
-  background-color: #c48262 !important;
+  background-color: var(--main-dark) !important;
 }
 
 .source-item:hover {
-  background-color: #ffd4c1 !important;
+  background-color: var(--hover-color) !important;
 }

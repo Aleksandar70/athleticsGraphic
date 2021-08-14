@@ -32,10 +32,15 @@
 
 <div class="canvas">
   {#if setSearch.enable}
-    <Input type="search" on:input={(event) => doSearch(event)} />
+    <Input
+      type="search"
+      bsSize="sm"
+      placeholder="🔎 Search by {setSearch.key}"
+      on:input={(event) => doSearch(event)}
+    />
   {/if}
   <DataTable {headerData} {rowData} />
-  <div>
+  <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData bind:rowData />
     <Button
       on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}

@@ -32,4 +32,6 @@
     <Button on:click={toggle}>{UIText.CLOSE}</Button>
   </ModalFooter>
 </Modal>
-<Button on:click={() => toggle()}><Icon data={eye} /></Button>
+<Button class="toggle-modal" on:click={() => toggle()}
+  ><Icon data={eye} /></Button
+>
