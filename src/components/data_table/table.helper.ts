@@ -52,6 +52,20 @@ export const getHeaderData = (
   return tableColumns;
 };
 
+export const search = (
+  searchValue: string,
+  searchKey: string,
+  tableData: TableData
+): TableData => {
+  return tableData.filter((row) =>
+    (
+      row.find(
+        (r) => (r.id as string).toLowerCase() === searchKey.toLowerCase()
+      ).value as string
+    ).includes(searchValue.toLowerCase())
+  );
+};
+
 export const getUpdatedTable = (tableData, rowData) => {
   const keys = Object.keys(tableData[0]);
   const updatedValues = rowData.map((row) => row.map((field) => field.value));
