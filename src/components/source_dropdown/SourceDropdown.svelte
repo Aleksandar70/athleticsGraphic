@@ -35,9 +35,3 @@
     </DropdownMenu>
   </ButtonDropdown>
 </div>
-
-<style>
-  .dropdownButton {
-    position: relative;
-  }
-</style>
