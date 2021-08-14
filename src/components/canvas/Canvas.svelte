@@ -34,10 +34,12 @@
   {#if setSearch.enable}
     <Input type="search" on:input={(event) => doSearch(event)} />
   {/if}
-  <ColumnDisplayOptionsModal bind:headerData bind:rowData />
   <DataTable {headerData} {rowData} />
-  <Button
-    on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
-    >{UIText.TABLE_SAVE}</Button
-  >
+  <div>
+    <ColumnDisplayOptionsModal bind:headerData bind:rowData />
+    <Button
+      on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
+      >{UIText.TABLE_SAVE}</Button
+    >
+  </div>
 </div>

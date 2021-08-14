@@ -60,7 +60,8 @@ export const search = (
   return tableData.filter((row) =>
     (
       row.find(
-        (r) => (r.id as string).toLowerCase() === searchKey.toLowerCase()
+        (field) =>
+          (field.id as string).toLowerCase() === searchKey.toLowerCase()
       ).value as string
     ).includes(searchValue.toLowerCase())
   );

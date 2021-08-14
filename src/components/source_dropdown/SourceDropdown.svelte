@@ -9,6 +9,7 @@
   import { UIText } from "../../../global/constants/ui_text";
   import { updateConfig } from "../../api/config.api";
   import { dataSource } from "../../config.store";
+  import "./sourcedropdown.style.css";
 
   const valueChange = async (selectedSource) => {
     await updateConfig({ dataSource: selectedSource });
@@ -17,7 +18,7 @@
   };
 </script>
 
-<div class="dropdownButton">
+<div class="dropdown-button">
   <ButtonDropdown>
     <DropdownToggle caret>{$dataSource}</DropdownToggle>
     <DropdownMenu>
