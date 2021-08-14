@@ -11,6 +11,10 @@
   text-transform: uppercase;
 }
 
+.table-header:hover {
+  cursor: pointer;
+}
+
 .table-body {
   background-color: #ffffff;
 }

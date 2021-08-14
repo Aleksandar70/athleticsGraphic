@@ -1,7 +1,9 @@
 <script>
+  import { UIText } from "../../../global/constants/ui_text";
+
   import "./footer.style.css";
 </script>
 
 <footer class="footer">
-  <div class="copyright">Copyright 2021 Elegra</div>
+  <span class="copyright">{UIText.FOOTER_TEXT}</span>
 </footer>

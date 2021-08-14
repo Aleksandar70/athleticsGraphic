@@ -20,11 +20,17 @@
 
 <div class="app">
   <Router url={Paths.CLIENT_URL}>
-    <Header />
-    <Route path={Paths.ROOT_PATH}><EventListPage /></Route>
-    <Route path="{Paths.EVENTS_PATH}/:eventId" let:params>
-      <EventCompetitors eventId={params.eventId} />
-    </Route>
+    <section class="header-section">
+      <Header />
+    </section>
+    <main class="main-content">
+      <Route path={Paths.ROOT_PATH}><EventListPage /></Route>
+      <Route path="{Paths.EVENTS_PATH}/:eventId" let:params>
+        <EventCompetitors eventId={params.eventId} />
+      </Route>
+    </main>
   </Router>
-  <Footer />
+  <section class="footer-section">
+    <Footer />
+  </section>
 </div>
