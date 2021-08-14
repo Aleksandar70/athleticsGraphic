@@ -1,4 +1,4 @@
-.result-page {
-  display: grid;
-  place-items: center;
+.event-competitors--page {
+  display: flex;
+  justify-content: center;
 }

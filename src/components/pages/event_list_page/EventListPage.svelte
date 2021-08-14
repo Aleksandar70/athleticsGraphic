@@ -13,7 +13,7 @@
   });
 </script>
 
-<div class="event-page">
+<div class="event-list--page">
   {#if tableData?.length > 0}
     <Canvas
       {tableData}

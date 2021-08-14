@@ -1,4 +1,4 @@
-.event-page {
-  display: grid;
-  place-items: center;
+.event-list--page {
+  display: flex;
+  justify-content: center;
 }

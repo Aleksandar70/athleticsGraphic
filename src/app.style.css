@@ -9,6 +9,5 @@
 }
 
 .app {
-  display: grid;
   background-color: var(--main-light);
 }

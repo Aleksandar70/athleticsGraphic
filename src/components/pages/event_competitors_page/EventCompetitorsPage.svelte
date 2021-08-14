@@ -15,7 +15,7 @@
   });
 </script>
 
-<div class="result-page">
+<div class="event-competitors--page">
   {#if tableData?.length > 0}
     <Canvas {tableData} defaultColumns={defaultEventCompetitorsColumns} />
   {:else}
