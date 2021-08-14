@@ -15,7 +15,11 @@
 
 <div class="event-page">
   {#if tableData?.length > 0}
-    <Canvas {tableData} defaultColumns={defaultEventColumns} />
+    <Canvas
+      {tableData}
+      defaultColumns={defaultEventColumns}
+      setSearch={{ enable: true, key: "name" }}
+    />
   {:else}
     <Spinner />
   {/if}

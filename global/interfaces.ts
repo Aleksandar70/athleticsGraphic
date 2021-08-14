@@ -47,6 +47,11 @@ export interface IConfig {
   dataSource: string;
 }
 
+export interface ISearch {
+  enable: boolean;
+  key?: string;
+}
+
 export interface ITableData {
   advancement: string;
   age_group: string;
