@@ -1,11 +1,11 @@
 import type {
-  FieldData,
-  HeaderData,
+  HeaderField,
   RawData,
   TableData,
+  Headers,
 } from "../../../global/types";
 
-export const hideColumn = (field: FieldData, data: TableData): TableData => {
+export const hideColumn = (field: HeaderField, data: TableData): TableData => {
   data.forEach((record) => {
     const rowData = record.find((data) => data.id == field.value);
     rowData.show = field.show;
@@ -42,10 +42,10 @@ export const getTableData = (
 export const getHeaderData = (
   rawData: RawData,
   defaultColumns: string[]
-): HeaderData => {
+): Headers => {
   if (!rawData?.length) return [];
 
-  const tableColumns = Object.keys(rawData[0]).map((data) => ({
+  const tableColumns: Headers = Object.keys(rawData[0]).map((data) => ({
     value: data,
     show: defaultColumns.includes(data),
   }));
@@ -67,12 +67,12 @@ export const search = (
   );
 };
 
-export const getUpdatedTable = (tableData, rowData) => {
-  const keys = Object.keys(tableData[0]);
-  const updatedValues = rowData.map((row) => row.map((field) => field.value));
+// export const getUpdatedTable = (tableData, rowData) => {
+//   const keys = Object.keys(tableData[0]);
+//   const updatedValues = rowData.map((row) => row.map((field) => field.value));
 
-  const updatedTable = updatedValues.map((values) =>
-    Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]))
-  );
-  return updatedTable;
-};
+//   const updatedTable = updatedValues.map((values) =>
+//     Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]))
+//   );
+//   return updatedTable;
+// };

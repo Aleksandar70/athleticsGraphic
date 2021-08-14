@@ -5,7 +5,6 @@
   import {
     getTableData,
     getHeaderData,
-    getUpdatedTable,
     search,
   } from "../data_table/table.helper";
   import "./canvas.style.css";
@@ -43,9 +42,6 @@
   <DataTable {headerData} {rowData} />
   <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData bind:rowData />
-    <Button
-      on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
-      >{UIText.TABLE_SAVE}</Button
-    >
+    <Button on:click={() => {}}>{UIText.TABLE_SAVE}</Button>
   </div>
 </div>
