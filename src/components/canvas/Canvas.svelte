@@ -35,10 +35,10 @@
   <Modal>
     <ColumnDisplayOptions bind:headerData bind:rowData />
   </Modal>
+  <Button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</Button>
   {#if setSearch.enable}
     <Input type="search" on:input={(event) => doSearch(event)} />
   {/if}
-  <Button on:click={() => getModal().open()}>{UIText.COLUMN_TOGGLE}</Button>
   <DataTable {headerData} {rowData} />
   <Button
     on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
