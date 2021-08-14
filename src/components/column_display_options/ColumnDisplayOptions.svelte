@@ -2,7 +2,7 @@
   import Icon from "svelte-awesome/components/Icon.svelte";
   import { eye } from "svelte-awesome/icons";
   import { Button, Input, Modal, ModalBody, ModalFooter } from "sveltestrap";
-
+  import { UIText } from "../../../global/constants/ui_text";
   import { hideColumn } from "../data_table/table.helper";
 
   export let headerData;
@@ -29,7 +29,7 @@
     {/each}
   </ModalBody>
   <ModalFooter>
-    <Button on:click={toggle}>Close</Button>
+    <Button on:click={toggle}>{UIText.CLOSE}</Button>
   </ModalFooter>
 </Modal>
 <Button on:click={() => toggle()}><Icon data={eye} /></Button>
