@@ -8,7 +8,7 @@
 <header class="header">
   <img
     on:click={() => navigate(Paths.ROOT_PATH)}
-    src="/img/logo.png"
+    src="/img/logo-light.svg"
     alt="Elegra Logo"
   />
   <div class="options">
