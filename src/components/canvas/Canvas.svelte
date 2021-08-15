@@ -5,16 +5,15 @@
   import {
     getTableData,
     getHeaderData,
-    getUpdatedTable,
     search,
   } from "../data_table/table.helper";
   import "./canvas.style.css";
-  import { updateCompetitors } from "../../api/competitor.api";
   import { Button, Input } from "sveltestrap";
   import type { ISearch } from "../../../global/interfaces";
+  import type { RawData } from "../../../global/types";
 
-  export let tableData;
-  export let defaultColumns;
+  export let tableData: RawData;
+  export let defaultColumns: string[];
   export let setSearch: ISearch = { enable: false };
 
   const rows = getTableData(tableData, defaultColumns);
@@ -22,24 +21,24 @@
   let headerData = getHeaderData(tableData, defaultColumns);
   let rowData = rows;
 
-  const doSearch = (event) =>
-    (rowData = search(
-      (event.target as HTMLInputElement).value,
-      setSearch.key,
-      rows
-    ));
+  const doSearch = (target: EventTarget) => {
+    rowData = search((target as HTMLInputElement).value, setSearch.key, rows);
+  };
 </script>
 
 <div class="canvas">
   {#if setSearch.enable}
-    <Input type="search" on:input={(event) => doSearch(event)} />
+    <Input
+      class="input-search"
+      type="search"
+      bsSize="sm"
+      placeholder="🔎 Search by {setSearch.key}"
+      on:input={(event) => doSearch(event.target)}
+    />
   {/if}
   <DataTable {headerData} {rowData} />
-  <div>
+  <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData bind:rowData />
-    <Button
-      on:click={() => updateCompetitors(getUpdatedTable(tableData, rowData))}
-      >{UIText.TABLE_SAVE}</Button
-    >
+    <Button on:click={() => {}}>{UIText.TABLE_SAVE}</Button>
   </div>
 </div>

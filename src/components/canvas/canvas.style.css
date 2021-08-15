@@ -1,4 +1,10 @@
 .canvas {
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 0;
+  height: 100%;
+}
+
+.input-search {
+  width: 230px !important;
 }
