@@ -16,28 +16,30 @@
     dataSource.set(selectedSource);
     location.reload();
   };
+
+  $: isActive = (value) => $dataSource === value;
 </script>
 
-<div class="dropdown-button">
-  <ButtonDropdown>
-    <DropdownToggle caret>{$dataSource}</DropdownToggle>
-    <DropdownMenu>
-      <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
-      <DropdownItem on:click={() => valueChange(SOURCE.LOCAL)}
-        >{SOURCE.LOCAL}</DropdownItem
-      >
-      <DropdownItem on:click={() => valueChange(SOURCE.REMOTE)}
-        >{SOURCE.REMOTE}</DropdownItem
-      >
-      <DropdownItem on:click={() => valueChange(SOURCE.SEMI)}
-        >{SOURCE.SEMI}</DropdownItem
-      >
-    </DropdownMenu>
-  </ButtonDropdown>
-</div>
-
-<style>
-  .dropdownButton {
-    position: relative;
-  }
-</style>
+<ButtonDropdown>
+  <DropdownToggle class="data-source--dropdown text-dark" caret
+    >{$dataSource}</DropdownToggle
+  >
+  <DropdownMenu class="data-source--dropdown">
+    <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
+    <DropdownItem
+      class="source-item"
+      active={isActive(SOURCE.LOCAL)}
+      on:click={() => valueChange(SOURCE.LOCAL)}>{SOURCE.LOCAL}</DropdownItem
+    >
+    <DropdownItem
+      class="source-item"
+      active={isActive(SOURCE.REMOTE)}
+      on:click={() => valueChange(SOURCE.REMOTE)}>{SOURCE.REMOTE}</DropdownItem
+    >
+    <DropdownItem
+      class="source-item"
+      active={isActive(SOURCE.SEMI)}
+      on:click={() => valueChange(SOURCE.SEMI)}>{SOURCE.SEMI}</DropdownItem
+    >
+  </DropdownMenu>
+</ButtonDropdown>

@@ -1,5 +1,5 @@
 import express from "express";
-import { ITableData } from "../../../../global/interfaces";
+// import { ITableData } from "../../../../global/interfaces";
 // import { updateCompetitors } from "../../database/repository/competitor.repo";
 
 const routerCompetitor = express.Router();
