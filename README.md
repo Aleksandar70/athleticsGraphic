@@ -38,3 +38,6 @@ To run lint, go to either FE or BE directory and run `npm run lint`
 
 ## Bootstrap v5
 https://sveltestrap.js.org/?path=/story/components--get-started
+
+## Mongo DB
+The most aplicable database for this project.

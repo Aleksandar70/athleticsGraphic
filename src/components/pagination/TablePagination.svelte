@@ -1,5 +1,7 @@
 <script lang="ts">
   import { Pagination, PaginationItem, PaginationLink } from "sveltestrap";
+  import "./tablePagination.style.css";
+
   let rows = [];
   let page = 0;
   let totalPages = [];
@@ -27,7 +29,7 @@
   };
 </script>
 
-<Pagination size="sm">
+<Pagination class="pagination-centered" size="sm">
   <PaginationItem>
     <PaginationLink first on:click={() => setPage(page)} />
   </PaginationItem>
