@@ -11,6 +11,7 @@
 
   import "./table.style.css";
   import { Paths } from "../../../global/constants/api";
+  import { UIText } from "../../../global/constants/ui_text";
 
   export let headerData: Headers;
   export let rowData: TableData;
@@ -45,7 +46,8 @@
   <tbody class="table-body">
     {#if sortedRows.length === 0}
       <tr
-        ><td class="empty-data" colspan={headerData.length}>No Results 😐</td
+        ><td class="empty-data" colspan={headerData.length}
+          >{UIText.NO_RESULTS}</td
         ></tr
       >
     {/if}

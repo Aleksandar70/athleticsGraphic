@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Canvas from "../../canvas/Canvas.svelte";
+  import Canvas from "../../components/canvas/Canvas.svelte";
   import { onMount } from "svelte";
-  import { getEventData } from "../../../api/event.api";
-  import Spinner from "../../spinner/Spinner.svelte";
+  import { getEventData } from "../../api/event.api";
+  import Spinner from "../../components/spinner/Spinner.svelte";
   import "./eventlistpage.style.css";
-  import { defaultEventColumns } from "../../../../global/defaults";
+  import { defaultEventColumns } from "../../../global/defaults";
 
   $: tableData = [];
 

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { Router, navigate, Route } from "svelte-routing";
   import { onMount } from "svelte";
-  import EventListPage from "./components/pages/event_list_page/EventListPage.svelte";
-  import EventCompetitors from "./components/pages/event_competitors_page/EventCompetitorsPage.svelte";
-  import Header from "./components/Home/Header.svelte";
-  import Footer from "./components/Home/Footer.svelte";
+  import EventListPage from "./pages/event_list_page/EventListPage.svelte";
+  import EventCompetitors from "./pages/event_competitors_page/EventCompetitorsPage.svelte";
+  import Header from "./components/header/Header.svelte";
+  import Footer from "./components/footer/Footer.svelte";
   import { Paths } from "../global/constants/api";
   import { getConfig } from "./api/config.api";
   import { dataSource } from "./config.store";

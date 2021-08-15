@@ -1,10 +1,10 @@
 <script>
   import { onMount } from "svelte";
-  import Canvas from "../../canvas/Canvas.svelte";
-  import { getEventCompetitors } from "../../../api/event.api";
-  import Spinner from "../../spinner/Spinner.svelte";
+  import Canvas from "../../components/canvas/Canvas.svelte";
+  import { getEventCompetitors } from "../../api/event.api";
+  import Spinner from "../../components/spinner/Spinner.svelte";
   import "./eventcompetitorspage.style.css";
-  import { defaultEventCompetitorsColumns } from "../../../../global/defaults";
+  import { defaultEventCompetitorsColumns } from "../../../global/defaults";
 
   export let eventId;
 

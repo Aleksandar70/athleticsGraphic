@@ -67,6 +67,7 @@ export const search = (
   );
 };
 
+// TODO: To be fixed with the ticket `Fix table data saving`
 // export const getUpdatedTable = (tableData, rowData) => {
 //   const keys = Object.keys(tableData[0]);
 //   const updatedValues = rowData.map((row) => row.map((field) => field.value));

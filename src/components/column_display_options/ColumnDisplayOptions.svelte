@@ -30,7 +30,7 @@
 
 <Modal {isOpen} size="sm" {toggle} scrollable>
   <ModalHeader>
-    <h5>Toggle columns</h5>
+    <h5>{UIText.TOGGLE_COLUMNS_HEADER}</h5>
   </ModalHeader>
   <ModalBody class="modal-body">
     {#each headerData as field}
