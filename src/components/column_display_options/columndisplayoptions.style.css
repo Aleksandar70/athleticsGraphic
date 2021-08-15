@@ -1,0 +1,24 @@
+.modal-body {
+  line-height: 2em;
+}
+
+.modal-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  border: 0.2px solid var(--light-grey);
+  border-radius: 20px;
+  padding: 7px;
+}
+
+.modal-field:hover {
+  cursor: pointer;
+}
+
+.field-value {
+  max-width: 75%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
