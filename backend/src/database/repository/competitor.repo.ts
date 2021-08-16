@@ -12,26 +12,39 @@ export const createCompetitors = async (
 
 export const findCompetitorsForEvent = async (eventId: string) => {
   const source = await getDataSource();
-
-  if (source === SOURCE.LOCAL) {
-    return await CompetitorModel.find({ event: eventId });
-  }
-
-  const { competitorsData } = await getOTCompetitionData();
-
-  if (source === SOURCE.REMOTE) {
-    for (const competitor of competitorsData) {
-      await CompetitorModel.replaceOne(
-        {
-          competitorId: competitor.competitorId,
-        },
-        competitor,
-        { upsert: true, setDefaultsOnInsert: true }
-      );
+  switch (source) {
+    case SOURCE.LOCAL: {
+      return await findCompetitorsForEventLocal(eventId);
     }
-    return await CompetitorModel.find({ event: eventId });
+    case SOURCE.REMOTE: {
+      return await findCompetitorsForEventRemote(eventId);
+    }
+    case SOURCE.SEMI: {
+      return await findCompetitorsForEventSemi(eventId);
+    }
   }
+};
 
+const findCompetitorsForEventLocal = async (eventId) => {
+  return await CompetitorModel.find({ event: eventId });
+};
+
+const findCompetitorsForEventRemote = async (eventId) => {
+  const { competitorsData } = await getOTCompetitionData();
+  for (const competitor of competitorsData) {
+    await CompetitorModel.replaceOne(
+      {
+        competitorId: competitor.competitorId,
+      },
+      competitor,
+      { upsert: true, setDefaultsOnInsert: true }
+    );
+  }
+  return await CompetitorModel.find({ event: eventId });
+};
+
+const findCompetitorsForEventSemi = async (eventId) => {
+  const { competitorsData } = await getOTCompetitionData();
   for (const competitor of competitorsData) {
     await CompetitorModel.updateOne(
       {
