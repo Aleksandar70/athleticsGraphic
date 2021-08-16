@@ -17,11 +17,13 @@ connectDatabase()
     console.log("Connected to database");
     await createDefaultConfig();
     const otCompetitionData = await getOTCompetitionData();
-    createCompetition(otCompetitionData.competitionData);
+    await createCompetition(otCompetitionData.competitionData);
     await createCompetitors(otCompetitionData.competitorsData);
     await createEvents(otCompetitionData.eventsData);
   })
-  .catch((_) => console.log("Error connecting to database"));
+  .catch((error) =>
+    console.log("Error connecting to database:", error.message)
+  );
 
 const app = express();
 const port = Paths.SERVER_PORT;

@@ -1,11 +1,6 @@
 import { Schema } from "mongoose";
 
 const UnitSchema = new Schema({
-  actualStartTime: {
-    type: Date,
-    required: false,
-    default: -1,
-  },
   day: {
     type: Number,
     required: false,
