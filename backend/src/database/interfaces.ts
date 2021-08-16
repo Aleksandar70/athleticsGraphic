@@ -78,3 +78,54 @@ export interface ITrial {
   height?: string;
   round?: number;
 }
+
+export interface ICompetitor {
+  _id?: ObjectId;
+  competitorId?: string;
+  nationalId?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  dateOfBirth?: string;
+  teamId?: string;
+  nonScorer?: boolean;
+  numbered?: boolean;
+  sortEventCode?: string;
+  sortBib?: string;
+  sortAgeGroup?: string;
+  checkedIn?: boolean;
+  nationality?: string;
+  event?: string;
+  pb?: string;
+  sb?: string;
+  flagUrl?: string;
+  teamName?: string;
+}
+
+export interface ICompetition {
+  _id?: ObjectId;
+  address?: string;
+  city?: string;
+  contactDetails?: string;
+  country?: string;
+  date?: string;
+  englishName?: string;
+  finishDate?: string;
+  fullName?: string;
+  id?: string;
+  latitude?: number;
+  longitude?: number;
+  organiser?: string;
+  shortName?: string;
+  slug?: string;
+  teamTypes?: string;
+  type?: string;
+  website?: string;
+  year?: number;
+  yeah?: number;
+}
+
+export interface IConfig {
+  _id?: ObjectId;
+  dataSource?: string;
+}

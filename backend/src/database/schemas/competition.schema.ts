@@ -87,11 +87,6 @@ const CompetitionSchema = new Schema({
     required: false,
     default: 2021,
   },
-  yeah: {
-    type: Number,
-    required: false,
-    default: 22,
-  },
 });
 
 export default CompetitionSchema;

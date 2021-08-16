@@ -1,16 +1,16 @@
 import { IConfig } from "../../../../global/interfaces";
 import { ConfigModel } from "../models/config.model";
 
-export const createDefaultConfig = async (): Promise<void> => {
-  if ((await ConfigModel.countDocuments()) > 0) return;
-  ConfigModel.create({});
+export const createDefaultConfig = async (): Promise<IConfig> => {
+  if ((await ConfigModel.countDocuments()) > 0) return {} as IConfig;
+  return await ConfigModel.create({});
 };
 
-export const updateConfig = async (config: IConfig): Promise<void> => {
+export const updateConfig = async (config: IConfig): Promise<IConfig[]> =>
   await ConfigModel.updateMany({}, { $set: config });
-};
 
-export const getConfig = (): IConfig[] => ConfigModel.find();
+export const getConfig = async (): Promise<IConfig[]> =>
+  await ConfigModel.find();
 
 export const getDataSource = async () => {
   const config = await getConfig();
