@@ -1,7 +1,6 @@
 import express from "express";
 import { findCompetitorsForEvent } from "../../database/repository/competitor.repo";
-import { getDataSource } from "../../database/repository/config.repo";
-import { getAllEvents } from "../events.api";
+import { getAllEvents } from "../../database/repository/event.repo";
 
 const router = express.Router();
 

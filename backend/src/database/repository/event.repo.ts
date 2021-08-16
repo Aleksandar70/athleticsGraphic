@@ -1,7 +1,10 @@
+import { SOURCE } from "../../../../global/constants/constants";
+import { getOTCompetitionData } from "../../api/opentrack.api";
 import { EventModel } from "../models/event.model";
 import { ResultModel } from "../models/result.model";
 import { TrialModel } from "../models/trial.model";
 import { UnitModel } from "../models/unit.model";
+import { getDataSource } from "./config.repo";
 
 export const createEvents = async (events): Promise<void> => {
   if ((await EventModel.countDocuments()) > 0) return;
@@ -41,7 +44,40 @@ export const createEvents = async (events): Promise<void> => {
   await EventModel.insertMany(eventModels);
 };
 
-export const getEvents = () => EventModel.find();
+export const getAllEvents = async () => {
+  const source = await getDataSource();
+  switch (source.toLowerCase()) {
+    case SOURCE.LOCAL: {
+      return await getEventsLocal();
+    }
+    case SOURCE.REMOTE: {
+      return await getEventsRemote();
+    }
+    case SOURCE.SEMI: {
+      return await getEventsSemi();
+    }
+  }
+};
+
+const getEventsRemote = async () => {
+  const { eventsData } = await getOTCompetitionData();
+  for await (const data of eventsData) {
+    EventModel.findOneAndUpdate({ eventId: data.eventId }, data);
+  }
+  return getEventsLocal();
+};
+
+const getEventsSemi = async () => {
+  const { eventsData } = await getOTCompetitionData();
+  for await (const data of eventsData) {
+    EventModel.findOneAndUpdate({ eventId: data.eventId }, data, {
+      omitUndefined: true,
+    });
+  }
+  return getEventsLocal();
+};
+
+const getEventsLocal = () => EventModel.find();
 
 const unwrapEvent = ({
   ageGroups,
