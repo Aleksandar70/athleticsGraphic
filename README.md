@@ -11,7 +11,11 @@ This project is separated into two parts
 
 ## Get started
 
-To run project, use two terminals.
+If you just cloned the project, run `npm install` to install all the needed dependencies.
+
+To run the project, run `npm run all` in the terminal. This will start both frontend and backend.
+
+Or, if you want to start seaprately, open two terminals.
 
 To run frontend, navigate to the root of the project and run
 
