@@ -1,15 +1,16 @@
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
+import { IEvent } from "../interfaces";
 import { EventModel } from "../models/event.model";
 import { getDataSource } from "./config.repo";
 import { createUnits } from "./unit.repo";
 
-export const createEvents = async (events): Promise<void> => {
+export const createEvents = async (events: IEvent[]): Promise<void> => {
   if ((await EventModel.countDocuments()) > 0) return;
 
   const eventModels: any[] = [];
   for (const event of events) {
-    const units = await createUnits(event.units);
+    const units = await createUnits(event.units ?? []);
 
     const eventModel = new EventModel({
       units: units.map((unit) => unit._id),
@@ -22,7 +23,7 @@ export const createEvents = async (events): Promise<void> => {
   await EventModel.insertMany(eventModels);
 };
 
-export const getAllEvents = async () => {
+export const getAllEvents = async (): Promise<IEvent[]> => {
   const source = await getDataSource();
   switch (source.toLowerCase()) {
     case SOURCE.LOCAL: {
@@ -34,10 +35,12 @@ export const getAllEvents = async () => {
     case SOURCE.SEMI: {
       return await getEventsSemi();
     }
+    default:
+      return await getEventsLocal();
   }
 };
 
-const getEventsRemote = async () => {
+const getEventsRemote = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
   for (const data of eventsData) {
     await EventModel.replaceOne({ eventId: data.eventId }, unwrapEvent(data));
@@ -45,7 +48,7 @@ const getEventsRemote = async () => {
   return getEventsLocal();
 };
 
-const getEventsSemi = async () => {
+const getEventsSemi = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
   for await (const data of eventsData) {
     EventModel.findOneAndUpdate({ eventId: data.eventId }, data, {
@@ -55,7 +58,7 @@ const getEventsSemi = async () => {
   return getEventsLocal();
 };
 
-const getEventsLocal = async () => await EventModel.find();
+const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
 
 const unwrapEvent = ({
   ageGroups,
@@ -84,7 +87,7 @@ const unwrapEvent = ({
   showFormGuide,
   status,
   teamTypes,
-}) => ({
+}: IEvent): IEvent => ({
   ageGroups,
   cachedCount,
   category,
