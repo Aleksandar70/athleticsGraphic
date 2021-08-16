@@ -7,6 +7,9 @@
     "dev": "rollup -c -w",
     "start": "sirv public --no-clear --single",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx,.svelte",
+    "client": "npm run dev",
+    "server": "cd backend && nodemon",
+    "all": "concurrently \"npm run client\" \"npm run server\"",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
@@ -17,6 +20,7 @@
     "@types/d3-array": "^3.0.1",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "concurrently": "^6.2.1",
     "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.0",
