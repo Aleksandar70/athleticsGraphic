@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { OpenTrack } from "../../../global/constants/api";
+import { ICompetition } from "../database/interfaces";
 
 interface IOTCompetitionData {
   competitionData;
@@ -46,7 +47,7 @@ const unwrapCompetition = ({
   // venue
   website,
   year,
-}) => ({
+}: ICompetition): ICompetition => ({
   address,
   city,
   contactDetails,

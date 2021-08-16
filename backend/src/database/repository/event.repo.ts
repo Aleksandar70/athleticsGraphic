@@ -5,8 +5,8 @@ import { EventModel } from "../models/event.model";
 import { getDataSource } from "./config.repo";
 import { createUnits } from "./unit.repo";
 
-export const createEvents = async (events: IEvent[]): Promise<void> => {
-  if ((await EventModel.countDocuments()) > 0) return;
+export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
+  if ((await EventModel.countDocuments()) > 0) return [];
 
   const eventModels: any[] = [];
   for (const event of events) {
@@ -20,10 +20,10 @@ export const createEvents = async (events: IEvent[]): Promise<void> => {
     eventModels.push(eventModel);
   }
 
-  await EventModel.insertMany(eventModels);
+  return await EventModel.insertMany(eventModels);
 };
 
-export const getAllEvents = async (): Promise<IEvent[]> => {
+export const getEvents = async (): Promise<IEvent[]> => {
   const source = await getDataSource();
   switch (source.toLowerCase()) {
     case SOURCE.LOCAL: {

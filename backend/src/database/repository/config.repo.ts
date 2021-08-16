@@ -12,7 +12,7 @@ export const updateConfig = async (config: IConfig): Promise<IConfig[]> =>
 export const getConfig = async (): Promise<IConfig[]> =>
   await ConfigModel.find();
 
-export const getDataSource = async () => {
+export const getDataSource = async (): Promise<string> => {
   const config = await getConfig();
   return config?.[0]?.dataSource;
 };

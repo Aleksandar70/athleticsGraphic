@@ -1,18 +1,18 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { findCompetitorsForEvent } from "../../database/repository/competitor.repo";
-import { getAllEvents } from "../../database/repository/event.repo";
+import { getEvents } from "../../database/repository/event.repo";
 
 const router = express.Router();
 
-router.get("/", async (_, res) => {
-  const events = await getAllEvents();
-  return await res.status(200).json(events);
+router.get("/", async (_: Request, res: Response) => {
+  const events = await getEvents();
+  return res.status(200).json(events);
 });
 
-router.get("/:eventId", async (req, res) => {
+router.get("/:eventId", async (req: Request, res: Response) => {
   const { eventId } = req.params;
   const competitors = await findCompetitorsForEvent(eventId);
-  return await res.status(200).json(competitors);
+  return res.status(200).json(competitors);
 });
 
 export default router;
