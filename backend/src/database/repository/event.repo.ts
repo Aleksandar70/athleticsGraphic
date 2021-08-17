@@ -3,7 +3,7 @@ import { getOTCompetitionData } from "../../api/opentrack.api";
 import { IEvent } from "../interfaces";
 import { EventModel } from "../models/event.model";
 import { getDataSource } from "./config.repo";
-import { createUnits } from "./unit.repo";
+import { createUnits, getUnits } from "./unit.repo";
 
 export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
   if ((await EventModel.countDocuments()) > 0) return [];
@@ -13,8 +13,8 @@ export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
     const units = await createUnits(event.units ?? []);
 
     const eventModel = new EventModel({
-      units: units.map((unit) => unit._id),
       ...unwrapEvent(event),
+      units: units.map((unit) => unit._id),
     });
 
     eventModels.push(eventModel);
@@ -40,25 +40,49 @@ export const getEvents = async (): Promise<IEvent[]> => {
   }
 };
 
+const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
+
 const getEventsRemote = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
-  for (const data of eventsData) {
-    await EventModel.replaceOne({ eventId: data.eventId }, unwrapEvent(data));
+
+  const eventModels: IEvent[] = [];
+  for (const event of eventsData) {
+    const units = await getUnits(event.units ?? []);
+
+    const eventModel = await EventModel.findOneAndReplace(
+      { eventId: event.eventId },
+      {
+        ...unwrapEvent(event),
+        units: units.map((unit) => unit?._id),
+      },
+      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
+    );
+    eventModels.push(eventModel);
   }
-  return getEventsLocal();
+
+  return eventModels;
 };
 
 const getEventsSemi = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
-  for await (const data of eventsData) {
-    EventModel.findOneAndUpdate({ eventId: data.eventId }, data, {
-      omitUndefined: true,
-    });
-  }
-  return getEventsLocal();
-};
 
-const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
+  const eventModels: IEvent[] = [];
+  for (const event of eventsData) {
+    const units = await getUnits(event.units ?? []);
+
+    const eventModel = await EventModel.findOneAndUpdate(
+      { eventId: event.eventId },
+      {
+        ...unwrapEvent(event),
+        units: units.map((unit) => unit?._id),
+      },
+      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
+    );
+    eventModels.push(eventModel);
+  }
+
+  return eventModels;
+};
 
 const unwrapEvent = ({
   ageGroups,

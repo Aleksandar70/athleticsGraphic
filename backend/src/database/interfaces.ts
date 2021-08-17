@@ -58,6 +58,7 @@ export interface IUnit {
   splitsStart?: number;
   status?: string;
   trials?: ITrial[];
+  unitCode?: string;
 }
 
 export interface IResult {

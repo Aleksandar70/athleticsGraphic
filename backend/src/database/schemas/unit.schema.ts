@@ -117,6 +117,11 @@ const UnitSchema = new Schema({
     required: false,
     default: "",
   },
+  unitCode: {
+    type: String,
+    required: false,
+    default: "1",
+  },
   trials: [{ type: Schema.Types.ObjectId, ref: "trials" }],
 });
 
