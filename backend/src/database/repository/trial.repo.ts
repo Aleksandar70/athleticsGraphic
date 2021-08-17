@@ -6,7 +6,7 @@ import { getDataSource } from "./config.repo";
 export const createTrials = async (unit: IUnit): Promise<ITrial[]> =>
   await TrialModel.insertMany(unit.trials);
 
-export const getTrials = async (unit: IUnit) => {
+export const getTrials = async (unit: IUnit): Promise<ITrial[]> => {
   const source = await getDataSource();
   switch (source) {
     case SOURCE.REMOTE: {

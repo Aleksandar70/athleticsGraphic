@@ -110,6 +110,7 @@ export interface ICompetition {
   contactDetails?: string;
   country?: string;
   date?: string;
+  competitors?: ICompetitor[];
   englishName?: string;
   finishDate?: string;
   fullName?: string;
@@ -123,7 +124,7 @@ export interface ICompetition {
   type?: string;
   website?: string;
   year?: number;
-  yeah?: number;
+  events?: IEvent[];
 }
 
 export interface IConfig {

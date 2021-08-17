@@ -7,7 +7,7 @@ export const connectDatabase = async (): Promise<void> => {
   if (database) {
     return;
   }
-  const db = await mongoose.connect(
+  await mongoose.connect(
     `mongodb://127.0.0.1:27017/athletics-${OpenTrack.COMPETITION_ID}${OpenTrack.COMPETITION_YEAR}`,
     {
       useNewUrlParser: true,

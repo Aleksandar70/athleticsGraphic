@@ -10,7 +10,7 @@ interface IOTCompetitionData {
 
 export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
   try {
-    const otCompetitionData: AxiosResponse<any> = await axios.get(
+    const otCompetitionData: AxiosResponse<ICompetition> = await axios.get(
       `${OpenTrack.OPEN_TRACK_API}${OpenTrack.JSON_NOCACHE}`
     );
     const competitionData = otCompetitionData.data;

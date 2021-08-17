@@ -13,7 +13,7 @@ import { createEvents } from "./database/repository/event.repo";
 import { createDefaultConfig } from "./database/repository/config.repo";
 
 connectDatabase()
-  .then(async (_) => {
+  .then(async () => {
     console.log("Connected to database");
     await createDefaultConfig();
     const otCompetitionData = await getOTCompetitionData();
