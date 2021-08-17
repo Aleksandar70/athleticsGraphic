@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { OpenTrack } from "../../../global/constants/api";
+import { ICompetition } from "../database/interfaces";
 
 interface IOTCompetitionData {
   competitionData;
@@ -9,7 +10,7 @@ interface IOTCompetitionData {
 
 export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
   try {
-    const otCompetitionData: AxiosResponse<any> = await axios.get(
+    const otCompetitionData: AxiosResponse<ICompetition> = await axios.get(
       `${OpenTrack.OPEN_TRACK_API}${OpenTrack.JSON_NOCACHE}`
     );
     const competitionData = otCompetitionData.data;
@@ -46,7 +47,7 @@ const unwrapCompetition = ({
   // venue
   website,
   year,
-}) => ({
+}: ICompetition): ICompetition => ({
   address,
   city,
   contactDetails,

@@ -1,47 +1,88 @@
+import { SOURCE } from "../../../../global/constants/constants";
+import { getOTCompetitionData } from "../../api/opentrack.api";
+import { IEvent } from "../interfaces";
 import { EventModel } from "../models/event.model";
-import { ResultModel } from "../models/result.model";
-import { TrialModel } from "../models/trial.model";
-import { UnitModel } from "../models/unit.model";
+import { getDataSource } from "./config.repo";
+import { createUnits, getUnits } from "./unit.repo";
 
-export const createEvents = async (events): Promise<void> => {
-  if ((await EventModel.countDocuments()) > 0) return;
+export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
+  if ((await EventModel.countDocuments()) > 0) return [];
 
-  const eventModels: any[] = [];
+  const eventModels: IEvent[] = [];
   for (const event of events) {
-    const _units = event.units;
-
-    const unitModels: any[] = [];
-
-    for (const _unit of _units) {
-      const _results = _unit.results;
-      const _trials = _unit.trials;
-
-      const results = await ResultModel.insertMany(_results);
-      const trials = await TrialModel.insertMany(_trials);
-
-      const unitModel = new UnitModel({
-        results: results.map((result) => result._id),
-        trials: trials.map((trial) => trial._id),
-        ...unwrapUnit(_unit),
-      });
-
-      unitModels.push(unitModel);
-    }
-
-    const units = await UnitModel.insertMany(unitModels);
+    const units = await createUnits(event.units ?? []);
 
     const eventModel = new EventModel({
-      units: units.map((unit) => unit._id),
       ...unwrapEvent(event),
+      units: units.map((unit) => unit._id),
     });
 
     eventModels.push(eventModel);
   }
 
-  await EventModel.insertMany(eventModels);
+  return await EventModel.insertMany(eventModels);
 };
 
-export const getEvents = () => EventModel.find();
+export const getEvents = async (): Promise<IEvent[]> => {
+  const source = await getDataSource();
+  switch (source.toLowerCase()) {
+    case SOURCE.LOCAL: {
+      return await getEventsLocal();
+    }
+    case SOURCE.REMOTE: {
+      return await getEventsRemote();
+    }
+    case SOURCE.SEMI: {
+      return await getEventsSemi();
+    }
+    default:
+      return await getEventsLocal();
+  }
+};
+
+const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
+
+const getEventsRemote = async (): Promise<IEvent[]> => {
+  const { eventsData } = await getOTCompetitionData();
+
+  const eventModels: IEvent[] = [];
+  for (const event of eventsData) {
+    const units = await getUnits(event.units ?? []);
+
+    const eventModel = await EventModel.findOneAndReplace(
+      { eventId: event.eventId },
+      {
+        ...unwrapEvent(event),
+        units: units.map((unit) => unit?._id),
+      },
+      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
+    );
+    eventModels.push(eventModel);
+  }
+
+  return eventModels;
+};
+
+const getEventsSemi = async (): Promise<IEvent[]> => {
+  const { eventsData } = await getOTCompetitionData();
+
+  const eventModels: IEvent[] = [];
+  for (const event of eventsData) {
+    const units = await getUnits(event.units ?? []);
+
+    const eventModel = await EventModel.findOneAndUpdate(
+      { eventId: event.eventId },
+      {
+        ...unwrapEvent(event),
+        units: units.map((unit) => unit?._id),
+      },
+      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
+    );
+    eventModels.push(eventModel);
+  }
+
+  return eventModels;
+};
 
 const unwrapEvent = ({
   ageGroups,
@@ -55,8 +96,10 @@ const unwrapEvent = ({
   eventId,
   genders,
   heatTimeCalculation,
+  lanePrefs,
   lanes,
   maxFieldAttempts,
+  maxPerHeat,
   name,
   r1Time,
   r2Day,
@@ -68,7 +111,7 @@ const unwrapEvent = ({
   showFormGuide,
   status,
   teamTypes,
-}) => ({
+}: IEvent): IEvent => ({
   ageGroups,
   cachedCount,
   category,
@@ -80,8 +123,10 @@ const unwrapEvent = ({
   eventId,
   genders,
   heatTimeCalculation,
+  lanePrefs,
   lanes,
   maxFieldAttempts,
+  maxPerHeat,
   name,
   r1Time,
   r2Day,
@@ -93,40 +138,4 @@ const unwrapEvent = ({
   showFormGuide,
   status,
   teamTypes,
-});
-
-const unwrapUnit = ({
-  day,
-  eventId,
-  eventName,
-  heat,
-  heatName,
-  heights,
-  initialHeight,
-  overrideCeScores,
-  overridePlaces,
-  resultsStatus,
-  round,
-  scheduledStartTime,
-  showAthleteDetails,
-  showPartials,
-  showPoints,
-  status,
-}) => ({
-  day,
-  eventId,
-  eventName,
-  heat,
-  heatName,
-  heights,
-  initialHeight,
-  overrideCeScores,
-  overridePlaces,
-  resultsStatus,
-  round,
-  scheduledStartTime,
-  showAthleteDetails,
-  showPartials,
-  showPoints,
-  status,
 });

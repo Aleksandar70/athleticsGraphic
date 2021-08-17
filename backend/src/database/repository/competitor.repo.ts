@@ -1,36 +1,61 @@
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
+import { ICompetitor } from "../interfaces";
 import { CompetitorModel } from "../models/competitor.model";
 import { getDataSource } from "./config.repo";
 
 export const createCompetitors = async (
-  competitors: Record<string, unknown>[]
-): Promise<void> => {
-  if ((await CompetitorModel.countDocuments()) > 0) return;
-  await CompetitorModel.insertMany(competitors);
+  competitors: ICompetitor[]
+): Promise<ICompetitor[]> => {
+  if ((await CompetitorModel.countDocuments()) > 0) return [];
+  return await CompetitorModel.insertMany(competitors);
 };
 
-export const findCompetitorsForEvent = async (eventId: string) => {
+export const findCompetitorsForEvent = async (
+  eventId: string
+): Promise<ICompetitor[]> => {
   const source = await getDataSource();
-
-  if (source === SOURCE.LOCAL) {
-    return await CompetitorModel.find({ event: eventId });
+  switch (source) {
+    case SOURCE.LOCAL: {
+      return await findCompetitorsForEventLocal(eventId);
+    }
+    case SOURCE.REMOTE: {
+      return await findCompetitorsForEventRemote(eventId);
+    }
+    case SOURCE.SEMI: {
+      return await findCompetitorsForEventSemi(eventId);
+    }
+    default:
+      return await findCompetitorsForEventLocal(eventId);
   }
+};
 
+const findCompetitorsForEventLocal = async (
+  eventId: string
+): Promise<ICompetitor[]> => await CompetitorModel.find({ event: eventId });
+
+const findCompetitorsForEventRemote = async (
+  eventId: string
+): Promise<ICompetitor[]> => {
   const { competitorsData } = await getOTCompetitionData();
 
-  if (source === SOURCE.REMOTE) {
-    for (const competitor of competitorsData) {
-      await CompetitorModel.replaceOne(
-        {
-          competitorId: competitor.competitorId,
-        },
-        competitor,
-        { upsert: true, setDefaultsOnInsert: true }
-      );
-    }
-    return await CompetitorModel.find({ event: eventId });
+  for (const competitor of competitorsData) {
+    await CompetitorModel.replaceOne(
+      {
+        competitorId: competitor.competitorId,
+      },
+      competitor,
+      { upsert: true, setDefaultsOnInsert: true }
+    );
   }
+
+  return await CompetitorModel.find({ event: eventId });
+};
+
+const findCompetitorsForEventSemi = async (
+  eventId: string
+): Promise<ICompetitor[]> => {
+  const { competitorsData } = await getOTCompetitionData();
 
   for (const competitor of competitorsData) {
     await CompetitorModel.updateOne(
@@ -41,5 +66,6 @@ export const findCompetitorsForEvent = async (eventId: string) => {
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
     );
   }
+
   return await CompetitorModel.find({ event: eventId });
 };

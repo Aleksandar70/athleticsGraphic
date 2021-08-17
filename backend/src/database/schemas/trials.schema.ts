@@ -11,6 +11,11 @@ const TrialSchema = new Schema({
     required: false,
     default: "",
   },
+  height: {
+    type: String,
+    required: false,
+    default: "",
+  },
   round: {
     type: Number,
     required: false,

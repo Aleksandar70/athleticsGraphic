@@ -13,15 +13,17 @@ import { createEvents } from "./database/repository/event.repo";
 import { createDefaultConfig } from "./database/repository/config.repo";
 
 connectDatabase()
-  .then(async (_) => {
+  .then(async () => {
     console.log("Connected to database");
     await createDefaultConfig();
     const otCompetitionData = await getOTCompetitionData();
-    createCompetition(otCompetitionData.competitionData);
+    await createCompetition(otCompetitionData.competitionData);
     await createCompetitors(otCompetitionData.competitorsData);
     await createEvents(otCompetitionData.eventsData);
   })
-  .catch((_) => console.log("Error connecting to database"));
+  .catch((error) =>
+    console.log("Error connecting to database:", error.message)
+  );
 
 const app = express();
 const port = Paths.SERVER_PORT;

@@ -16,6 +16,11 @@ const ResultSchema = new Schema({
     required: false,
     default: -1,
   },
+  lane: {
+    type: Number,
+    required: false,
+    default: -1,
+  },
   performance: {
     type: String,
     required: false,
@@ -30,6 +35,11 @@ const ResultSchema = new Schema({
     type: Number,
     required: false,
     default: -1,
+  },
+  rawTime: {
+    type: String,
+    required: false,
+    default: "",
   },
 });
 

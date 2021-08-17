@@ -56,12 +56,22 @@ const EventSchema = new Schema({
     required: false,
     default: "",
   },
+  lanePrefs: {
+    type: String,
+    required: false,
+    default: "",
+  },
   lanes: {
     type: Number,
     required: false,
     default: 0,
   },
   maxFieldAttempts: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
+  maxPerHeat: {
     type: Number,
     required: false,
     default: 0,

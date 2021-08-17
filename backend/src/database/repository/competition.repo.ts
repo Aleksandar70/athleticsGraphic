@@ -1,7 +1,10 @@
+import { ICompetition } from "../interfaces";
 import { CompetitionModel } from "../models/competition.model";
 
-export const createCompetition = (competition): void =>
-  CompetitionModel.findOneAndUpdate({}, competition, {
+export const createCompetition = async (
+  competition: ICompetition
+): Promise<ICompetition> =>
+  await CompetitionModel.findOneAndUpdate({}, competition, {
     upsert: true,
     setDefaultsOnInsert: true,
   });
