@@ -16,7 +16,7 @@
   $: currentPageRows = totalPages.length > 0 ? totalPages[page] : [];
   //2
   const paginate = (events) => {
-    const pages = Math.ceil(events.length / eventsPerPage); //12/10=3
+    const pages = Math.ceil(events.length / eventsPerPage);
     const paginatedEvents = Array.from({ length: pages }, (_, index) => {
       const start = index * eventsPerPage;
       return events.slice(start, start + eventsPerPage);
@@ -33,10 +33,8 @@
   });
 
   const setPage = async (p) => {
-    console.log("page: ", p);
     if (page >= 0 && page < totalPages.length) {
       page = p;
-      console.log("setPage ", setPage);
     }
   };
 </script>
@@ -46,7 +44,7 @@
     <PaginationLink first on:click={() => setPage(1)} />
   </PaginationItem>
   <PaginationItem>
-    <PaginationLink previous on:click={() => setPage(page - 1)} />
+    <PaginationLink previous on:click={() => setPage(page + 1)} />
   </PaginationItem>
   {#each totalPages as page, i}
     <PaginationItem>
@@ -54,7 +52,7 @@
     </PaginationItem>
   {/each}
   <PaginationItem>
-    <PaginationLink next on:click={() => setPage(page + 1)} />
+    <PaginationLink next on:click={() => setPage(page + 2)} />
   </PaginationItem>
   <PaginationItem>
     <PaginationLink last on:click={() => setPage(totalPages.length)} />
