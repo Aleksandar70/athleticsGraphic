@@ -4,34 +4,31 @@
   import { onMount } from "svelte";
   import { Constants } from "../../../global/constants/constants";
   import { getEventData } from "../../api/event.api";
+  import { getTableData } from "../data_table/table.helper";
+  import { defaultEventColumns } from "../../../global/defaults";
 
-  let rows = [];
   let page = 0;
   let totalPages = [];
-  let currentPageRows = [];
+  export let currentPageRows = [];
   let eventsPerPage = Constants.ROWS_PER_TABLE;
-  let tableData = [];
+  let eventData = [];
 
   $: currentPageRows = totalPages.length > 0 ? totalPages[page] : [];
 
-  //2
   const paginate = (events) => {
     const pages = Math.ceil(events.length / eventsPerPage);
     const paginatedEvents = Array.from({ length: pages }, (_, index) => {
       const start = index * eventsPerPage;
       return events.slice(start, start + eventsPerPage);
     });
-
     totalPages = [...paginatedEvents];
     currentPageRows = paginatedEvents[page];
   };
-  //1
+
   onMount(async () => {
-    tableData = await getEventData();
-    rows = Array.from({ length: tableData.length }, (_, i) => {
-      tableData;
-    });
-    paginate(rows);
+    console.log("USAO");
+    eventData = await getEventData();
+    paginate(getTableData(eventData, defaultEventColumns));
   });
 
   const setPage = (p: number) => {

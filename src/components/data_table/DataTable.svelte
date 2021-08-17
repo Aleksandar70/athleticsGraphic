@@ -11,7 +11,6 @@
 
   import "./table.style.css";
   import { Paths } from "../../../global/constants/api";
-  import TablePagination from "../pagination/TablePagination.svelte";
   import { UIText } from "../../../global/constants/ui_text";
 
   export let headerData: Headers;
@@ -84,4 +83,3 @@
     {/each}
   </tbody>
 </Table>
-<TablePagination />

@@ -11,6 +11,7 @@
   import { Button, Input } from "sveltestrap";
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
+  import TablePagination from "../pagination/TablePagination.svelte";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
@@ -20,9 +21,20 @@
 
   let headerData = getHeaderData(tableData, defaultColumns);
   let rowData = rows;
+  let currentPageRows = [];
+  $: displayRows = currentPageRows;
+  $: console.log("displayRows ", displayRows);
 
   const doSearch = (target: EventTarget) => {
-    rowData = search((target as HTMLInputElement).value, setSearch.key, rows);
+    if ((target as HTMLInputElement).value === "") {
+      displayRows = currentPageRows;
+    } else {
+      displayRows = search(
+        (target as HTMLInputElement).value,
+        setSearch.key,
+        rows
+      );
+    }
   };
 </script>
 
@@ -36,7 +48,10 @@
       on:input={(event) => doSearch(event.target)}
     />
   {/if}
-  <DataTable {headerData} {rowData} />
+  {#if displayRows?.length}
+    <DataTable {headerData} rowData={displayRows} />
+  {/if}
+  <TablePagination bind:currentPageRows />
   <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData bind:rowData />
     <Button on:click={() => {}}>{UIText.TABLE_SAVE}</Button>
