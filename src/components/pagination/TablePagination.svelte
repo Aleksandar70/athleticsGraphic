@@ -10,10 +10,10 @@
   let totalPages = [];
   let currentPageRows = [];
   let eventsPerPage = Constants.ROWS_PER_TABLE;
-  let loading = true;
   let tableData = [];
 
   $: currentPageRows = totalPages.length > 0 ? totalPages[page] : [];
+
   //2
   const paginate = (events) => {
     const pages = Math.ceil(events.length / eventsPerPage);
@@ -28,13 +28,16 @@
   //1
   onMount(async () => {
     tableData = await getEventData();
-    rows = Array.from({ length: tableData.length }, (_, i) => `item${i}`);
+    rows = Array.from({ length: tableData.length }, (_, i) => {
+      tableData;
+    });
     paginate(rows);
   });
 
-  const setPage = async (p) => {
-    if (page >= 0 && page < totalPages.length) {
+  const setPage = (p: number) => {
+    if (p >= 0 && p <= totalPages.length) {
       page = p;
+      console.log("page: ", page);
     }
   };
 </script>
@@ -44,7 +47,7 @@
     <PaginationLink first on:click={() => setPage(1)} />
   </PaginationItem>
   <PaginationItem>
-    <PaginationLink previous on:click={() => setPage(page + 1)} />
+    <PaginationLink previous on:click={() => setPage(page - 1)} />
   </PaginationItem>
   {#each totalPages as page, i}
     <PaginationItem>
@@ -52,7 +55,7 @@
     </PaginationItem>
   {/each}
   <PaginationItem>
-    <PaginationLink next on:click={() => setPage(page + 2)} />
+    <PaginationLink next on:click={() => setPage(page + 1)} />
   </PaginationItem>
   <PaginationItem>
     <PaginationLink last on:click={() => setPage(totalPages.length)} />
