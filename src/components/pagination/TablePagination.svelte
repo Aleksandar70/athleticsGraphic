@@ -1,50 +1,62 @@
 <script lang="ts">
   import { Pagination, PaginationItem, PaginationLink } from "sveltestrap";
   import "./tablePagination.style.css";
+  import { onMount } from "svelte";
+  import { Constants } from "../../../global/constants/constants";
+  import { getEventData } from "../../api/event.api";
 
   let rows = [];
   let page = 0;
   let totalPages = [];
   let currentPageRows = [];
-  let itemsPerPage = 5;
+  let eventsPerPage = Constants.ROWS_PER_TABLE;
   let loading = true;
+  let tableData = [];
 
   $: currentPageRows = totalPages.length > 0 ? totalPages[page] : [];
-  const setPage = async (page) => {
-    if (page >= 0 && page < totalPages.length) {
-    }
-  };
-
-  const paginate = (items) => {
-    const pages = Math.ceil(items.length / itemsPerPage);
-
-    const paginatedItems = Array.from({ length: pages }, (_, index) => {
-      const start = index * itemsPerPage;
-      return items.slice(start, start + itemsPerPage);
+  //2
+  const paginate = (events) => {
+    const pages = Math.ceil(events.length / eventsPerPage); //12/10=3
+    const paginatedEvents = Array.from({ length: pages }, (_, index) => {
+      const start = index * eventsPerPage;
+      return events.slice(start, start + eventsPerPage);
     });
 
-    console.log("paginatedItems are", paginatedItems);
-    totalPages = [...paginatedItems];
-    currentPageRows = paginatedItems[page];
+    totalPages = [...paginatedEvents];
+    currentPageRows = paginatedEvents[page];
+  };
+  //1
+  onMount(async () => {
+    tableData = await getEventData();
+    rows = Array.from({ length: tableData.length }, (_, i) => `item${i}`);
+    paginate(rows);
+  });
+
+  const setPage = async (p) => {
+    console.log("page: ", p);
+    if (page >= 0 && page < totalPages.length) {
+      page = p;
+      console.log("setPage ", setPage);
+    }
   };
 </script>
 
 <Pagination class="pagination-centered" size="sm">
   <PaginationItem>
-    <PaginationLink first on:click={() => setPage(page)} />
+    <PaginationLink first on:click={() => setPage(1)} />
   </PaginationItem>
   <PaginationItem>
     <PaginationLink previous on:click={() => setPage(page - 1)} />
   </PaginationItem>
   {#each totalPages as page, i}
     <PaginationItem>
-      <PaginationLink>{i + 1}</PaginationLink>
+      <PaginationLink on:click={() => setPage(i + 1)}>{i + 1}</PaginationLink>
     </PaginationItem>
   {/each}
   <PaginationItem>
     <PaginationLink next on:click={() => setPage(page + 1)} />
   </PaginationItem>
   <PaginationItem>
-    <PaginationLink last on:click={() => setPage(page)} />
+    <PaginationLink last on:click={() => setPage(totalPages.length)} />
   </PaginationItem>
 </Pagination>
