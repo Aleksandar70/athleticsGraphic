@@ -6,7 +6,7 @@ const routerCompetitor = express.Router();
 
 // TODO: FIX THIS
 
-routerCompetitor.put("/", async (req, res) => {
+routerCompetitor.put("/", async () => {
   // const competitors: ITableData = req.body;
   // const val = await updateCompetitors(competitors);
   // return await res.status(200).json(val);
