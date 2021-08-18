@@ -22,7 +22,7 @@
   let rowData = rows;
   let currentPageRows;
   $: displayRows = currentPageRows;
-
+  
   const doSearch = (target: EventTarget) => {
     if ((target as HTMLInputElement).value === "") {
       displayRows = currentPageRows;
@@ -46,7 +46,7 @@
       on:input={(event) => doSearch(event.target)}
     />
   {/if}
-  {#if displayRows?.length}
+  {#if displayRows}
     <DataTable {headerData} rowData={displayRows} />
   {/if}
   {#if rowData?.length}
