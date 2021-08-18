@@ -14,7 +14,6 @@ export const getEventCompetitors = async (
   return response.data as RawData;
 };
 
-export const updateEvents = async (tableData: RawData): Promise<RawData> => {
-  const updatedCompetitors = await putRequest(`${Paths.EVENTS}`, tableData);
-  return updatedCompetitors.data as RawData;
+export const updateEvents = async (tableData: RawData): Promise<boolean> => {
+  return (await putRequest(`${Paths.EVENTS}`, tableData)) as unknown as boolean;
 };

@@ -23,7 +23,22 @@ export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
   return await EventModel.insertMany(eventModels);
 };
 
-export const updateEvents = (events: IEvent[]) => {};
+export const updateEvents = async (events: IEvent[]): Promise<boolean> => {
+  let result = true;
+  for (const event of events) {
+    const status = await EventModel.updateOne(
+      { eventId: event.eventId },
+      event,
+      {
+        omitUndefined: true,
+      }
+    );
+
+    result = result && status.ok === 1;
+  }
+
+  return result;
+};
 
 export const getEvents = async (): Promise<IEvent[]> => {
   const source = await getDataSource();

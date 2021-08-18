@@ -7,4 +7,5 @@ export type TableField = ITableField;
 export type TableRow = TableField[];
 export type TableData = TableRow[];
 
-export type RawData = Record<string, unknown>[];
+export type TableFieldType = string | number | string[];
+export type RawData = Record<string, TableFieldType>[];

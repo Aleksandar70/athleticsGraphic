@@ -1,11 +1,15 @@
+import type { TableFieldType } from "./types";
+
 export interface ITableHeader {
   value: string;
   show: boolean;
 }
 
 export interface ITableField {
-  value: string;
+  value: TableFieldType;
+  stringValue: string;
   show: boolean;
+  changed: boolean;
   link?: string;
   id: string;
 }

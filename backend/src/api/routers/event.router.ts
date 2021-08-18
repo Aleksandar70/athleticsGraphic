@@ -18,8 +18,8 @@ router.get("/:eventId", async (req: Request, res: Response) => {
 
 router.put("/", async (req: Request, res: Response) => {
   const newData: IEvent[] = req.body;
-  const events = await updateEvents(newData);
-  return res.status(200).json(events);
+  const result = await updateEvents(newData);
+  return res.status(200).json(result);
 });
 
 export default router;
