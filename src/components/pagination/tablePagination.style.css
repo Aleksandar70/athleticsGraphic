@@ -1,7 +1,3 @@
-.pagination-centered{
-    float: none;
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+.pagination-centered {
+  text-align: center;
+}
