@@ -1,14 +1,20 @@
 import { Paths } from "../../global/constants/api";
-import { getRequest } from "../utils/api.utils";
+import type { RawData } from "../../global/types";
+import { getRequest, putRequest } from "../utils/api.utils";
 
-export const getEventData = async (): Promise<Record<string, unknown>[]> => {
+export const getEventData = async (): Promise<RawData> => {
   const response = await getRequest(`${Paths.EVENTS}`);
-  return response.data as Record<string, unknown>[];
+  return response.data as RawData;
 };
 
 export const getEventCompetitors = async (
   eventId: string
-): Promise<Record<string, unknown>[]> => {
+): Promise<RawData> => {
   const response = await getRequest(`${Paths.EVENTS}/${eventId}`);
-  return response.data as Record<string, unknown>[];
+  return response.data as RawData;
+};
+
+export const updateEvents = async (tableData: RawData): Promise<RawData> => {
+  const updatedCompetitors = await putRequest(`${Paths.EVENTS}`, tableData);
+  return updatedCompetitors.data as RawData;
 };

@@ -23,6 +23,8 @@ export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
   return await EventModel.insertMany(eventModels);
 };
 
+export const updateEvents = (events: IEvent[]) => {};
+
 export const getEvents = async (): Promise<IEvent[]> => {
   const source = await getDataSource();
   switch (source.toLowerCase()) {
