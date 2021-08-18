@@ -3,27 +3,17 @@
   import "./tablePagination.style.css";
   import type { TableData } from "../../../global/types";
   import { onMount } from "svelte";
-  import { Constants } from "../../../global/constants/constants";
+  import { paginate } from "../data_table/table.helper";
 
   export let page = 0;
   export let rowData: TableData;
   export let currentPageRows = [];
-  let totalPages = [];
+  export let totalPages = [];
 
   $: currentPageRows = totalPages.length > 0 ? totalPages[page] : [];
-  const paginate = (events) => {
-    const pages = Math.ceil(events.length / Constants.ROWS_PER_TABLE);
-
-    const paginatedEvents = Array.from({ length: pages }, (_, index) => {
-      const start = index * Constants.ROWS_PER_TABLE;
-      return events.slice(start, start + Constants.ROWS_PER_TABLE);
-    });
-
-    totalPages = [...paginatedEvents];
-  };
 
   onMount(() => {
-    paginate(rowData);
+    totalPages = [...paginate(rowData)];
   });
 
   const setPage = (p: number) => {

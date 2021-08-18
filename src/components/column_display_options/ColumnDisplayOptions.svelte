@@ -24,6 +24,7 @@
   const toggleColumn = (field: HeaderField) => {
     field.show = !field.show;
     rowData = hideColumn(field, rowData);
+    console.log("rowsData: ", rowData);
     return field;
   };
 </script>

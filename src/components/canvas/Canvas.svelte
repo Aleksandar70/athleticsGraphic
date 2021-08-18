@@ -6,6 +6,7 @@
     getTableData,
     getHeaderData,
     search,
+    paginate,
   } from "../data_table/table.helper";
   import "./canvas.style.css";
   import { Button, Input } from "sveltestrap";
@@ -17,21 +18,24 @@
   export let defaultColumns: string[];
   export let setSearch: ISearch = { enable: false };
 
+  let totalPages = [];
   const rows = getTableData(tableData, defaultColumns);
   let headerData = getHeaderData(tableData, defaultColumns);
   let rowData = rows;
   let currentPageRows;
   $: displayRows = currentPageRows;
-  
+
   const doSearch = (target: EventTarget) => {
     if ((target as HTMLInputElement).value === "") {
-      displayRows = currentPageRows;
+      totalPages = [...paginate(rowData)];
+      displayRows = [totalPages];
     } else {
       displayRows = search(
         (target as HTMLInputElement).value,
         setSearch.key,
         rows
       );
+      totalPages = [...paginate(displayRows)];
     }
   };
 </script>
@@ -50,7 +54,7 @@
     <DataTable {headerData} rowData={displayRows} />
   {/if}
   {#if rowData?.length}
-    <TablePagination bind:currentPageRows {rowData} />
+    <TablePagination bind:currentPageRows bind:totalPages {rowData} />
   {/if}
   <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData bind:rowData />
