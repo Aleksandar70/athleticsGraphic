@@ -15,20 +15,20 @@
 
 <Pagination class="pagination-centered" size="sm">
   <PaginationItem>
-    <PaginationLink first on:click={() => setPage(1)} />
+    <PaginationLink first on:click={() => setPage(0)} />
   </PaginationItem>
   <PaginationItem>
     <PaginationLink previous on:click={() => setPage(page - 1)} />
   </PaginationItem>
   {#each totalPages as page, i}
     <PaginationItem>
-      <PaginationLink on:click={() => setPage(i + 1)}>{i + 1}</PaginationLink>
+      <PaginationLink on:click={() => setPage(i)}>{i + 1}</PaginationLink>
     </PaginationItem>
   {/each}
   <PaginationItem>
     <PaginationLink next on:click={() => setPage(page + 1)} />
   </PaginationItem>
   <PaginationItem>
-    <PaginationLink last on:click={() => setPage(totalPages.length)} />
+    <PaginationLink last on:click={() => setPage(totalPages.length - 1)} />
   </PaginationItem>
 </Pagination>
