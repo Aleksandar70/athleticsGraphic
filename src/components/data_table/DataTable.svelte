@@ -25,6 +25,7 @@
   };
 
   $: sortedRows = rowData;
+  
   $: if (sortBy !== null) {
     sortedRows = sortByColumn(rowData, sortBy, sortDirection);
   }
