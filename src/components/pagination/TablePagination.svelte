@@ -40,8 +40,8 @@
   <PaginationItem>
     <PaginationLink href="#" previous on:click={() => setPage(page - 1)} />
   </PaginationItem>
-  {#each totalPages as page, i}
-    <PaginationItem>
+  {#each totalPages as _totalPage, i}
+    <PaginationItem active={page === i}>
       <PaginationLink href="#" on:click={() => setPage(i)}
         >{i + 1}</PaginationLink
       >
