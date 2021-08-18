@@ -68,7 +68,7 @@ export const search = (
   );
 };
 
-export const paginate = (events) => {
+export const paginate = (events: TableData) => {
   const pages = Math.ceil(events.length / Constants.ROWS_PER_TABLE);
 
   const paginatedEvents = Array.from({ length: pages }, (_, index) => {
