@@ -21,12 +21,13 @@
   let headerData = getHeaderData(tableData, defaultColumns);
   let rowData = rows;
   let currentPageRows;
+  $: displayRows = currentPageRows;
 
   const doSearch = (target: EventTarget) => {
     if ((target as HTMLInputElement).value === "") {
-      currentPageRows = currentPageRows;
+      displayRows = currentPageRows;
     } else {
-      currentPageRows = search(
+      displayRows = search(
         (target as HTMLInputElement).value,
         setSearch.key,
         rows
@@ -45,8 +46,8 @@
       on:input={(event) => doSearch(event.target)}
     />
   {/if}
-  {#if currentPageRows?.length}
-    <DataTable {headerData} rowData={currentPageRows} />
+  {#if displayRows?.length}
+    <DataTable {headerData} rowData={displayRows} />
   {/if}
   {#if rowData?.length}
     <TablePagination bind:currentPageRows {rowData} />

@@ -4,7 +4,6 @@ import type {
   TableData,
   Headers,
 } from "../../../global/types";
-import { Constants } from "../../../global/constants/constants";
 
 export const hideColumn = (field: HeaderField, data: TableData): TableData => {
   data.forEach((record) => {
@@ -66,15 +65,6 @@ export const search = (
       ).value as string
     ).includes(searchValue.toLowerCase())
   );
-};
-
-export const paginate = (events) => {
-  const pages = Math.ceil(events.length / Constants.ROWS_PER_TABLE);
-  const paginatedEvents = Array.from({ length: pages }, (_, index) => {
-    const start = index * Constants.ROWS_PER_TABLE;
-    return events.slice(start, start + Constants.ROWS_PER_TABLE);
-  });
-  return paginatedEvents;
 };
 
 // TODO: To be fixed with the ticket `Fix table data saving`

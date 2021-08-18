@@ -25,7 +25,7 @@
   };
 
   $: sortedRows = rowData;
-
+  $: console.log("sorted rows: ", sortedRows);
   $: if (sortBy !== null) {
     sortedRows = sortByColumn(rowData, sortBy, sortDirection);
   }
