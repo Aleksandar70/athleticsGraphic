@@ -11,6 +11,25 @@ export const createCompetitors = async (
   return await CompetitorModel.insertMany(competitors);
 };
 
+export const updateCompetitors = async (
+  competitors: ICompetitor[]
+): Promise<boolean> => {
+  let result = true;
+  for (const competitor of competitors) {
+    const status = await CompetitorModel.updateOne(
+      { competitorId: competitor.competitorId },
+      competitor,
+      {
+        omitUndefined: true,
+      }
+    );
+
+    result = result && status.ok === 1;
+  }
+
+  return result;
+};
+
 export const findCompetitorsForEvent = async (
   eventId: string
 ): Promise<ICompetitor[]> => {

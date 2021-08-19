@@ -15,5 +15,5 @@ export const getEventCompetitors = async (
 };
 
 export const updateEvents = async (tableData: RawData): Promise<boolean> => {
-  return (await putRequest(`${Paths.EVENTS}`, tableData)) as unknown as boolean;
+  return (await putRequest(Paths.EVENTS, tableData)) as unknown as boolean;
 };
