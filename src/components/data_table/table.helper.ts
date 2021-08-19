@@ -11,6 +11,7 @@ export const hideColumn = (field: HeaderField, data: TableData): TableData => {
     const rowData = record.find((data) => data.id == field.value);
     rowData.show = field.show;
   });
+  console.log("data ", data);
   return data;
 };
 

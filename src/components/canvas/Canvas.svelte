@@ -57,7 +57,7 @@
     <TablePagination bind:currentPageRows bind:totalPages {rowData} />
   {/if}
   <div class="table-options">
-    <ColumnDisplayOptionsModal bind:headerData bind:rowData />
+    <ColumnDisplayOptionsModal bind:headerData rowData={displayRows} />
     <Button on:click={() => {}}>{UIText.TABLE_SAVE}</Button>
   </div>
 </div>
