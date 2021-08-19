@@ -1,3 +1,19 @@
 .pagination {
   align-self: center;
 }
+
+.pagination-item .pagination-link {
+  box-shadow: var(--main-dark) !important;
+}
+
+.pagination-item.active .pagination-link {
+  background-color: var(--main-dark) !important;
+  border-color: var(--main-dark) !important;
+  box-shadow: var(--main-dark) !important;
+  color: white !important;
+}
+
+.pagination-link {
+  color: black !important;
+  text-decoration: none !important;
+}

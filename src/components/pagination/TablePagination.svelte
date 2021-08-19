@@ -25,23 +25,41 @@
 
 <Pagination class="pagination" size="sm">
   <PaginationItem>
-    <PaginationLink href="#" first on:click={() => setPage(0)} />
+    <PaginationLink
+      class="pagination-link"
+      href="#"
+      first
+      on:click={() => setPage(0)}
+    />
   </PaginationItem>
   <PaginationItem>
-    <PaginationLink href="#" previous on:click={() => setPage(page - 1)} />
+    <PaginationLink
+      class="pagination-link"
+      href="#"
+      previous
+      on:click={() => setPage(page - 1)}
+    />
   </PaginationItem>
   {#each totalPages as _totalPage, i}
-    <PaginationItem active={page === i}>
-      <PaginationLink href="#" on:click={() => setPage(i)}
-        >{i + 1}</PaginationLink
+    <PaginationItem class="pagination-item" active={page === i}>
+      <PaginationLink
+        class="pagination-link"
+        href="#"
+        on:click={() => setPage(i)}>{i + 1}</PaginationLink
       >
     </PaginationItem>
   {/each}
   <PaginationItem>
-    <PaginationLink href="#" next on:click={() => setPage(page + 1)} />
+    <PaginationLink
+      class="pagination-link"
+      href="#"
+      next
+      on:click={() => setPage(page + 1)}
+    />
   </PaginationItem>
   <PaginationItem>
     <PaginationLink
+      class="pagination-link"
       href="#"
       last
       on:click={() => setPage(totalPages.length - 1)}
