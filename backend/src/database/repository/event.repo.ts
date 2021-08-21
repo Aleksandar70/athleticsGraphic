@@ -62,11 +62,10 @@ const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
 const getEventsRemote = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
 
-  const eventModels: IEvent[] = [];
   for (const event of eventsData) {
     const units = await getUnits(event.units ?? []);
 
-    const eventModel = await EventModel.findOneAndReplace(
+    await EventModel.replaceOne(
       { eventId: event.eventId },
       {
         ...unwrapEvent(event),
@@ -74,20 +73,18 @@ const getEventsRemote = async (): Promise<IEvent[]> => {
       },
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
     );
-    eventModels.push(eventModel);
   }
 
-  return eventModels;
+  return await getEventsLocal();
 };
 
 const getEventsSemi = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
 
-  const eventModels: IEvent[] = [];
   for (const event of eventsData) {
     const units = await getUnits(event.units ?? []);
 
-    const eventModel = await EventModel.findOneAndUpdate(
+    await EventModel.updateOne(
       { eventId: event.eventId },
       {
         ...unwrapEvent(event),
@@ -95,10 +92,9 @@ const getEventsSemi = async (): Promise<IEvent[]> => {
       },
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
     );
-    eventModels.push(eventModel);
   }
 
-  return eventModels;
+  return await getEventsLocal();
 };
 
 const unwrapEvent = ({
