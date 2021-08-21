@@ -77,6 +77,13 @@ export const setUnchanged = (tableData: TableData): TableData => {
   return tableData;
 };
 
+export const checkIfChanged = (tableData: TableData): boolean => {
+  const changedFields = tableData.filter((tableRow) =>
+    tableRow.find((row) => row.changed === true)
+  );
+  return changedFields?.length > 0;
+};
+
 export const updatedTableValues = (tableData: TableData): RawData => {
   return tableData
     .map((row) =>

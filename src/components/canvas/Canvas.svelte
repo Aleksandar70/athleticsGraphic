@@ -7,6 +7,7 @@
     getHeaderData,
     search,
     updatedTableValues,
+    checkIfChanged,
   } from "../data_table/table.helper";
   import "./canvas.style.css";
   import { Button, Input } from "sveltestrap";
@@ -32,7 +33,8 @@
     rowData = search((target as HTMLInputElement).value, setSearch.key, rows);
   };
 
-  const onUpdate = async () => {
+  const onUpdate = async (): Promise<void> => {
+    if (!checkIfChanged(rowData)) return;
     const updatedValue = updatedTableValues(rowData);
     updateResult = await updateAction(updatedValue);
   };
