@@ -10,7 +10,7 @@
   import type { Headers, TableData } from "../../../global/types";
   import { Paths } from "../../../global/constants/api";
   import { UIText } from "../../../global/constants/ui_text";
-  import Pagination from "../pagiantion/Pagination.svelte";
+  import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
   import "./table.style.css";
 
