@@ -39,6 +39,7 @@
 
   $: if (updateResult) {
     sortedRows = setUnchanged(sortedRows);
+    updateResult = undefined;
   }
 </script>
 
