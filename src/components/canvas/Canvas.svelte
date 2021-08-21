@@ -12,6 +12,7 @@
   import { Button, Input } from "sveltestrap";
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
+  import FadingText from "../fading_text/FadingText.svelte";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
@@ -51,12 +52,6 @@
   <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData bind:rowData />
     <Button on:click={() => onUpdate()}>{UIText.TABLE_SAVE}</Button>
-    {#if updateResult !== undefined}
-      {#if updateResult}
-        <span>Saved</span>
-      {:else}
-        <span>Not Saved</span>
-      {/if}
-    {/if}
+    <FadingText result={updateResult} />
   </div>
 </div>
