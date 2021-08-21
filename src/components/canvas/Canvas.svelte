@@ -22,10 +22,12 @@
 
   let headerData = getHeaderData(tableData, defaultColumns);
   let rowData = rows;
+  let currentPage = 0;
 
   let updateResult: boolean;
 
   const doSearch = (target: EventTarget) => {
+    currentPage = 0;
     rowData = search((target as HTMLInputElement).value, setSearch.key, rows);
   };
 
@@ -45,7 +47,7 @@
       on:input={(event) => doSearch(event.target)}
     />
   {/if}
-  <DataTable {headerData} {rowData} {updateResult} />
+  <DataTable {headerData} {rowData} {updateResult} bind:currentPage />
   <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData bind:rowData />
     <Button on:click={() => onUpdate()}>{UIText.TABLE_SAVE}</Button>
