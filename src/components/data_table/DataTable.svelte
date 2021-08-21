@@ -8,13 +8,18 @@
   import { Table } from "sveltestrap";
   import { isFlag, getAltName } from "./flag.helper";
   import type { Headers, TableData } from "../../../global/types";
-
-  import "./table.style.css";
   import { Paths } from "../../../global/constants/api";
   import { UIText } from "../../../global/constants/ui_text";
+  import Pagination from "../pagination/Pagination.svelte";
+  import { Constants } from "../../../global/constants/constants";
+  import "./table.style.css";
 
   export let headerData: Headers;
   export let rowData: TableData;
+  export let currentPage: number;
+
+  $: lowerRange = currentPage * Constants.ROWS_PER_TABLE;
+  $: higherRange = lowerRange + (Constants.ROWS_PER_TABLE - 1);
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;
@@ -51,35 +56,38 @@
         ></tr
       >
     {/if}
-    {#each sortedRows as row}
-      <tr>
-        {#each row as data}
-          {#if data.show}
-            {#if isFlag(data.value)}
-              <td>
-                <img
-                  class="table-data--image"
-                  alt={getAltName(data.value)}
-                  src={data.value}
-                /></td
-              >
-            {:else if data.link}
-              <td
-                ><Link
-                  class="table-data--link"
-                  to={`${Paths.EVENTS_PATH}/${data.link}`}>{data.value}</Link
-                ></td
-              >
-            {:else}
-              <td
-                contenteditable="true"
-                spellcheck="false"
-                bind:innerHTML={data.value}
-              />
+    {#each sortedRows as row, i}
+      {#if i >= lowerRange && i <= higherRange}
+        <tr>
+          {#each row as data}
+            {#if data.show}
+              {#if isFlag(data.value)}
+                <td>
+                  <img
+                    class="table-data--image"
+                    alt={getAltName(data.value)}
+                    src={data.value}
+                  /></td
+                >
+              {:else if data.link}
+                <td
+                  ><Link
+                    class="table-data--link"
+                    to={`${Paths.EVENTS_PATH}/${data.link}`}>{data.value}</Link
+                  ></td
+                >
+              {:else}
+                <td
+                  contenteditable="true"
+                  spellcheck="false"
+                  bind:innerHTML={data.value}
+                />
+              {/if}
             {/if}
-          {/if}
-        {/each}
-      </tr>
+          {/each}
+        </tr>
+      {/if}
     {/each}
   </tbody>
 </Table>
+<Pagination bind:currentPage rowData={sortedRows} />
