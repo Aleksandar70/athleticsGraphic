@@ -31,3 +31,7 @@
 .table-data--image:hover {
   cursor: inherit;
 }
+
+.table-data--changed {
+  box-shadow: inset 0 0 6px var(--notice-color) !important;
+}

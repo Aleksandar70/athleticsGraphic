@@ -85,9 +85,7 @@
                 >
               {:else}
                 <td
-                  style="background-color: {data.changed
-                    ? `#fffedb`
-                    : 'white'};"
+                  class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
                   spellcheck="false"
                   bind:innerHTML={data.stringValue}
