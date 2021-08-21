@@ -6,5 +6,5 @@ export abstract class UIText {
   static readonly NO_RESULTS: string = "No Results 😐";
   static readonly TOGGLE_COLUMNS_HEADER: string = "Toggle columns";
   static readonly UPDATE_SAVED: string = "✔️ Saved";
-  static readonly UPDATE_NOT_SAVED: string = "❌ Not Saved";
+  static readonly UPDATE_NOT_SAVED: string = "❌ Some data wasn't saved";
 }
