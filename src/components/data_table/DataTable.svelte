@@ -16,7 +16,7 @@
 
   export let headerData: Headers;
   export let rowData: TableData;
-  let currentPage = 0;
+  export let currentPage: number;
 
   $: lowerRange = currentPage * Constants.ROWS_PER_TABLE;
   $: higherRange = lowerRange + (Constants.ROWS_PER_TABLE - 1);
