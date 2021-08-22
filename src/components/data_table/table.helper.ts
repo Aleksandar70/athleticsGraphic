@@ -100,6 +100,7 @@ export const updatedTableValues = (tableData: TableData): RawData => {
               field.value instanceof Number
                 ? Number(field.stringValue)
                 : field.stringValue;
+            field.value = parsedValue;
             return [field.id, parsedValue];
           })
       )
