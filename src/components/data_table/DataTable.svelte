@@ -12,10 +12,12 @@
   import { UIText } from "../../../global/constants/ui_text";
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
+  import { setUnchanged } from "./table.helper";
   import "./table.style.css";
 
   export let headerData: Headers;
   export let rowData: TableData;
+  export let updateResult: boolean;
   export let currentPage: number;
 
   $: lowerRange = currentPage * Constants.ROWS_PER_TABLE;
@@ -33,6 +35,11 @@
 
   $: if (sortBy !== null) {
     sortedRows = sortByColumn(rowData, sortBy, sortDirection);
+  }
+
+  $: if (updateResult) {
+    sortedRows = setUnchanged(sortedRows);
+    updateResult = undefined;
   }
 </script>
 
@@ -61,26 +68,30 @@
         <tr>
           {#each row as data}
             {#if data.show}
-              {#if isFlag(data.value)}
+              {#if isFlag(data.stringValue)}
                 <td>
                   <img
                     class="table-data--image"
-                    alt={getAltName(data.value)}
-                    src={data.value}
+                    alt={getAltName(data.stringValue)}
+                    src={data.stringValue}
                   /></td
                 >
               {:else if data.link}
                 <td
                   ><Link
                     class="table-data--link"
-                    to={`${Paths.EVENTS_PATH}/${data.link}`}>{data.value}</Link
+                    to={`${Paths.EVENTS_PATH}/${data.link}`}
+                    >{data.stringValue}</Link
                   ></td
                 >
               {:else}
                 <td
+                  class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
                   spellcheck="false"
-                  bind:innerHTML={data.value}
+                  bind:innerHTML={data.stringValue}
+                  on:input={() =>
+                    (data.changed = data.value != data.stringValue)}
                 />
               {/if}
             {/if}

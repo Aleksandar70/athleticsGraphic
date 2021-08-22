@@ -30,8 +30,10 @@ export const getTableData = (
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
     return Object.entries(row).map(([key, value]) => ({
-      value: value.toString(),
+      value: value,
+      stringValue: value.toString(),
       show: defaultColumns.includes(key),
+      changed: false,
       link: links?.get(value.toString()),
       id: key,
     }));
@@ -67,13 +69,41 @@ export const search = (
   );
 };
 
-// TODO: To be fixed with the ticket `Fix table data saving`
-// export const getUpdatedTable = (tableData, rowData) => {
-//   const keys = Object.keys(tableData[0]);
-//   const updatedValues = rowData.map((row) => row.map((field) => field.value));
+export const setUnchanged = (tableData: TableData): TableData => {
+  tableData.forEach((tableRow) =>
+    tableRow.forEach((row) => (row.changed = false))
+  );
 
-//   const updatedTable = updatedValues.map((values) =>
-//     Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]))
-//   );
-//   return updatedTable;
-// };
+  return tableData;
+};
+
+export const checkIfChanged = (tableData: TableData): boolean => {
+  const changedFields = tableData.filter((tableRow) =>
+    tableRow.find((row) => row.changed === true)
+  );
+  return changedFields?.length > 0;
+};
+
+export const updatedTableValues = (tableData: TableData): RawData => {
+  return tableData
+    .map((row) =>
+      Object.fromEntries(
+        row
+          .filter(
+            (_row) =>
+              _row.changed ||
+              _row.id === "eventId" ||
+              _row.id === "competitorId"
+          )
+          .map((field) => {
+            const parsedValue =
+              field.value instanceof Number
+                ? Number(field.stringValue)
+                : field.stringValue;
+            field.value = parsedValue;
+            return [field.id, parsedValue];
+          })
+      )
+    )
+    .filter((changedFields) => Object.keys(changedFields).length > 1);
+};

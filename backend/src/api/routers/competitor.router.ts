@@ -1,15 +1,13 @@
-import express from "express";
-// import { ITableData } from "../../../../global/interfaces";
-// import { updateCompetitors } from "../../database/repository/competitor.repo";
+import express, { Request, Response } from "express";
+import { ICompetitor } from "../../database/interfaces";
+import { updateCompetitors } from "../../database/repository/competitor.repo";
 
-const routerCompetitor = express.Router();
+const router = express.Router();
 
-// TODO: FIX THIS
-
-routerCompetitor.put("/", async () => {
-  // const competitors: ITableData = req.body;
-  // const val = await updateCompetitors(competitors);
-  // return await res.status(200).json(val);
+router.put("/", async (req: Request, res: Response) => {
+  const newData: ICompetitor[] = req.body;
+  const result = await updateCompetitors(newData);
+  return res.status(200).json(result);
 });
 
-export default routerCompetitor;
+export default router;

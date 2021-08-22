@@ -23,6 +23,23 @@ export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
   return await EventModel.insertMany(eventModels);
 };
 
+export const updateEvents = async (events: IEvent[]): Promise<boolean> => {
+  let result = true;
+  for (const event of events) {
+    const status = await EventModel.updateOne(
+      { eventId: event.eventId },
+      event,
+      {
+        omitUndefined: true,
+      }
+    );
+
+    result = result && status.ok === 1;
+  }
+
+  return result;
+};
+
 export const getEvents = async (): Promise<IEvent[]> => {
   const source = await getDataSource();
   switch (source.toLowerCase()) {
@@ -45,11 +62,10 @@ const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
 const getEventsRemote = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
 
-  const eventModels: IEvent[] = [];
   for (const event of eventsData) {
     const units = await getUnits(event.units ?? []);
 
-    const eventModel = await EventModel.findOneAndReplace(
+    await EventModel.replaceOne(
       { eventId: event.eventId },
       {
         ...unwrapEvent(event),
@@ -57,20 +73,18 @@ const getEventsRemote = async (): Promise<IEvent[]> => {
       },
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
     );
-    eventModels.push(eventModel);
   }
 
-  return eventModels;
+  return await getEventsLocal();
 };
 
 const getEventsSemi = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
 
-  const eventModels: IEvent[] = [];
   for (const event of eventsData) {
     const units = await getUnits(event.units ?? []);
 
-    const eventModel = await EventModel.findOneAndUpdate(
+    await EventModel.updateOne(
       { eventId: event.eventId },
       {
         ...unwrapEvent(event),
@@ -78,10 +92,9 @@ const getEventsSemi = async (): Promise<IEvent[]> => {
       },
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
     );
-    eventModels.push(eventModel);
   }
 
-  return eventModels;
+  return await getEventsLocal();
 };
 
 const unwrapEvent = ({
