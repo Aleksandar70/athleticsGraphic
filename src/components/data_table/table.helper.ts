@@ -54,7 +54,8 @@ export const toggleDefaultHeader = (
 ): Headers => {
   headers.forEach((headerData) => {
     defaultEventColumns.forEach((defaultColumn) => {
-      if (defaultColumn == headerData.value) {
+      if (defaultColumn === headerData.value) {
+        console.log("headerData.value ", headerData.value);
         headerData.show = isDefaultChecked;
       }
     });
