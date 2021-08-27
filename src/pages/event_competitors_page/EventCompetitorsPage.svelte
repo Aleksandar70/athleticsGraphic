@@ -1,8 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import Canvas from "../../components/canvas/Canvas.svelte";
-  import { getEventData } from "../../api/event.api";
-  import { getCompetitorsForEvent } from "../../api/competitor.api";
+  import { getCompetitorResultsData } from "../../components/data_table/table.helper";
   import Spinner from "../../components/spinner/Spinner.svelte";
   import "./eventcompetitorspage.style.css";
   import { defaultEventCompetitorsColumns } from "../../../global/defaults";
@@ -10,19 +9,17 @@
 
   export let eventId;
 
-  $: eventData = [];
+  $: tableData = [];
 
   onMount(async () => {
-    const eventDatas = await getEventData(eventId);
-    eventData = await getCompetitorsForEvent(eventId);
-    console.log("competitorData ->? ", eventData);
+    tableData = getCompetitorResultsData(eventId);
   });
 </script>
 
 <div class="event-competitors--page">
-  {#if eventData.length > 0}
+  {#if tableData.length > 0}
     <Canvas
-      {eventData}
+      {tableData}
       defaultColumns={defaultEventCompetitorsColumns}
       updateAction={updateCompetitors}
     />

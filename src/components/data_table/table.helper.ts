@@ -4,6 +4,8 @@ import type {
   TableData,
   Headers,
 } from "../../../global/types";
+import { getCompetitorsForEvent } from "../../api/competitor.api";
+import { getEventData } from "../../api/event.api";
 
 export const hideColumn = (field: HeaderField, data: TableData): TableData => {
   data.forEach((record) => {
@@ -19,6 +21,48 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
     fielsLinks.set(data.name, data.eventId);
   });
   return fielsLinks;
+};
+
+export const getCompetitorResultsData = async (
+  eventId: string
+): Promise<TableData> => {
+  const eventData = await getEventData(eventId);
+  const competitorData = await getCompetitorsForEvent(eventId);
+
+  const data = [];
+
+  const units = eventData.units;
+
+  for (const unit of units) {
+    const _heat = unit.heat;
+    const _resultBibs = unit.results.map((result) => result.bib);
+    const _competitors = competitorData.filter((competitor) =>
+      _resultBibs.includes(competitor.competitorId)
+    );
+    const _trials = unit.trials;
+    for (const competitor of _competitors) {
+      if (unit.rounds) {
+        continue;
+      } else if (unit.heights.length > 0) {
+        for (const trial of _trials) {
+          console.log("trial =-> ", trial);
+          if (trial.bib === competitor.competitorId) {
+            // console.log("trial.height -> ", trial.height);
+            competitor[trial.height] =
+              competitor[trial.height]?.concat(trial.result) ?? trial.result;
+          }
+        }
+      } else {
+        continue;
+      }
+    }
+
+    const _data = { heat: _heat, competitors: _competitors };
+    data.push(_data);
+  }
+
+  console.log("data -> ", data);
+  return data;
 };
 
 export const getTableData = (

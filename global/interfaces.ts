@@ -27,11 +27,24 @@ export interface IEvent {
 }
 
 export interface IUnit {
+  heat: number;
+  heights: string[];
   rounds?: number;
   trials: ITrial[];
   results: IResult[];
 }
 
-export interface ITrial {}
+export interface ITrial {
+  bib: string;
+  result?: string;
+  height?: string;
+  round?: number;
+}
 
-export interface IResult {}
+export interface IResult {
+  bib: string;
+}
+
+export interface ICompetitor {
+  competitorId: string;
+}
