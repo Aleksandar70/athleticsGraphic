@@ -11,7 +11,6 @@ export const hideColumn = (field: HeaderField, data: TableData): TableData => {
     const rowData = record.find((data) => data.id == field.value);
     rowData.show = field.show;
   });
-  console.log("data1 ", data);
   return data;
 };
 
@@ -39,12 +38,13 @@ export const resetToDefaultColumns = (
   data.forEach((record) => {
     record.find((data) => {
       defaultEventColumns.forEach((defaultColumn) => {
-        if (defaultColumn == data.id) {
+        if (defaultColumn === data.id) {
           data.show = isDefaultChecked;
         }
       });
     });
   });
+  console.log("default: ", data);
   return data;
 };
 

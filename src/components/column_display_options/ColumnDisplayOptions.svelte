@@ -35,16 +35,16 @@
     return field;
   };
 
-  const toggleAllColumns = (isShowAllChecked: boolean) => {
-    showAll = !isShowAllChecked;
-    isDefaultChecked = false;
+  const toggleAllColumns = () => {
+    showAll = !showAll;
+    // isDefaultChecked = false;
     rowData = showAllColumns(showAll, rowData);
     return toggleHeader(showAll, headerData);
   };
 
-  const toggleDefaultColumns = (isChecked: boolean) => {
-    isDefaultChecked = !isChecked;
-    showAll = false;
+  const toggleDefaultColumns = () => {
+    isDefaultChecked = !isDefaultChecked;
+    // showAll = false;
     rowData = resetToDefaultColumns(isDefaultChecked, rowData);
     return toggleDefaultHeader(isDefaultChecked, headerData);
   };
@@ -53,16 +53,13 @@
 <Modal {isOpen} size="sm" {toggle} scrollable>
   <ModalHeader>
     <h5>{UIText.TOGGLE_COLUMNS_HEADER}</h5>
-    <div
-      class="modal-field"
-      on:click={() => (headerData = toggleAllColumns(showAll))}
-    >
+    <div class="modal-field" on:click={() => (headerData = toggleAllColumns())}>
       <span class="field-value"><h6>{UIText.TOGGLE_ALL_COLUMNS}</h6></span>
       <Switch checked={showAll} />
     </div>
     <div
       class="modal-field"
-      on:click={() => (headerData = toggleDefaultColumns(isDefaultChecked))}
+      on:click={() => (headerData = toggleDefaultColumns())}
     >
       <span class="field-value"><h6>{UIText.TOGGLE_DEFAULT_COLUMNS}</h6></span>
       <Switch checked={isDefaultChecked} />
