@@ -14,7 +14,7 @@
     hideColumn,
     showAllColumns,
     resetToDefaultColumns,
-    toggleHeader,
+    toggleAllHeaders,
     toggleDefaultHeader,
   } from "../data_table/table.helper";
   import Switch from "../switch/Switch.svelte";
@@ -37,16 +37,16 @@
 
   const toggleAllColumns = () => {
     rowData = showAllColumns(!showAll, rowData);
-    headerData = toggleHeader(!showAll, headerData);
-    showAll = !showAll;
+    headerData = toggleAllHeaders(!showAll, headerData);
     isDefaultChecked = false;
+    showAll = !showAll;
   };
 
   const toggleDefaultColumns = () => {
     rowData = resetToDefaultColumns(!isDefaultChecked, rowData);
     headerData = toggleDefaultHeader(!isDefaultChecked, headerData);
-    isDefaultChecked = !isDefaultChecked;
     showAll = false;
+    isDefaultChecked = !isDefaultChecked;
   };
 </script>
 

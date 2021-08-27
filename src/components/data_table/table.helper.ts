@@ -24,7 +24,10 @@ export const showAllColumns = (
   return data;
 };
 
-export const toggleHeader = (showAll: boolean, headers: Headers): Headers => {
+export const toggleAllHeaders = (
+  showAll: boolean,
+  headers: Headers
+): Headers => {
   headers.forEach((headerData) => {
     headerData.show = showAll;
   });
@@ -35,16 +38,15 @@ export const resetToDefaultColumns = (
   isDefaultChecked: boolean,
   data: TableData
 ): TableData => {
-  data.forEach((record) => {
-    record.find((data) => {
-      defaultEventColumns.forEach((defaultColumn) => {
-        if (defaultColumn === data.id) {
-          data.show = isDefaultChecked;
-        }
-      });
+  data.forEach((tableRow) => {
+    tableRow.find((data) => {
+      if (defaultEventColumns.includes(data.id)) {
+        data.show = isDefaultChecked;
+      } else {
+        data.show = !isDefaultChecked;
+      }
     });
   });
-  console.log("default: ", data);
   return data;
 };
 
@@ -53,12 +55,11 @@ export const toggleDefaultHeader = (
   headers: Headers
 ): Headers => {
   headers.forEach((headerData) => {
-    defaultEventColumns.forEach((defaultColumn) => {
-      if (defaultColumn === headerData.value) {
-        console.log("headerData.value ", headerData.value);
-        headerData.show = isDefaultChecked;
-      }
-    });
+    if (defaultEventColumns.includes(headerData.value)) {
+      headerData.show = isDefaultChecked;
+    } else {
+      headerData.show = !isDefaultChecked;
+    }
   });
   return headers;
 };
