@@ -2,14 +2,12 @@ import { Paths } from "../../global/constants/api";
 import type { RawData } from "../../global/types";
 import { getRequest, putRequest } from "../utils/api.utils";
 
-export const getEventData = async (): Promise<RawData> => {
+export const getEventsData = async (): Promise<RawData> => {
   const response = await getRequest(`${Paths.EVENTS}`);
   return response.data as RawData;
 };
 
-export const getEventCompetitors = async (
-  eventId: string
-): Promise<RawData> => {
+export const getEventData = async (eventId: string): Promise<RawData> => {
   const response = await getRequest(`${Paths.EVENTS}/${eventId}`);
   return response.data?.[0] as RawData;
 };

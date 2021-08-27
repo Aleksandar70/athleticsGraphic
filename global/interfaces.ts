@@ -22,3 +22,16 @@ export interface ISearch {
   enable: boolean;
   key?: string;
 }
+export interface IEvent {
+  units: IUnit[];
+}
+
+export interface IUnit {
+  rounds?: number;
+  trials: ITrial[];
+  results: IResult[];
+}
+
+export interface ITrial {}
+
+export interface IResult {}
