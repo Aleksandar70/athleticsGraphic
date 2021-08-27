@@ -11,6 +11,7 @@ export const hideColumn = (field: HeaderField, data: TableData): TableData => {
     const rowData = record.find((data) => data.id == field.value);
     rowData.show = field.show;
   });
+  console.log("data1 ", data);
   return data;
 };
 
@@ -24,20 +25,41 @@ export const showAllColumns = (
   return data;
 };
 
+export const toggleHeader = (showAll: boolean, headers: Headers): Headers => {
+  headers.forEach((headerData) => {
+    headerData.show = showAll;
+  });
+  return headers;
+};
+
 export const resetToDefaultColumns = (
-  defaultColumns: boolean,
+  isDefaultChecked: boolean,
   data: TableData
 ): TableData => {
   data.forEach((record) => {
     record.find((data) => {
       defaultEventColumns.forEach((defaultColumn) => {
         if (defaultColumn == data.id) {
-          data.show = defaultColumns;
+          data.show = isDefaultChecked;
         }
       });
     });
   });
   return data;
+};
+
+export const toggleDefaultHeader = (
+  isDefaultChecked: boolean,
+  headers: Headers
+): Headers => {
+  headers.forEach((headerData) => {
+    defaultEventColumns.forEach((defaultColumn) => {
+      if (defaultColumn == headerData.value) {
+        headerData.show = isDefaultChecked;
+      }
+    });
+  });
+  return headers;
 };
 
 export const getFieldLinks = (rows: RawData): Map<string, string> => {

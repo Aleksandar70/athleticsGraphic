@@ -14,6 +14,8 @@
     hideColumn,
     showAllColumns,
     resetToDefaultColumns,
+    toggleHeader,
+    toggleDefaultHeader,
   } from "../data_table/table.helper";
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
@@ -23,7 +25,7 @@
 
   let isOpen = false;
   let showAll = false;
-  let defaultColumns = false;
+  let isDefaultChecked = false;
 
   const toggle = () => (isOpen = !isOpen);
 
@@ -33,49 +35,45 @@
     return field;
   };
 
-  const toggleAllColumns = (showAll: boolean) => {
-    showAll = !showAll;
-    defaultColumns = false;
+  const toggleAllColumns = (isShowAllChecked: boolean) => {
+    showAll = !isShowAllChecked;
+    isDefaultChecked = false;
     rowData = showAllColumns(showAll, rowData);
-    return showAll;
+    return toggleHeader(showAll, headerData);
   };
 
-  const toggleDefaultColumns = (defaultColumns: boolean) => {
-    defaultColumns = !defaultColumns;
+  const toggleDefaultColumns = (isChecked: boolean) => {
+    isDefaultChecked = !isChecked;
     showAll = false;
-    rowData = resetToDefaultColumns(defaultColumns, rowData);
-    return defaultColumns;
+    rowData = resetToDefaultColumns(isDefaultChecked, rowData);
+    return toggleDefaultHeader(isDefaultChecked, headerData);
   };
 </script>
 
 <Modal {isOpen} size="sm" {toggle} scrollable>
   <ModalHeader>
     <h5>{UIText.TOGGLE_COLUMNS_HEADER}</h5>
-  </ModalHeader>
-  <ModalBody class="modal-body">
     <div
       class="modal-field"
-      on:click={() => (showAll = toggleAllColumns(showAll))}
+      on:click={() => (headerData = toggleAllColumns(showAll))}
     >
-      <span class="field-value">{UIText.TOGGLE_ALL_COLUMNS}</span>
+      <span class="field-value"><h6>{UIText.TOGGLE_ALL_COLUMNS}</h6></span>
       <Switch checked={showAll} />
     </div>
     <div
       class="modal-field"
-      on:click={() => (defaultColumns = toggleDefaultColumns(defaultColumns))}
+      on:click={() => (headerData = toggleDefaultColumns(isDefaultChecked))}
     >
-      <span class="field-value">{UIText.TOGGLE_DEFAULT_COLUMNS}</span>
-      <Switch checked={defaultColumns} />
+      <span class="field-value"><h6>{UIText.TOGGLE_DEFAULT_COLUMNS}</h6></span>
+      <Switch checked={isDefaultChecked} />
     </div>
+  </ModalHeader>
+  <ModalBody class="modal-body">
     {#each headerData as field}
-      {#if showAll === true}
-        <Switch checked={true} />
-      {:else}
-        <div class="modal-field" on:click={() => (field = toggleColumn(field))}>
-          <span class="field-value">{field.value.toUpperCase()}</span>
-          <Switch checked={field.show} />
-        </div>
-      {/if}
+      <div class="modal-field" on:click={() => (field = toggleColumn(field))}>
+        <span class="field-value">{field.value.toUpperCase()}</span>
+        <Switch checked={field.show} />
+      </div>
     {/each}
   </ModalBody>
   <ModalFooter>
