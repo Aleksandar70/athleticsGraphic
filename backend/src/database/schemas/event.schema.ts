@@ -9,7 +9,6 @@ const EventSchema = new Schema({
   cachedCount: {
     type: Number,
     required: false,
-    default: 0,
   },
   category: {
     type: String,
@@ -24,17 +23,14 @@ const EventSchema = new Schema({
   cutAfterRound: {
     type: Number,
     required: false,
-    default: 0,
   },
   cutSurvivors: {
     type: Number,
     required: false,
-    default: 0,
   },
   day: {
     type: Number,
     required: false,
-    default: 0,
   },
   eventCode: {
     type: String,
@@ -64,17 +60,14 @@ const EventSchema = new Schema({
   lanes: {
     type: Number,
     required: false,
-    default: 0,
   },
   maxFieldAttempts: {
     type: Number,
     required: false,
-    default: 0,
   },
   maxPerHeat: {
     type: Number,
     required: false,
-    default: 0,
   },
   name: {
     type: String,
@@ -89,12 +82,10 @@ const EventSchema = new Schema({
   r2Day: {
     type: Number,
     required: false,
-    default: 0,
   },
   r3Day: {
     type: Number,
     required: false,
-    default: 0,
   },
   reorderLastRound: {
     type: Boolean,

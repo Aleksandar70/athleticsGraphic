@@ -85,7 +85,6 @@ const CompetitionSchema = new Schema({
   year: {
     type: Number,
     required: false,
-    default: 2021,
   },
 });
 

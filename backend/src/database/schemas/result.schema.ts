@@ -9,17 +9,14 @@ const ResultSchema = new Schema({
   catpos: {
     type: Number,
     required: false,
-    default: -1,
   },
   order: {
     type: Number,
     required: false,
-    default: -1,
   },
   lane: {
     type: Number,
     required: false,
-    default: -1,
   },
   performance: {
     type: String,
@@ -29,12 +26,10 @@ const ResultSchema = new Schema({
   place: {
     type: Number,
     required: false,
-    default: -1,
   },
   points: {
     type: Number,
     required: false,
-    default: -1,
   },
   rawTime: {
     type: String,

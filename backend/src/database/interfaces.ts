@@ -47,6 +47,7 @@ export interface IUnit {
   results?: IResult[];
   resultsStatus?: string;
   round?: number;
+  rounds?: number;
   scheduledStartTime?: string;
   showAthleteDetails?: boolean;
   showHandicap?: boolean;

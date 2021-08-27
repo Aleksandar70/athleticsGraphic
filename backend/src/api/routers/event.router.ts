@@ -1,7 +1,10 @@
 import express, { Request, Response } from "express";
 import { IEvent } from "../../database/interfaces";
-import { findCompetitorsForEvent } from "../../database/repository/competitor.repo";
-import { getEvents, updateEvents } from "../../database/repository/event.repo";
+import {
+  getEvent,
+  getEvents,
+  updateEvents,
+} from "../../database/repository/event.repo";
 
 const router = express.Router();
 
@@ -12,8 +15,8 @@ router.get("/", async (_: Request, res: Response) => {
 
 router.get("/:eventId", async (req: Request, res: Response) => {
   const { eventId } = req.params;
-  const competitors = await findCompetitorsForEvent(eventId);
-  return res.status(200).json(competitors);
+  const event = await getEvent(eventId);
+  return res.status(200).json(event);
 });
 
 router.put("/", async (req: Request, res: Response) => {

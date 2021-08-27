@@ -23,6 +23,12 @@ export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
   return await EventModel.insertMany(eventModels);
 };
 
+export const getEvent = async (eventId: string): Promise<IEvent> =>
+  await EventModel.find({ eventId: eventId }).populate({
+    path: "units",
+    populate: ["results", "trials"],
+  });
+
 export const updateEvents = async (events: IEvent[]): Promise<boolean> => {
   let result = true;
   for (const event of events) {

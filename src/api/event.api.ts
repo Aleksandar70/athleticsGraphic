@@ -11,7 +11,7 @@ export const getEventCompetitors = async (
   eventId: string
 ): Promise<RawData> => {
   const response = await getRequest(`${Paths.EVENTS}/${eventId}`);
-  return response.data as RawData;
+  return response.data?.[0] as RawData;
 };
 
 export const updateEvents = async (tableData: RawData): Promise<boolean> => {

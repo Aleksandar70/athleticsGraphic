@@ -4,12 +4,10 @@ const UnitSchema = new Schema({
   day: {
     type: Number,
     required: false,
-    default: -1,
   },
   distance: {
     type: Number,
     required: false,
-    default: -1,
   },
   eventId: {
     type: String,
@@ -24,7 +22,6 @@ const UnitSchema = new Schema({
   heat: {
     type: Number,
     required: false,
-    default: -1,
   },
   heatName: {
     type: String,
@@ -54,7 +51,6 @@ const UnitSchema = new Schema({
   precision: {
     type: Number,
     required: false,
-    default: -1,
   },
   results: [{ type: Schema.Types.ObjectId, ref: "results" }],
   resultsStatus: {
@@ -65,7 +61,10 @@ const UnitSchema = new Schema({
   round: {
     type: Number,
     required: false,
-    default: -1,
+  },
+  rounds: {
+    type: Number,
+    required: false,
   },
   scheduledStartTime: {
     type: String,
@@ -105,12 +104,10 @@ const UnitSchema = new Schema({
   splitsLap: {
     type: Number,
     required: false,
-    default: -1,
   },
   splitsStart: {
     type: Number,
     required: false,
-    default: -1,
   },
   status: {
     type: String,
