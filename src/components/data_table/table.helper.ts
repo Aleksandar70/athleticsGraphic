@@ -4,11 +4,38 @@ import type {
   TableData,
   Headers,
 } from "../../../global/types";
+import { defaultEventColumns } from "../../../global/defaults";
 
 export const hideColumn = (field: HeaderField, data: TableData): TableData => {
   data.forEach((record) => {
     const rowData = record.find((data) => data.id == field.value);
     rowData.show = field.show;
+  });
+  return data;
+};
+
+export const showAllColumns = (
+  showAll: boolean,
+  data: TableData
+): TableData => {
+  data.forEach((tableRow) => {
+    tableRow.forEach((row) => (row.show = showAll));
+  });
+  return data;
+};
+
+export const resetToDefaultColumns = (
+  defaultColumns: boolean,
+  data: TableData
+): TableData => {
+  data.forEach((record) => {
+    record.find((data) => {
+      defaultEventColumns.forEach((defaultColumn) => {
+        if (defaultColumn == data.id) {
+          data.show = defaultColumns;
+        }
+      });
+    });
   });
   return data;
 };
