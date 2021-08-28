@@ -35,6 +35,7 @@
   const toggleColumn = (field: HeaderField) => {
     field.show = !field.show;
     rowData = hideColumn(field, rowData);
+    
     return field;
   };
 

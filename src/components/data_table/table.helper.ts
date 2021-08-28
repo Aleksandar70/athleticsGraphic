@@ -5,6 +5,7 @@ import type {
   Headers,
 } from "../../../global/types";
 import { defaultEventColumns } from "../../../global/defaults";
+import { visibleColumns } from "../../config.store";
 
 export const hideColumn = (field: HeaderField, data: TableData): TableData => {
   data.forEach((record) => {
@@ -72,18 +73,18 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
   return fielsLinks;
 };
 
-export const getTableData = (
-  rawData: RawData,
-  defaultColumns: string[]
-): TableData => {
+export const getTableData = (rawData: RawData, visibleColumns): TableData => {
   if (!rawData?.length) return [];
-
+  const eventId =
+    (rawData[0].event as string) ?? (rawData[0].eventId as string);
   const links = getFieldLinks(rawData);
+  console.log("eventId: ", eventId);
+  console.log("visible columns: ", visibleColumns[eventId]);
   const tableData = rawData?.map((row) => {
     return Object.entries(row).map(([key, value]) => ({
       value: value,
       stringValue: value.toString(),
-      show: defaultColumns.includes(key),
+      show: visibleColumns[eventId]?.includes(key),
       changed: false,
       link: links?.get(value.toString()),
       id: key,
@@ -92,15 +93,13 @@ export const getTableData = (
   return tableData;
 };
 
-export const getHeaderData = (
-  rawData: RawData,
-  defaultColumns: string[]
-): Headers => {
+export const getHeaderData = (rawData: RawData, visibleColumns): Headers => {
   if (!rawData?.length) return [];
-
+  const eventId =
+    (rawData[0].event as string) ?? (rawData[0].eventId as string);
   const tableColumns: Headers = Object.keys(rawData[0]).map((data) => ({
     value: data,
-    show: defaultColumns.includes(data),
+    show: visibleColumns[eventId]?.includes(data),
   }));
   return tableColumns;
 };
