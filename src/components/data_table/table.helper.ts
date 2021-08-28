@@ -25,7 +25,7 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
 
 export const getCompetitorResultsData = async (
   eventId: string
-): Promise<TableData> => {
+): Promise<any> => {
   const eventData = await getEventData(eventId);
   const competitorData = await getCompetitorsForEvent(eventId);
 
@@ -34,7 +34,6 @@ export const getCompetitorResultsData = async (
   const units = eventData.units;
 
   for (const unit of units) {
-    const _heat = unit.heat;
     const _resultBibs = unit.results.map((result) => result.bib);
     const _competitors = competitorData.filter((competitor) =>
       _resultBibs.includes(competitor.competitorId)
@@ -42,26 +41,34 @@ export const getCompetitorResultsData = async (
     const _trials = unit.trials;
     for (const competitor of _competitors) {
       if (unit.rounds) {
-        continue;
+        let round = 1;
+        while (round <= unit.rounds) {
+          competitor[round++] = "";
+        }
       } else if (unit.heights.length > 0) {
-        for (const trial of _trials) {
-          console.log("trial =-> ", trial);
-          if (trial.bib === competitor.competitorId) {
-            // console.log("trial.height -> ", trial.height);
+        const heights = unit.heights;
+        for (const height of heights) {
+          competitor[height] = "";
+        }
+      }
+
+      for (const trial of _trials) {
+        if (trial.bib === competitor.competitorId) {
+          if (unit.rounds) {
+            competitor[trial.round] = trial.result;
+          } else if (unit.heights.length > 0) {
             competitor[trial.height] =
               competitor[trial.height]?.concat(trial.result) ?? trial.result;
           }
         }
-      } else {
-        continue;
       }
     }
 
-    const _data = { heat: _heat, competitors: _competitors };
+    if (units.length === 1) return _competitors;
+    const _data = { heatName: unit.heatName, competitors: _competitors };
     data.push(_data);
   }
 
-  console.log("data -> ", data);
   return data;
 };
 
