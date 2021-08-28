@@ -48,7 +48,7 @@
   {:else}
     <div class="heat-tables">
       {#each tableData as heatTableData}
-        <Button on:click={() => toggle(heatTableData.heatName)}
+        <Button class="toggle-button" on:click={() => toggle(heatTableData.heatName)}
           >{heatTableData.heatName}</Button
         >
         <Collapse isOpen={heatToggle.get(heatTableData.heatName)}>

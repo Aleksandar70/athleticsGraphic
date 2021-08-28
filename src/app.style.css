@@ -19,3 +19,7 @@
   background-color: var(--main-light);
   overflow-x: hidden;
 }
+
+.main-content {
+  padding: 25px 0;
+}
