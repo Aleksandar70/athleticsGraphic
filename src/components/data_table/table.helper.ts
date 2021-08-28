@@ -6,6 +6,7 @@ import type {
 } from "../../../global/types";
 import { getCompetitorsForEvent } from "../../api/competitor.api";
 import { getEventData } from "../../api/event.api";
+import { isHeight, isRound } from "../../utils/event.utils";
 import { isNumeric } from "../../utils/string.utils";
 
 export const hideColumn = (field: HeaderField, data: TableData): TableData => {
@@ -58,8 +59,7 @@ export const getCompetitorResultsData = async (
           if (unit.rounds) {
             competitor[trial.round] = trial.result;
           } else if (unit.heights.length > 0) {
-            competitor[trial.height] =
-              competitor[trial.height]?.concat(trial.result) ?? trial.result;
+            competitor[trial.height] = trial.result;
           }
         }
       }
@@ -86,13 +86,14 @@ export const getTableData = (
         defaultColumns = [...defaultColumns, key];
       }
 
-      console.log("defaultColumns-> ", defaultColumns);
       return {
         value: value,
         stringValue: value.toString(),
         show: defaultColumns.includes(key),
         changed: false,
         link: links?.get(value.toString()),
+        height: isHeight(key),
+        round: isRound(key),
         id: key,
       };
     });

@@ -12,6 +12,8 @@ export interface ITableField {
   changed: boolean;
   link?: string;
   id: string;
+  round: boolean;
+  height: boolean;
 }
 
 export interface IConfig {

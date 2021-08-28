@@ -8,7 +8,7 @@
   import { updateCompetitors } from "../../api/competitor.api";
   import { Button, Collapse } from "sveltestrap";
 
-  export let eventId;
+  export let eventId: string;
 
   let hasHeats = false;
   let heatToggle = new Map();
@@ -48,7 +48,9 @@
   {:else}
     <div class="heat-tables">
       {#each tableData as heatTableData}
-        <Button class="toggle-button" on:click={() => toggle(heatTableData.heatName)}
+        <Button
+          class="toggle-button"
+          on:click={() => toggle(heatTableData.heatName)}
           >{heatTableData.heatName}</Button
         >
         <Collapse isOpen={heatToggle.get(heatTableData.heatName)}>

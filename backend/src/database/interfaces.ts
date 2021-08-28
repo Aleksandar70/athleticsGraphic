@@ -75,7 +75,8 @@ export interface IResult {
 }
 export interface ITrial {
   _id?: ObjectId;
-  bib?: string;
+  bib: string;
+  competitorId?: string;
   result?: string;
   height?: string;
   round?: number;

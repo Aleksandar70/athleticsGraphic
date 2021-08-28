@@ -7,6 +7,9 @@ export abstract class Paths {
   static readonly RESULTS = "results";
   static readonly RESULTS_PATH = `${Paths.ROOT_PATH}${Paths.RESULTS}`;
 
+  static readonly TRIALS = "results";
+  static readonly TRIALS_PATH = `${Paths.ROOT_PATH}${Paths.TRIALS}`;
+
   static readonly EVENTS = "events";
   static readonly EVENTS_PATH = `${Paths.ROOT_PATH}${Paths.EVENTS}`;
 
