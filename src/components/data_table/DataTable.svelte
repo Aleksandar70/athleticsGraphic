@@ -12,8 +12,9 @@
   import { UIText } from "../../../global/constants/ui_text";
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
-  import { setUnchanged } from "./table.helper";
+  import { setUnchanged, showAllColumns } from "./table.helper";
   import "./table.style.css";
+import { shouldShowAllColumns } from "../../config.store";
 
   export let headerData: Headers;
   export let rowData: TableData;
@@ -47,7 +48,7 @@
   <thead class="table-header">
     <tr>
       {#each headerData as column, i}
-        {#if column.show}
+        {#if column.show || $shouldShowAllColumns}
           <th class="header-text" on:click={() => updateSortDirection(i)}
             >{column.value}</th
           >
@@ -67,7 +68,7 @@
       {#if i >= lowerRange && i <= higherRange}
         <tr>
           {#each row as data}
-            {#if data.show}
+            {#if data.show || $shouldShowAllColumns}
               {#if isFlag(data.stringValue)}
                 <td>
                   <img
