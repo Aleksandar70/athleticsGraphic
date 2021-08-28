@@ -16,7 +16,6 @@ router.get("/", async (_: Request, res: Response) => {
 router.get("/:eventId", async (req: Request, res: Response) => {
   const { eventId } = req.params;
   const event = await getEvent(eventId);
-  console.log("event ->> ", event.units);
   return res.status(200).json(event);
 });
 

@@ -27,7 +27,7 @@ export interface IEvent {
 }
 
 export interface IUnit {
-  heat: number;
+  heatName: number;
   heights: string[];
   rounds?: number;
   trials: ITrial[];
