@@ -22,3 +22,17 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
+.toggle-all {
+  display: inline-block;
+}
+
+.toggle-default {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+}
+
+.checkbox {
+  margin-right: 1.5rem;
+}
