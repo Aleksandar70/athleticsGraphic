@@ -6,6 +6,7 @@ import type {
 } from "../../../global/types";
 import { getCompetitorsForEvent } from "../../api/competitor.api";
 import { getEventData } from "../../api/event.api";
+import { isNumeric } from "../../utils/string.utils";
 
 export const hideColumn = (field: HeaderField, data: TableData): TableData => {
   data.forEach((record) => {
@@ -25,11 +26,11 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
 
 export const getCompetitorResultsData = async (
   eventId: string
-): Promise<any> => {
+): Promise<unknown[]> => {
   const eventData = await getEventData(eventId);
   const competitorData = await getCompetitorsForEvent(eventId);
 
-  const data = [];
+  const data: unknown[] = [];
 
   const units = eventData.units;
 
@@ -80,14 +81,21 @@ export const getTableData = (
 
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
-    return Object.entries(row).map(([key, value]) => ({
-      value: value,
-      stringValue: value.toString(),
-      show: defaultColumns.includes(key),
-      changed: false,
-      link: links?.get(value.toString()),
-      id: key,
-    }));
+    return Object.entries(row).map(([key, value]) => {
+      if (!defaultColumns.includes(key) && isNumeric(key)) {
+        defaultColumns = [...defaultColumns, key];
+      }
+
+      console.log("defaultColumns-> ", defaultColumns);
+      return {
+        value: value,
+        stringValue: value.toString(),
+        show: defaultColumns.includes(key),
+        changed: false,
+        link: links?.get(value.toString()),
+        id: key,
+      };
+    });
   });
   return tableData;
 };
@@ -98,10 +106,15 @@ export const getHeaderData = (
 ): Headers => {
   if (!rawData?.length) return [];
 
-  const tableColumns: Headers = Object.keys(rawData[0]).map((data) => ({
-    value: data,
-    show: defaultColumns.includes(data),
-  }));
+  const tableColumns: Headers = Object.keys(rawData[0]).map((data) => {
+    if (!defaultColumns.includes(data) && isNumeric(data)) {
+      defaultColumns = [...defaultColumns, data];
+    }
+    return {
+      value: data,
+      show: defaultColumns.includes(data),
+    };
+  });
   return tableColumns;
 };
 
