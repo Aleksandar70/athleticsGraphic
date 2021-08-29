@@ -44,8 +44,7 @@ export const getTrials = async (unit: IUnit): Promise<ITrial[]> => {
       return await getTrialsRemote(unit);
     }
     case SOURCE.SEMI: {
-      const trialsSemi = await getTrialsSemi(unit);
-      return trialsSemi;
+      return await getTrialsSemi(unit);
     }
     default:
       return [];
@@ -63,11 +62,15 @@ const getTrialsRemote = async (unit: IUnit): Promise<ITrial[]> => {
       ? { bib: trial.bib, height: trial.height }
       : { bib: trial.bib, round: trial.round };
 
-    const trialModel = await TrialModel.findOneAndReplace(filter, trial, {
-      omitUndefined: true,
-      upsert: true,
-      setDefaultsOnInsert: true,
-    });
+    const trialModel = await TrialModel.findOneAndReplace(
+      filter,
+      { ...filter, result: trial.result },
+      {
+        omitUndefined: true,
+        upsert: true,
+        setDefaultsOnInsert: true,
+      }
+    );
     trialModels.push(trialModel);
   }
 
@@ -79,23 +82,21 @@ const getTrialsSemi = async (unit: IUnit): Promise<ITrial[]> => {
   const trials = unit.trials ?? [];
   const formatedTrials = mergeTrialResults(trials);
 
-  console.log("formatedTrials -=> ", formatedTrials);
-
   for (const trial of formatedTrials) {
     const filter = isHeightTrial(trials)
       ? { bib: trial.bib, height: trial.height }
       : { bib: trial.bib, round: trial.round };
 
-    console.log("trial -> ", trial);
-
-    for (const trial of formatedTrials) {
-      const trialModel = await TrialModel.findOneAndUpdate(filter, trial, {
+    const trialModel = await TrialModel.findOneAndUpdate(
+      filter,
+      { ...filter, result: trial.result },
+      {
         omitUndefined: true,
         upsert: true,
         setDefaultsOnInsert: true,
-      });
-      trialModels.push(trialModel);
-    }
+      }
+    );
+    trialModels.push(trialModel);
   }
   return trialModels;
 };
@@ -125,8 +126,6 @@ const mergeTrialResults = (trials: ITrial[]): ITrial[] => {
   return formattedTrials;
 };
 
-const isHeightTrial = (trials: ITrial[]) =>
-  trials.filter(
-    (data) =>
-      Object.keys(data).filter((number) => number.includes(".")).length > 0
-  ).length > 0;
+const isHeightTrial = (trials: ITrial[]): boolean =>
+  Object.keys(trials?.[0]).includes("height") ||
+  Object.keys(trials?.[0]).filter((key) => key.includes(".")).length > 0;
