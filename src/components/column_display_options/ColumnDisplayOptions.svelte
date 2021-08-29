@@ -36,6 +36,11 @@
   const toggleColumn = (field: HeaderField) => {
     field.show = !field.show;
     rowData = hideOrShowColumn(field, rowData);
+    setColumnsToLocalStorage(field);
+    return field;
+  };
+
+  const setColumnsToLocalStorage = (field) => {
     const columnsPerEvent = visibleColumns;
     let columns = columnsPerEvent[$currentEventId];
     if (columns.includes(field.value)) {
@@ -45,7 +50,6 @@
     }
     columnsPerEvent[$currentEventId] = columns;
     visibleColumns.set(JSON.stringify(columnsPerEvent));
-    return field;
   };
 
   const toggleAllColumns = () => {
