@@ -23,7 +23,7 @@ export const showAllColumns = (
   showAll: boolean,
   data: TableData
 ): TableData => {
-  const columns = visibleColumns[get(currentEventId)];
+  const columns = getCurrentColumns();
   data.forEach((tableRow) => {
     tableRow.forEach((row) => {
       row.show = showAll || columns.includes(row.id);
@@ -36,7 +36,7 @@ export const toggleAllHeaders = (
   showAll: boolean,
   headers: Headers
 ): Headers => {
-  const columns = visibleColumns[get(currentEventId)];
+  const columns = getCurrentColumns();
   headers.forEach((headerData) => {
     headerData.show = showAll || columns.includes(headerData.value);
   });
@@ -65,6 +65,10 @@ export const getDefaultColumns = () => {
   return get(currentEventId) === "events"
     ? defaultEventColumns
     : defaultEventCompetitorsColumns;
+};
+
+export const getCurrentColumns = () => {
+  return visibleColumns[get(currentEventId)];
 };
 
 export const getFieldLinks = (rows: RawData): Map<string, string> => {

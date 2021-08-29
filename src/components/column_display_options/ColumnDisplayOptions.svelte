@@ -66,12 +66,14 @@
     <h5>{UIText.TOGGLE_COLUMNS_HEADER}</h5>
     <div class="toggle-all--wrapper">
       <Checkbox
-      size="2.5rem"
+        size="2.5rem"
         class="toggle-all--checkbox"
         checked={$shouldShowAllColumns}
         on:change={() => toggleAllColumns()}
       />
-      <label class="toggle-all--text" for="toggle-all--checkbox">{UIText.TOGGLE_ALL_COLUMNS}</label>
+      <label class="toggle-all--text" for="toggle-all--checkbox"
+        >{UIText.TOGGLE_ALL_COLUMNS}</label
+      >
     </div>
     <div>
       <Button on:click={() => toggleDefaultColumns()}
