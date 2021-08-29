@@ -1,3 +1,4 @@
+import type { ICompetitor, IHeatEventData } from "../../../global/interfaces";
 import type {
   HeaderField,
   RawData,
@@ -27,11 +28,11 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
 
 export const getCompetitorResultsData = async (
   eventId: string
-): Promise<unknown[]> => {
+): Promise<IHeatEventData[] | ICompetitor[]> => {
   const eventData = await getEventData(eventId);
   const competitorData = await getCompetitorsForEvent(eventId);
 
-  const data: unknown[] = [];
+  const data: IHeatEventData[] = [];
 
   const units = eventData.units;
 
@@ -69,7 +70,7 @@ export const getCompetitorResultsData = async (
     const _data = { heatName: unit.heatName, competitors: _competitors };
     data.push(_data);
   }
-  
+
   return data;
 };
 

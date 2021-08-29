@@ -29,7 +29,7 @@ export interface IEvent {
 }
 
 export interface IUnit {
-  heatName: number;
+  heatName: string;
   heights: string[];
   rounds?: number;
   trials: ITrial[];
@@ -41,6 +41,11 @@ export interface ITrial {
   result?: string;
   height?: string;
   round?: number;
+}
+
+export interface IHeatEventData {
+  heatName: string;
+  competitors: ICompetitor[];
 }
 
 export interface IResult {
