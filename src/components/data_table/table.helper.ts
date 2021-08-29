@@ -69,7 +69,7 @@ export const getCompetitorResultsData = async (
     const _data = { heatName: unit.heatName, competitors: _competitors };
     data.push(_data);
   }
-
+  
   return data;
 };
 

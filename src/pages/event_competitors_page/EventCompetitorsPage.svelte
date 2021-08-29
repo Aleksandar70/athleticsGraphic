@@ -6,7 +6,7 @@
   import "./eventcompetitorspage.style.css";
   import { defaultEventCompetitorsColumns } from "../../../global/defaults";
   import { updateCompetitors } from "../../api/competitor.api";
-  import { Button, Collapse } from "sveltestrap";
+  import { Collapse } from "sveltestrap";
 
   export let eventId: string;
 
@@ -23,7 +23,7 @@
 
   onMount(async () => {
     tableData = await getCompetitorResultsData(eventId);
-    hasHeats = tableData?.length === 2;
+    hasHeats = Object.keys(tableData?.[0]).includes("heatName");
     if (hasHeats) {
       tableData.forEach((data, idx) => {
         heatToggle.set(data.heatName, idx === 0);
