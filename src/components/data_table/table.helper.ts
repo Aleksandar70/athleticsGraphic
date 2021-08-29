@@ -22,30 +22,6 @@ export const hideOrShowColumn = (
   return data;
 };
 
-export const showAllColumns = (
-  showAll: boolean,
-  data: TableData
-): TableData => {
-  const currentColumns = getCurrentColumns();
-  data.forEach((tableRow) => {
-    tableRow.forEach((row) => {
-      row.show = showAll || currentColumns.includes(row.id);
-    });
-  });
-  return data;
-};
-
-export const toggleAllHeaders = (
-  showAll: boolean,
-  headers: Headers
-): Headers => {
-  const currentColumns = getCurrentColumns();
-  headers.forEach((headerData) => {
-    headerData.show = showAll || currentColumns.includes(headerData.value);
-  });
-  return headers;
-};
-
 export const resetToDefaultColumns = (data: TableData): TableData => {
   const defaultColumns = getDefaultColumns();
   data.forEach((tableRow) => {

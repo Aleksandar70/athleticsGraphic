@@ -11,6 +11,7 @@
   import { UIText } from "../../../global/constants/ui_text";
   import type { HeaderField, Headers, TableData } from "../../../global/types";
   import {
+    getDefaultColumns,
     hideOrShowColumn,
     resetToDefaultColumns,
     toggleDefaultHeader,
@@ -47,6 +48,7 @@
   const toggleDefaultColumns = () => {
     rowData = resetToDefaultColumns(rowData);
     headerData = toggleDefaultHeader(headerData);
+    $visibleColumns[$currentEventId].columns = getDefaultColumns();
     $visibleColumns[$currentEventId].showAll = false;
   };
 </script>
