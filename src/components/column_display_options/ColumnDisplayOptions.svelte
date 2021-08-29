@@ -12,24 +12,19 @@
   import type { HeaderField, Headers, TableData } from "../../../global/types";
   import {
     hideOrShowColumn,
-    showAllColumns,
     resetToDefaultColumns,
-    toggleAllHeaders,
     toggleDefaultHeader,
   } from "../data_table/table.helper";
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
-  import {
-    currentEventId,
-    shouldShowAllColumns,
-    visibleColumns,
-  } from "../../config.store";
+  import { currentEventId, visibleColumns } from "../../config.store";
   import Checkbox from "svelte-checkbox";
 
   export let headerData: Headers;
   export let rowData: TableData;
 
   let isOpen = false;
+  $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
 
   const toggle = () => (isOpen = !isOpen);
 
@@ -41,24 +36,18 @@
   };
 
   const setColumnsToLocalStorage = (field) => {
-    let columns = $visibleColumns[$currentEventId];
+    let columns = $visibleColumns[$currentEventId].columns;
     columns = columns.includes(field.value)
       ? columns.filter((column) => column !== field.value)
       : [...columns, field.value];
-    $visibleColumns[$currentEventId] = columns;
+    $visibleColumns[$currentEventId].columns = columns;
     visibleColumns.set($visibleColumns);
-  };
-
-  const toggleAllColumns = () => {
-    rowData = showAllColumns(!$shouldShowAllColumns, rowData);
-    headerData = toggleAllHeaders(!$shouldShowAllColumns, headerData);
-    shouldShowAllColumns.set(!$shouldShowAllColumns);
   };
 
   const toggleDefaultColumns = () => {
     rowData = resetToDefaultColumns(rowData);
     headerData = toggleDefaultHeader(headerData);
-    shouldShowAllColumns.set(false);
+    $visibleColumns[$currentEventId].showAll = false;
   };
 </script>
 
@@ -69,8 +58,9 @@
       <Checkbox
         size="2.5rem"
         class="toggle-all--checkbox"
-        checked={$shouldShowAllColumns}
-        on:change={() => toggleAllColumns()}
+        checked={shouldShowAllColumns}
+        on:change={() =>
+          ($visibleColumns[$currentEventId].showAll = !shouldShowAllColumns)}
       />
       <label class="toggle-all--text" for="toggle-all--checkbox"
         >{UIText.TOGGLE_ALL_COLUMNS}</label
@@ -86,7 +76,7 @@
     {#each headerData as field}
       <div class="modal-field" on:click={() => (field = toggleColumn(field))}>
         <span class="field-value">{field.value.toUpperCase()}</span>
-        <Switch checked={field.show} />
+        <Switch checked={field.show || shouldShowAllColumns} />
       </div>
     {/each}
   </ModalBody>
