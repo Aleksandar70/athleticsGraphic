@@ -20,8 +20,10 @@
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
   import {
+    currentEventId,
     shouldShowAllColumns,
     shouldShowDefaultColumns,
+    visibleColumns,
   } from "../../config.store";
   import Checkbox from "svelte-checkbox";
 
@@ -35,7 +37,15 @@
   const toggleColumn = (field: HeaderField) => {
     field.show = !field.show;
     rowData = hideColumn(field, rowData);
-    
+    const columnsPerEvent = visibleColumns;
+    let columns = columnsPerEvent[$currentEventId];
+    if (columns.includes(field.value)) {
+      columns = columns.filter((column) => column !== field.value);
+    } else {
+      columns.push(field.value);
+    }
+    columnsPerEvent[$currentEventId] = columns;
+    visibleColumns.set(JSON.stringify(columnsPerEvent));
     return field;
   };
 

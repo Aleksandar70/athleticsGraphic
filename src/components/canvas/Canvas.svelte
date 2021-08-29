@@ -14,23 +14,26 @@
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
-  import { visibleColumns } from "../../config.store";
+  import { currentEventId, visibleColumns } from "../../config.store";
+
   export let tableData: RawData;
   export let defaultColumns: string[];
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
 
-  const eventId =
-    (tableData[0]?.event as string) ?? (tableData[0]?.eventId as string);
-  if (!Object.keys($visibleColumns).includes(eventId)) {
-    const newVisibleColumns = $visibleColumns;
-    newVisibleColumns[eventId] = defaultColumns;
+  currentEventId.set(
+    (tableData[0]?.event as string) ?? (tableData[0]?.eventId as string)
+  );
+  if (!Object.keys(visibleColumns).includes($currentEventId)) {
+    console.log("USAO");
+    const newVisibleColumns = visibleColumns;
+    newVisibleColumns[$currentEventId] = defaultColumns;
     visibleColumns.set(JSON.stringify(newVisibleColumns));
   }
 
-  const rows = getTableData(tableData, $visibleColumns);
+  const rows = getTableData(tableData, visibleColumns);
 
-  let headerData = getHeaderData(tableData, $visibleColumns);
+  let headerData = getHeaderData(tableData, visibleColumns);
   let rowData = rows;
   let currentPage = 0;
 

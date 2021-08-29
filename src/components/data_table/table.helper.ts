@@ -5,7 +5,8 @@ import type {
   Headers,
 } from "../../../global/types";
 import { defaultEventColumns } from "../../../global/defaults";
-import { visibleColumns } from "../../config.store";
+import { currentEventId, visibleColumns } from "../../config.store";
+import { get } from "svelte/store";
 
 export const hideColumn = (field: HeaderField, data: TableData): TableData => {
   data.forEach((record) => {
@@ -19,8 +20,11 @@ export const showAllColumns = (
   showAll: boolean,
   data: TableData
 ): TableData => {
+  const columns = visibleColumns[get(currentEventId)];
   data.forEach((tableRow) => {
-    tableRow.forEach((row) => (row.show = showAll));
+    tableRow.forEach((row) => {
+      row.show = showAll || columns.includes(row.id);
+    });
   });
   return data;
 };
@@ -29,8 +33,9 @@ export const toggleAllHeaders = (
   showAll: boolean,
   headers: Headers
 ): Headers => {
+  const columns = visibleColumns[get(currentEventId)];
   headers.forEach((headerData) => {
-    headerData.show = showAll;
+    headerData.show = showAll || columns.includes(headerData.value);
   });
   return headers;
 };
@@ -78,8 +83,6 @@ export const getTableData = (rawData: RawData, visibleColumns): TableData => {
   const eventId =
     (rawData[0].event as string) ?? (rawData[0].eventId as string);
   const links = getFieldLinks(rawData);
-  console.log("eventId: ", eventId);
-  console.log("visible columns: ", visibleColumns[eventId]);
   const tableData = rawData?.map((row) => {
     return Object.entries(row).map(([key, value]) => ({
       value: value,
