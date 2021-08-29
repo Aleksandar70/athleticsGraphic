@@ -5,6 +5,7 @@ import EventRouter from "./api/routers/event.router";
 import CompetitorRouter from "./api/routers/competitor.router";
 import ConfigRouter from "./api/routers/config.router";
 import TrialsRouter from "./api/routers/trials.router";
+import ResultsRouter from "./api/routers/results.router";
 import { Paths } from "../../global/constants/api";
 import { json } from "body-parser";
 import { getOTCompetitionData } from "./api/opentrack.api";
@@ -34,6 +35,7 @@ app.use(cors());
 app.use(Paths.EVENTS_PATH, EventRouter);
 app.use(Paths.COMPETITOR_PATH, CompetitorRouter);
 app.use(Paths.TRIALS_PATH, TrialsRouter);
+app.use(Paths.RESULTS_PATH, ResultsRouter);
 app.use(Paths.CONFIG_PATH, ConfigRouter);
 
 app.listen(port, () => console.log(`Server is up at port ${port}`));

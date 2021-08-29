@@ -35,8 +35,9 @@
 
   const onUpdate = async (): Promise<void> => {
     if (!checkIfChanged(rowData)) return;
+    const eventId = tableData?.[0].event as string;
     const updatedValue = updatedTableValues(rowData);
-    updateResult = await updateAction(updatedValue);
+    updateResult = await updateAction(updatedValue, eventId);
   };
 </script>
 

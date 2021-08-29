@@ -57,7 +57,7 @@ export const getEvent = async (eventId: string): Promise<IEvent> => {
   }
 };
 
-const getEventLocal = async (eventId: string): Promise<IEvent> =>
+export const getEventLocal = async (eventId: string): Promise<IEvent> =>
   await EventModel.find({ eventId: eventId }).populate({
     path: "units",
     populate: ["results", "trials"],

@@ -12,18 +12,10 @@ export const getCompetitorsForEvent = async (
 };
 
 export const updateCompetitors = async (
-  tableData: RawData
+  tableData: RawData,
+  eventId: string
 ): Promise<boolean> => {
-  const trialNumbers = tableData
-    .map((data) => {
-      const trialData = {};
-      const numbers = Object.keys(data).filter((key) => isNumeric(key));
-      trialData["competitorId"] = data.competitorId;
-      numbers.forEach((number) => (trialData[number] = data[number]));
-      return trialData;
-    })
-    .filter((data) => Object.keys(data)?.length > 1);
-
+  const trialNumbers = getTrialData(tableData);
   let trialsUpdated = true;
 
   if (trialNumbers?.length) {
@@ -32,8 +24,51 @@ export const updateCompetitors = async (
       trialNumbers
     )) as unknown as boolean;
   }
+
+  const result = getResultData(tableData, eventId);
+  let resultsUpdated = true;
+
+  if (result?.length) {
+    resultsUpdated = (await putRequest(
+      Paths.RESULTS,
+      result
+    )) as unknown as boolean;
+  }
+
   return (
     trialsUpdated &&
+    resultsUpdated &&
     ((await putRequest(Paths.COMPETITOR, tableData)) as unknown as boolean)
   );
+};
+
+const getTrialData = (tableData: RawData): Record<string, string>[] => {
+  return tableData
+    .map((data) => {
+      const trialData = {};
+      const numbers = Object.keys(data).filter((key) => isNumeric(key));
+      trialData["competitorId"] = data.competitorId;
+      numbers.forEach((number) => {
+        trialData[number] = data[number];
+        delete trialData[number];
+      });
+      return trialData;
+    })
+    .filter((data) => Object.keys(data)?.length > 1);
+};
+
+const getResultData = (
+  tableData: RawData,
+  eventId: string
+): Record<string, string>[] => {
+  return tableData
+    .map((data) => {
+      const resultData: Record<string, string> = {};
+      resultData["competitorId"] = data.competitorId as string;
+      resultData["result"] = data.result as string;
+      resultData["eventId"] = eventId;
+      delete resultData["results"];
+      return resultData;
+    })
+    .filter((data) => data.result);
 };
