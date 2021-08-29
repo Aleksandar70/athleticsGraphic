@@ -22,7 +22,6 @@
   import {
     currentEventId,
     shouldShowAllColumns,
-    shouldShowDefaultColumns,
     visibleColumns,
   } from "../../config.store";
   import Checkbox from "svelte-checkbox";
@@ -53,13 +52,11 @@
     rowData = showAllColumns(!$shouldShowAllColumns, rowData);
     headerData = toggleAllHeaders(!$shouldShowAllColumns, headerData);
     shouldShowAllColumns.set(!$shouldShowAllColumns);
-    shouldShowDefaultColumns.set(false);
   };
 
   const toggleDefaultColumns = () => {
-    rowData = resetToDefaultColumns(!$shouldShowDefaultColumns, rowData);
-    headerData = toggleDefaultHeader(!$shouldShowDefaultColumns, headerData);
-    shouldShowDefaultColumns.set(!$shouldShowDefaultColumns);
+    rowData = resetToDefaultColumns(rowData);
+    headerData = toggleDefaultHeader(headerData);
     shouldShowAllColumns.set(false);
   };
 </script>
@@ -76,12 +73,9 @@
       />
     </div>
     <div class="toggle-default">
-      <h6>{UIText.TOGGLE_DEFAULT_COLUMNS}</h6>
-      <Checkbox
-        class="checkbox"
-        checked={$shouldShowDefaultColumns}
-        on:change={() => toggleDefaultColumns()}
-      />
+      <Button on:click={() => toggleDefaultColumns()}
+        >{UIText.TOGGLE_DEFAULT_COLUMNS}</Button
+      >
     </div>
   </ModalHeader>
   <ModalBody class="modal-body">

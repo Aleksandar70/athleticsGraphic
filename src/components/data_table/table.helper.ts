@@ -4,7 +4,10 @@ import type {
   TableData,
   Headers,
 } from "../../../global/types";
-import { defaultEventColumns } from "../../../global/defaults";
+import {
+  defaultEventColumns,
+  defaultEventCompetitorsColumns,
+} from "../../../global/defaults";
 import { currentEventId, visibleColumns } from "../../config.store";
 import { get } from "svelte/store";
 
@@ -40,43 +43,26 @@ export const toggleAllHeaders = (
   return headers;
 };
 
-export const resetToDefaultColumns = (
-  isDefaultChecked: boolean,
-  data: TableData
-): TableData => {
+export const resetToDefaultColumns = (data: TableData): TableData => {
+  const defaultColumns =
+    get(currentEventId) === "events"
+      ? defaultEventColumns
+      : defaultEventCompetitorsColumns;
   data.forEach((tableRow) => {
-    console.log("defaultEventColumns1 ", defaultEventColumns)
-    const columns = visibleColumns[get(currentEventId)];
-    console.log("columns ", columns)
-    tableRow.find((data) => {
-      if (!isDefaultChecked) {
-        //false
-        data.show = columns.includes(data.id);
-      } else if (defaultEventColumns.includes(data.id)) {
-        //true
-        console.log("USAO ", isDefaultChecked);
-        data.show = isDefaultChecked;
-      } else {
-        data.show = false;
-      }
+    tableRow.forEach((data) => {
+      data.show = defaultColumns.includes(data.id);
     });
   });
   return data;
 };
 
-export const toggleDefaultHeader = (
-  isDefaultChecked: boolean,
-  headers: Headers
-): Headers => {
-  const columns = visibleColumns[get(currentEventId)];
+export const toggleDefaultHeader = (headers: Headers): Headers => {
+  const defaultColumns =
+  get(currentEventId) === "events"
+    ? defaultEventColumns
+    : defaultEventCompetitorsColumns;
   headers.forEach((headerData) => {
-    if (!isDefaultChecked) {
-      headerData.show = columns.includes(headerData.value);
-    } else if (defaultEventColumns.includes(headerData.value)) {
-      headerData.show = isDefaultChecked;
-    } else {
-      headerData.show = false;
-    }
+    headerData.show = defaultColumns.includes(headerData.value);
   });
   return headers;
 };

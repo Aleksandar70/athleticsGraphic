@@ -22,13 +22,11 @@
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
 
-  currentEventId.set((tableData[0]?.event as string) ?? "000");
+  currentEventId.set((tableData[0]?.event as string) ?? "events");
 
-  //ne treba da udje na svaki refresh
   if (!visibleColumns[$currentEventId]) {
-    console.log("USAO",)
     const newVisibleColumns = visibleColumns;
-    newVisibleColumns[$currentEventId] = defaultColumns; //promeni defaultColumns
+    newVisibleColumns[$currentEventId] = [...defaultColumns];
     visibleColumns.set(JSON.stringify(newVisibleColumns));
   }
 

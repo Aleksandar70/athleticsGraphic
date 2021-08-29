@@ -4,8 +4,6 @@ export const dataSource = writable("");
 
 export const shouldShowAllColumns = writable(false);
 
-export const shouldShowDefaultColumns = writable(false);
-
 export const currentEventId = writable("");
 
 export const columns = localStorage.getItem("columns");
