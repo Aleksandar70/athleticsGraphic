@@ -64,15 +64,16 @@
 <Modal {isOpen} size="sm" {toggle} scrollable>
   <ModalHeader>
     <h5>{UIText.TOGGLE_COLUMNS_HEADER}</h5>
-    <div class="toggle-all">
-      <h6>{UIText.TOGGLE_ALL_COLUMNS}</h6>
+    <div class="toggle-all--wrapper">
       <Checkbox
-        class="checkbox"
+      size="2.5rem"
+        class="toggle-all--checkbox"
         checked={$shouldShowAllColumns}
         on:change={() => toggleAllColumns()}
       />
+      <label class="toggle-all--text" for="toggle-all--checkbox">{UIText.TOGGLE_ALL_COLUMNS}</label>
     </div>
-    <div class="toggle-default">
+    <div>
       <Button on:click={() => toggleDefaultColumns()}
         >{UIText.TOGGLE_DEFAULT_COLUMNS}</Button
       >

@@ -23,16 +23,17 @@
   white-space: nowrap;
 }
 
-.toggle-all {
-  display: inline-block;
+.toggle-all--wrapper {
+  display: flex;
+  justify-content: flex-start;
+  justify-items: center;
+  margin-bottom: 15px;
 }
 
-.toggle-default {
-  display: inline-block;
-  position: absolute;
-  right: 0;
-}
-
-.checkbox {
-  margin-right: 1.5rem;
+.toggle-all--text {
+  display: block;
+  text-align: left;
+  margin-left: 15px;
+  height: fit-content;
+  background-color: red;
 }

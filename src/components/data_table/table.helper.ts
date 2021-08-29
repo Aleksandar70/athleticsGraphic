@@ -44,10 +44,7 @@ export const toggleAllHeaders = (
 };
 
 export const resetToDefaultColumns = (data: TableData): TableData => {
-  const defaultColumns =
-    get(currentEventId) === "events"
-      ? defaultEventColumns
-      : defaultEventCompetitorsColumns;
+  const defaultColumns = getDefaultColumns();
   data.forEach((tableRow) => {
     tableRow.forEach((data) => {
       data.show = defaultColumns.includes(data.id);
@@ -57,14 +54,17 @@ export const resetToDefaultColumns = (data: TableData): TableData => {
 };
 
 export const toggleDefaultHeader = (headers: Headers): Headers => {
-  const defaultColumns =
-  get(currentEventId) === "events"
-    ? defaultEventColumns
-    : defaultEventCompetitorsColumns;
+  const defaultColumns = getDefaultColumns();
   headers.forEach((headerData) => {
     headerData.show = defaultColumns.includes(headerData.value);
   });
   return headers;
+};
+
+export const getDefaultColumns = () => {
+  return get(currentEventId) === "events"
+    ? defaultEventColumns
+    : defaultEventCompetitorsColumns;
 };
 
 export const getFieldLinks = (rows: RawData): Map<string, string> => {
