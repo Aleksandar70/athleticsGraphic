@@ -23,10 +23,10 @@
 
   currentEventId.set((tableData[0]?.event as string) ?? "events");
 
-  if (!visibleColumns[$currentEventId]) {
-    const newVisibleColumns = visibleColumns;
+  if (!$visibleColumns[$currentEventId]) {
+    const newVisibleColumns = $visibleColumns;
     newVisibleColumns[$currentEventId] = [...defaultColumns];
-    visibleColumns.set(JSON.stringify(newVisibleColumns));
+    visibleColumns.set(newVisibleColumns);
   }
 
   const rows = getTableData(tableData);

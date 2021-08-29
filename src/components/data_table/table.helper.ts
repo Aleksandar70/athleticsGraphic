@@ -11,7 +11,10 @@ import {
 import { currentEventId, visibleColumns } from "../../config.store";
 import { get } from "svelte/store";
 
-export const hideOrShowColumn = (field: HeaderField, data: TableData): TableData => {
+export const hideOrShowColumn = (
+  field: HeaderField,
+  data: TableData
+): TableData => {
   data.forEach((record) => {
     const rowData = record.find((data) => data.id == field.value);
     rowData.show = field.show;
@@ -81,14 +84,12 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
 
 export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];
-  const eventId =
-    (rawData[0].event as string) ?? (rawData[0].eventId as string);
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
     return Object.entries(row).map(([key, value]) => ({
       value: value,
       stringValue: value.toString(),
-      show: visibleColumns[get(currentEventId)]?.includes(key),
+      show: get(visibleColumns)[get(currentEventId)]?.includes(key),
       changed: false,
       link: links?.get(value.toString()),
       id: key,
@@ -99,11 +100,9 @@ export const getTableData = (rawData: RawData): TableData => {
 
 export const getHeaderData = (rawData: RawData): Headers => {
   if (!rawData?.length) return [];
-  const eventId =
-    (rawData[0].event as string) ?? (rawData[0].eventId as string);
   const tableColumns: Headers = Object.keys(rawData[0]).map((data) => ({
     value: data,
-    show: visibleColumns[get(currentEventId)]?.includes(data),
+    show: get(visibleColumns)[get(currentEventId)]?.includes(data),
   }));
   return tableColumns;
 };

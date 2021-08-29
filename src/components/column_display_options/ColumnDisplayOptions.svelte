@@ -41,15 +41,12 @@
   };
 
   const setColumnsToLocalStorage = (field) => {
-    const columnsPerEvent = visibleColumns;
-    let columns = columnsPerEvent[$currentEventId];
-    if (columns.includes(field.value)) {
-      columns = columns.filter((column) => column !== field.value);
-    } else {
-      columns.push(field.value);
-    }
-    columnsPerEvent[$currentEventId] = columns;
-    visibleColumns.set(JSON.stringify(columnsPerEvent));
+    let columns = $visibleColumns[$currentEventId];
+    columns = columns.includes(field.value)
+      ? columns.filter((column) => column !== field.value)
+      : [...columns, field.value];
+    $visibleColumns[$currentEventId] = columns;
+    visibleColumns.set($visibleColumns);
   };
 
   const toggleAllColumns = () => {
