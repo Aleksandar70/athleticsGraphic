@@ -37,7 +37,8 @@ export const getCompetitorResultsData = async (
   const units = eventData.units;
 
   for (const unit of units) {
-    const _resultBibs = unit.results.map((result) => result.bib);
+    const _results = unit.results;
+    const _resultBibs = _results.map((result) => result.bib);
     const _competitors = competitorData.filter((competitor) =>
       _resultBibs.includes(competitor.competitorId)
     );
@@ -64,6 +65,10 @@ export const getCompetitorResultsData = async (
           }
         }
       }
+
+      competitor["result"] = _results.find(
+        (result) => result.bib === competitor.competitorId
+      )?.performance;
     }
 
     if (units.length === 1) return _competitors;
