@@ -23,14 +23,10 @@
 
   onMount(async () => {
     tableData = await getCompetitorResultsData(eventId);
-    hasHeats = Object.keys(tableData[0]).length === 2;
+    hasHeats = tableData?.length === 2;
     if (hasHeats) {
       tableData.forEach((data, idx) => {
-        if (idx === 0) {
-          heatToggle.set(data.heatName, true);
-        } else {
-          heatToggle.set(data.heatName, false);
-        }
+        heatToggle.set(data.heatName, idx === 0);
       });
     }
   });
@@ -48,11 +44,12 @@
   {:else}
     <div class="heat-tables">
       {#each tableData as heatTableData}
-        <Button
+        <div
           class="toggle-button"
           on:click={() => toggle(heatTableData.heatName)}
-          >{heatTableData.heatName}</Button
         >
+          {heatTableData.heatName}
+        </div>
         <Collapse isOpen={heatToggle.get(heatTableData.heatName)}>
           <Canvas
             tableData={heatTableData.competitors}
