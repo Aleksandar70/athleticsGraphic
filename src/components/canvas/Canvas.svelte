@@ -21,19 +21,16 @@
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
 
-  currentEventId.set(
-    (tableData[0]?.event as string) ?? (tableData[0]?.eventId as string)
-  );
-  if (!Object.keys(visibleColumns).includes($currentEventId)) {
-    console.log("USAO");
+  currentEventId.set((tableData[0]?.event as string) ?? "000");
+  if (!visibleColumns[$currentEventId]) {
     const newVisibleColumns = visibleColumns;
     newVisibleColumns[$currentEventId] = defaultColumns;
     visibleColumns.set(JSON.stringify(newVisibleColumns));
   }
 
-  const rows = getTableData(tableData, visibleColumns);
+  const rows = getTableData(tableData);
 
-  let headerData = getHeaderData(tableData, visibleColumns);
+  let headerData = getHeaderData(tableData);
   let rowData = rows;
   let currentPage = 0;
 

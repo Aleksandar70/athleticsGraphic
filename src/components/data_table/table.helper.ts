@@ -78,7 +78,7 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
   return fielsLinks;
 };
 
-export const getTableData = (rawData: RawData, visibleColumns): TableData => {
+export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];
   const eventId =
     (rawData[0].event as string) ?? (rawData[0].eventId as string);
@@ -87,7 +87,7 @@ export const getTableData = (rawData: RawData, visibleColumns): TableData => {
     return Object.entries(row).map(([key, value]) => ({
       value: value,
       stringValue: value.toString(),
-      show: visibleColumns[eventId]?.includes(key),
+      show: visibleColumns[get(currentEventId)]?.includes(key),
       changed: false,
       link: links?.get(value.toString()),
       id: key,
@@ -96,13 +96,13 @@ export const getTableData = (rawData: RawData, visibleColumns): TableData => {
   return tableData;
 };
 
-export const getHeaderData = (rawData: RawData, visibleColumns): Headers => {
+export const getHeaderData = (rawData: RawData): Headers => {
   if (!rawData?.length) return [];
   const eventId =
     (rawData[0].event as string) ?? (rawData[0].eventId as string);
   const tableColumns: Headers = Object.keys(rawData[0]).map((data) => ({
     value: data,
-    show: visibleColumns[eventId]?.includes(data),
+    show: visibleColumns[get(currentEventId)]?.includes(data),
   }));
   return tableColumns;
 };
