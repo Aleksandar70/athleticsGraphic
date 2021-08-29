@@ -50,7 +50,7 @@ const getTrialData = (tableData: RawData): Record<string, string>[] => {
       trialData["competitorId"] = data.competitorId;
       numbers.forEach((number) => {
         trialData[number] = data[number];
-        delete trialData[number];
+        delete data[number];
       });
       return trialData;
     })
@@ -67,7 +67,7 @@ const getResultData = (
       resultData["competitorId"] = data.competitorId as string;
       resultData["result"] = data.result as string;
       resultData["eventId"] = eventId;
-      delete resultData["results"];
+      delete data.result;
       return resultData;
     })
     .filter((data) => data.result);
