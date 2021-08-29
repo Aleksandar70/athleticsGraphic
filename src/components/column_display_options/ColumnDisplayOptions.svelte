@@ -11,7 +11,7 @@
   import { UIText } from "../../../global/constants/ui_text";
   import type { HeaderField, Headers, TableData } from "../../../global/types";
   import {
-    hideColumn,
+    hideOrShowColumn,
     showAllColumns,
     resetToDefaultColumns,
     toggleAllHeaders,
@@ -35,7 +35,7 @@
 
   const toggleColumn = (field: HeaderField) => {
     field.show = !field.show;
-    rowData = hideColumn(field, rowData);
+    rowData = hideOrShowColumn(field, rowData);
     const columnsPerEvent = visibleColumns;
     let columns = columnsPerEvent[$currentEventId];
     if (columns.includes(field.value)) {

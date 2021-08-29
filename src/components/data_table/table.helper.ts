@@ -11,7 +11,7 @@ import {
 import { currentEventId, visibleColumns } from "../../config.store";
 import { get } from "svelte/store";
 
-export const hideColumn = (field: HeaderField, data: TableData): TableData => {
+export const hideOrShowColumn = (field: HeaderField, data: TableData): TableData => {
   data.forEach((record) => {
     const rowData = record.find((data) => data.id == field.value);
     rowData.show = field.show;
@@ -23,10 +23,10 @@ export const showAllColumns = (
   showAll: boolean,
   data: TableData
 ): TableData => {
-  const columns = getCurrentColumns();
+  const currentColumns = getCurrentColumns();
   data.forEach((tableRow) => {
     tableRow.forEach((row) => {
-      row.show = showAll || columns.includes(row.id);
+      row.show = showAll || currentColumns.includes(row.id);
     });
   });
   return data;
@@ -36,9 +36,9 @@ export const toggleAllHeaders = (
   showAll: boolean,
   headers: Headers
 ): Headers => {
-  const columns = getCurrentColumns();
+  const currentColumns = getCurrentColumns();
   headers.forEach((headerData) => {
-    headerData.show = showAll || columns.includes(headerData.value);
+    headerData.show = showAll || currentColumns.includes(headerData.value);
   });
   return headers;
 };
