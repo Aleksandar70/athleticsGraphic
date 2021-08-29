@@ -12,14 +12,16 @@
   import { UIText } from "../../../global/constants/ui_text";
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
-  import { setUnchanged, showAllColumns } from "./table.helper";
+  import { setUnchanged } from "./table.helper";
+  import { currentEventId, visibleColumns } from "../../config.store";
   import "./table.style.css";
-import { shouldShowAllColumns } from "../../config.store";
 
   export let headerData: Headers;
   export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
+
+  $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
 
   $: lowerRange = currentPage * Constants.ROWS_PER_TABLE;
   $: higherRange = lowerRange + (Constants.ROWS_PER_TABLE - 1);
@@ -48,7 +50,7 @@ import { shouldShowAllColumns } from "../../config.store";
   <thead class="table-header">
     <tr>
       {#each headerData as column, i}
-        {#if column.show || $shouldShowAllColumns}
+        {#if column.show || shouldShowAllColumns}
           <th class="header-text" on:click={() => updateSortDirection(i)}
             >{column.value}</th
           >
@@ -68,7 +70,7 @@ import { shouldShowAllColumns } from "../../config.store";
       {#if i >= lowerRange && i <= higherRange}
         <tr>
           {#each row as data}
-            {#if data.show || $shouldShowAllColumns}
+            {#if data.show || shouldShowAllColumns}
               {#if isFlag(data.stringValue)}
                 <td>
                   <img

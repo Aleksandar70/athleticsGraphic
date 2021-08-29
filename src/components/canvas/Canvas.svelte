@@ -25,7 +25,10 @@
 
   if (!$visibleColumns[$currentEventId]) {
     const newVisibleColumns = $visibleColumns;
-    newVisibleColumns[$currentEventId] = [...defaultColumns];
+    newVisibleColumns[$currentEventId] = {
+      showAll: false,
+      columns: [...defaultColumns],
+    };
     visibleColumns.set(newVisibleColumns);
   }
 

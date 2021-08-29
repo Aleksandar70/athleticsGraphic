@@ -84,12 +84,13 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
 
 export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];
+  const _visibleColumns = get(visibleColumns)[get(currentEventId)];
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
     return Object.entries(row).map(([key, value]) => ({
       value: value,
       stringValue: value.toString(),
-      show: get(visibleColumns)[get(currentEventId)]?.includes(key),
+      show: _visibleColumns.showAll || _visibleColumns?.columns?.includes(key),
       changed: false,
       link: links?.get(value.toString()),
       id: key,
@@ -100,9 +101,10 @@ export const getTableData = (rawData: RawData): TableData => {
 
 export const getHeaderData = (rawData: RawData): Headers => {
   if (!rawData?.length) return [];
+  const _visibleColumns = get(visibleColumns)[get(currentEventId)];
   const tableColumns: Headers = Object.keys(rawData[0]).map((data) => ({
     value: data,
-    show: get(visibleColumns)[get(currentEventId)]?.includes(data),
+    show: _visibleColumns.showAll || _visibleColumns?.columns?.includes(data),
   }));
   return tableColumns;
 };
