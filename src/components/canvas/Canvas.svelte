@@ -15,6 +15,7 @@
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
   import { currentEventId, visibleColumns } from "../../config.store";
+  import { get } from "svelte/store";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
@@ -22,14 +23,16 @@
   export let updateAction: Function;
 
   currentEventId.set((tableData[0]?.event as string) ?? "000");
+
+  //ne treba da udje na svaki refresh
   if (!visibleColumns[$currentEventId]) {
+    console.log("USAO",)
     const newVisibleColumns = visibleColumns;
-    newVisibleColumns[$currentEventId] = defaultColumns;
+    newVisibleColumns[$currentEventId] = defaultColumns; //promeni defaultColumns
     visibleColumns.set(JSON.stringify(newVisibleColumns));
   }
 
   const rows = getTableData(tableData);
-
   let headerData = getHeaderData(tableData);
   let rowData = rows;
   let currentPage = 0;

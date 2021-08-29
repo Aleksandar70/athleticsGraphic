@@ -45,11 +45,19 @@ export const resetToDefaultColumns = (
   data: TableData
 ): TableData => {
   data.forEach((tableRow) => {
+    console.log("defaultEventColumns1 ", defaultEventColumns)
+    const columns = visibleColumns[get(currentEventId)];
+    console.log("columns ", columns)
     tableRow.find((data) => {
-      if (defaultEventColumns.includes(data.id)) {
+      if (!isDefaultChecked) {
+        //false
+        data.show = columns.includes(data.id);
+      } else if (defaultEventColumns.includes(data.id)) {
+        //true
+        console.log("USAO ", isDefaultChecked);
         data.show = isDefaultChecked;
       } else {
-        data.show = !isDefaultChecked;
+        data.show = false;
       }
     });
   });
@@ -60,11 +68,14 @@ export const toggleDefaultHeader = (
   isDefaultChecked: boolean,
   headers: Headers
 ): Headers => {
+  const columns = visibleColumns[get(currentEventId)];
   headers.forEach((headerData) => {
-    if (defaultEventColumns.includes(headerData.value)) {
+    if (!isDefaultChecked) {
+      headerData.show = columns.includes(headerData.value);
+    } else if (defaultEventColumns.includes(headerData.value)) {
       headerData.show = isDefaultChecked;
     } else {
-      headerData.show = !isDefaultChecked;
+      headerData.show = false;
     }
   });
   return headers;
