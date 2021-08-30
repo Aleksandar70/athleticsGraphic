@@ -1,9 +1,4 @@
-import type {
-  HeaderField,
-  RawData,
-  TableData,
-  Headers,
-} from "../../../global/types";
+import type { RawData, TableData, Headers } from "../../../global/types";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
@@ -11,42 +6,13 @@ import {
 import { currentEventId, visibleColumns } from "../../config.store";
 import { get } from "svelte/store";
 
-export const hideOrShowColumn = (
-  field: HeaderField,
-  data: TableData
-): TableData => {
-  data.forEach((record) => {
-    const rowData = record.find((data) => data.id == field.value);
-    rowData.show = field.show;
-  });
-  return data;
-};
-
-export const resetToDefaultColumns = (data: TableData): TableData => {
-  const defaultColumns = getDefaultColumns();
-  data.forEach((tableRow) => {
-    tableRow.forEach((data) => {
-      data.show = defaultColumns.includes(data.id);
-    });
-  });
-  return data;
-};
-
-export const toggleDefaultHeader = (headers: Headers): Headers => {
-  const defaultColumns = getDefaultColumns();
-  headers.forEach((headerData) => {
-    headerData.show = defaultColumns.includes(headerData.value);
-  });
-  return headers;
-};
-
-export const getDefaultColumns = () => {
+export const getDefaultColumns = (): string[] => {
   return get(currentEventId) === "events"
     ? defaultEventColumns
     : defaultEventCompetitorsColumns;
 };
 
-export const getCurrentColumns = () => {
+export const getCurrentColumns = (): string => {
   return visibleColumns[get(currentEventId)];
 };
 

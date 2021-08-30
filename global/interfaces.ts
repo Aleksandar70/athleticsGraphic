@@ -8,7 +8,6 @@ export interface ITableHeader {
 export interface ITableField {
   value: TableFieldType;
   stringValue: string;
-  show: boolean;
   changed: boolean;
   link?: string;
   id: string;

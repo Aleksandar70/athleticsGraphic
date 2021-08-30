@@ -63,7 +63,7 @@
   {/if}
   <DataTable {headerData} {rowData} {updateResult} bind:currentPage />
   <div class="table-options">
-    <ColumnDisplayOptionsModal bind:headerData bind:rowData />
+    <ColumnDisplayOptionsModal bind:headerData />
     <Button on:click={() => onUpdate()}>{UIText.TABLE_SAVE}</Button>
     <FadingText result={updateResult} />
   </div>
