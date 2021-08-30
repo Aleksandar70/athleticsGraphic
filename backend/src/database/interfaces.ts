@@ -47,6 +47,7 @@ export interface IUnit {
   results?: IResult[];
   resultsStatus?: string;
   round?: number;
+  rounds?: number;
   scheduledStartTime?: string;
   showAthleteDetails?: boolean;
   showHandicap?: boolean;
@@ -74,7 +75,8 @@ export interface IResult {
 }
 export interface ITrial {
   _id?: ObjectId;
-  bib?: string;
+  bib: string;
+  competitorId?: string;
   result?: string;
   height?: string;
   round?: number;

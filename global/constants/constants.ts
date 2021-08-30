@@ -1,5 +1,5 @@
 export abstract class Constants {
-  static readonly ROWS_PER_TABLE: number = 5;
+  static readonly ROWS_PER_TABLE: number = 8;
 }
 
 export enum SOURCE {

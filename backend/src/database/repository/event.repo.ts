@@ -40,6 +40,65 @@ export const updateEvents = async (events: IEvent[]): Promise<boolean> => {
   return result;
 };
 
+export const getEvent = async (eventId: string): Promise<IEvent> => {
+  const source = await getDataSource();
+  switch (source.toLowerCase()) {
+    case SOURCE.LOCAL: {
+      return await getEventLocal(eventId);
+    }
+    case SOURCE.REMOTE: {
+      return await getEventRemote(eventId);
+    }
+    case SOURCE.SEMI: {
+      return await getEventSemi(eventId);
+    }
+    default:
+      return await getEventLocal(eventId);
+  }
+};
+
+export const getEventLocal = async (eventId: string): Promise<IEvent> =>
+  await EventModel.find({ eventId: eventId }).populate({
+    path: "units",
+    populate: ["results", "trials"],
+  });
+
+const getEventRemote = async (eventId: string): Promise<IEvent> => {
+  const { eventsData } = await getOTCompetitionData();
+  const event = eventsData.find((event) => event.eventId === eventId);
+
+  const units = await getUnits(event?.units ?? []);
+
+  await EventModel.replaceOne(
+    { eventId: event?.eventId },
+    {
+      ...unwrapEvent(event as IEvent),
+      units: units.map((unit) => unit?._id),
+    },
+    { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
+  );
+
+  return getEventLocal(eventId);
+};
+
+const getEventSemi = async (eventId: string): Promise<IEvent> => {
+  const { eventsData } = await getOTCompetitionData();
+  const event = eventsData.find((event) => event.eventId === eventId);
+
+  const units = await getUnits(event?.units ?? []);
+
+  await EventModel.updateOne(
+    { eventId: event?.eventId },
+    {
+      ...unwrapEvent(event as IEvent),
+      units: units.map((unit) => unit?._id),
+    },
+    { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
+  );
+
+  return getEventLocal(eventId);
+};
+
 export const getEvents = async (): Promise<IEvent[]> => {
   const source = await getDataSource();
   switch (source.toLowerCase()) {

@@ -14,4 +14,5 @@ export const defaultEventCompetitorsColumns = [
   "flagUrl",
   "pb",
   "sb",
+  "result",
 ];

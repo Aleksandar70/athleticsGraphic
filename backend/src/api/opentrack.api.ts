@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { OpenTrack } from "../../../global/constants/api";
-import { ICompetition } from "../database/interfaces";
+import { ICompetition, ICompetitor, IEvent } from "../database/interfaces";
 
 interface IOTCompetitionData {
-  competitionData;
-  competitorsData;
-  eventsData;
+  competitionData: ICompetition;
+  competitorsData: ICompetitor[];
+  eventsData: IEvent[];
 }
 
 export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
@@ -16,8 +16,8 @@ export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
     const competitionData = otCompetitionData.data;
     return {
       competitionData: unwrapCompetition(competitionData),
-      competitorsData: competitionData.competitors,
-      eventsData: competitionData.events,
+      competitorsData: competitionData.competitors ?? [],
+      eventsData: competitionData.events ?? [],
     };
   } catch (err) {
     console.error(err);

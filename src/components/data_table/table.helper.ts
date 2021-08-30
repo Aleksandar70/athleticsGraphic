@@ -1,4 +1,9 @@
+import type { ICompetitor, IHeatEventData } from "../../../global/interfaces";
 import type { RawData, TableData, Headers } from "../../../global/types";
+import { getCompetitorsForEvent } from "../../api/competitor.api";
+import { getEventData } from "../../api/event.api";
+import { isHeight, isRound } from "../../utils/event.utils";
+import { isNumeric } from "../../utils/string.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
@@ -24,26 +29,86 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
   return fielsLinks;
 };
 
+export const getCompetitorResultsData = async (
+  eventId: string
+): Promise<IHeatEventData[] | ICompetitor[]> => {
+  const eventData = await getEventData(eventId);
+  const competitorData = await getCompetitorsForEvent(eventId);
+
+  const data: IHeatEventData[] = [];
+
+  const units = eventData.units;
+
+  for (const unit of units) {
+    const _results = unit.results;
+    const _resultBibs = _results.map((result) => result.bib);
+    const _competitors = competitorData.filter((competitor) =>
+      _resultBibs.includes(competitor.competitorId)
+    );
+    const _trials = unit.trials;
+    for (const competitor of _competitors) {
+      if (unit.rounds) {
+        let round = 1;
+        while (round <= unit.rounds) {
+          competitor[round++] = "";
+        }
+      } else if (unit.heights.length > 0) {
+        const heights = unit.heights;
+        for (const height of heights) {
+          competitor[height] = "";
+        }
+      }
+
+      for (const trial of _trials) {
+        if (trial.bib === competitor.competitorId) {
+          if (unit.rounds) {
+            competitor[trial.round] = trial.result;
+          } else if (unit.heights.length > 0) {
+            competitor[trial.height] = trial.result;
+          }
+        }
+      }
+
+      competitor["result"] = _results.find(
+        (result) => result.bib === competitor.competitorId
+      )?.performance;
+    }
+
+    if (units.length === 1) return _competitors;
+    const _data = { heatName: unit.heatName, competitors: _competitors };
+    data.push(_data);
+  }
+
+  return data;
+};
+
 export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
-    return Object.entries(row).map(([key, value]) => ({
-      value: value,
-      stringValue: value.toString(),
-      changed: false,
-      link: links?.get(value.toString()),
-      id: key,
-    }));
+    return Object.entries(row).map(([key, value]) => {
+      return {
+        value: value,
+        stringValue: value.toString(),
+        changed: false,
+        link: links?.get(value.toString()),
+        height: isHeight(key),
+        round: isRound(key),
+        id: key,
+      };
+    });
   });
   return tableData;
 };
 
 export const getHeaderData = (rawData: RawData): Headers => {
   if (!rawData?.length) return [];
-  const tableColumns: Headers = Object.keys(rawData[0]).map((data) => ({
-    value: data,
-  }));
+
+  const tableColumns: Headers = Object.keys(rawData[0]).map((data) => {
+    return {
+      value: data,
+    };
+  });
   return tableColumns;
 };
 
