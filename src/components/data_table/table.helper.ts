@@ -86,19 +86,17 @@ export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
-    // if (!defaultColumns.includes(key) && isNumeric(key)) {
-    //   defaultColumns = [...defaultColumns, key];
-    // }
-
-    return Object.entries(row).map(([key, value]) => ({
-      value: value,
-      stringValue: value.toString(),
-      changed: false,
-      link: links?.get(value.toString()),
-      height: isHeight(key),
-      round: isRound(key),
-      id: key,
-    }));
+    return Object.entries(row).map(([key, value]) => {
+      return {
+        value: value,
+        stringValue: value.toString(),
+        changed: false,
+        link: links?.get(value.toString()),
+        height: isHeight(key),
+        round: isRound(key),
+        id: key,
+      };
+    });
   });
   return tableData;
 };
@@ -107,9 +105,6 @@ export const getHeaderData = (rawData: RawData): Headers => {
   if (!rawData?.length) return [];
 
   const tableColumns: Headers = Object.keys(rawData[0]).map((data) => {
-    // if (!defaultColumns.includes(data) && isNumeric(data)) {
-    //   defaultColumns = [...defaultColumns, data];
-    // }
     return {
       value: data,
     };
