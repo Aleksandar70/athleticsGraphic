@@ -2,7 +2,6 @@ import type { TableFieldType } from "./types";
 
 export interface ITableHeader {
   value: string;
-  show: boolean;
 }
 
 export interface ITableField {

@@ -54,13 +54,12 @@
       <Input
         type="checkbox"
         class="toggle-all--checkbox"
+        name="toggle-all--checkbox"
         checked={shouldShowAllColumns}
         on:change={() =>
           ($visibleColumns[$currentEventId].showAll = !shouldShowAllColumns)}
       />
-      <label class="toggle-all--text" for="toggle-all--checkbox"
-        >{UIText.TOGGLE_ALL_COLUMNS}</label
-      >
+      <label for="toggle-all--checkbox">{UIText.TOGGLE_ALL_COLUMNS}</label>
     </div>
     <Button on:click={() => toggleDefaultColumns()}
       >{UIText.TOGGLE_DEFAULT_COLUMNS}</Button
