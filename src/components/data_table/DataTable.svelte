@@ -13,12 +13,16 @@
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
   import { setUnchanged } from "./table.helper";
+  import { currentEventId, visibleColumns } from "../../config.store";
   import "./table.style.css";
 
   export let headerData: Headers;
   export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
+
+  $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
+  $: _visibleColumns = $visibleColumns[$currentEventId].columns;
 
   $: lowerRange = currentPage * Constants.ROWS_PER_TABLE;
   $: higherRange = lowerRange + (Constants.ROWS_PER_TABLE - 1);
@@ -47,7 +51,7 @@
   <thead class="table-header">
     <tr>
       {#each headerData as column, i}
-        {#if column.show}
+        {#if _visibleColumns.includes(column.value) || shouldShowAllColumns}
           <th class="header-text" on:click={() => updateSortDirection(i)}
             >{column.value}</th
           >
@@ -67,7 +71,7 @@
       {#if i >= lowerRange && i <= higherRange}
         <tr>
           {#each row as data}
-            {#if data.show}
+            {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}
               {#if isFlag(data.stringValue)}
                 <td>
                   <img

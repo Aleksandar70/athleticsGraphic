@@ -14,15 +14,26 @@
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
+  import { currentEventId, visibleColumns } from "../../config.store";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
 
-  const rows = getTableData(tableData, defaultColumns);
+  currentEventId.set((tableData[0]?.event as string) ?? "events");
 
-  let headerData = getHeaderData(tableData, defaultColumns);
+  if (!$visibleColumns[$currentEventId]) {
+    const newVisibleColumns = $visibleColumns;
+    newVisibleColumns[$currentEventId] = {
+      showAll: false,
+      columns: [...defaultColumns],
+    };
+    visibleColumns.set(newVisibleColumns);
+  }
+
+  const rows = getTableData(tableData);
+  let headerData = getHeaderData(tableData);
   let rowData = rows;
   let currentPage = 0;
 
@@ -53,7 +64,7 @@
   {/if}
   <DataTable {headerData} {rowData} {updateResult} bind:currentPage />
   <div class="table-options">
-    <ColumnDisplayOptionsModal bind:headerData bind:rowData />
+    <ColumnDisplayOptionsModal bind:headerData />
     <Button on:click={() => onUpdate()}>{UIText.TABLE_SAVE}</Button>
     <FadingText result={updateResult} />
   </div>

@@ -3,40 +3,76 @@
   import { faEye } from "@fortawesome/free-solid-svg-icons";
   import {
     Button,
+    Input,
     Modal,
     ModalBody,
     ModalFooter,
     ModalHeader,
   } from "sveltestrap";
   import { UIText } from "../../../global/constants/ui_text";
-  import type { HeaderField, Headers, TableData } from "../../../global/types";
-  import { hideColumn } from "../data_table/table.helper";
+  import type { Headers } from "../../../global/types";
+  import { getDefaultColumns } from "../data_table/table.helper";
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
+  import { currentEventId, visibleColumns } from "../../config.store";
 
   export let headerData: Headers;
-  export let rowData: TableData;
 
   let isOpen = false;
+  $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll as boolean;
+  $: _visibleColumns = $visibleColumns[$currentEventId].columns as string[];
 
   const toggle = () => (isOpen = !isOpen);
 
-  const toggleColumn = (field: HeaderField) => {
-    field.show = !field.show;
-    rowData = hideColumn(field, rowData);
-    return field;
+  const toggleColumn = (value: string) => {
+    const columnData = $visibleColumns[$currentEventId];
+    let columns = columnData.columns;
+
+    if (columnData.showAll) {
+      const allColumns = headerData.map((data) => data.value);
+      columns = allColumns;
+      columnData.showAll = false;
+    }
+
+    columns = columns.includes(value)
+      ? columns.filter((column: string) => column !== value)
+      : [...columns, value];
+    $visibleColumns[$currentEventId].columns = columns;
+    visibleColumns.set($visibleColumns);
+  };
+
+  const toggleDefaultColumns = () => {
+    $visibleColumns[$currentEventId].columns = getDefaultColumns();
+    $visibleColumns[$currentEventId].showAll = false;
   };
 </script>
 
 <Modal {isOpen} size="sm" {toggle} scrollable>
   <ModalHeader>
-    <h5>{UIText.TOGGLE_COLUMNS_HEADER}</h5>
+    <h3>{UIText.TOGGLE_COLUMNS_HEADER}</h3>
+    <div class="toggle-all--wrapper">
+      <Input
+        type="checkbox"
+        class="toggle-all--checkbox"
+        name="toggle-all--checkbox"
+        checked={shouldShowAllColumns}
+        on:change={() =>
+          ($visibleColumns[$currentEventId].showAll = !shouldShowAllColumns)}
+      />
+      <label for="toggle-all--checkbox">{UIText.TOGGLE_ALL_COLUMNS}</label>
+    </div>
+    <Button on:click={() => toggleDefaultColumns()}
+      >{UIText.TOGGLE_DEFAULT_COLUMNS}</Button
+    >
   </ModalHeader>
   <ModalBody class="modal-body">
     {#each headerData as field}
-      <div class="modal-field" on:click={() => (field = toggleColumn(field))}>
+      <div class="modal-field" on:click={() => toggleColumn(field.value)}>
         <span class="field-value">{field.value.toUpperCase()}</span>
-        <Switch checked={field.show} />
+        <Switch
+          checked={_visibleColumns.includes(field.value) ||
+            shouldShowAllColumns}
+        />
       </div>
     {/each}
   </ModalBody>

@@ -22,3 +22,10 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
+.toggle-all--wrapper {
+  display: flex;
+  justify-content: flex-start;
+  justify-items: center;
+  margin: 15px 0;
+}
