@@ -1,16 +1,19 @@
-import type {
-  HeaderField,
-  RawData,
-  TableData,
-  Headers,
-} from "../../../global/types";
+import type { RawData, TableData, Headers } from "../../../global/types";
+import {
+  defaultEventColumns,
+  defaultEventCompetitorsColumns,
+} from "../../../global/defaults";
+import { currentEventId, visibleColumns } from "../../config.store";
+import { get } from "svelte/store";
 
-export const hideColumn = (field: HeaderField, data: TableData): TableData => {
-  data.forEach((record) => {
-    const rowData = record.find((data) => data.id == field.value);
-    rowData.show = field.show;
-  });
-  return data;
+export const getDefaultColumns = (): string[] => {
+  return get(currentEventId) === "events"
+    ? defaultEventColumns
+    : defaultEventCompetitorsColumns;
+};
+
+export const getCurrentColumns = (): string => {
+  return visibleColumns[get(currentEventId)];
 };
 
 export const getFieldLinks = (rows: RawData): Map<string, string> => {
@@ -21,18 +24,13 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
   return fielsLinks;
 };
 
-export const getTableData = (
-  rawData: RawData,
-  defaultColumns: string[]
-): TableData => {
+export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];
-
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
     return Object.entries(row).map(([key, value]) => ({
       value: value,
       stringValue: value.toString(),
-      show: defaultColumns.includes(key),
       changed: false,
       link: links?.get(value.toString()),
       id: key,
@@ -41,15 +39,10 @@ export const getTableData = (
   return tableData;
 };
 
-export const getHeaderData = (
-  rawData: RawData,
-  defaultColumns: string[]
-): Headers => {
+export const getHeaderData = (rawData: RawData): Headers => {
   if (!rawData?.length) return [];
-
   const tableColumns: Headers = Object.keys(rawData[0]).map((data) => ({
     value: data,
-    show: defaultColumns.includes(data),
   }));
   return tableColumns;
 };
