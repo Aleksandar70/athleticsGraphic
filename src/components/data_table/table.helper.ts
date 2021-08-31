@@ -8,7 +8,7 @@ import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
 } from "../../../global/defaults";
-import { currentEventId, visibleColumns } from "../../config.store";
+import { currentEventId, visibleColumns } from "../../stores/table.store";
 import { get } from "svelte/store";
 
 export const getDefaultColumns = (): string[] => {

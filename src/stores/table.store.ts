@@ -1,7 +1,5 @@
 import { writable } from "svelte/store";
 
-export const dataSource = writable("");
-
 export const currentEventId = writable("");
 
 const columns = localStorage.getItem("columns");

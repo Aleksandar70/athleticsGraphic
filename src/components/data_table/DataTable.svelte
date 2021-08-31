@@ -13,7 +13,7 @@
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
   import { setUnchanged } from "./table.helper";
-  import { currentEventId, visibleColumns } from "../../config.store";
+  import { currentEventId, visibleColumns } from "../../stores/table.store";
   import { isNumeric } from "../../utils/string.utils";
   import "./table.style.css";
 
