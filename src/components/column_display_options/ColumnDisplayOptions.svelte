@@ -15,8 +15,8 @@
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
   import { currentEventId, visibleColumns } from "../../config.store";
-  import { filterHeaderData } from "../data_table/table.helper";
-  export let headerData: Headers;
+
+  export let filteredHeaderData: Headers;
 
   let isOpen = false;
   $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll as boolean;
@@ -29,7 +29,7 @@
     let columns = columnData.columns;
 
     if (columnData.showAll) {
-      const allColumns = headerData.map((data) => data.value);
+      const allColumns = filteredHeaderData.map((data) => data.value);
       columns = allColumns;
       columnData.showAll = false;
     }
@@ -66,7 +66,7 @@
     >
   </ModalHeader>
   <ModalBody class="modal-body">
-    {#each filterHeaderData(headerData) as field}
+    {#each filteredHeaderData as field}
       <div class="modal-field" on:click={() => toggleColumn(field.value)}>
         <span class="field-value">{field.value.toUpperCase()}</span>
         <Switch

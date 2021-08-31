@@ -16,6 +16,7 @@ import {
 } from "../../../global/defaults";
 import { currentEventId, visibleColumns } from "../../config.store";
 import { get } from "svelte/store";
+import { isNumeric } from "../../utils/string.utils";
 
 export const getDefaultColumns = (): string[] => {
   return get(currentEventId) === "events"
@@ -184,16 +185,37 @@ export const filterHeaderData = (headers: Headers): Headers => {
       const index = headers.indexOf(headerData, 0);
       headers.splice(index, 1);
     }
+    if (isNumeric(headerData.value)) {
+      console.log("number: ", headerData.value);
+      const index = headers.indexOf(headerData, 0);
+      headers.splice(index, 1);
+    }
+  });
+  console.log("headers: ", headers);
+  return headers;
+};
+
+export const filterTableHeaderData = (headers: Headers): Headers => {
+  headers.forEach((headerData) => {
+    if (
+      !getColumnsForModal().includes(headerData.value) &&
+      !isNumeric(headerData.value)
+    ) {
+      const index = headers.indexOf(headerData, 0);
+      headers.splice(index, 1);
+    }
   });
   return headers;
 };
 
-export const filterRowData = (row: TableRow): TableRow => {
-  row.forEach((rowData) => {
-    if (!getColumnsForModal().includes(rowData.id) && isNaN(+rowData.id)) {
-      const index = row.indexOf(rowData, 0);
-      row.splice(index, 1);
-    }
+export const filterRowData = (tableData: TableData): TableData => {
+  tableData.forEach((rowData) => {
+    rowData.forEach((row) => {
+      if (!getColumnsForModal().includes(row.id) && !isNumeric(row.id)) {
+        const index = rowData.indexOf(row, 0);
+        rowData.splice(index, 1);
+      }
+    });
   });
-  return row;
+  return tableData;
 };

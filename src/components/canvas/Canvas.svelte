@@ -8,6 +8,9 @@
     search,
     updatedTableValues,
     checkIfChanged,
+    filterTableHeaderData,
+    filterRowData,
+filterHeaderData,
   } from "../data_table/table.helper";
   import "./canvas.style.css";
   import { Button, Input } from "sveltestrap";
@@ -34,7 +37,10 @@
 
   const rows = getTableData(tableData);
   let headerData = getHeaderData(tableData);
+  let filteredHeaderData = filterTableHeaderData(headerData);
+  // let filteredHeaderDataModel = filterHeaderData(headerData);
   let rowData = rows;
+  let filteredRowData = filterRowData(rowData);
   let currentPage = 0;
 
   let updateResult: boolean;
@@ -62,9 +68,14 @@
       on:input={(event) => doSearch(event.target)}
     />
   {/if}
-  <DataTable {headerData} {rowData} {updateResult} bind:currentPage />
+  <DataTable
+    {filteredHeaderData}
+    {filteredRowData}
+    {updateResult}
+    bind:currentPage
+  />
   <div class="table-options">
-    <ColumnDisplayOptionsModal bind:headerData />
+    <ColumnDisplayOptionsModal bind:filteredHeaderData />
     <Button on:click={() => onUpdate()}>{UIText.TABLE_SAVE}</Button>
     <FadingText result={updateResult} />
   </div>
