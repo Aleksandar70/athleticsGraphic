@@ -202,6 +202,9 @@ export const filterHeaderData = (headers: Headers): Headers => {
       const index = headers.indexOf(headerData, 0);
       headers.splice(index, 1);
     }
+    if (isNumeric(headerData.value)) {
+      headers.push(headers.splice(headers.indexOf(headerData), 1)[0]);
+    }
   });
   return headers;
 };
@@ -214,6 +217,9 @@ export const filterRowData = (tableData: TableData): TableData => {
       if (!columnsForModal.includes(row.id) && !isNumeric(row.id)) {
         const index = rowData.indexOf(row, 0);
         rowData.splice(index, 1);
+      }
+      if (isNumeric(row.id)) {
+        rowData.push(rowData.splice(rowData.indexOf(row), 1)[0]);
       }
     });
   });
