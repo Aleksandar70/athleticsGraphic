@@ -7,7 +7,7 @@
   import Footer from "./components/footer/Footer.svelte";
   import { Paths } from "../global/constants/api";
   import { getConfig } from "./api/config.api";
-  import { dataSource } from "./config.store";
+  import { dataSource } from "./stores/config.store";
 
   import "./app.style.css";
 

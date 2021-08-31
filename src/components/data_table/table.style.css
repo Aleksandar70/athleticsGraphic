@@ -19,6 +19,10 @@
   background-color: #ffffff;
 }
 
+.table-row.selected {
+  background-color: antiquewhite;
+}
+
 .table-data--link {
   text-decoration: none;
 }

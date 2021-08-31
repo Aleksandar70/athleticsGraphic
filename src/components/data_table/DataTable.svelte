@@ -12,8 +12,16 @@
   import { UIText } from "../../../global/constants/ui_text";
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
-  import { setUnchanged } from "./table.helper";
-  import { currentEventId, visibleColumns } from "../../stores/table.store";
+  import {
+    getCompetitorIdFromRow,
+    isRowSelected,
+    setUnchanged,
+  } from "./table.helper";
+  import {
+    currentEventId,
+    selectedParticipant,
+    visibleColumns,
+  } from "../../stores/table.store";
   import { isNumeric } from "../../utils/string.utils";
   import "./table.style.css";
 
@@ -70,7 +78,16 @@
     {/if}
     {#each sortedRows as row, i}
       {#if i >= lowerRange && i <= higherRange}
-        <tr>
+        <tr
+          class="table-row {$selectedParticipant && isRowSelected(row)
+            ? 'selected'
+            : ''}"
+          on:click={() =>
+            selectedParticipant.set({
+              id: getCompetitorIdFromRow(row),
+              data: row,
+            })}
+        >
           {#each row as data}
             {#if _visibleColumns.includes(data.id) || shouldShowAllColumns || isNumeric(data.id)}
               {#if isFlag(data.stringValue)}

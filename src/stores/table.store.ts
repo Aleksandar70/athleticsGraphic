@@ -7,3 +7,7 @@ export const visibleColumns = writable(columns ? JSON.parse(columns) : {});
 visibleColumns.subscribe((value) =>
   localStorage.setItem("columns", JSON.stringify(value))
 );
+
+export const selectedParticipant = writable({});
+
+currentEventId.subscribe((_) => selectedParticipant.set({}));
