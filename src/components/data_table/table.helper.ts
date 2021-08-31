@@ -1,12 +1,18 @@
 import type { ICompetitor, IHeatEventData } from "../../../global/interfaces";
-import type { RawData, TableData, Headers } from "../../../global/types";
+import type {
+  RawData,
+  TableData,
+  Headers,
+  TableRow,
+} from "../../../global/types";
 import { getCompetitorsForEvent } from "../../api/competitor.api";
 import { getEventData } from "../../api/event.api";
 import { isHeight, isRound } from "../../utils/event.utils";
-import { isNumeric } from "../../utils/string.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
+  defaultEventColumnsUI,
+  defaultEventCompetitorsColumnsUI,
 } from "../../../global/defaults";
 import { currentEventId, visibleColumns } from "../../config.store";
 import { get } from "svelte/store";
@@ -15,6 +21,12 @@ export const getDefaultColumns = (): string[] => {
   return get(currentEventId) === "events"
     ? defaultEventColumns
     : defaultEventCompetitorsColumns;
+};
+
+export const getColumnsForModal = (): string[] => {
+  return get(currentEventId) === "events"
+    ? defaultEventColumnsUI
+    : defaultEventCompetitorsColumnsUI;
 };
 
 export const getCurrentColumns = (): string => {
@@ -164,4 +176,24 @@ export const updatedTableValues = (tableData: TableData): RawData => {
       )
     )
     .filter((changedFields) => Object.keys(changedFields).length > 1);
+};
+
+export const filterHeaderData = (headers: Headers): Headers => {
+  headers.forEach((headerData) => {
+    if (!getColumnsForModal().includes(headerData.value)) {
+      const index = headers.indexOf(headerData, 0);
+      headers.splice(index, 1);
+    }
+  });
+  return headers;
+};
+
+export const filterRowData = (row: TableRow): TableRow => {
+  row.forEach((rowData) => {
+    if (!getColumnsForModal().includes(rowData.id) && isNaN(+rowData.id)) {
+      const index = row.indexOf(rowData, 0);
+      row.splice(index, 1);
+    }
+  });
+  return row;
 };
