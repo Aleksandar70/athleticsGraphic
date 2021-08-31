@@ -217,6 +217,5 @@ export const filterRowData = (tableData: TableData): TableData => {
       }
     });
   });
-  console.log(tableData);
   return tableData;
 };

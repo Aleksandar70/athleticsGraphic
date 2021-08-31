@@ -13,7 +13,9 @@
 
   const setPage = (event: MouseEvent, page: number): void => {
     event.preventDefault();
-    currentPage = page;
+    if (page >= 0 && page < numberOfPages.length) {
+      currentPage = page;
+    }
   };
 </script>
 
