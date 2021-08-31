@@ -1,4 +1,4 @@
-import type { TableFieldType } from "./types";
+import type { TableFieldType, TableRow } from "./types";
 
 export interface ITableHeader {
   value: string;
@@ -12,6 +12,11 @@ export interface ITableField {
   id: string;
   round: boolean;
   height: boolean;
+}
+
+export interface ISelectedRow {
+  id: string;
+  data: TableRow;
 }
 
 export interface IConfig {

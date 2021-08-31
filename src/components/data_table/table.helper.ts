@@ -95,7 +95,7 @@ export const getCompetitorIdFromRow = (row: TableRow): string =>
 
 export const isRowSelected = (row: TableRow): boolean =>
   get(currentEventId) !== "events" &&
-  get(selectedParticipant)?.["id"] === getCompetitorIdFromRow(row);
+  get(selectedParticipant)?.id === getCompetitorIdFromRow(row);
 
 export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];

@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import type { ISelectedRow } from "../../global/interfaces";
 
 export const currentEventId = writable("");
 
@@ -8,6 +9,7 @@ visibleColumns.subscribe((value) =>
   localStorage.setItem("columns", JSON.stringify(value))
 );
 
-export const selectedParticipant = writable({});
+const participants: ISelectedRow = { id: "", data: null };
+export const selectedParticipant = writable(participants);
 
-currentEventId.subscribe((_) => selectedParticipant.set({}));
+currentEventId.subscribe((_) => selectedParticipant.set(participants));
