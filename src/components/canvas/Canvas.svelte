@@ -15,6 +15,7 @@
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
   import { currentEventId, visibleColumns } from "../../config.store";
+  import { isNumeric } from "../../utils/string.utils";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
@@ -22,12 +23,15 @@
   export let updateAction: Function;
 
   currentEventId.set((tableData[0]?.event as string) ?? "events");
-
-  if (!$visibleColumns[$currentEventId]) {
+  const currentEvent = $visibleColumns[$currentEventId];
+  if (!currentEvent) {
     const newVisibleColumns = $visibleColumns;
+    const trialNumbers = Object.keys(tableData[0]).filter((key) =>
+      isNumeric(key)
+    );
     newVisibleColumns[$currentEventId] = {
       showAll: false,
-      columns: [...defaultColumns],
+      columns: [...defaultColumns, ...trialNumbers],
     };
     visibleColumns.set(newVisibleColumns);
   }

@@ -19,7 +19,7 @@ export const defaultEventColumnsUI = [
   "lanes",
   "maxFieldAttempts",
   "r2Day",
-  "r3Day"
+  "r3Day",
 ];
 
 export const defaultEventCompetitorsColumns = [
@@ -41,5 +41,5 @@ export const defaultEventCompetitorsColumnsUI = [
   "flagUrl",
   "pb",
   "sb",
-  "result"
+  "result",
 ];

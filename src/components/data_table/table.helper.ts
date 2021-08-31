@@ -3,7 +3,6 @@ import type {
   RawData,
   TableData,
   Headers,
-  TableRow,
 } from "../../../global/types";
 import { getCompetitorsForEvent } from "../../api/competitor.api";
 import { getEventData } from "../../api/event.api";
@@ -111,7 +110,7 @@ export const getTableData = (rawData: RawData): TableData => {
       };
     });
   });
-  
+
   return filterRowData(tableData);
 };
 
@@ -181,11 +180,13 @@ export const updatedTableValues = (tableData: TableData): RawData => {
 };
 
 export const filterHeaderData = (headers: Headers): Headers => {
-  //isNumeric(headerData.value)
   const columnsForModal = getColumnsForModal();
   const headersCopy = [...headers];
   headersCopy.forEach((headerData) => {
-    if (!columnsForModal.includes(headerData.value)) {
+    if (
+      !columnsForModal.includes(headerData.value) &&
+      !isNumeric(headerData.value)
+    ) {
       const index = headers.indexOf(headerData, 0);
       headers.splice(index, 1);
     }
@@ -198,7 +199,7 @@ export const filterRowData = (tableData: TableData): TableData => {
   tableData.forEach((rowData) => {
     const rowDataCopy = [...rowData];
     rowDataCopy.forEach((row) => {
-      if (!columnsForModal.includes(row.id)) {
+      if (!columnsForModal.includes(row.id) && !isNumeric(row.id)) {
         const index = rowData.indexOf(row, 0);
         rowData.splice(index, 1);
       }

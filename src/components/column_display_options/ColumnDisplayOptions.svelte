@@ -15,6 +15,7 @@
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
   import { currentEventId, visibleColumns } from "../../config.store";
+  import { isNumeric } from "../../utils/string.utils";
 
   export let headerData: Headers;
 
@@ -42,7 +43,15 @@
   };
 
   const toggleDefaultColumns = () => {
-    $visibleColumns[$currentEventId].columns = getDefaultColumns();
+    const trialNumbers = headerData
+      .filter((data) => isNumeric(data.value))
+      .map((data) => data.value);
+    const _defaultColumns = getDefaultColumns();
+    $visibleColumns[$currentEventId].columns = [
+      ..._defaultColumns,
+      ...trialNumbers,
+    ];
+
     $visibleColumns[$currentEventId].showAll = false;
   };
 </script>
