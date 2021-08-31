@@ -3,7 +3,7 @@ export const defaultEventColumns = [
   "name",
   "genders",
   "status",
-  "r1Time"
+  "r1Time",
 ];
 
 export const defaultEventColumnsUI = [
@@ -20,6 +20,10 @@ export const defaultEventColumnsUI = [
   "maxFieldAttempts",
   "r2Day",
   "r3Day",
+  "lanePrefs",
+  "eventCode",
+  "category",
+  "maxFieldAttempts",
 ];
 
 export const defaultEventCompetitorsColumns = [
@@ -30,7 +34,7 @@ export const defaultEventCompetitorsColumns = [
   "flagUrl",
   "pb",
   "sb",
-  "result"
+  "result",
 ];
 
 export const defaultEventCompetitorsColumnsUI = [
@@ -42,4 +46,8 @@ export const defaultEventCompetitorsColumnsUI = [
   "pb",
   "sb",
   "result",
+  "nationality",
+  "dateOfBirth",
+  "teamName",
+  "event",
 ];
