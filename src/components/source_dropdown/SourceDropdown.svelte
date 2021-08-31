@@ -8,7 +8,7 @@
   import { SOURCE } from "../../../global/constants/constants";
   import { UIText } from "../../../global/constants/ui_text";
   import { updateConfig } from "../../api/config.api";
-  import { dataSource } from "../../config.store";
+  import { dataSource } from "../../stores/config.store";
   import "./sourcedropdown.style.css";
 
   const valueChange = async (selectedSource) => {
