@@ -14,7 +14,7 @@
   import { getDefaultColumns } from "../data_table/table.helper";
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
-  import { currentEventId, visibleColumns } from "../../config.store";
+  import { currentEventId, visibleColumns } from "../../stores/table.store";
 
   export let headerData: Headers;
 

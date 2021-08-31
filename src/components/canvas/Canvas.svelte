@@ -14,7 +14,7 @@
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
-  import { currentEventId, visibleColumns } from "../../config.store";
+  import { currentEventId, visibleColumns } from "../../stores/table.store";
 
   export let tableData: RawData;
   export let defaultColumns: string[];

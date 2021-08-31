@@ -1,14 +1,22 @@
 import type { ICompetitor, IHeatEventData } from "../../../global/interfaces";
-import type { RawData, TableData, Headers } from "../../../global/types";
+import type {
+  RawData,
+  TableData,
+  Headers,
+  TableRow,
+} from "../../../global/types";
 import { getCompetitorsForEvent } from "../../api/competitor.api";
 import { getEventData } from "../../api/event.api";
 import { isHeight, isRound } from "../../utils/event.utils";
-import { isNumeric } from "../../utils/string.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
 } from "../../../global/defaults";
-import { currentEventId, visibleColumns } from "../../config.store";
+import {
+  currentEventId,
+  selectedParticipant,
+  visibleColumns,
+} from "../../stores/table.store";
 import { get } from "svelte/store";
 
 export const getDefaultColumns = (): string[] => {
@@ -81,6 +89,13 @@ export const getCompetitorResultsData = async (
 
   return data;
 };
+
+export const getCompetitorIdFromRow = (row: TableRow): string =>
+  row.find((field) => field.id === "competitorId")?.stringValue ?? "events";
+
+export const isRowSelected = (row: TableRow): boolean =>
+  get(currentEventId) !== "events" &&
+  get(selectedParticipant)?.id === getCompetitorIdFromRow(row);
 
 export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];
