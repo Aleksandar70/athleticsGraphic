@@ -1,9 +1,5 @@
 import type { ICompetitor, IHeatEventData } from "../../../global/interfaces";
-import type {
-  RawData,
-  TableData,
-  Headers,
-} from "../../../global/types";
+import type { RawData, TableData, Headers } from "../../../global/types";
 import { getCompetitorsForEvent } from "../../api/competitor.api";
 import { getEventData } from "../../api/event.api";
 import { isHeight, isRound } from "../../utils/event.utils";
@@ -205,5 +201,6 @@ export const filterRowData = (tableData: TableData): TableData => {
       }
     });
   });
+  console.log(tableData);
   return tableData;
 };
