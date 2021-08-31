@@ -28,6 +28,9 @@ jobs:
       - name: Running lint
         run: npm run lint --if-present
 
+      - name: Running svelte check
+        run: npm run check --if-present
+
       - name: Building
         run: npm run build --if-present
 

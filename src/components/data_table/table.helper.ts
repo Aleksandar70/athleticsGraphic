@@ -8,7 +8,6 @@ import type {
 import { getCompetitorsForEvent } from "../../api/competitor.api";
 import { getEventData } from "../../api/event.api";
 import { isHeight, isRound } from "../../utils/event.utils";
-import { isNumeric } from "../../utils/string.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
