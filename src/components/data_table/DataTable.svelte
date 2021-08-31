@@ -17,8 +17,8 @@
   import { isNumeric } from "../../utils/string.utils";
   import "./table.style.css";
 
-  export let filteredHeaderData: Headers;
-  export let filteredRowData: TableData;
+  export let headerData: Headers;
+  export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
 
@@ -36,10 +36,10 @@
     sortBy = columnIndex;
   };
 
-  $: sortedRows = filteredRowData;
+  $: sortedRows = rowData;
 
   $: if (sortBy !== null) {
-    sortedRows = sortByColumn(filteredRowData, sortBy, sortDirection);
+    sortedRows = sortByColumn(rowData, sortBy, sortDirection);
   }
 
   $: if (updateResult) {
@@ -51,7 +51,7 @@
 <Table class="table-data" bordered>
   <thead class="table-header">
     <tr>
-      {#each filteredHeaderData as column, i}
+      {#each headerData as column, i}
         {#if _visibleColumns.includes(column.value) || shouldShowAllColumns || isNumeric(column.value)}
           <th class="header-text" on:click={() => updateSortDirection(i)}
             >{column.value}</th
@@ -63,7 +63,7 @@
   <tbody class="table-body">
     {#if sortedRows.length === 0}
       <tr
-        ><td class="empty-data" colspan={filteredHeaderData.length}
+        ><td class="empty-data" colspan={headerData.length}
           >{UIText.NO_RESULTS}</td
         ></tr
       >

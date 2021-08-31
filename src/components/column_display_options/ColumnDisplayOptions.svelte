@@ -16,7 +16,7 @@
   import "./columndisplayoptions.style.css";
   import { currentEventId, visibleColumns } from "../../config.store";
 
-  export let filteredHeaderData: Headers;
+  export let headerData: Headers;
 
   let isOpen = false;
   $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll as boolean;
@@ -29,7 +29,7 @@
     let columns = columnData.columns;
 
     if (columnData.showAll) {
-      const allColumns = filteredHeaderData.map((data) => data.value);
+      const allColumns = headerData.map((data) => data.value);
       columns = allColumns;
       columnData.showAll = false;
     }
@@ -66,7 +66,7 @@
     >
   </ModalHeader>
   <ModalBody class="modal-body">
-    {#each filteredHeaderData as field}
+    {#each headerData as field}
       <div class="modal-field" on:click={() => toggleColumn(field.value)}>
         <span class="field-value">{field.value.toUpperCase()}</span>
         <Switch

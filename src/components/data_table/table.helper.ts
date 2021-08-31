@@ -111,7 +111,8 @@ export const getTableData = (rawData: RawData): TableData => {
       };
     });
   });
-  return tableData;
+  
+  return filterRowData(tableData);
 };
 
 export const getHeaderData = (rawData: RawData): Headers => {
@@ -122,7 +123,7 @@ export const getHeaderData = (rawData: RawData): Headers => {
       value: data,
     };
   });
-  return tableColumns;
+  return filterHeaderData(tableColumns);
 };
 
 export const search = (
@@ -180,27 +181,11 @@ export const updatedTableValues = (tableData: TableData): RawData => {
 };
 
 export const filterHeaderData = (headers: Headers): Headers => {
-  headers.forEach((headerData) => {
-    if (!getColumnsForModal().includes(headerData.value)) {
-      const index = headers.indexOf(headerData, 0);
-      headers.splice(index, 1);
-    }
-    if (isNumeric(headerData.value)) {
-      console.log("number: ", headerData.value);
-      const index = headers.indexOf(headerData, 0);
-      headers.splice(index, 1);
-    }
-  });
-  console.log("headers: ", headers);
-  return headers;
-};
-
-export const filterTableHeaderData = (headers: Headers): Headers => {
-  headers.forEach((headerData) => {
-    if (
-      !getColumnsForModal().includes(headerData.value) &&
-      !isNumeric(headerData.value)
-    ) {
+  //isNumeric(headerData.value)
+  const columnsForModal = getColumnsForModal();
+  const headersCopy = [...headers];
+  headersCopy.forEach((headerData) => {
+    if (!columnsForModal.includes(headerData.value)) {
       const index = headers.indexOf(headerData, 0);
       headers.splice(index, 1);
     }
@@ -209,9 +194,11 @@ export const filterTableHeaderData = (headers: Headers): Headers => {
 };
 
 export const filterRowData = (tableData: TableData): TableData => {
+  const columnsForModal = getColumnsForModal();
   tableData.forEach((rowData) => {
-    rowData.forEach((row) => {
-      if (!getColumnsForModal().includes(row.id) && !isNumeric(row.id)) {
+    const rowDataCopy = [...rowData];
+    rowDataCopy.forEach((row) => {
+      if (!columnsForModal.includes(row.id)) {
         const index = rowData.indexOf(row, 0);
         rowData.splice(index, 1);
       }
