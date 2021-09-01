@@ -32,10 +32,9 @@
     }
   });
 </script>
-<div class="graphic-controls">
-  <GraphicControl />
-</div>
+
 <div class="event-competitors--page">
+  <GraphicControl />
   {#if tableData.length === 0}
     <Spinner />
   {:else if !hasHeats}
@@ -64,4 +63,3 @@
     </div>
   {/if}
 </div>
-

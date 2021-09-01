@@ -16,6 +16,4 @@ export abstract class UIText {
   static readonly SHOW_PERSONAL_BEST: string = "Show personal best";
   static readonly SHOW_PERSONAL_DATA: string = "Show personal data";
   static readonly TV_GRAPHIC: string = "TV Graphic";
-  static readonly SEND: string = "Send";
-  static readonly CANCEL: string = "Cancel";
 }

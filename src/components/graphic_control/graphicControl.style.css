@@ -1,0 +1,13 @@
+.graphic-controls {
+  display: inline-block;
+  margin-left:3px;
+  margin-right: 200px;
+}
+
+.graphic-controls:empty {
+  width: 0;
+}
+
+.graphic-clear {
+  margin-top: 20px;
+}
