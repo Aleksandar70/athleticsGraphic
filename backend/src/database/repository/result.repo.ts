@@ -9,7 +9,7 @@ export const createResults = async (unit: IUnit): Promise<IResult[]> =>
 
 export const updateResults = async (
   updatedResults: Record<string, string>[]
-) => {
+): Promise<void> => {
   const eventId = updatedResults?.[0].eventId;
   const event: IEvent = await getEventLocal(eventId);
   const units: IUnit[] = event[0].units ?? [];

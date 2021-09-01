@@ -22,7 +22,6 @@
     selectedParticipant,
     visibleColumns,
   } from "../../stores/table.store";
-  import { isNumeric } from "../../utils/string.utils";
   import "./table.style.css";
 
   export let headerData: Headers;
@@ -60,7 +59,7 @@
   <thead class="table-header">
     <tr>
       {#each headerData as column, i}
-        {#if _visibleColumns.includes(column.value) || shouldShowAllColumns || isNumeric(column.value)}
+        {#if _visibleColumns.includes(column.value) || shouldShowAllColumns}
           <th class="header-text" on:click={() => updateSortDirection(i)}
             >{column.value}</th
           >
@@ -89,7 +88,7 @@
             })}
         >
           {#each row as data}
-            {#if _visibleColumns.includes(data.id) || shouldShowAllColumns || isNumeric(data.id)}
+            {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}
               {#if isFlag(data.stringValue)}
                 <td>
                   <img

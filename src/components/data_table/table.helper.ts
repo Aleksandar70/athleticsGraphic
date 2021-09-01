@@ -11,6 +11,8 @@ import { isHeight, isRound } from "../../utils/event.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
+  defaultEventColumnsUI,
+  defaultEventCompetitorsColumnsUI,
 } from "../../../global/defaults";
 import {
   currentEventId,
@@ -18,11 +20,18 @@ import {
   visibleColumns,
 } from "../../stores/table.store";
 import { get } from "svelte/store";
+import { isNumeric } from "../../utils/string.utils";
 
 export const getDefaultColumns = (): string[] => {
   return get(currentEventId) === "events"
     ? defaultEventColumns
     : defaultEventCompetitorsColumns;
+};
+
+export const getColumnsForModal = (): string[] => {
+  return get(currentEventId) === "events"
+    ? defaultEventColumnsUI
+    : defaultEventCompetitorsColumnsUI;
 };
 
 export const getCurrentColumns = (): string => {
@@ -113,7 +122,8 @@ export const getTableData = (rawData: RawData): TableData => {
       };
     });
   });
-  return tableData;
+
+  return filterRowData(tableData);
 };
 
 export const getHeaderData = (rawData: RawData): Headers => {
@@ -124,7 +134,7 @@ export const getHeaderData = (rawData: RawData): Headers => {
       value: data,
     };
   });
-  return tableColumns;
+  return filterHeaderData(tableColumns);
 };
 
 export const search = (
@@ -179,4 +189,39 @@ export const updatedTableValues = (tableData: TableData): RawData => {
       )
     )
     .filter((changedFields) => Object.keys(changedFields).length > 1);
+};
+
+export const filterHeaderData = (headers: Headers): Headers => {
+  const columnsForModal = getColumnsForModal();
+  const headersCopy = [...headers];
+  headersCopy.forEach((headerData) => {
+    if (
+      !columnsForModal.includes(headerData.value) &&
+      !isNumeric(headerData.value)
+    ) {
+      const index = headers.indexOf(headerData, 0);
+      headers.splice(index, 1);
+    }
+    if (isNumeric(headerData.value)) {
+      headers.push(headers.splice(headers.indexOf(headerData), 1)[0]);
+    }
+  });
+  return headers;
+};
+
+export const filterRowData = (tableData: TableData): TableData => {
+  const columnsForModal = getColumnsForModal();
+  tableData.forEach((rowData) => {
+    const rowDataCopy = [...rowData];
+    rowDataCopy.forEach((row) => {
+      if (!columnsForModal.includes(row.id) && !isNumeric(row.id)) {
+        const index = rowData.indexOf(row, 0);
+        rowData.splice(index, 1);
+      }
+      if (isNumeric(row.id)) {
+        rowData.push(rowData.splice(rowData.indexOf(row), 1)[0]);
+      }
+    });
+  });
+  return tableData;
 };

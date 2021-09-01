@@ -14,6 +14,7 @@
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
+  import { isNumeric } from "../../utils/string.utils";
   import { currentEventId, visibleColumns } from "../../stores/table.store";
 
   export let tableData: RawData;
@@ -22,19 +23,23 @@
   export let updateAction: Function;
 
   currentEventId.set((tableData[0]?.event as string) ?? "events");
-
-  if (!$visibleColumns[$currentEventId]) {
+  const currentEvent = $visibleColumns[$currentEventId];
+  if (!currentEvent) {
     const newVisibleColumns = $visibleColumns;
+    const trialNumbers = Object.keys(tableData[0]).filter((key) =>
+      isNumeric(key)
+    );
     newVisibleColumns[$currentEventId] = {
       showAll: false,
-      columns: [...defaultColumns],
+      columns: [...defaultColumns, ...trialNumbers],
     };
     visibleColumns.set(newVisibleColumns);
   }
 
   const rows = getTableData(tableData);
-  let headerData = getHeaderData(tableData);
   let rowData = rows;
+  let headerData = getHeaderData(tableData);
+
   let currentPage = 0;
 
   let updateResult: boolean;
