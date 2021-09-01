@@ -12,4 +12,4 @@ visibleColumns.subscribe((value) =>
 const participants: ISelectedRow = { id: "", data: null };
 export const selectedParticipant = writable(participants);
 
-currentEventId.subscribe((_) => selectedParticipant.set(participants));
+currentEventId.subscribe(() => selectedParticipant.set(participants));

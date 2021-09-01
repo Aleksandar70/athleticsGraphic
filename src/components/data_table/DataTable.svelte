@@ -22,7 +22,6 @@
     selectedParticipant,
     visibleColumns,
   } from "../../stores/table.store";
-  import { isNumeric } from "../../utils/string.utils";
   import "./table.style.css";
 
   export let headerData: Headers;
