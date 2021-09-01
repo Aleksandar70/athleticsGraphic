@@ -1,6 +1,6 @@
 .graphic-controls {
   display: inline-block;
-  margin-left:3px;
+  margin-left: 3px;
   margin-right: 200px;
 }
 
@@ -8,6 +8,11 @@
   width: 0;
 }
 
-.graphic-clear {
+.graphic-personal {
   margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.graphic-time {
+  margin-bottom: 20px;
 }
