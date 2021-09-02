@@ -1,18 +1,38 @@
 .graphic-controls {
   display: inline-block;
-  margin-left: 3px;
-  margin-right: 200px;
 }
 
 .graphic-controls:empty {
   width: 0;
 }
 
-.graphic-personal {
-  margin-top: 20px;
-  margin-bottom: 20px;
+#graphic-control--header {
+  display: flex;
+  justify-items: center;
+  justify-content: space-between;
+  padding: 10px;
 }
 
-.graphic-time {
-  margin-bottom: 20px;
+#graphic-control--header .graphic-clear {
+  margin-left: 25px;
+}
+
+.graphic-control--title {
+  line-height: unset !important;
+}
+
+.graphic-control--body {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.graphic-control--body div {
+  display: flex;
+  flex-direction: column;
+}
+.graphic-events * {
+  margin-top: 10px;
+}
+.graphic-personal * {
+  margin-top: 10px;
 }

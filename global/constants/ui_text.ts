@@ -21,5 +21,5 @@ export abstract class UIText {
   static readonly START_TIME: string = "Start time";
   static readonly STOP_TIME: string = "Stop time";
   static readonly CLEAR_ALL: string = "Clear all";
-  static readonly CLEAR_SEQUENCE: string = "Clear sequence";
+  static readonly CLEAR_SEQUENCE: string = "Clear";
 }
