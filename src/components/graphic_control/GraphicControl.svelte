@@ -3,7 +3,6 @@
     Button,
     Card,
     CardBody,
-    CardFooter,
     CardHeader,
     CardTitle,
     Label,
