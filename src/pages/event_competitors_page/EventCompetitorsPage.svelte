@@ -7,6 +7,7 @@
   import { defaultEventCompetitorsColumns } from "../../../global/defaults";
   import { updateCompetitors } from "../../api/competitor.api";
   import { Collapse } from "sveltestrap";
+  import GraphicControl from "../../components/graphic_control/GraphicControl.svelte";
 
   export let eventId: string;
 
@@ -33,6 +34,7 @@
 </script>
 
 <div class="event-competitors--page">
+  <GraphicControl />
   {#if tableData.length === 0}
     <Spinner />
   {:else if !hasHeats}

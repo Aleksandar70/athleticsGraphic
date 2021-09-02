@@ -1,6 +1,6 @@
 .event-competitors--page {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .heat-tables {
