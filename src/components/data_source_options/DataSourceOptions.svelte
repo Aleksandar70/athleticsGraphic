@@ -20,7 +20,7 @@
   import Spinner from "../spinner/Spinner.svelte";
   import "./datasourceoptions.style.css";
 
-  const valueChange = async (selectedSource) => {
+  const valueChange = async (selectedSource: string) => {
     await updateConfig({ dataSource: selectedSource });
     dataSource.set(selectedSource);
     location.reload();
