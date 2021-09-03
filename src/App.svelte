@@ -13,7 +13,7 @@
 
   onMount(async () => {
     const config = await getConfig();
-    dataSource.set(config.dataSource);
+    dataSource.set(config?.dataSource);
     navigate(window.location.pathname);
   });
 </script>

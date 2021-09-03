@@ -1,7 +1,5 @@
-import { SOURCE } from "../../../../global/constants/constants";
 import { IUnit } from "../interfaces";
 import { UnitModel } from "../models/unit.model";
-import { getDataSource } from "./config.repo";
 import { createResults, getResults } from "./result.repo";
 import { createTrials, getTrials } from "./trial.repo";
 
@@ -24,46 +22,6 @@ export const createUnits = async (units: IUnit[]): Promise<IUnit[]> => {
 };
 
 export const getUnits = async (units: IUnit[]): Promise<IUnit[]> => {
-  const source = await getDataSource();
-  switch (source) {
-    case SOURCE.REMOTE: {
-      return await getUnitsRemote(units);
-    }
-    case SOURCE.SEMI: {
-      return await getUnitsSemi(units);
-    }
-    default:
-      return [];
-  }
-};
-
-const getUnitsRemote = async (units: IUnit[]): Promise<IUnit[]> => {
-  const unitModels: IUnit[] = [];
-
-  for (const unit of units) {
-    const unwrappedUnit = unwrapUnit(unit);
-    const results = await getResults(unit);
-    const trials = await getTrials(unit);
-
-    const unitModel = await UnitModel.findOneAndReplace(
-      {
-        eventId: unit.eventId,
-        unitCode: unit.unitCode ?? "1",
-      },
-      {
-        ...unwrappedUnit,
-        results: results.map((result) => result?._id),
-        trials: trials.map((trial) => trial?._id),
-      },
-      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
-    );
-    unitModels.push(unitModel);
-  }
-
-  return unitModels;
-};
-
-const getUnitsSemi = async (units: IUnit[]): Promise<IUnit[]> => {
   const unitModels: IUnit[] = [];
 
   for (const unit of units) {

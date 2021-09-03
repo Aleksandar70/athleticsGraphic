@@ -4,6 +4,7 @@ export abstract class UIText {
   static readonly SOURCES_HEADER: string = "Select data source";
   static readonly FOOTER_TEXT: string = "© Elegra 2021";
   static readonly NO_RESULTS: string = "No Results 😐";
+  static readonly NO_RESULTS_INIT: string = "Please initialize the database.";
   static readonly TOGGLE_COLUMNS_HEADER: string = "Toggle columns";
   static readonly TOGGLE_ALL_COLUMNS: string = "Show all";
   static readonly TOGGLE_DEFAULT_COLUMNS: string = "Reset to defaults";
@@ -22,4 +23,10 @@ export abstract class UIText {
   static readonly STOP_TIME: string = "Stop time";
   static readonly CLEAR_ALL: string = "Clear all";
   static readonly CLEAR_SEQUENCE: string = "Clear";
+
+  static readonly INIT_WARNING: string = "⚠️ All existing data will be lost";
+  static readonly INIT_BUTTON: string = "Initialize";
+  static readonly INIT_BODY: string = `This will delete your currect data and create a new one from the API. If you wish to proceed, click ${UIText.INIT_BUTTON}.`;
+  static readonly INIT_CANCEL: string = "Cancel";
+  static readonly INIT_IN_PROGRESS: string = "Initializing...";
 }

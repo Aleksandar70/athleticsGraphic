@@ -41,9 +41,6 @@ export const findCompetitorsForEvent = async (
     case SOURCE.REMOTE: {
       return await findCompetitorsForEventRemote(eventId);
     }
-    case SOURCE.SEMI: {
-      return await findCompetitorsForEventSemi(eventId);
-    }
     default:
       return await findCompetitorsForEventLocal(eventId);
   }
@@ -54,24 +51,6 @@ const findCompetitorsForEventLocal = async (
 ): Promise<ICompetitor[]> => await CompetitorModel.find({ event: eventId });
 
 const findCompetitorsForEventRemote = async (
-  eventId: string
-): Promise<ICompetitor[]> => {
-  const { competitorsData } = await getOTCompetitionData();
-
-  for (const competitor of competitorsData) {
-    await CompetitorModel.replaceOne(
-      {
-        competitorId: competitor.competitorId,
-      },
-      competitor,
-      { upsert: true, setDefaultsOnInsert: true }
-    );
-  }
-
-  return await CompetitorModel.find({ event: eventId });
-};
-
-const findCompetitorsForEventSemi = async (
   eventId: string
 ): Promise<ICompetitor[]> => {
   const { competitorsData } = await getOTCompetitionData();

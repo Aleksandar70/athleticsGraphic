@@ -18,6 +18,9 @@ export abstract class Paths {
 
   static readonly CONFIG = "config";
   static readonly CONFIG_PATH = `${Paths.ROOT_PATH}${Paths.CONFIG}`;
+
+  static readonly DATABASE = "database";
+  static readonly DATABASE_PATH = `${Paths.ROOT_PATH}${Paths.DATABASE}`;
 }
 
 export abstract class OpenTrack {

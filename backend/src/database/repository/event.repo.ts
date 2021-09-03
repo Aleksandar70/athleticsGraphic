@@ -42,15 +42,12 @@ export const updateEvents = async (events: IEvent[]): Promise<boolean> => {
 
 export const getEvent = async (eventId: string): Promise<IEvent> => {
   const source = await getDataSource();
-  switch (source.toLowerCase()) {
+  switch (source?.toLowerCase()) {
     case SOURCE.LOCAL: {
       return await getEventLocal(eventId);
     }
     case SOURCE.REMOTE: {
       return await getEventRemote(eventId);
-    }
-    case SOURCE.SEMI: {
-      return await getEventSemi(eventId);
     }
     default:
       return await getEventLocal(eventId);
@@ -64,24 +61,6 @@ export const getEventLocal = async (eventId: string): Promise<IEvent> =>
   });
 
 const getEventRemote = async (eventId: string): Promise<IEvent> => {
-  const { eventsData } = await getOTCompetitionData();
-  const event = eventsData.find((event) => event.eventId === eventId);
-
-  const units = await getUnits(event?.units ?? []);
-
-  await EventModel.replaceOne(
-    { eventId: event?.eventId },
-    {
-      ...unwrapEvent(event as IEvent),
-      units: units.map((unit) => unit?._id),
-    },
-    { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
-  );
-
-  return getEventLocal(eventId);
-};
-
-const getEventSemi = async (eventId: string): Promise<IEvent> => {
   const { eventsData } = await getOTCompetitionData();
   const event = eventsData.find((event) => event.eventId === eventId);
 
@@ -101,15 +80,12 @@ const getEventSemi = async (eventId: string): Promise<IEvent> => {
 
 export const getEvents = async (): Promise<IEvent[]> => {
   const source = await getDataSource();
-  switch (source.toLowerCase()) {
+  switch (source?.toLowerCase()) {
     case SOURCE.LOCAL: {
       return await getEventsLocal();
     }
     case SOURCE.REMOTE: {
       return await getEventsRemote();
-    }
-    case SOURCE.SEMI: {
-      return await getEventsSemi();
     }
     default:
       return await getEventsLocal();
@@ -119,25 +95,6 @@ export const getEvents = async (): Promise<IEvent[]> => {
 const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
 
 const getEventsRemote = async (): Promise<IEvent[]> => {
-  const { eventsData } = await getOTCompetitionData();
-
-  for (const event of eventsData) {
-    const units = await getUnits(event.units ?? []);
-
-    await EventModel.replaceOne(
-      { eventId: event.eventId },
-      {
-        ...unwrapEvent(event),
-        units: units.map((unit) => unit?._id),
-      },
-      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
-    );
-  }
-
-  return await getEventsLocal();
-};
-
-const getEventsSemi = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
 
   for (const event of eventsData) {
