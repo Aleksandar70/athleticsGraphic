@@ -7,7 +7,6 @@ import { getDataSource } from "./config.repo";
 export const createCompetitors = async (
   competitors: ICompetitor[]
 ): Promise<ICompetitor[]> => {
-  if ((await CompetitorModel.countDocuments()) > 0) return [];
   return await CompetitorModel.insertMany(competitors);
 };
 

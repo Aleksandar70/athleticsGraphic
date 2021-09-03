@@ -6,9 +6,8 @@ import { getDataSource } from "./config.repo";
 import { createUnits, getUnits } from "./unit.repo";
 
 export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
-  if ((await EventModel.countDocuments()) > 0) return [];
-
   const eventModels: IEvent[] = [];
+
   for (const event of events) {
     const units = await createUnits(event.units ?? []);
 
