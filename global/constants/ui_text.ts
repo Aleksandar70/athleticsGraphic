@@ -10,11 +10,11 @@ export abstract class UIText {
   static readonly UPDATE_SAVED: string = "✔️ Saved";
   static readonly UPDATE_NOT_SAVED: string = "❌ Some data wasn't saved";
 
-  static readonly TV_GRAPHIC_CONTROL: string = "TV Graphic Control";
+  static readonly TV_GRAPHIC_CONTROL: string = "Controls";
   static readonly EVENTS: string = "Events";
-  static readonly EVENT_ANNOUNCEMENT: string = "Event announcement";
-  static readonly SHOW_PERSONAL_BEST: string = "Show personal best";
-  static readonly SHOW_PERSONAL_DATA: string = "Show personal data";
+  static readonly EVENT_ANNOUNCEMENT: string = "Announcement";
+  static readonly SHOW_PERSONAL_BEST: string = "Personal Best";
+  static readonly SHOW_PERSONAL_DATA: string = "Personal Data";
   static readonly MEDALS: string = "Medals";
   static readonly RESULTS: string = "Results";
   static readonly TIME: string = "Time";
