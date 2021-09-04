@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { levelMap } from "../../database/database";
 import { IEvent } from "../../database/interfaces";
 import {
   getEvent,
@@ -8,13 +9,17 @@ import {
 
 const router = express.Router();
 
-router.get("/", async (_: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
+  const { locked } = req.query;
+  await levelMap.put("locked", locked ?? []);
   const events = await getEvents();
   return res.status(200).json(events);
 });
 
 router.get("/:eventId", async (req: Request, res: Response) => {
   const { eventId } = req.params;
+  const { locked } = req.query;
+  await levelMap.put("locked", locked ?? []);
   const event = await getEvent(eventId);
   return res.status(200).json(event);
 });

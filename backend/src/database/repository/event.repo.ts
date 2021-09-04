@@ -1,5 +1,6 @@
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
+import { getLockedFields } from "../database";
 import { IEvent } from "../interfaces";
 import { EventModel } from "../models/event.model";
 import { getDataSource } from "./config.repo";
@@ -62,13 +63,14 @@ export const getEventLocal = async (eventId: string): Promise<IEvent> =>
 const getEventRemote = async (eventId: string): Promise<IEvent> => {
   const { eventsData } = await getOTCompetitionData();
   const event = eventsData.find((event) => event.eventId === eventId);
-
   const units = await getUnits(event?.units ?? []);
+
+  const unwrappedEvent = unwrapEvent(event as IEvent);
 
   await EventModel.updateOne(
     { eventId: event?.eventId },
     {
-      ...unwrapEvent(event as IEvent),
+      ...unwrappedEvent,
       units: units.map((unit) => unit?._id),
     },
     { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
@@ -96,17 +98,17 @@ const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
 const getEventsRemote = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
 
-  for (const event of eventsData) {
-    const units = await getUnits(event.units ?? []);
+  const lockedFields = await getLockedFields();
 
-    await EventModel.updateOne(
-      { eventId: event.eventId },
-      {
-        ...unwrapEvent(event),
-        units: units.map((unit) => unit?._id),
-      },
-      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
-    );
+  for (const event of eventsData) {
+    const unwrappedEvent = unwrapEvent(event);
+    lockedFields.forEach((field: string) => delete unwrappedEvent?.[field]);
+
+    await EventModel.updateOne({ eventId: event.eventId }, unwrappedEvent, {
+      omitUndefined: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
+    });
   }
 
   return await getEventsLocal();

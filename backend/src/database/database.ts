@@ -5,6 +5,8 @@ import { createCompetition } from "./repository/competition.repo";
 import { createCompetitors } from "./repository/competitor.repo";
 import { createDefaultConfig } from "./repository/config.repo";
 import { createEvents } from "./repository/event.repo";
+import level from "level-ts";
+export const levelMap = new level("./levelDB");
 
 let database: mongoose.Connection;
 
@@ -45,3 +47,6 @@ export const initialize = async (): Promise<void> => {
   await createEvents(otCompetitionData.eventsData);
   console.log("Initialization complete.");
 };
+
+export const getLockedFields = async (): Promise<string[]> =>
+  (await levelMap.exists("locked")) ? await levelMap.get("locked") : [];

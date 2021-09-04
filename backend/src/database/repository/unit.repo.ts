@@ -1,3 +1,4 @@
+import { getLockedFields } from "../database";
 import { IUnit } from "../interfaces";
 import { UnitModel } from "../models/unit.model";
 import { createResults, getResults } from "./result.repo";
@@ -24,20 +25,30 @@ export const createUnits = async (units: IUnit[]): Promise<IUnit[]> => {
 export const getUnits = async (units: IUnit[]): Promise<IUnit[]> => {
   const unitModels: IUnit[] = [];
 
+  const lockedFields = await getLockedFields();
+
   for (const unit of units) {
     const unwrappedUnit = unwrapUnit(unit);
     const results = await getResults(unit);
     const trials = await getTrials(unit);
+
+    const updatedModel = lockedFields.includes("result")
+      ? {
+          ...unwrappedUnit,
+          trials: trials.map((trial) => trial?._id),
+        }
+      : {
+          ...unwrappedUnit,
+          results: results.map((result) => result?._id),
+          trials: trials.map((trial) => trial?._id),
+        };
+
     const unitModel = await UnitModel.findOneAndUpdate(
       {
         eventId: unit.eventId,
         unitCode: unit.unitCode ?? "1",
       },
-      {
-        ...unwrappedUnit,
-        results: results.map((result) => result?._id),
-        trials: trials.map((trial) => trial?._id),
-      },
+      updatedModel,
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
     );
     unitModels.push(unitModel);

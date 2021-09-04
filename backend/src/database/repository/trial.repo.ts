@@ -1,3 +1,4 @@
+import { getLockedFields } from "../database";
 import { ITrial, IUnit } from "../interfaces";
 import { TrialModel } from "../models/trial.model";
 
@@ -40,10 +41,18 @@ export const getTrials = async (unit: IUnit): Promise<ITrial[]> => {
   const trials = unit.trials ?? [];
   const formatedTrials = mergeTrialResults(trials);
 
+  const lockedFields = await getLockedFields();
+
   for (const trial of formatedTrials) {
     const filter = isHeightTrial(trials)
       ? { bib: trial.bib, height: trial.height }
       : { bib: trial.bib, round: trial.round };
+
+    if (lockedFields.includes(trial.height ?? trial.round?.toString() ?? "")) {
+      const trialModel = await TrialModel.findOne(filter);
+      trialModels.push(trialModel);
+      continue;
+    }
 
     const trialModel = await TrialModel.findOneAndUpdate(
       filter,

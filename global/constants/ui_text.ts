@@ -10,6 +10,9 @@ export abstract class UIText {
   static readonly TOGGLE_DEFAULT_COLUMNS: string = "Reset to defaults";
   static readonly UPDATE_SAVED: string = "✔️ Saved";
   static readonly UPDATE_NOT_SAVED: string = "❌ Some data wasn't saved";
+  static readonly TOGGLE_LOCK_COLUMNS: string = "Lock columns";
+  static readonly TOGGLE_LOCK_INFO: string =
+    "Setting fields to active will prevent them from being overwritten in the database when new data comes from the API";
 
   static readonly TV_GRAPHIC_CONTROL: string = "TV Graphic Control";
   static readonly EVENTS: string = "Events";

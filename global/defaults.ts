@@ -21,7 +21,6 @@ export const defaultEventColumnsUI = [
   "r2Day",
   "r3Day",
   "lanePrefs",
-  "eventCode",
   "category",
   "maxFieldAttempts",
 ];
@@ -50,4 +49,11 @@ export const defaultEventCompetitorsColumnsUI = [
   "dateOfBirth",
   "teamName",
   "event",
+];
+
+export const uneditableFields = [
+  "competitorId",
+  "event",
+  "eventId",
+  "eventCode",
 ];

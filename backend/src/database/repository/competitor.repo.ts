@@ -1,5 +1,6 @@
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
+import { getLockedFields } from "../database";
 import { ICompetitor } from "../interfaces";
 import { CompetitorModel } from "../models/competitor.model";
 import { getDataSource } from "./config.repo";
@@ -54,7 +55,11 @@ const findCompetitorsForEventRemote = async (
 ): Promise<ICompetitor[]> => {
   const { competitorsData } = await getOTCompetitionData();
 
+  const lockedFields = await getLockedFields();
+
   for (const competitor of competitorsData) {
+    lockedFields.forEach((field: string) => delete competitor?.[field]);
+
     await CompetitorModel.updateOne(
       {
         competitorId: competitor.competitorId,

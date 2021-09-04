@@ -1,3 +1,4 @@
+import { getLockedFields } from "../database";
 import { IEvent, IResult, IUnit } from "../interfaces";
 import { ResultModel } from "../models/result.model";
 import { getEventLocal } from "./event.repo";
@@ -27,6 +28,10 @@ export const updateResults = async (
 };
 
 export const getResults = async (unit: IUnit): Promise<IResult[]> => {
+  const lockedFields = await getLockedFields();
+
+  if (lockedFields.includes("result")) return [];
+
   const resultModels: IResult[] = [];
   const results = unit.results ?? [];
 
