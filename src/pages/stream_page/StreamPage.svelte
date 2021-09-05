@@ -7,7 +7,7 @@
     const timeline = gsap.timeline();
 
     timeline
-      .to("#najavaDogadjajaBG", 0.5, {
+      .to("#najavaDogadjajaBG", {
         duration: 0.5,
         opacity: 1,
         scaleY: 1,
@@ -15,21 +15,18 @@
       })
       .to(
         "#najavaDogadjajaNaslov",
-        0.5,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
+        { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       )
       .to(
         "#najavaDogadjajaLokacija",
-        0.3,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
+        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.2"
       )
       .to(
         "#najavaDogadjajaHash",
-        0.1,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.2"
+        { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+        "<.1"
       );
   });
 </script>
