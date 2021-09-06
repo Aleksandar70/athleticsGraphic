@@ -11,3 +11,16 @@
 .source-item:hover {
   background-color: var(--hover-color) !important;
 }
+
+.initialize-button {
+  width: 30px;
+  cursor: pointer;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: right;
+}
+
+.init-modal--spin-body {
+  display: flex;
+  justify-content: center;
+}

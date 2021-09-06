@@ -15,13 +15,16 @@
   import {
     getCompetitorIdFromRow,
     isRowSelected,
+    setLock,
     setUnchanged,
   } from "./table.helper";
   import {
     currentEventId,
+    lockedColumns,
     selectedParticipant,
     visibleColumns,
   } from "../../stores/table.store";
+  import { uneditableFields } from "../../../global/defaults";
   import "./table.style.css";
 
   export let headerData: Headers;
@@ -61,7 +64,7 @@
       {#each headerData as column, i}
         {#if _visibleColumns.includes(column.value) || shouldShowAllColumns}
           <th class="header-text" on:click={() => updateSortDirection(i)}
-            >{column.value}</th
+            >{column.value}{$lockedColumns && setLock(column.value)}</th
           >
         {/if}
       {/each}
@@ -105,6 +108,8 @@
                     >{data.stringValue}</Link
                   ></td
                 >
+              {:else if uneditableFields.includes(data.id)}
+                <td>{data.stringValue}</td>
               {:else}
                 <td
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"

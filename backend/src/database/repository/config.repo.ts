@@ -2,7 +2,6 @@ import { IConfig } from "../../../../global/interfaces";
 import { ConfigModel } from "../models/config.model";
 
 export const createDefaultConfig = async (): Promise<IConfig> => {
-  if ((await ConfigModel.countDocuments()) > 0) return {} as IConfig;
   return await ConfigModel.create({});
 };
 

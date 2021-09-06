@@ -9,13 +9,14 @@
     updatedTableValues,
     checkIfChanged,
   } from "../data_table/table.helper";
-  import "./canvas.style.css";
   import { Button, Input } from "sveltestrap";
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
   import { isNumeric } from "../../utils/string.utils";
   import { currentEventId, visibleColumns } from "../../stores/table.store";
+  import ColumnLockOptions from "../column_lock_options/ColumnLockOptions.svelte";
+  import "./canvas.style.css";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
@@ -70,6 +71,7 @@
   <DataTable {headerData} {rowData} {updateResult} bind:currentPage />
   <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData />
+    <ColumnLockOptions bind:headerData />
     <Button on:click={() => onUpdate()}>{UIText.TABLE_SAVE}</Button>
     <FadingText result={updateResult} />
   </div>

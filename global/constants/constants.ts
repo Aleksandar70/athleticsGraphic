@@ -5,5 +5,4 @@ export abstract class Constants {
 export enum SOURCE {
   LOCAL = "local",
   REMOTE = "remote",
-  SEMI = "semi",
 }

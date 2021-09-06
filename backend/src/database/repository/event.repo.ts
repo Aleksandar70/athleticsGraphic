@@ -1,14 +1,14 @@
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
+import { getLockedFields } from "../database";
 import { IEvent } from "../interfaces";
 import { EventModel } from "../models/event.model";
 import { getDataSource } from "./config.repo";
 import { createUnits, getUnits } from "./unit.repo";
 
 export const createEvents = async (events: IEvent[]): Promise<IEvent[]> => {
-  if ((await EventModel.countDocuments()) > 0) return [];
-
   const eventModels: IEvent[] = [];
+
   for (const event of events) {
     const units = await createUnits(event.units ?? []);
 
@@ -42,15 +42,12 @@ export const updateEvents = async (events: IEvent[]): Promise<boolean> => {
 
 export const getEvent = async (eventId: string): Promise<IEvent> => {
   const source = await getDataSource();
-  switch (source.toLowerCase()) {
+  switch (source?.toLowerCase()) {
     case SOURCE.LOCAL: {
       return await getEventLocal(eventId);
     }
     case SOURCE.REMOTE: {
       return await getEventRemote(eventId);
-    }
-    case SOURCE.SEMI: {
-      return await getEventSemi(eventId);
     }
     default:
       return await getEventLocal(eventId);
@@ -66,31 +63,14 @@ export const getEventLocal = async (eventId: string): Promise<IEvent> =>
 const getEventRemote = async (eventId: string): Promise<IEvent> => {
   const { eventsData } = await getOTCompetitionData();
   const event = eventsData.find((event) => event.eventId === eventId);
-
   const units = await getUnits(event?.units ?? []);
 
-  await EventModel.replaceOne(
-    { eventId: event?.eventId },
-    {
-      ...unwrapEvent(event as IEvent),
-      units: units.map((unit) => unit?._id),
-    },
-    { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
-  );
-
-  return getEventLocal(eventId);
-};
-
-const getEventSemi = async (eventId: string): Promise<IEvent> => {
-  const { eventsData } = await getOTCompetitionData();
-  const event = eventsData.find((event) => event.eventId === eventId);
-
-  const units = await getUnits(event?.units ?? []);
+  const unwrappedEvent = unwrapEvent(event as IEvent);
 
   await EventModel.updateOne(
     { eventId: event?.eventId },
     {
-      ...unwrapEvent(event as IEvent),
+      ...unwrappedEvent,
       units: units.map((unit) => unit?._id),
     },
     { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
@@ -101,15 +81,12 @@ const getEventSemi = async (eventId: string): Promise<IEvent> => {
 
 export const getEvents = async (): Promise<IEvent[]> => {
   const source = await getDataSource();
-  switch (source.toLowerCase()) {
+  switch (source?.toLowerCase()) {
     case SOURCE.LOCAL: {
       return await getEventsLocal();
     }
     case SOURCE.REMOTE: {
       return await getEventsRemote();
-    }
-    case SOURCE.SEMI: {
-      return await getEventsSemi();
     }
     default:
       return await getEventsLocal();
@@ -121,36 +98,17 @@ const getEventsLocal = async (): Promise<IEvent[]> => await EventModel.find();
 const getEventsRemote = async (): Promise<IEvent[]> => {
   const { eventsData } = await getOTCompetitionData();
 
-  for (const event of eventsData) {
-    const units = await getUnits(event.units ?? []);
-
-    await EventModel.replaceOne(
-      { eventId: event.eventId },
-      {
-        ...unwrapEvent(event),
-        units: units.map((unit) => unit?._id),
-      },
-      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
-    );
-  }
-
-  return await getEventsLocal();
-};
-
-const getEventsSemi = async (): Promise<IEvent[]> => {
-  const { eventsData } = await getOTCompetitionData();
+  const lockedFields = await getLockedFields();
 
   for (const event of eventsData) {
-    const units = await getUnits(event.units ?? []);
+    const unwrappedEvent = unwrapEvent(event);
+    lockedFields.forEach((field: string) => delete unwrappedEvent?.[field]);
 
-    await EventModel.updateOne(
-      { eventId: event.eventId },
-      {
-        ...unwrapEvent(event),
-        units: units.map((unit) => unit?._id),
-      },
-      { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
-    );
+    await EventModel.updateOne({ eventId: event.eventId }, unwrappedEvent, {
+      omitUndefined: true,
+      upsert: true,
+      setDefaultsOnInsert: true,
+    });
   }
 
   return await getEventsLocal();
