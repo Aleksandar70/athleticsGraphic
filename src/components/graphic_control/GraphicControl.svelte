@@ -27,7 +27,11 @@
       <div class="graphic-events">
         <Label>Event</Label>
         <Button color="primary">{UIText.EVENTS}</Button>
-        <Button color="primary">{UIText.EVENT_ANNOUNCEMENT}</Button>
+        <Button
+          color="primary"
+          on:click={() => window.open("/stream", "_blank")}
+          >{UIText.EVENT_ANNOUNCEMENT}</Button
+        >
         <Button color="primary">{UIText.TIME}</Button>
         <Button color="primary">{UIText.START_TIME}</Button>
         <Button color="primary">{UIText.STOP_TIME}</Button>
