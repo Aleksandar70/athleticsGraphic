@@ -9,6 +9,12 @@ visibleColumns.subscribe((value) =>
   localStorage.setItem("columns", JSON.stringify(value))
 );
 
+const locked = localStorage.getItem("locked");
+export const lockedColumns = writable(locked ? JSON.parse(locked) : {});
+lockedColumns.subscribe((value) =>
+  localStorage.setItem("locked", JSON.stringify(value))
+);
+
 const participants: ISelectedRow = { id: "", data: null };
 export const selectedParticipant = writable(participants);
 

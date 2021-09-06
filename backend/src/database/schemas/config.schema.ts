@@ -5,7 +5,7 @@ const ConfigSchema = new Schema({
   dataSource: {
     type: String,
     required: true,
-    default: SOURCE.SEMI,
+    default: SOURCE.REMOTE,
   },
 });
 

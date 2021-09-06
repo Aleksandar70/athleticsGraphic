@@ -16,6 +16,7 @@ import {
 } from "../../../global/defaults";
 import {
   currentEventId,
+  lockedColumns,
   selectedParticipant,
   visibleColumns,
 } from "../../stores/table.store";
@@ -105,6 +106,9 @@ export const getCompetitorIdFromRow = (row: TableRow): string =>
 export const isRowSelected = (row: TableRow): boolean =>
   get(currentEventId) !== "events" &&
   get(selectedParticipant)?.id === getCompetitorIdFromRow(row);
+
+export const setLock = (value: string): string =>
+  get(lockedColumns)?.[get(currentEventId)]?.includes(value) ? " 🔒" : "";
 
 export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];

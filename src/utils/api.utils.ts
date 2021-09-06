@@ -18,3 +18,11 @@ export const putRequest = async (
   const response = await axios.put(`${Paths.SERVER_URL}${path}`, body);
   return response;
 };
+
+export const postRequest = async (
+  path: string,
+  body?: unknown
+): Promise<AxiosResponse<unknown>> => {
+  const response = await axios.post(`${Paths.SERVER_URL}${path}`, body);
+  return response;
+};

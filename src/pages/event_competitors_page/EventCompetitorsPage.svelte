@@ -3,11 +3,11 @@
   import Canvas from "../../components/canvas/Canvas.svelte";
   import { getCompetitorResultsData } from "../../components/data_table/table.helper";
   import Spinner from "../../components/spinner/Spinner.svelte";
-  import "./eventcompetitorspage.style.css";
   import { defaultEventCompetitorsColumns } from "../../../global/defaults";
   import { updateCompetitors } from "../../api/competitor.api";
   import { Collapse } from "sveltestrap";
   import GraphicControl from "../../components/graphic_control/GraphicControl.svelte";
+  import "./eventcompetitorspage.style.css";
 
   export let eventId: string;
 
@@ -24,7 +24,7 @@
 
   onMount(async () => {
     tableData = await getCompetitorResultsData(eventId);
-    hasHeats = Object.keys(tableData?.[0]).includes("heatName");
+    hasHeats = Object.keys(tableData?.[0] ?? {}).includes("heatName");
     if (hasHeats) {
       tableData.forEach((data, idx) => {
         heatToggle.set(data.heatName, idx === 0);

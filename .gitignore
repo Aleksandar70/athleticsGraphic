@@ -2,6 +2,7 @@
 /public/build/
 /backend/node_modules/
 /backend/build/
+/backend/levelDB/
 
 .DS_Store
 .vscode

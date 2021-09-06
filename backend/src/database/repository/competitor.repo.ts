@@ -1,5 +1,6 @@
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
+import { getLockedFields } from "../database";
 import { ICompetitor } from "../interfaces";
 import { CompetitorModel } from "../models/competitor.model";
 import { getDataSource } from "./config.repo";
@@ -7,7 +8,6 @@ import { getDataSource } from "./config.repo";
 export const createCompetitors = async (
   competitors: ICompetitor[]
 ): Promise<ICompetitor[]> => {
-  if ((await CompetitorModel.countDocuments()) > 0) return [];
   return await CompetitorModel.insertMany(competitors);
 };
 
@@ -41,9 +41,6 @@ export const findCompetitorsForEvent = async (
     case SOURCE.REMOTE: {
       return await findCompetitorsForEventRemote(eventId);
     }
-    case SOURCE.SEMI: {
-      return await findCompetitorsForEventSemi(eventId);
-    }
     default:
       return await findCompetitorsForEventLocal(eventId);
   }
@@ -58,25 +55,11 @@ const findCompetitorsForEventRemote = async (
 ): Promise<ICompetitor[]> => {
   const { competitorsData } = await getOTCompetitionData();
 
-  for (const competitor of competitorsData) {
-    await CompetitorModel.replaceOne(
-      {
-        competitorId: competitor.competitorId,
-      },
-      competitor,
-      { upsert: true, setDefaultsOnInsert: true }
-    );
-  }
-
-  return await CompetitorModel.find({ event: eventId });
-};
-
-const findCompetitorsForEventSemi = async (
-  eventId: string
-): Promise<ICompetitor[]> => {
-  const { competitorsData } = await getOTCompetitionData();
+  const lockedFields = await getLockedFields();
 
   for (const competitor of competitorsData) {
+    lockedFields.forEach((field: string) => delete competitor?.[field]);
+
     await CompetitorModel.updateOne(
       {
         competitorId: competitor.competitorId,
