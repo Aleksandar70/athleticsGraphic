@@ -31,6 +31,8 @@
   export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
+  let currentRow: number;
+  let currentColumn: number;
 
   $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
   $: _visibleColumns = $visibleColumns[$currentEventId].columns;
@@ -55,6 +57,24 @@
   $: if (updateResult) {
     sortedRows = setUnchanged(sortedRows);
     updateResult = undefined;
+  }
+
+  function handleKeyArrows(event) {
+    const keyPressed = event.keyCode;
+    console.log("keyPressed", keyPressed);
+    if (keyPressed < 37 || keyPressed > 40) return;
+    //left
+    if (keyPressed === 37) currentColumn = Math.max(0, currentColumn - 1);
+    //right
+    if (keyPressed === 39)
+      currentRow = Math.min(currentColumn + 1, sortedRows.length - 1);
+    //up
+    if (keyPressed === 38) currentRow = Math.max(0, currentColumn - 1);
+    //down
+    if (keyPressed === 40)
+      currentRow = Math.min(currentRow + 1, sortedRows.length - 1);
+
+    console.log("Key up is pressed!", event);
   }
 </script>
 
@@ -90,7 +110,7 @@
               data: row,
             })}
         >
-          {#each row as data}
+          {#each row as data, i}
             {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}
               {#if isFlag(data.stringValue)}
                 <td>
@@ -118,6 +138,7 @@
                   bind:innerHTML={data.stringValue}
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}
+                  on:keyup={handleKeyArrows}
                 />
               {/if}
             {/if}
