@@ -1,41 +1,19 @@
-<script>
+<script lang="ts">
   import "./streampage.style.css";
-  import gsap from "gsap";
-  import { onMount } from "svelte";
+  import { Graphics } from "../../../global/constants/constants";
+  import ScoreRounds from "../../components/graphics/score_rounds/ScoreRounds.svelte";
+  import EventAnnouncement from "../../components/graphics/event_announcement/EventAnnouncement.svelte";
 
-  onMount(() => {
-    const timeline = gsap.timeline();
+  let graphics: { id: string; data: {} } = { id: "", data: {} };
 
-    timeline
-      .to("#najavaDogadjajaBG", {
-        duration: 0.5,
-        opacity: 1,
-        scaleY: 1,
-        ease: "power2.out",
-      })
-      .to(
-        "#najavaDogadjajaNaslov",
-        { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<"
-      )
-      .to(
-        "#najavaDogadjajaLokacija",
-        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.2"
-      )
-      .to(
-        "#najavaDogadjajaHash",
-        { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.1"
-      );
+  const channel = new BroadcastChannel("graphics");
+  channel.addEventListener("message", (event) => {
+    graphics = event.data;
   });
 </script>
 
-<div class="graphics--wrapper">
-  <div id="najavaDogadjaja" class="najavaDogadjaja">
-    <img id="najavaDogadjajaBG" alt="img" src="/img/graphics/najava.png" />
-    <p id="najavaDogadjajaNaslov">6th SERBIAN OPEN INDOOR MEETING</p>
-    <p id="najavaDogadjajaLokacija">BELGRADE, FEBRUARY 2021</p>
-    <p id="najavaDogadjajaHash">#belgrade2021</p>
-  </div>
-</div>
+{#if graphics.id == Graphics.PERSONAL_SCORE}
+  <ScoreRounds data={graphics.data} />
+{:else if graphics.id == Graphics.ANNOUNCEMENT}
+  <EventAnnouncement />
+{/if}

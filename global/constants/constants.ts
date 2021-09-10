@@ -6,3 +6,8 @@ export enum SOURCE {
   LOCAL = "local",
   REMOTE = "remote",
 }
+
+export enum Graphics {
+  PERSONAL_SCORE = "personal_score",
+  ANNOUNCEMENT = "announcement",
+}
