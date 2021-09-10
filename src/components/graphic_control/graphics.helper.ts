@@ -4,6 +4,7 @@ import {
   currentEventData,
   selectedParticipant,
 } from "../../stores/table.store";
+import { isNumeric } from "../../utils/string.utils";
 
 export const getDataForPreviewModal = (
   id: Graphics
@@ -17,9 +18,15 @@ export const getDataForPreviewModal = (
       data["Last Name"] = getFieldValueFromParticipant("lastName");
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
+      data["Scores"] = getScores();
   }
   return data;
 };
 
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
+
+const getScores = (): string[] =>
+  get(selectedParticipant)
+    .filter((field) => isNumeric(field.id))
+    .map((scores) => scores?.stringValue);

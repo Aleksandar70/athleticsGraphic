@@ -8,97 +8,67 @@
     const timeline = gsap.timeline();
 
     timeline
-      .to("#horizontalSelektovaniRezultatBG", {
+      .to("#scoresBackground", {
         duration: 1,
         opacity: 1,
         scaleX: 1,
         ease: "power2.out",
       })
       .to(
-        "#horizontalSelektovaniRezultatBib",
+        "#scoresBib",
         { duration: 0.7, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<0.1"
       )
       .to(
-        "#horizontalSelektovaniRezultatImg",
+        "#scoresFlag",
         { duration: 0.5, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<0.1"
       )
       .to(
-        "#horizontalSelektovaniRezultatDisciplina",
+        "#scoresEventName",
         { duration: 0.7, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<"
       )
       .to(
-        "#horizontalSelektovaniRezultatCountry",
+        "#scoresCountry",
         { duration: 0.5, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<0.2"
       )
       .to(
-        "#horizontalSelektovaniRezultatTakmicar",
+        "#scoresCompetitor",
         { duration: 0.5, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<"
       )
       .to(
-        "#horizontalSelektovaniRezultatVrednost1",
+        ".scores",
         { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<0.15"
-      )
-      .to(
-        "#horizontalSelektovaniRezultatVrednost2",
-        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
-        "<0.05"
-      )
-      .to(
-        "#horizontalSelektovaniRezultatVrednost3",
-        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
-        "<0.05"
-      )
-      .to(
-        "#horizontalSelektovaniRezultatVrednost4",
-        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
-        "<0.05"
-      )
-      .to(
-        "#horizontalSelektovaniRezultatVrednost5",
-        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
-        "<0.05"
-      )
-      .to(
-        "#horizontalSelektovaniRezultatVrednost6",
-        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
-        "<0.05"
       );
   });
 </script>
 
-<div id="horizontalSelektovaniRezultat" class="horizontalSelektovaniRezultat">
+<div id="scores--wrapper">
   <img
-    id="horizontalSelektovaniRezultatBG"
+    id="scoresBackground"
     alt="score_rounds"
     src="/img/graphics/score_rounds.png"
   />
-  <p id="horizontalSelektovaniRezultatDisciplina">{data["Event Name"]}</p>
-  <p id="horizontalSelektovaniRezultatBib">{data["ID"]}</p>
-  <img
-    id="horizontalSelektovaniRezultatImg"
-    alt={data["Flag"]}
-    src="/img/flags/{data['Flag']}.png"
-  />
-  <p id="horizontalSelektovaniRezultatCountry">{data["Nationality"]}</p>
-  <p id="horizontalSelektovaniRezultatTakmicar">
+  <p id="scoresEventName">{data["Event Name"]}</p>
+  <p id="scoresBib">{data["ID"]}</p>
+  <img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
+  <p id="scoresCountry">{data["Nationality"]}</p>
+  <p id="scoresCompetitor">
     {`${data["First Name"]} ${data["Last Name"]}`}
   </p>
-  <p id="horizontalSelektovaniRezultatVrednost1" />
-  <p id="horizontalSelektovaniRezultatVrednost2" />
-  <p id="horizontalSelektovaniRezultatVrednost3" />
-  <p id="horizontalSelektovaniRezultatVrednost4" />
-  <p id="horizontalSelektovaniRezultatVrednost5" />
-  <p id="horizontalSelektovaniRezultatVrednost6" />
+  {#each data["Scores"] as score, i}
+    <p class="scores" id="scoresResult{i + 1}">
+      {score}
+    </p>
+  {/each}
 </div>
 
 <style>
-  #horizontalSelektovaniRezultat {
+  #scores--wrapper {
     width: 1920px;
     height: 1080px;
     z-index: 0;
@@ -107,7 +77,7 @@
     left: 0px;
   }
 
-  #horizontalSelektovaniRezultatBG {
+  #scoresBackground {
     top: 802px;
     left: 187px;
     position: fixed;
@@ -116,7 +86,7 @@
     transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatDisciplina {
+  #scoresEventName {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -132,7 +102,7 @@
     transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatBib {
+  #scoresBib {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -148,7 +118,7 @@
     transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatImg {
+  #scoresFlag {
     position: fixed;
     height: 48px;
     width: 48px;
@@ -159,7 +129,7 @@
     transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatCountry {
+  #scoresCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -175,7 +145,7 @@
     transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatTakmicar {
+  #scoresCompetitor {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -191,7 +161,7 @@
     transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatVrednost1 {
+  .scores {
     font-family: "Montserrat-SemiBold";
     font-size: 18pt;
     position: fixed;
@@ -199,91 +169,34 @@
     width: 68px;
     height: 48px;
     line-height: 48px;
-    top: 897px;
+    top: 922px;
+    color: rgb(28, 59, 113);
+    transform-origin: left center;
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  #scoresResult1 {
     left: 409px;
-    color: rgb(28, 59, 113);
-    transform-origin: left center;
-    opacity: 0;
-    transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatVrednost2 {
-    font-family: "Montserrat-SemiBold";
-    font-size: 18pt;
-    position: fixed;
-    text-align: center;
-    width: 68px;
-    height: 48px;
-    line-height: 48px;
-    top: 897px;
+  #scoresResult2 {
     left: 529px;
-    color: rgb(28, 59, 113);
-    transform-origin: left center;
-    opacity: 0;
-    transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatVrednost3 {
-    font-family: "Montserrat-SemiBold";
-    font-size: 18pt;
-    position: fixed;
-    text-align: center;
-    width: 68px;
-    height: 48px;
-    line-height: 48px;
-    top: 897px;
+  #scoresResult3 {
     left: 649px;
-    color: rgb(28, 59, 113);
-    transform-origin: left center;
-    opacity: 0;
-    transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatVrednost4 {
-    font-family: "Montserrat-SemiBold";
-    font-size: 18pt;
-    position: fixed;
-    text-align: center;
-    width: 68px;
-    height: 48px;
-    line-height: 48px;
-    top: 897px;
+  #scoresResult4 {
     left: 769px;
-    color: rgb(28, 59, 113);
-    transform-origin: left center;
-    opacity: 0;
-    transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatVrednost5 {
-    font-family: "Montserrat-SemiBold";
-    font-size: 18pt;
-    position: fixed;
-    text-align: center;
-    width: 68px;
-    height: 48px;
-    line-height: 48px;
-    top: 897px;
+  #scoresResult5 {
     left: 889px;
-    color: rgb(28, 59, 113);
-    transform-origin: left center;
-    opacity: 0;
-    transform: scaleX(0);
   }
 
-  #horizontalSelektovaniRezultatVrednost6 {
-    font-family: "Montserrat-SemiBold";
-    font-size: 18pt;
-    position: fixed;
-    text-align: center;
-    width: 68px;
-    height: 48px;
-    line-height: 48px;
-    top: 897px;
+  #scoresResult6 {
     left: 1009px;
-    color: rgb(28, 59, 113);
-    transform-origin: left center;
-    opacity: 0;
-    transform: scaleX(0);
   }
 </style>

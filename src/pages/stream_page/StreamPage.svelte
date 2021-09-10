@@ -12,8 +12,10 @@
   });
 </script>
 
-{#if graphics.id == Graphics.PERSONAL_SCORE}
-  <ScoreRounds data={graphics.data} />
-{:else if graphics.id == Graphics.ANNOUNCEMENT}
-  <EventAnnouncement />
-{/if}
+<div class="graphics--wrapper">
+  {#if graphics.id == Graphics.PERSONAL_SCORE}
+    <ScoreRounds data={graphics.data} />
+  {:else if graphics.id == Graphics.ANNOUNCEMENT}
+    <EventAnnouncement />
+  {/if}
+</div>

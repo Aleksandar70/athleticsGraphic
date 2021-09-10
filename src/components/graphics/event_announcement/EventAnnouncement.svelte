@@ -6,41 +6,39 @@
     const timeline = gsap.timeline();
 
     timeline
-      .to("#najavaDogadjajaBG", {
+      .to("#eventBackground", {
         duration: 0.5,
         opacity: 1,
         scaleY: 1,
         ease: "power2.out",
       })
       .to(
-        "#najavaDogadjajaNaslov",
+        "#eventTitle",
         { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       )
       .to(
-        "#najavaDogadjajaLokacija",
+        "#eventLocation",
         { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.2"
       )
       .to(
-        "#najavaDogadjajaHash",
+        "#eventHashtag",
         { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.1"
       );
   });
 </script>
 
-<div class="graphics--wrapper">
-  <div id="najavaDogadjaja" class="najavaDogadjaja">
-    <img id="najavaDogadjajaBG" alt="img" src="/img/graphics/najava.png" />
-    <p id="najavaDogadjajaNaslov">6th SERBIAN OPEN INDOOR MEETING</p>
-    <p id="najavaDogadjajaLokacija">BELGRADE, FEBRUARY 2021</p>
-    <p id="najavaDogadjajaHash">#belgrade2021</p>
-  </div>
+<div id="event--wrapper">
+  <img id="eventBackground" alt="img" src="/img/graphics/najava.png" />
+  <p id="eventTitle">6th SERBIAN OPEN INDOOR MEETING</p>
+  <p id="eventLocation">BELGRADE, FEBRUARY 2021</p>
+  <p id="eventHashtag">#belgrade2021</p>
 </div>
 
 <style>
-  #najavaDogadjajaBG {
+  #eventBackground {
     top: 274px;
     left: 517px;
     position: fixed;
@@ -49,7 +47,7 @@
     transform: scaleY(0);
   }
 
-  #najavaDogadjajaNaslov {
+  #eventTitle {
     font-family: "Montserrat-Bold";
     font-size: 24pt;
     position: fixed;
@@ -61,7 +59,7 @@
     transform: scaleY(0);
   }
 
-  #najavaDogadjajaLokacija {
+  #eventLocation {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -73,7 +71,7 @@
     transform: scaleY(0);
   }
 
-  #najavaDogadjajaHash {
+  #eventHashtag {
     font-family: "Montserrat-MediumItalic";
     font-size: 16pt;
     position: fixed;
