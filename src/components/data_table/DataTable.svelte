@@ -84,11 +84,7 @@
           class="table-row {$selectedParticipant && isRowSelected(row)
             ? 'selected'
             : ''}"
-          on:click={() =>
-            selectedParticipant.set({
-              id: getCompetitorIdFromRow(row),
-              data: row,
-            })}
+          on:click={() => selectedParticipant.set(row)}
         >
           {#each row as data}
             {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}
