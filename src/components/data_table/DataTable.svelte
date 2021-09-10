@@ -12,12 +12,7 @@
   import { UIText } from "../../../global/constants/ui_text";
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
-  import {
-    getCompetitorIdFromRow,
-    isRowSelected,
-    setLock,
-    setUnchanged,
-  } from "./table.helper";
+  import { isRowSelected, setLock, setUnchanged } from "./table.helper";
   import {
     currentEventId,
     lockedColumns,
