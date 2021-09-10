@@ -20,6 +20,7 @@
   const sendGraphics = () => {
     const channel = new BroadcastChannel("graphics");
     channel.postMessage({ id: id, data: data });
+    toggle();
   };
 
   const inputChange = (target: EventTarget, name: string) => {
