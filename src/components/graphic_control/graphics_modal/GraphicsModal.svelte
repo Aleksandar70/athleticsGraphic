@@ -13,13 +13,17 @@
 
   export let isOpen: boolean;
   export let id: Graphics;
-  export let data = {};
+  export let data: Record<string, string | number> = {};
 
   const toggle = () => (isOpen = !isOpen);
 
   const sendGraphics = () => {
     const channel = new BroadcastChannel("graphics");
     channel.postMessage({ id: id, data: data });
+  };
+
+  const inputChange = (target: EventTarget, name: string) => {
+    data[name] = (target as HTMLInputElement).value;
   };
 </script>
 
@@ -29,7 +33,17 @@
       {#each Object.entries(data) as [name, value]}
         <FormGroup>
           <Label for={name}>{name}</Label>
-          <Input type="text" value={value?.toString()} />
+          {#if name === "Flag"}
+            <img
+              alt={value?.toString()}
+              src="/img/flags/{value?.toString()}.png"
+            />
+          {/if}
+          <Input
+            type="text"
+            bind:value
+            on:change={(event) => inputChange(event.target, name)}
+          />
         </FormGroup>
       {/each}
     </Form>
