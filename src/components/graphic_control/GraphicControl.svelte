@@ -52,7 +52,7 @@
       </div>
       <div class="graphic-personal">
         <Label>Personal</Label>
-        <Button color="primary" on:click={() => action(Graphics.PERSONAL_BEST)}
+        <Button color="primary" on:click={() => action(Graphics.PERSONAL_SCORE)}
           >{UIText.SHOW_PERSONAL_BEST}</Button
         >
         <Button color="primary">{UIText.SHOW_PERSONAL_DATA}</Button>
