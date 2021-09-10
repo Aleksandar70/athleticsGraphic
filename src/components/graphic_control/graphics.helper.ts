@@ -15,7 +15,7 @@ export const getDataForPreviewModal = (
       data["ID"] = getFieldValueFromParticipant("competitorId");
       data["First Name"] = getFieldValueFromParticipant("firstName");
       data["Last Name"] = getFieldValueFromParticipant("lastName");
-      data["Flag"] = getFieldValueFromParticipant("flagUrl");
+      data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
   }
   return data;

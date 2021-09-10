@@ -82,8 +82,8 @@
   <p id="horizontalSelektovaniRezultatBib">{data["ID"]}</p>
   <img
     id="horizontalSelektovaniRezultatImg"
-    alt={data["Nationality"]}
-    src="/img/flags/{data['Nationality']}.png"
+    alt={data["Flag"]}
+    src="/img/flags/{data['Flag']}.png"
   />
   <p id="horizontalSelektovaniRezultatCountry">{data["Nationality"]}</p>
   <p id="horizontalSelektovaniRezultatTakmicar">
