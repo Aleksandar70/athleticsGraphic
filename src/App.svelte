@@ -2,7 +2,8 @@
   import { Router, navigate, Route } from "svelte-routing";
   import { onMount } from "svelte";
   import EventListPage from "./pages/event_list_page/EventListPage.svelte";
-  import EventCompetitors from "./pages/event_competitors_page/EventCompetitorsPage.svelte";
+  import EventCompetitorsPage from "./pages/event_competitors_page/EventCompetitorsPage.svelte";
+  import StreamPage from "./pages/stream_page/StreamPage.svelte";
   import Header from "./components/header/Header.svelte";
   import Footer from "./components/footer/Footer.svelte";
   import { Paths } from "../global/constants/api";
@@ -16,21 +17,26 @@
     dataSource.set(config?.dataSource);
     navigate(window.location.pathname);
   });
+
+  const isStream = window.location.pathname === "/stream";
 </script>
 
-<div class="app">
-  <Router url={Paths.CLIENT_URL}>
-    <section class="header-section">
-      <Header />
-    </section>
-    <main class="main-content">
-      <Route path={Paths.ROOT_PATH}><EventListPage /></Route>
-      <Route path="{Paths.EVENTS_PATH}/:eventId" let:params>
-        <EventCompetitors eventId={params.eventId} />
-      </Route>
-    </main>
-  </Router>
-  <section class="footer-section">
-    <Footer />
-  </section>
-</div>
+<Router url={Paths.CLIENT_URL}>
+  {#if !isStream}
+    <div class="app">
+      <section class="header-section">
+        <Header />
+      </section>
+      <main class="main-content">
+        <Route path={Paths.ROOT_PATH}><EventListPage /></Route>
+        <Route path="{Paths.EVENTS_PATH}/:eventId" let:params>
+          <EventCompetitorsPage eventId={params.eventId} />
+        </Route>
+      </main>
+      <section class="footer-section">
+        <Footer />
+      </section>
+    </div>
+  {/if}
+  <Route path={Paths.STREAM}><StreamPage /></Route>
+</Router>

@@ -15,6 +15,7 @@ import {
   defaultEventCompetitorsColumnsUI,
 } from "../../../global/defaults";
 import {
+  currentEventData,
   currentEventId,
   lockedColumns,
   selectedParticipant,
@@ -51,6 +52,9 @@ export const getCompetitorResultsData = async (
   eventId: string
 ): Promise<IHeatEventData[] | ICompetitor[]> => {
   const eventData = await getEventData(eventId);
+
+  currentEventData.set(eventData);
+
   const competitorData = await getCompetitorsForEvent(eventId);
 
   const data: IHeatEventData[] = [];
@@ -105,7 +109,8 @@ export const getCompetitorIdFromRow = (row: TableRow): string =>
 
 export const isRowSelected = (row: TableRow): boolean =>
   get(currentEventId) !== "events" &&
-  get(selectedParticipant)?.id === getCompetitorIdFromRow(row);
+  getCompetitorIdFromRow(get(selectedParticipant)) ===
+    getCompetitorIdFromRow(row);
 
 export const setLock = (value: string): string =>
   get(lockedColumns)?.[get(currentEventId)]?.includes(value) ? " 🔒" : "";

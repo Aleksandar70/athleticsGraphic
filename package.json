@@ -43,6 +43,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "d3-array": "^3.0.1",
+    "gsap": "^3.7.1",
     "sirv-cli": "^1.0.0",
     "svelte-fa": "^2.2.1",
     "svelte-routing": "^1.6.0",
