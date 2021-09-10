@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
 
+  export let data;
+
   onMount(() => {
     const timeline = gsap.timeline();
 
@@ -32,9 +34,9 @@
 
 <div id="event--wrapper">
   <img id="eventBackground" alt="img" src="/img/graphics/najava.png" />
-  <p id="eventTitle">6th SERBIAN OPEN INDOOR MEETING</p>
-  <p id="eventLocation">BELGRADE, FEBRUARY 2021</p>
-  <p id="eventHashtag">#belgrade2021</p>
+  <p id="eventTitle">{data["Event Name"]}</p>
+  <p id="eventLocation">{data["Location"]}</p>
+  <p id="eventHashtag">{data["Hashtag"]}</p>
 </div>
 
 <style>

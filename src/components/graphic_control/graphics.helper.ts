@@ -11,6 +11,11 @@ export const getDataForPreviewModal = (
 ): Record<string, string> => {
   const data = {};
   switch (id) {
+    case Graphics.ANNOUNCEMENT:
+      data["Event Name"] = "6th SERBIAN OPEN INDOOR MEETING";
+      data["Location"] = "BELGRADE, FEBRUARY 2021";
+      data["Hashtag"] = "#belgrade2021";
+      break;
     case Graphics.PERSONAL_SCORE:
       data["Event Name"] = get(currentEventData)["name"];
       data["ID"] = getFieldValueFromParticipant("competitorId");

@@ -16,6 +16,6 @@
   {#if graphics.id == Graphics.PERSONAL_SCORE}
     <ScoreRounds data={graphics.data} />
   {:else if graphics.id == Graphics.ANNOUNCEMENT}
-    <EventAnnouncement />
+    <EventAnnouncement data={graphics.data} />
   {/if}
 </div>
