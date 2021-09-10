@@ -19,6 +19,9 @@ export abstract class Paths {
   static readonly CONFIG = "config";
   static readonly CONFIG_PATH = `${Paths.ROOT_PATH}${Paths.CONFIG}`;
 
+  static readonly STREAM = "stream";
+  static readonly STREAM_PATH = `${Paths.ROOT_PATH}${Paths.STREAM}`;
+
   static readonly DATABASE = "database";
   static readonly DATABASE_PATH = `${Paths.ROOT_PATH}${Paths.DATABASE}`;
 }

@@ -34,16 +34,17 @@
 </script>
 
 <div class="event-competitors--page">
-  <GraphicControl />
   {#if tableData.length === 0}
     <Spinner />
   {:else if !hasHeats}
+    <GraphicControl />
     <Canvas
       {tableData}
       defaultColumns={defaultEventCompetitorsColumns}
       updateAction={updateCompetitors}
     />
   {:else}
+    <GraphicControl />
     <div class="heat-tables">
       {#each tableData as heatTableData}
         <div
