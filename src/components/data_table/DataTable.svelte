@@ -26,13 +26,20 @@
   } from "../../stores/table.store";
   import { uneditableFields } from "../../../global/defaults";
   import "./table.style.css";
+  import Keydown from "svelte-keydown";
+  import { onMount } from "svelte";
 
   export let headerData: Headers;
   export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
+
   let currentRow: number;
-  let currentColumn: number;
+  let currentColumn: string;
+  let combo_events = [];
+  let focusCell;
+
+  onMount(() => focusCell.focus());
 
   $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
   $: _visibleColumns = $visibleColumns[$currentEventId].columns;
@@ -60,6 +67,7 @@
   }
 
   function handleKeyArrows(event) {
+    console.log("combo_events: ", combo_events);
     const keyPressed = event.keyCode;
     console.log("keyPressed", keyPressed);
     if (keyPressed < 37 || keyPressed > 40) return;
@@ -73,8 +81,6 @@
     //down
     if (keyPressed === 40)
       currentRow = Math.min(currentRow + 1, sortedRows.length - 1);
-
-    console.log("Key up is pressed!", event);
   }
 </script>
 
@@ -110,7 +116,7 @@
               data: row,
             })}
         >
-          {#each row as data, i}
+          {#each row as data}
             {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}
               {#if isFlag(data.stringValue)}
                 <td>
@@ -130,6 +136,17 @@
                 >
               {:else if uneditableFields.includes(data.id)}
                 <td>{data.stringValue}</td>
+              {:else if currentRow === i && currentColumn === data.id}
+                <td
+                  class="table-data--{data.changed ? 'changed' : 'unchanged'}"
+                  contenteditable="true"
+                  spellcheck="false"
+                  on:keyup={handleKeyArrows}
+                  bind:this={focusCell}
+                  bind:innerHTML={data.stringValue}
+                  on:input={() =>
+                    (data.changed = data.value != data.stringValue)}
+                />
               {:else}
                 <td
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
@@ -138,7 +155,6 @@
                   bind:innerHTML={data.stringValue}
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}
-                  on:keyup={handleKeyArrows}
                 />
               {/if}
             {/if}

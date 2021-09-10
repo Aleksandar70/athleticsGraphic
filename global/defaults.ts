@@ -57,3 +57,20 @@ export const uneditableFields = [
   "eventId",
   "eventCode",
 ];
+
+export const EventColumnsUI = [
+  "name",
+  "genders",
+  "status",
+  "r1Time",
+  "ageGroups",
+  "rounds",
+  "day",
+  "lanes",
+  "maxFieldAttempts",
+  "r2Day",
+  "r3Day",
+  "lanePrefs",
+  "category",
+  "maxFieldAttempts",
+];
