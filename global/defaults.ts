@@ -56,5 +56,6 @@ export const uneditableFields = [
   "event",
   "eventId",
   "eventCode",
-  "flagUrl"
+  "flagUrl",
+  "name",
 ];
