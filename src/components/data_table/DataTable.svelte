@@ -19,7 +19,10 @@
     selectedParticipant,
     visibleColumns,
   } from "../../stores/table.store";
-  import { uneditableFields, editableEventColumnsUI } from "../../../global/defaults";
+  import {
+    uneditableFields,
+    editableEventColumnsUI,
+  } from "../../../global/defaults";
   import "./table.style.css";
   import { onMount } from "svelte";
 
@@ -28,12 +31,15 @@
   export let updateResult: boolean;
   export let currentPage: number;
 
-  let currentRow: number;
-  let currentColumn: number;
+  let currentRow = 0;
+  let currentColumn = 0;
   let combo_events = [];
   let focusCell;
 
-  onMount(() => focusCell.focus());
+  onMount(() => {
+    console.log(focusCell);
+    focusCell?.focus();
+  });
 
   $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
   $: _visibleColumns = $visibleColumns[$currentEventId].columns;
@@ -75,8 +81,12 @@
     //down
     if (keyPressed === 40)
       currentRow = Math.min(currentRow + 1, sortedRows.length - 1);
-      console.log("USAO");
+      
+      console.log(" focusCell?.focus(); ",  focusCell?.focus());
+      focusCell?.focus();
   }
+  $: console.log("column ", currentColumn);
+  $: console.log("row ", currentRow);
 </script>
 
 <Table class="table-data" bordered>
@@ -117,16 +127,6 @@
                     src={data.stringValue}
                   /></td
                 >
-              {:else if data.link}
-                <td
-                  ><Link
-                    class="table-data--link"
-                    to={`${Paths.EVENTS_PATH}/${data.link}`}
-                    >{data.stringValue}</Link
-                  ></td
-                >
-              {:else if uneditableFields.includes(data.id)}
-                <td>{data.stringValue}</td>
               {:else if currentRow === i && editableEventColumnsUI[currentColumn] === data.id}
                 <td
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
@@ -138,12 +138,21 @@
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}
                 />
+              {:else if data.link}
+                <td
+                  ><Link
+                    class="table-data--link"
+                    to={`${Paths.EVENTS_PATH}/${data.link}`}
+                    >{data.stringValue}</Link
+                  ></td
+                >
+              {:else if uneditableFields.includes(data.id)}
+                <td>{data.stringValue}</td>
               {:else}
                 <td
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
                   spellcheck="false"
-                  bind:this={focusCell}
                   bind:innerHTML={data.stringValue}
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}

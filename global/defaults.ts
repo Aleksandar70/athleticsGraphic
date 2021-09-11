@@ -59,8 +59,8 @@ export const uneditableFields = [
 ];
 
 export const editableEventColumnsUI = [
-  "name",
   "genders",
+  "name",
   "status",
   "r1Time",
   "ageGroups",
