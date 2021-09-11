@@ -71,12 +71,16 @@
 
   function handleKeyArrows(event) {
     const keyPressed = event.keyCode;
-    if (keyPressed < 37 || keyPressed > 40) return;
     //left
-    if (keyPressed === 37) currentColumn.set(Math.max(0, $currentColumn - 1));
+    if (event.ctrlKey && keyPressed === 37) {
+      console.log("usao");
+      currentColumn.set(Math.max(0, $currentColumn - 1));
+    }
     //right
-    if (keyPressed === 39)
+    if (event.ctrlKey && keyPressed === 39) {
+      console.log("usao");
       currentRow.set(Math.min($currentColumn + 1, sortedRows.length - 1));
+    }
     //up
     if (keyPressed === 38) currentRow.set(Math.max(0, $currentRow - 1));
     //down
@@ -130,7 +134,7 @@
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
                   spellcheck="false"
-                  on:keyup={handleKeyArrows}
+                  on:keydown={handleKeyArrows}
                   bind:this={focusCell}
                   bind:innerHTML={data.stringValue}
                   on:input={() =>
