@@ -6,7 +6,7 @@ export const defaultEventColumns = [
   "r1Time",
 ];
 
-export const defaultEventColumnsUI = [
+export const eventColumnsUI = [
   "eventId",
   "name",
   "genders",
@@ -36,7 +36,7 @@ export const defaultEventCompetitorsColumns = [
   "result",
 ];
 
-export const defaultEventCompetitorsColumnsUI = [
+export const eventCompetitorsColumnsUI = [
   "competitorId",
   "firstName",
   "lastName",
@@ -58,7 +58,7 @@ export const uneditableFields = [
   "eventCode",
 ];
 
-export const EventColumnsUI = [
+export const editableEventColumnsUI = [
   "name",
   "genders",
   "status",

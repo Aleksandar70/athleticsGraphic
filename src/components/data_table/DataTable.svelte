@@ -19,9 +19,8 @@
     selectedParticipant,
     visibleColumns,
   } from "../../stores/table.store";
-  import { uneditableFields } from "../../../global/defaults";
+  import { uneditableFields, editableEventColumnsUI } from "../../../global/defaults";
   import "./table.style.css";
-  import Keydown from "svelte-keydown";
   import { onMount } from "svelte";
 
   export let headerData: Headers;
@@ -30,7 +29,7 @@
   export let currentPage: number;
 
   let currentRow: number;
-  let currentColumn: string;
+  let currentColumn: number;
   let combo_events = [];
   let focusCell;
 
@@ -76,6 +75,7 @@
     //down
     if (keyPressed === 40)
       currentRow = Math.min(currentRow + 1, sortedRows.length - 1);
+      console.log("USAO");
   }
 </script>
 
@@ -127,7 +127,7 @@
                 >
               {:else if uneditableFields.includes(data.id)}
                 <td>{data.stringValue}</td>
-              {:else if currentRow === i && currentColumn === data.id}
+              {:else if currentRow === i && editableEventColumnsUI[currentColumn] === data.id}
                 <td
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
@@ -143,6 +143,7 @@
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
                   spellcheck="false"
+                  bind:this={focusCell}
                   bind:innerHTML={data.stringValue}
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}

@@ -11,8 +11,8 @@ import { isHeight, isRound } from "../../utils/event.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
-  defaultEventColumnsUI,
-  defaultEventCompetitorsColumnsUI,
+  eventColumnsUI,
+  eventCompetitorsColumnsUI,
 } from "../../../global/defaults";
 import {
   currentEventData,
@@ -32,8 +32,8 @@ export const getDefaultColumns = (): string[] => {
 
 export const getColumnsForModal = (): string[] => {
   return get(currentEventId) === "events"
-    ? defaultEventColumnsUI
-    : defaultEventCompetitorsColumnsUI;
+    ? eventColumnsUI
+    : eventCompetitorsColumnsUI;
 };
 
 export const getCurrentColumns = (): string => {
