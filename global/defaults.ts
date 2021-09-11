@@ -74,3 +74,16 @@ export const editableEventColumnsUI = [
   "category",
   "maxFieldAttempts",
 ];
+
+export const editableEventCompetitorsColumnsUI = [
+  "firstName",
+  "lastName",
+  "teamId",
+  "flagUrl",
+  "pb",
+  "sb",
+  "result",
+  "nationality",
+  "dateOfBirth",
+  "teamName",
+];

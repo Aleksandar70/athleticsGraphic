@@ -18,10 +18,13 @@
     lockedColumns,
     selectedParticipant,
     visibleColumns,
+    currentColumn,
+    currentRow,
   } from "../../stores/table.store";
   import {
     uneditableFields,
     editableEventColumnsUI,
+    editableEventCompetitorsColumnsUI,
   } from "../../../global/defaults";
   import "./table.style.css";
   import { onMount } from "svelte";
@@ -31,13 +34,9 @@
   export let updateResult: boolean;
   export let currentPage: number;
 
-  let currentRow = 0;
-  let currentColumn = 0;
-  let combo_events = [];
   let focusCell;
 
   onMount(() => {
-    console.log(focusCell);
     focusCell?.focus();
   });
 
@@ -67,26 +66,31 @@
   }
 
   function handleKeyArrows(event) {
-    console.log("combo_events: ", combo_events);
     const keyPressed = event.keyCode;
-    console.log("keyPressed", keyPressed);
     if (keyPressed < 37 || keyPressed > 40) return;
     //left
-    if (keyPressed === 37) currentColumn = Math.max(0, currentColumn - 1);
+    if (keyPressed === 37) currentColumn.set(Math.max(0, $currentColumn - 1));
     //right
     if (keyPressed === 39)
-      currentRow = Math.min(currentColumn + 1, sortedRows.length - 1);
+      currentRow.set(Math.min($currentColumn + 1, sortedRows.length - 1));
     //up
-    if (keyPressed === 38) currentRow = Math.max(0, currentColumn - 1);
+    if (keyPressed === 38) currentRow.set(Math.max(0, $currentRow - 1));
     //down
     if (keyPressed === 40)
-      currentRow = Math.min(currentRow + 1, sortedRows.length - 1);
-      
-      console.log(" focusCell?.focus(); ",  focusCell?.focus());
-      focusCell?.focus();
+      currentRow.set(Math.min($currentRow + 1, sortedRows.length - 1));
   }
-  $: console.log("column ", currentColumn);
-  $: console.log("row ", currentRow);
+
+  function handleMouseClick(event, row, column) {
+    currentRow.set(row);
+    currentColumn.set(
+      editableEventColumnsUI.findIndex((header) => header === column)
+    );
+    focusCell = event.target;
+  }
+
+  $: if (focusCell) {
+    focusCell?.focus();
+  }
 </script>
 
 <Table class="table-data" bordered>
@@ -127,10 +131,10 @@
                     src={data.stringValue}
                   /></td
                 >
-              {:else if currentRow === i && editableEventColumnsUI[currentColumn] === data.id}
+              {:else if $currentRow === i && (editableEventColumnsUI[$currentColumn] === data.id || editableEventCompetitorsColumnsUI[$currentColumn] === data.id)}
                 <td
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
-                  contenteditable="true"
+                  contenteditable="true" 
                   spellcheck="false"
                   on:keyup={handleKeyArrows}
                   bind:this={focusCell}
@@ -153,6 +157,7 @@
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
                   spellcheck="false"
+                  on:click={(event) => handleMouseClick(event, i, data.id)}
                   bind:innerHTML={data.stringValue}
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}

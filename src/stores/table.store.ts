@@ -2,6 +2,9 @@ import { writable } from "svelte/store";
 
 export const currentEventId = writable("");
 
+export const currentColumn = writable(0);
+export const currentRow = writable(0);
+
 export const currentEventData = writable({});
 
 const columns = localStorage.getItem("columns");
