@@ -72,17 +72,15 @@
   function handleKeyArrows(event) {
     const keyPressed = event.keyCode;
     //left
-    if (event.ctrlKey && keyPressed === 37) {
-      console.log("usao");
-      currentColumn.set(Math.max(0, $currentColumn - 1));
-    }
+    if (keyPressed === 37) currentColumn.set(Math.max(0, $currentColumn - 1));
+
     //right
-    if (event.ctrlKey && keyPressed === 39) {
-      console.log("usao");
-      currentRow.set(Math.min($currentColumn + 1, sortedRows.length - 1));
-    }
+    if (keyPressed === 39)
+      currentColumn.set(Math.min($currentColumn + 1, sortedRows.length - 1));
+
     //up
     if (keyPressed === 38) currentRow.set(Math.max(0, $currentRow - 1));
+
     //down
     if (keyPressed === 40)
       currentRow.set(Math.min($currentRow + 1, sortedRows.length - 1));
