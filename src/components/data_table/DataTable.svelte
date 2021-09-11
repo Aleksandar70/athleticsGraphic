@@ -23,8 +23,8 @@
   } from "../../stores/table.store";
   import {
     uneditableFields,
-    editableEventColumnsUI,
-    editableEventCompetitorsColumnsUI,
+    eventColumnsUI,
+    eventCompetitorsColumnsUI,
   } from "../../../global/defaults";
   import "./table.style.css";
   import { onMount } from "svelte";
@@ -35,6 +35,10 @@
   export let currentPage: number;
 
   let focusCell;
+  let editableColumns = [
+    ...eventColumnsUI,
+    ...eventCompetitorsColumnsUI,
+  ].filter((column) => !uneditableFields.includes(column));
 
   onMount(() => {
     focusCell?.focus();
@@ -82,9 +86,7 @@
 
   function handleMouseClick(event, row, column) {
     currentRow.set(row);
-    currentColumn.set(
-      editableEventColumnsUI.findIndex((header) => header === column)
-    );
+    currentColumn.set(editableColumns.findIndex((header) => header === column));
     focusCell = event.target;
   }
 
@@ -123,18 +125,10 @@
         >
           {#each row as data}
             {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}
-              {#if isFlag(data.stringValue)}
-                <td>
-                  <img
-                    class="table-data--image"
-                    alt={getAltName(data.stringValue)}
-                    src={data.stringValue}
-                  /></td
-                >
-              {:else if $currentRow === i && (editableEventColumnsUI[$currentColumn] === data.id || editableEventCompetitorsColumnsUI[$currentColumn] === data.id)}
+              {#if $currentRow === i && editableColumns[$currentColumn] === data.id}
                 <td
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
-                  contenteditable="true" 
+                  contenteditable="true"
                   spellcheck="false"
                   on:keyup={handleKeyArrows}
                   bind:this={focusCell}
@@ -142,6 +136,14 @@
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}
                 />
+              {:else if isFlag(data.stringValue)}
+                <td>
+                  <img
+                    class="table-data--image"
+                    alt={getAltName(data.stringValue)}
+                    src={data.stringValue}
+                  /></td
+                >
               {:else if data.link}
                 <td
                   ><Link
