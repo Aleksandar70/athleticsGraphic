@@ -58,3 +58,8 @@ export const uneditableFields = [
   "flagUrl",
   "name",
 ];
+
+export const allEditableFields = [
+  ...eventColumnsUI,
+  ...eventCompetitorsColumnsUI,
+].filter((value: string) => !uneditableFields.includes(value));

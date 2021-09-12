@@ -12,7 +12,12 @@
   import { UIText } from "../../../global/constants/ui_text";
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
-  import { isRowSelected, setLock, setUnchanged } from "./table.helper";
+  import {
+    getEditableColumns,
+    isRowSelected,
+    setLock,
+    setUnchanged,
+  } from "./table.helper";
   import {
     currentEventId,
     lockedColumns,
@@ -21,14 +26,10 @@
     currentColumn,
     currentRow,
   } from "../../stores/table.store";
-  import {
-    uneditableFields,
-    eventColumnsUI,
-    eventCompetitorsColumnsUI,
-  } from "../../../global/defaults";
+  import { uneditableFields } from "../../../global/defaults";
   import "./table.style.css";
   import { onMount } from "svelte";
-  import { get } from "svelte/store";
+  import { getMaxPage } from "../pagination/pagination.helper";
 
   export let headerData: Headers;
   export let rowData: TableData;
@@ -36,35 +37,27 @@
   export let currentPage: number;
 
   let focusCell;
-
-  onMount(() => {
-    focusCell?.focus();
-  });
+  let editableColumns: string[] = [];
 
   $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
   $: _visibleColumns = $visibleColumns[$currentEventId].columns;
 
+  onMount(() => {
+    focusCell?.focus();
+
+    editableColumns = getEditableColumns(shouldShowAllColumns, _visibleColumns);
+  });
+
   $: lowerRange = currentPage * Constants.ROWS_PER_TABLE;
   $: higherRange = lowerRange + (Constants.ROWS_PER_TABLE - 1);
 
+  $: editableColumns = getEditableColumns(
+    shouldShowAllColumns,
+    _visibleColumns
+  );
+
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;
-
-  let editableColumns1 = $visibleColumns[$currentEventId].columns;
-  let editableColumns = [...eventColumnsUI, ...eventCompetitorsColumnsUI];
-  $: if (shouldShowAllColumns) {
-    editableColumns = editableColumns.filter(
-      (column) => !uneditableFields.includes(column)
-    );
-  } else {
-    console.log("USAO");
-    editableColumns = editableColumns.filter(
-      (column) =>
-        !uneditableFields.includes(column) && editableColumns1.includes(column)
-    );
-  }
-
-  console.log("editableColumns ", editableColumns);
 
   const updateSortDirection = (columnIndex: number): void => {
     sortDirection = changeSortDirection(sortDirection);
@@ -82,22 +75,50 @@
     updateResult = undefined;
   }
 
-  function handleKeyArrows(event) {
+  const handleKeyArrows = (event) => {
     const keyPressed = event.keyCode;
+    const columnCount = editableColumns.length - 1;
+
     //left
-    if (keyPressed === 37) currentColumn.set(Math.max(0, $currentColumn - 1));
+    if (keyPressed === 37) {
+      currentColumn.set(
+        $currentColumn === 0 ? columnCount : $currentColumn - 1
+      );
+    }
 
     //right
-    if (keyPressed === 39 && get(currentColumn) < editableColumns.length - 1)
-      currentColumn.set(Math.min($currentColumn + 1, sortedRows.length - 1));
+    if (keyPressed === 39) {
+      currentColumn.set($currentColumn < columnCount ? $currentColumn + 1 : 0);
+    }
 
     //up
-    if (keyPressed === 38) currentRow.set(Math.max(0, $currentRow - 1));
+    if (keyPressed === 38) {
+      if ($currentRow === lowerRange) {
+        if (lowerRange === 0) {
+          currentPage = getMaxPage(sortedRows.length);
+          currentRow.set(sortedRows.length - 1);
+        } else {
+          currentPage -= 1;
+          currentRow.set($currentRow - 1);
+        }
+      } else {
+        currentRow.set($currentRow - 1);
+      }
+    }
 
     //down
-    if (keyPressed === 40)
-      currentRow.set(Math.min($currentRow + 1, sortedRows.length - 1));
-  }
+    if (keyPressed === 40) {
+      if ($currentRow === sortedRows.length - 1) {
+        currentPage = 0;
+        currentRow.set(0);
+      } else if ($currentRow === higherRange) {
+        currentPage += 1;
+        currentRow.set($currentRow + 1);
+      } else {
+        currentRow.set($currentRow + 1);
+      }
+    }
+  };
 
   function handleMouseClick(event, row, column) {
     currentRow.set(row);
