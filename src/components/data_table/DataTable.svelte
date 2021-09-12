@@ -120,11 +120,11 @@
     }
   };
 
-  function handleMouseClick(event, row, column) {
+  const handleMouseClick = (event, row, column) => {
     currentRow.set(row);
     currentColumn.set(editableColumns.findIndex((header) => header === column));
     focusCell = event.target;
-  }
+  };
 
   $: if (focusCell) {
     focusCell?.focus();
