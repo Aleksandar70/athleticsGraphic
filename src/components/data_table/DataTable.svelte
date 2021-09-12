@@ -17,6 +17,7 @@
     isRowSelected,
     setLock,
     setUnchanged,
+    updateColumnsAndRows,
   } from "./table.helper";
   import {
     currentEventId,
@@ -29,7 +30,6 @@
   import { uneditableFields } from "../../../global/defaults";
   import "./table.style.css";
   import { onMount } from "svelte";
-  import { getMaxPage } from "../pagination/pagination.helper";
 
   export let headerData: Headers;
   export let rowData: TableData;
@@ -78,46 +78,16 @@
   const handleKeyArrows = (event) => {
     const keyPressed = event.keyCode;
     const columnCount = editableColumns.length - 1;
-
-    //left
-    if (keyPressed === 37) {
-      currentColumn.set(
-        $currentColumn === 0 ? columnCount : $currentColumn - 1
-      );
-    }
-
-    //right
-    if (keyPressed === 39) {
-      currentColumn.set($currentColumn < columnCount ? $currentColumn + 1 : 0);
-    }
-
-    //up
-    if (keyPressed === 38) {
-      if ($currentRow === lowerRange) {
-        if (lowerRange === 0) {
-          currentPage = getMaxPage(sortedRows.length);
-          currentRow.set(sortedRows.length - 1);
-        } else {
-          currentPage -= 1;
-          currentRow.set($currentRow - 1);
-        }
-      } else {
-        currentRow.set($currentRow - 1);
-      }
-    }
-
-    //down
-    if (keyPressed === 40) {
-      if ($currentRow === sortedRows.length - 1) {
-        currentPage = 0;
-        currentRow.set(0);
-      } else if ($currentRow === higherRange) {
-        currentPage += 1;
-        currentRow.set($currentRow + 1);
-      } else {
-        currentRow.set($currentRow + 1);
-      }
-    }
+    updateColumnsAndRows(
+      keyPressed,
+      columnCount,
+      $currentColumn,
+      $currentRow,
+      sortedRows,
+      higherRange,
+      lowerRange,
+      currentPage
+    );
   };
 
   const handleMouseClick = (event, row, column) => {
