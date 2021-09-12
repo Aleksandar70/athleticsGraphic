@@ -28,6 +28,7 @@
   } from "../../../global/defaults";
   import "./table.style.css";
   import { onMount } from "svelte";
+  import { get } from "svelte/store";
 
   export let headerData: Headers;
   export let rowData: TableData;
@@ -35,10 +36,6 @@
   export let currentPage: number;
 
   let focusCell;
-  let editableColumns = [
-    ...eventColumnsUI,
-    ...eventCompetitorsColumnsUI,
-  ].filter((column) => !uneditableFields.includes(column));
 
   onMount(() => {
     focusCell?.focus();
@@ -52,6 +49,22 @@
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;
+
+  let editableColumns1 = $visibleColumns[$currentEventId].columns;
+  let editableColumns = [...eventColumnsUI, ...eventCompetitorsColumnsUI];
+  $: if (shouldShowAllColumns) {
+    editableColumns = editableColumns.filter(
+      (column) => !uneditableFields.includes(column)
+    );
+  } else {
+    console.log("USAO");
+    editableColumns = editableColumns.filter(
+      (column) =>
+        !uneditableFields.includes(column) && editableColumns1.includes(column)
+    );
+  }
+
+  console.log("editableColumns ", editableColumns);
 
   const updateSortDirection = (columnIndex: number): void => {
     sortDirection = changeSortDirection(sortDirection);
@@ -75,7 +88,7 @@
     if (keyPressed === 37) currentColumn.set(Math.max(0, $currentColumn - 1));
 
     //right
-    if (keyPressed === 39)
+    if (keyPressed === 39 && get(currentColumn) < editableColumns.length - 1)
       currentColumn.set(Math.min($currentColumn + 1, sortedRows.length - 1));
 
     //up

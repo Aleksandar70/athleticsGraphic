@@ -7,22 +7,21 @@ export const defaultEventColumns = [
 ];
 
 export const eventColumnsUI = [
+  "ageGroups",
+  "category",
+  "eventCode",
   "eventId",
   "genders",
+  "lanePrefs",
   "name",
-  "status",
   "r1Time",
-  "ageGroups",
-  "eventCode",
   "rounds",
+  "status",
   "day",
   "lanes",
   "maxFieldAttempts",
   "r2Day",
   "r3Day",
-  "lanePrefs",
-  "category",
-  "maxFieldAttempts",
 ];
 
 export const defaultEventCompetitorsColumns = [
@@ -40,15 +39,15 @@ export const eventCompetitorsColumnsUI = [
   "competitorId",
   "firstName",
   "lastName",
+  "dateOfBirth",
   "teamId",
-  "flagUrl",
+  "nationality",
+  "event",
   "pb",
   "sb",
-  "result",
-  "nationality",
-  "dateOfBirth",
+  "flagUrl",
   "teamName",
-  "event",
+  "result",
 ];
 
 export const uneditableFields = [
