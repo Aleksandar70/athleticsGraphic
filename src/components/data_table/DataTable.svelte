@@ -12,26 +12,49 @@
   import { UIText } from "../../../global/constants/ui_text";
   import Pagination from "../pagination/Pagination.svelte";
   import { Constants } from "../../../global/constants/constants";
-  import { isRowSelected, setLock, setUnchanged } from "./table.helper";
+  import {
+    getEditableColumns,
+    isRowSelected,
+    setLock,
+    setUnchanged,
+  } from "./table.helper";
   import {
     currentEventId,
     lockedColumns,
     selectedParticipant,
     visibleColumns,
+    currentColumn,
+    currentRow,
   } from "../../stores/table.store";
   import { uneditableFields } from "../../../global/defaults";
   import "./table.style.css";
+  import { onMount } from "svelte";
+  import { getMaxPage } from "../pagination/pagination.helper";
 
   export let headerData: Headers;
   export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
 
+  let focusCell: HTMLTableDataCellElement;
+  let editableColumns: string[] = [];
+
   $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
   $: _visibleColumns = $visibleColumns[$currentEventId].columns;
 
+  onMount(() => {
+    focusCell?.focus();
+
+    editableColumns = getEditableColumns(shouldShowAllColumns, _visibleColumns);
+  });
+
   $: lowerRange = currentPage * Constants.ROWS_PER_TABLE;
   $: higherRange = lowerRange + (Constants.ROWS_PER_TABLE - 1);
+
+  $: editableColumns = getEditableColumns(
+    shouldShowAllColumns,
+    _visibleColumns
+  );
 
   let sortDirection = SortDirection.DESCENDING;
   let sortBy = null;
@@ -50,6 +73,60 @@
   $: if (updateResult) {
     sortedRows = setUnchanged(sortedRows);
     updateResult = undefined;
+  }
+
+  const handleKeyArrows = (event: KeyboardEvent): void => {
+    const keyPressed = event.key;
+    const columnCount = editableColumns.length - 1;
+    if (keyPressed === "ArrowLeft") {
+      currentColumn.set(
+        $currentColumn === 0 ? columnCount : $currentColumn - 1
+      );
+    }
+
+    if (keyPressed === "ArrowRight") {
+      currentColumn.set($currentColumn < columnCount ? $currentColumn + 1 : 0);
+    }
+
+    if (keyPressed === "ArrowUp") {
+      if ($currentRow === lowerRange) {
+        if (lowerRange === 0) {
+          currentPage = getMaxPage(sortedRows.length);
+          currentRow.set(sortedRows.length - 1);
+        } else {
+          currentPage -= 1;
+          currentRow.set($currentRow - 1);
+        }
+      } else {
+        currentRow.set($currentRow - 1);
+      }
+    }
+
+    if (keyPressed === "ArrowDown") {
+      if ($currentRow === sortedRows.length - 1) {
+        currentPage = 0;
+        currentRow.set(0);
+      } else if ($currentRow === higherRange) {
+        currentPage += 1;
+        currentRow.set($currentRow + 1);
+      } else {
+        currentRow.set($currentRow + 1);
+      }
+    }
+  };
+
+  const handleMouseClick = (
+    target: EventTarget,
+    row: number,
+    column: string
+  ) => {
+    currentRow.set(row);
+    currentColumn.set(editableColumns.findIndex((header) => header === column));
+    focusCell = target as HTMLTableDataCellElement;
+  };
+
+  $: if (focusCell) {
+    focusCell?.focus();
   }
 </script>
 
@@ -83,7 +160,18 @@
         >
           {#each row as data}
             {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}
-              {#if isFlag(data.stringValue)}
+              {#if $currentRow === i && editableColumns[$currentColumn] === data.id}
+                <td
+                  class="table-data--{data.changed ? 'changed' : 'unchanged'}"
+                  contenteditable="true"
+                  spellcheck="false"
+                  on:keydown={handleKeyArrows}
+                  bind:this={focusCell}
+                  bind:innerHTML={data.stringValue}
+                  on:input={() =>
+                    (data.changed = data.value != data.stringValue)}
+                />
+              {:else if isFlag(data.stringValue)}
                 <td>
                   <img
                     class="table-data--image"
@@ -106,6 +194,8 @@
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
                   spellcheck="false"
+                  on:click={(event) =>
+                    handleMouseClick(event.target, i, data.id)}
                   bind:innerHTML={data.stringValue}
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}

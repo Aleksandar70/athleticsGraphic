@@ -6,23 +6,22 @@ export const defaultEventColumns = [
   "r1Time",
 ];
 
-export const defaultEventColumnsUI = [
-  "eventId",
-  "name",
-  "genders",
-  "status",
-  "r1Time",
+export const eventColumnsUI = [
   "ageGroups",
+  "category",
   "eventCode",
+  "eventId",
+  "genders",
+  "lanePrefs",
+  "name",
+  "r1Time",
   "rounds",
+  "status",
   "day",
   "lanes",
   "maxFieldAttempts",
   "r2Day",
   "r3Day",
-  "lanePrefs",
-  "category",
-  "maxFieldAttempts",
 ];
 
 export const defaultEventCompetitorsColumns = [
@@ -36,19 +35,19 @@ export const defaultEventCompetitorsColumns = [
   "result",
 ];
 
-export const defaultEventCompetitorsColumnsUI = [
+export const eventCompetitorsColumnsUI = [
   "competitorId",
   "firstName",
   "lastName",
+  "dateOfBirth",
   "teamId",
-  "flagUrl",
+  "nationality",
+  "event",
   "pb",
   "sb",
-  "result",
-  "nationality",
-  "dateOfBirth",
+  "flagUrl",
   "teamName",
-  "event",
+  "result",
 ];
 
 export const uneditableFields = [
@@ -56,4 +55,11 @@ export const uneditableFields = [
   "event",
   "eventId",
   "eventCode",
+  "flagUrl",
+  "name",
 ];
+
+export const allEditableFields = [
+  ...eventColumnsUI,
+  ...eventCompetitorsColumnsUI,
+].filter((value: string) => !uneditableFields.includes(value));

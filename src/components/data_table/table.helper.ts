@@ -11,8 +11,9 @@ import { isHeight, isRound } from "../../utils/event.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
-  defaultEventColumnsUI,
-  defaultEventCompetitorsColumnsUI,
+  eventColumnsUI,
+  eventCompetitorsColumnsUI,
+  uneditableFields,
 } from "../../../global/defaults";
 import {
   currentEventData,
@@ -30,10 +31,10 @@ export const getDefaultColumns = (): string[] => {
     : defaultEventCompetitorsColumns;
 };
 
-export const getColumnsForModal = (): string[] => {
+export const getColumnsForDisplay = (): string[] => {
   return get(currentEventId) === "events"
-    ? defaultEventColumnsUI
-    : defaultEventCompetitorsColumnsUI;
+    ? eventColumnsUI
+    : eventCompetitorsColumnsUI;
 };
 
 export const getCurrentColumns = (): string => {
@@ -114,6 +115,25 @@ export const isRowSelected = (row: TableRow): boolean =>
 
 export const setLock = (value: string): string =>
   get(lockedColumns)?.[get(currentEventId)]?.includes(value) ? " 🔒" : "";
+
+export const getEditableColumns = (
+  showAll: boolean,
+  visibleColumns: string[]
+): string[] =>
+  showAll
+    ? [
+        ...getColumnsForDisplay().filter(
+          (value: string) => !uneditableFields.includes(value)
+        ),
+        ...visibleColumns.filter((value: string) => isNumeric(value)),
+      ]
+    : [
+        ...getColumnsForDisplay().filter(
+          (value: string) =>
+            !uneditableFields.includes(value) && visibleColumns.includes(value)
+        ),
+        ...visibleColumns.filter((value: string) => isNumeric(value)),
+      ];
 
 export const getTableData = (rawData: RawData): TableData => {
   if (!rawData?.length) return [];
@@ -201,7 +221,7 @@ export const updatedTableValues = (tableData: TableData): RawData => {
 };
 
 export const filterHeaderData = (headers: Headers): Headers => {
-  const columnsForModal = getColumnsForModal();
+  const columnsForModal = getColumnsForDisplay();
   const headersCopy = [...headers];
   headersCopy.forEach((headerData) => {
     if (
@@ -219,7 +239,7 @@ export const filterHeaderData = (headers: Headers): Headers => {
 };
 
 export const filterRowData = (tableData: TableData): TableData => {
-  const columnsForModal = getColumnsForModal();
+  const columnsForModal = getColumnsForDisplay();
   tableData.forEach((rowData) => {
     const rowDataCopy = [...rowData];
     rowDataCopy.forEach((row) => {
