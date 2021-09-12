@@ -259,27 +259,24 @@ export const filterRowData = (tableData: TableData): TableData => {
 };
 
 export const updateColumnsAndRows = (
-  keyPressed,
-  columnCount,
-  $currentColumn,
-  $currentRow,
-  sortedRows,
-  higherRange,
-  lowerRange,
-  currentPage
-) => {
-  //left
-  if (keyPressed === 37) {
+  keyPressed: string,
+  columnCount: number,
+  $currentColumn: number,
+  $currentRow: number,
+  sortedRows: TableData,
+  higherRange: number,
+  lowerRange: number,
+  currentPage: number
+): void => {
+  if (keyPressed === "ArrowLeft") {
     currentColumn.set($currentColumn === 0 ? columnCount : $currentColumn - 1);
   }
 
-  //right
-  if (keyPressed === 39) {
+  if (keyPressed === "ArrowRight") {
     currentColumn.set($currentColumn < columnCount ? $currentColumn + 1 : 0);
   }
 
-  //up
-  if (keyPressed === 38) {
+  if (keyPressed === "ArrowUp") {
     if ($currentRow === lowerRange) {
       if (lowerRange === 0) {
         currentPage = getMaxPage(sortedRows.length);
@@ -293,8 +290,8 @@ export const updateColumnsAndRows = (
     }
   }
 
-  //down
-  if (keyPressed === 40) {
+  if (keyPressed === "ArrowDown") {
+    let currentPage: number;
     if ($currentRow === sortedRows.length - 1) {
       currentPage = 0;
       currentRow.set(0);

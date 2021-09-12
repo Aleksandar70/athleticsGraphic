@@ -75,8 +75,8 @@
     updateResult = undefined;
   }
 
-  const handleKeyArrows = (event) => {
-    const keyPressed = event.keyCode;
+  const handleKeyArrows = (event: KeyboardEvent): void => {
+    const keyPressed = event.key;
     const columnCount = editableColumns.length - 1;
     updateColumnsAndRows(
       keyPressed,
@@ -90,10 +90,14 @@
     );
   };
 
-  const handleMouseClick = (event, row, column) => {
+  const handleMouseClick = (
+    target: EventTarget,
+    row: number,
+    column: string
+  ) => {
     currentRow.set(row);
     currentColumn.set(editableColumns.findIndex((header) => header === column));
-    focusCell = event.target;
+    focusCell = target;
   };
 
   $: if (focusCell) {
@@ -165,7 +169,8 @@
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
                   contenteditable="true"
                   spellcheck="false"
-                  on:click={(event) => handleMouseClick(event, i, data.id)}
+                  on:click={(event) =>
+                    handleMouseClick(event.target, i, data.id)}
                   bind:innerHTML={data.stringValue}
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}
