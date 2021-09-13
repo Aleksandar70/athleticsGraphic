@@ -1,12 +1,16 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
+  import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
 
   export let data = {};
+  export let clear = false;
+
+  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+
+  const timeline = gsap.timeline();
 
   onMount(() => {
-    const timeline = gsap.timeline();
-
     timeline
       .to("#scoresBackground", {
         duration: 1,
@@ -45,6 +49,13 @@
         "<0.15"
       );
   });
+
+  $: if (clear) {
+    timeline.reverse().then(() => {
+      $clearChannel.postMessage(false);
+      visibleGraphics.set({ id: "", data: {} });
+    });
+  }
 </script>
 
 <div id="scores--wrapper">

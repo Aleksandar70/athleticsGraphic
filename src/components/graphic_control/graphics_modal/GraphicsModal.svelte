@@ -10,6 +10,7 @@
     Button,
   } from "sveltestrap";
   import type { Graphics } from "../../../../global/constants/constants";
+  import { streamChannel } from "../../../stores/stream.store";
 
   export let isOpen: boolean;
   export let id: Graphics;
@@ -18,8 +19,7 @@
   const toggle = () => (isOpen = !isOpen);
 
   const sendGraphics = () => {
-    const channel = new BroadcastChannel("graphics");
-    channel.postMessage({ id: id, data: data });
+    $streamChannel.postMessage({ id: id, data: data });
     toggle();
   };
 

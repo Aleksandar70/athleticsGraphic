@@ -3,19 +3,17 @@
   import { Graphics } from "../../../global/constants/constants";
   import ScoreRounds from "../../components/graphics/score_rounds/ScoreRounds.svelte";
   import EventAnnouncement from "../../components/graphics/event_announcement/EventAnnouncement.svelte";
+  import { streamChannel, visibleGraphics } from "../../stores/stream.store";
 
-  let graphics: { id: string; data: {} } = { id: "", data: {} };
-
-  const channel = new BroadcastChannel("graphics");
-  channel.addEventListener("message", (event) => {
-    graphics = event.data;
-  });
+  $streamChannel.addEventListener("message", (event) =>
+    visibleGraphics.set(event.data)
+  );
 </script>
 
 <div class="graphics--wrapper">
-  {#if graphics.id == Graphics.PERSONAL_SCORE}
-    <ScoreRounds data={graphics.data} />
-  {:else if graphics.id == Graphics.ANNOUNCEMENT}
-    <EventAnnouncement data={graphics.data} />
+  {#if $visibleGraphics.id == Graphics.PERSONAL_SCORE}
+    <ScoreRounds data={$visibleGraphics.data} />
+  {:else if $visibleGraphics.id == Graphics.ANNOUNCEMENT}
+    <EventAnnouncement data={$visibleGraphics.data} />
   {/if}
 </div>
