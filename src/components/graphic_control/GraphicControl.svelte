@@ -13,6 +13,7 @@
   import { Graphics } from "../../../global/constants/constants";
   import { getDataForPreviewModal } from "./graphics.helper";
   import GraphicsModal from "./graphics_modal/GraphicsModal.svelte";
+  import { clearChannel, streamChannel } from "../../stores/stream.store";
 
   let displayData = {};
   let action_id: Graphics;
@@ -33,8 +34,14 @@
         >{UIText.TV_GRAPHIC_CONTROL} <Icon name="tv" /></CardTitle
       >
       <div class="graphic-clear">
-        <Button color="danger">{UIText.CLEAR_SEQUENCE}</Button>
-        <Button color="danger">{UIText.CLEAR_ALL}</Button>
+        <Button color="danger" on:click={() => $clearChannel.postMessage(true)}
+          >{UIText.CLEAR_SEQUENCE}</Button
+        >
+        <Button
+          color="danger"
+          on:click={() => $streamChannel.postMessage({ id: "", data: {} })}
+          >{UIText.CLEAR_ALL}</Button
+        >
       </div>
     </CardHeader>
     <CardBody class="graphic-control--body">
