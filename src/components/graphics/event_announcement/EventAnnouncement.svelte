@@ -1,11 +1,7 @@
 <script lant="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
-  import {
-    clearChannel,
-    streamChannel,
-    visibleGraphics,
-  } from "../../../stores/stream.store";
+  import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
 
   export let data;
   export let clear = false;
