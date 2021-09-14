@@ -10,4 +10,5 @@ export enum SOURCE {
 export enum Graphics {
   PERSONAL_SCORE = "personal_score",
   ANNOUNCEMENT = "announcement",
+  START_LIST = "start_list",
 }

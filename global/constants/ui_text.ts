@@ -17,6 +17,7 @@ export abstract class UIText {
   static readonly TV_GRAPHIC_CONTROL: string = "Controls";
   static readonly EVENTS: string = "Events";
   static readonly EVENT_ANNOUNCEMENT: string = "Announcement";
+  static readonly START_LIST: string = "Start list";
   static readonly SHOW_PERSONAL_BEST: string = "Personal Best";
   static readonly SHOW_PERSONAL_DATA: string = "Personal Data";
   static readonly MEDALS: string = "Medals";

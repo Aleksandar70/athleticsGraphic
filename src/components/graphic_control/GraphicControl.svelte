@@ -51,6 +51,9 @@
         <Button color="primary" on:click={() => action(Graphics.ANNOUNCEMENT)}
           >{UIText.EVENT_ANNOUNCEMENT}</Button
         >
+        <Button color="primary" on:click={() => action(Graphics.START_LIST)}
+          >{UIText.START_LIST}</Button
+        >
         <Button color="primary">{UIText.TIME}</Button>
         <Button color="primary">{UIText.START_TIME}</Button>
         <Button color="primary">{UIText.STOP_TIME}</Button>

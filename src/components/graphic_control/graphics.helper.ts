@@ -24,12 +24,22 @@ export const getDataForPreviewModal = (
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
       data["Scores"] = getScores();
+    case Graphics.START_LIST:
+      data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
+      data["Hashtag"] = "#belgrade2021";
+      data["Event Name"] = get(currentEventData)["name"];
+      data["Competitors"] = getCompetitorsForEvent("name");
+      break;
   }
   return data;
 };
 
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
+
+const getCompetitorsForEvent = (key: string): string => {
+  return null;
+};
 
 const getScores = (): string[] =>
   get(selectedParticipant)
