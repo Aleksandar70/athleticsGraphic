@@ -58,8 +58,6 @@ export const getCompetitorResultsData = async (
 
   const competitorData = await getCompetitorsForEvent(eventId);
 
-  console.log("competitorData -> ", competitorData);
-
   const data: IHeatEventData[] = [];
 
   const units = eventData.units;
