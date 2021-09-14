@@ -8,7 +8,25 @@ import { getDataSource } from "./config.repo";
 export const createCompetitors = async (
   competitors: ICompetitor[]
 ): Promise<ICompetitor[]> => {
-  return await CompetitorModel.insertMany(competitors);
+  const competitorModels: ICompetitor[] = [];
+
+  for (const competitor of competitors) {
+    const events: string[] = [];
+
+    competitor?.eventsEntered?.forEach(
+      (event) => event.eventId && events.push(event.eventId)
+    );
+
+    const competitorModel = new CompetitorModel({
+      ...competitor,
+      eventsEntered: events,
+    });
+
+    competitorModels.push(competitorModel);
+  }
+
+  await CompetitorModel.insertMany(competitorModels);
+  return competitorModels;
 };
 
 export const updateCompetitors = async (
@@ -48,7 +66,8 @@ export const findCompetitorsForEvent = async (
 
 const findCompetitorsForEventLocal = async (
   eventId: string
-): Promise<ICompetitor[]> => await CompetitorModel.find({ event: eventId });
+): Promise<ICompetitor[]> =>
+  await CompetitorModel.find({ eventsEntered: eventId });
 
 const findCompetitorsForEventRemote = async (
   eventId: string
@@ -64,10 +83,52 @@ const findCompetitorsForEventRemote = async (
       {
         competitorId: competitor.competitorId,
       },
-      competitor,
+      unwrapCompetitor(competitor),
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
     );
   }
 
-  return await CompetitorModel.find({ event: eventId });
+  return await findCompetitorsForEventLocal(eventId);
 };
+
+const unwrapCompetitor = ({
+  competitorId,
+  nationalId,
+  firstName,
+  lastName,
+  gender,
+  dateOfBirth,
+  teamId,
+  nonScorer,
+  numbered,
+  sortEventCode,
+  sortBib,
+  sortAgeGroup,
+  checkedIn,
+  nationality,
+  event,
+  pb,
+  sb,
+  flagUrl,
+  teamName,
+}: ICompetitor): ICompetitor => ({
+  competitorId,
+  nationalId,
+  firstName,
+  lastName,
+  gender,
+  dateOfBirth,
+  teamId,
+  nonScorer,
+  numbered,
+  sortEventCode,
+  sortBib,
+  sortAgeGroup,
+  checkedIn,
+  nationality,
+  event,
+  pb,
+  sb,
+  flagUrl,
+  teamName,
+});

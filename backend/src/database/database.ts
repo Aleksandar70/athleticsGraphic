@@ -43,8 +43,8 @@ export const initialize = async (): Promise<void> => {
   await createDefaultConfig();
   const otCompetitionData = await getOTCompetitionData();
   await createCompetition(otCompetitionData.competitionData);
-  await createCompetitors(otCompetitionData.competitorsData);
   await createEvents(otCompetitionData.eventsData);
+  await createCompetitors(otCompetitionData.competitorsData);
   console.log("Initialization complete.");
 };
 
