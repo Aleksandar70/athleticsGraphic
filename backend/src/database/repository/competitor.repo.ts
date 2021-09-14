@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose";
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
 import { getLockedFields } from "../database";
-import { ICompetitor } from "../interfaces";
+import { ICompetitor, IEvent } from "../interfaces";
 import { CompetitorModel } from "../models/competitor.model";
 import { getDataSource } from "./config.repo";
 import { getEvent } from "./event.repo";
@@ -74,7 +74,10 @@ const findCompetitorsForEventLocal = async (
 ): Promise<ICompetitor[]> => {
   const competitors = await CompetitorModel.find().populate("eventsEntered");
   return competitors.filter(
-    (c) => c.eventsEntered.filter((event) => event.eventId === eventId).length
+    (competitor: ICompetitor) =>
+      competitor?.eventsEntered?.filter(
+        (event: IEvent) => event.eventId === eventId
+      ).length
   );
 };
 
@@ -92,10 +95,52 @@ const findCompetitorsForEventRemote = async (
       {
         competitorId: competitor.competitorId,
       },
-      competitor,
+      unwrapCompetitor(competitor),
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }
     );
   }
 
-  return await CompetitorModel.find({ eventsEntered: eventId });
+  return await findCompetitorsForEventLocal(eventId);
 };
+
+const unwrapCompetitor = ({
+  competitorId,
+  nationalId,
+  firstName,
+  lastName,
+  gender,
+  dateOfBirth,
+  teamId,
+  nonScorer,
+  numbered,
+  sortEventCode,
+  sortBib,
+  sortAgeGroup,
+  checkedIn,
+  nationality,
+  event,
+  pb,
+  sb,
+  flagUrl,
+  teamName,
+}: ICompetitor): ICompetitor => ({
+  competitorId,
+  nationalId,
+  firstName,
+  lastName,
+  gender,
+  dateOfBirth,
+  teamId,
+  nonScorer,
+  numbered,
+  sortEventCode,
+  sortBib,
+  sortAgeGroup,
+  checkedIn,
+  nationality,
+  event,
+  pb,
+  sb,
+  flagUrl,
+  teamName,
+});

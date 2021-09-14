@@ -1,5 +1,4 @@
 import { Schema } from "mongoose";
-import { blank_object } from "svelte/internal";
 
 const CompetitorSchema = new Schema({
   competitorId: {
