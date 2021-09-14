@@ -46,3 +46,9 @@ To better check `.svelte` files run command `npm run check` in frontend director
 
 ## Bootstrap v5
 https://sveltestrap.js.org/?path=/story/components--get-started
+
+## Test cases
+year - competitionID
+2020 - ps-u20
+2021 - ec21_0640
+2021 - ps_10km
