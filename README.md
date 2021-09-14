@@ -49,6 +49,14 @@ https://sveltestrap.js.org/?path=/story/components--get-started
 
 ## Test cases
 year - competitionID
+country = SRB
+
 2020 - ps-u20
 2021 - ec21_0640
 2021 - ps_10km
+2021 - ps_hod_put
+2021 - balkan_u18
+2021 - 2021seniorski-miting
+
+country = NOR
+2021 - 2021vintersprinten-2021 
