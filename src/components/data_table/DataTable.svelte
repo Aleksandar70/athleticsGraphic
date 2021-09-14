@@ -36,7 +36,7 @@
   export let updateResult: boolean;
   export let currentPage: number;
 
-  let focusCell: HTMLTableDataCellElement;
+  let focusCell: HTMLTableCellElement;
   let editableColumns: string[] = [];
 
   $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
@@ -171,7 +171,7 @@
                   on:input={() =>
                     (data.changed = data.value != data.stringValue)}
                 />
-              {:else if isFlag(data.stringValue)}
+              {:else if data.id.toLowerCase().includes("flag")}
                 <td>
                   <img
                     class="table-data--image"

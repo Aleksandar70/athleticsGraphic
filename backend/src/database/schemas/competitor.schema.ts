@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { blank_object } from "svelte/internal";
 
 const CompetitorSchema = new Schema({
   competitorId: {
@@ -41,7 +42,7 @@ const CompetitorSchema = new Schema({
     required: false,
     default: false,
   },
-  // eventsEntered
+  eventsEntered: [{ type: Schema.Types.ObjectId, ref: "events" }],
   numbered: {
     type: Boolean,
     required: false,

@@ -16,7 +16,7 @@ export const getEventData = async (eventId: string): Promise<IEvent> => {
   const response = await getRequest(`${Paths.EVENTS}/${eventId}`, {
     locked: get(lockedColumns)?.[eventId] ?? [],
   });
-  return response.data?.[0];
+  return response.data as IEvent;
 };
 
 export const updateEvents = async (tableData: RawData): Promise<boolean> => {

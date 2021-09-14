@@ -1,14 +1,37 @@
+import { ObjectId } from "mongoose";
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
 import { getLockedFields } from "../database";
 import { ICompetitor } from "../interfaces";
 import { CompetitorModel } from "../models/competitor.model";
 import { getDataSource } from "./config.repo";
+import { getEvent } from "./event.repo";
 
 export const createCompetitors = async (
   competitors: ICompetitor[]
 ): Promise<ICompetitor[]> => {
-  return await CompetitorModel.insertMany(competitors);
+  const competitorModels: ICompetitor[] = [];
+
+  for (const competitor of competitors) {
+    const events: ObjectId[] = [];
+
+    const eventEntered = competitor?.eventsEntered ?? [];
+
+    for (const event of eventEntered) {
+      const _event = await getEvent(event?.eventId ?? "");
+      if (_event?._id) events.push(_event._id);
+    }
+
+    const competitorModel = new CompetitorModel({
+      ...competitor,
+      eventsEntered: events,
+    });
+
+    competitorModels.push(competitorModel);
+  }
+
+  await CompetitorModel.insertMany(competitorModels);
+  return competitorModels;
 };
 
 export const updateCompetitors = async (
@@ -48,7 +71,12 @@ export const findCompetitorsForEvent = async (
 
 const findCompetitorsForEventLocal = async (
   eventId: string
-): Promise<ICompetitor[]> => await CompetitorModel.find({ event: eventId });
+): Promise<ICompetitor[]> => {
+  const competitors = await CompetitorModel.find().populate("eventsEntered");
+  return competitors.filter(
+    (c) => c.eventsEntered.filter((event) => event.eventId === eventId).length
+  );
+};
 
 const findCompetitorsForEventRemote = async (
   eventId: string
@@ -69,5 +97,5 @@ const findCompetitorsForEventRemote = async (
     );
   }
 
-  return await CompetitorModel.find({ event: eventId });
+  return await CompetitorModel.find({ eventsEntered: eventId });
 };

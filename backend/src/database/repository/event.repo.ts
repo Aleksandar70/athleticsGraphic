@@ -54,11 +54,13 @@ export const getEvent = async (eventId: string): Promise<IEvent> => {
   }
 };
 
-export const getEventLocal = async (eventId: string): Promise<IEvent> =>
-  await EventModel.find({ eventId: eventId }).populate({
+export const getEventLocal = async (eventId: string): Promise<IEvent> => {
+  const eventModel = await EventModel.find({ eventId: eventId }).populate({
     path: "units",
     populate: ["results", "trials"],
   });
+  return eventModel?.[0];
+};
 
 const getEventRemote = async (eventId: string): Promise<IEvent> => {
   const { eventsData } = await getOTCompetitionData();

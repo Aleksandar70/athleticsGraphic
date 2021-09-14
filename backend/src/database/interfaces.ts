@@ -99,6 +99,7 @@ export interface ICompetitor {
   checkedIn?: boolean;
   nationality?: string;
   event?: string;
+  eventsEntered?: IEvent[];
   pb?: string;
   sb?: string;
   flagUrl?: string;
