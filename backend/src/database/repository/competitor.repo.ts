@@ -13,14 +13,11 @@ export const createCompetitors = async (
   const competitorModels: ICompetitor[] = [];
 
   for (const competitor of competitors) {
-    const events: ObjectId[] = [];
+    const events: string[] = [];
 
-    const eventEntered = competitor?.eventsEntered ?? [];
-
-    for (const event of eventEntered) {
-      const _event = await getEvent(event?.eventId ?? "");
-      if (_event?._id) events.push(_event._id);
-    }
+    competitor?.eventsEntered?.forEach(
+      (event) => event.eventId && events.push(event.eventId)
+    );
 
     const competitorModel = new CompetitorModel({
       ...competitor,
@@ -71,15 +68,8 @@ export const findCompetitorsForEvent = async (
 
 const findCompetitorsForEventLocal = async (
   eventId: string
-): Promise<ICompetitor[]> => {
-  const competitors = await CompetitorModel.find().populate("eventsEntered");
-  return competitors.filter(
-    (competitor: ICompetitor) =>
-      competitor?.eventsEntered?.filter(
-        (event: IEvent) => event.eventId === eventId
-      ).length
-  );
-};
+): Promise<ICompetitor[]> =>
+  await CompetitorModel.find({ eventsEntered: eventId });
 
 const findCompetitorsForEventRemote = async (
   eventId: string

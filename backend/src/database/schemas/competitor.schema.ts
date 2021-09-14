@@ -41,7 +41,11 @@ const CompetitorSchema = new Schema({
     required: false,
     default: false,
   },
-  eventsEntered: [{ type: Schema.Types.ObjectId, ref: "events" }],
+  eventsEntered: {
+    type: Array,
+    required: false,
+    default: [],
+  },
   numbered: {
     type: Boolean,
     required: false,
