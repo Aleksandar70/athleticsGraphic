@@ -1,11 +1,9 @@
-import { ObjectId } from "mongoose";
 import { SOURCE } from "../../../../global/constants/constants";
 import { getOTCompetitionData } from "../../api/opentrack.api";
 import { getLockedFields } from "../database";
-import { ICompetitor, IEvent } from "../interfaces";
+import { ICompetitor } from "../interfaces";
 import { CompetitorModel } from "../models/competitor.model";
 import { getDataSource } from "./config.repo";
-import { getEvent } from "./event.repo";
 
 export const createCompetitors = async (
   competitors: ICompetitor[]

@@ -6,7 +6,7 @@
   } from "./sort.helper";
   import { Link } from "svelte-routing";
   import { Table } from "sveltestrap";
-  import { isFlag, getAltName } from "./flag.helper";
+  import { getAltName } from "./flag.helper";
   import type { Headers, TableData } from "../../../global/types";
   import { Paths } from "../../../global/constants/api";
   import { UIText } from "../../../global/constants/ui_text";
