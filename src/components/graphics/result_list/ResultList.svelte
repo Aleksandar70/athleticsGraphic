@@ -264,7 +264,7 @@
     width: 350px;
     height: 38px;
     line-height: 38px;
-    top: 292px;
+    top: 310px;
     left: 1135px;
     color: rgb(255, 255, 255);
     transform-origin: top center;
@@ -440,7 +440,7 @@
     width: 375px;
     height: 46px;
     line-height: 46px;
-    top: 260px;
+    top: 285px;
     left: 658px;
     color: rgb(255, 255, 255);
     transform-origin: top center;
