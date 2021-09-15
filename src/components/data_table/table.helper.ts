@@ -16,6 +16,7 @@ import {
   uneditableFields,
 } from "../../../global/defaults";
 import {
+  competitors,
   currentEventData,
   currentEventId,
   lockedColumns,
@@ -57,6 +58,7 @@ export const getCompetitorResultsData = async (
   currentEventData.set(eventData);
 
   const competitorData = await getCompetitorsForEvent(eventId);
+  competitors.set(competitorData);
 
   const data: IHeatEventData[] = [];
 

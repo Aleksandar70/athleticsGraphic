@@ -3,6 +3,7 @@ import { Graphics } from "../../../global/constants/constants";
 import type { ICompetitor } from "../../../global/interfaces";
 import { getCompetitorsForEvent } from "../../api/competitor.api";
 import {
+  competitors,
   currentEventData,
   selectedParticipant,
 } from "../../stores/table.store";
@@ -32,14 +33,14 @@ export const getDataForPreviewModal = (
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
       data["Title"] = "STARTING LIST";
-      // data["Competitors"] = getCompetitorsForEvent2("event");
+      data["Competitors"] = getCompetitors();
       break;
     case Graphics.RESULT_LIST:
       data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
       data["Title"] = "RESULTS";
-      // data["Competitors"] = getCompetitorsForEvent2("event");
+      data["Competitors"] = getCompetitors();
   }
   return data;
 };
@@ -47,12 +48,11 @@ export const getDataForPreviewModal = (
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
-// const getCompetitorsForEvent2 = async (key: string): Promise<ICompetitor[]> => {
-//   console.log("eventId: ", getFieldValueFromParticipant("event"));
-//   const competitorData = await getCompetitorsForEvent("F01");
-//   console.log("competitors: ", competitorData);
-//   return null;
-// };
+const getCompetitors = (): Record<string, string>[] =>
+  get(competitors).map((competitor) => ({
+    Name: `${competitor.firstName} ${competitor.lastName}`,
+    Nationality: competitor.nationality,
+  }));
 
 const getScores = (): string[] =>
   get(selectedParticipant)

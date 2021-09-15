@@ -21,6 +21,8 @@ lockedColumns.subscribe((value) =>
 
 export const selectedParticipant = writable([]);
 
+export const competitors = writable([]);
+
 currentEventId.subscribe(() => {
   selectedParticipant.set([]);
   currentColumn.set(0);
