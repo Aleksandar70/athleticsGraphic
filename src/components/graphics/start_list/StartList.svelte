@@ -2075,6 +2075,7 @@
   <p id="startnaListaNaslov">{data["Competition"]}</p>
   <p id="startnaListaDisciplina">{data["Event Name"]}</p>
   <p id="startnaListaHash">{data["Hashtag"]}</p>
+  <p id="startnaListaTitle">{data["Title"]}</p>
 
   <p id="startnaListaPozicija1" />
   <img id="startnaListaImg1" src="" alt="" />
@@ -2176,6 +2177,22 @@
     opacity: 0;
     transform: scaleY(0);
   }
+
+  #startnaListaTitle {
+    font-family: 'Montserrat-Semibold';
+    font-size: 15pt;
+    position: fixed;
+    text-align: center;
+    width: 350px;
+    height: 38px;
+    line-height: 38px;
+    top: 292px;
+    left: 1135px;
+    color: rgb(255, 255, 255);
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+}
 
   #startnaListaTakmicar1 {
     top: 347px;

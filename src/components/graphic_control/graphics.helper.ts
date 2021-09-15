@@ -32,14 +32,14 @@ export const getDataForPreviewModal = (
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
       data["Title"] = "STARTING LIST";
-      data["Competitors"] = getCompetitorsForEvent2("event");
+      // data["Competitors"] = getCompetitorsForEvent2("event");
       break;
     case Graphics.RESULT_LIST:
       data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
       data["Title"] = "RESULTS";
-      data["Competitors"] = getCompetitorsForEvent2("event");
+      // data["Competitors"] = getCompetitorsForEvent2("event");
   }
   return data;
 };
@@ -47,12 +47,12 @@ export const getDataForPreviewModal = (
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
-const getCompetitorsForEvent2 = async (key: string): Promise<ICompetitor[]> => {
-  console.log("eventId: ", getFieldValueFromParticipant("event"));
-  const competitorData = await getCompetitorsForEvent("F01");
-  console.log("competitors: ", competitorData);
-  return competitorData;
-};
+// const getCompetitorsForEvent2 = async (key: string): Promise<ICompetitor[]> => {
+//   console.log("eventId: ", getFieldValueFromParticipant("event"));
+//   const competitorData = await getCompetitorsForEvent("F01");
+//   console.log("competitors: ", competitorData);
+//   return null;
+// };
 
 const getScores = (): string[] =>
   get(selectedParticipant)

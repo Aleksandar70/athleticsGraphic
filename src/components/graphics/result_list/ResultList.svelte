@@ -53,25 +53,89 @@
 </script>
 
 <div id="rezultatiLista" class="rezultatiLista">
-  <img id="rezultatiListaHeader" src="/img/graphicslistaHeader.png" alt="" />
-  <img id="rezultatiListaTakmicar1" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar2" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar3" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar4" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar5" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar6" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar7" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar8" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar9" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar10" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar11" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar12" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar13" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar14" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar15" src="/img/graphicslistaTakmicar.png" alt="" />
-  <img id="rezultatiListaTakmicar16" src="/img/graphicslistaTakmicar.png" alt="" />
+  <img id="rezultatiListaHeader" src="/img/graphics/listaHeader.png" alt="" />
+  <img
+    id="rezultatiListaTakmicar1"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar2"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar3"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar4"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar5"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar6"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar7"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar8"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar9"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar10"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar11"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar12"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar13"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar14"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar15"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="rezultatiListaTakmicar16"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
   <p id="rezultatiListaNaslov">{data["Competition"]}</p>
-  <p id="rezultatiListaDisciplina" />
+  <p id="rezultatiListaDisciplina">{data["Event Name"]}</p>
   <p id="rezultatiListaHash">{data["Hashtag"]}</p>
   <p id="rezultatiListaTitle">{data["Title"]}</p>
 
