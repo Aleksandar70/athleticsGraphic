@@ -2,13 +2,14 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
-  import { EventType } from "../../../../global/constants/constants";
 
   export let data = {};
   export let clear = false;
-  export let type = EventType.HORIZONTAL;
 
-  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+  const scores =
+    data["Scores"].filter((score: string) => score).length > 6
+      ? data["Scores"].slice(0).slice(-6)
+      : data["Scores"];
 
   const timeline = gsap.timeline();
 
@@ -60,46 +61,25 @@
   }
 </script>
 
-<div id="scores--wrapper">
-  {#if type === EventType.HORIZONTAL}
-    <img
-      id="scoresBackground"
-      alt="score_rounds"
-      src="/img/graphics/score_rounds.png"
-    />
-    <p id="scoresEventName">{data["Event Name"]}</p>
-    <p id="scoresBib">{data["ID"]}</p>
-    <img
-      id="scoresFlag"
-      alt={data["Flag"]}
-      src="/img/flags/{data['Flag']}.png"
-    />
-    <p id="scoresCountry">{data["Nationality"]}</p>
-    <p id="scoresCompetitor">
-      {`${data["First Name"]} ${data["Last Name"]}`}
-    </p>
-    {#each data["Scores"] as score, i}
-      <p class="scores" id="scoresResult{i + 1}">
-        {score}
-      </p>
-    {/each}
-  {:else if type === EventType.VERTICAL}
-    <h1>Vertical</h1>
-  {:else}
-    <h1>rUNNING</h1>
-  {/if}
-</div>
+<img
+  id="scoresBackground"
+  alt="score_rounds"
+  src="/img/graphics/score_vertical.png"
+/>
+<p id="scoresEventName">{data["Event Name"]}</p>
+<p id="scoresBib">{data["ID"]}</p>
+<img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
+<p id="scoresCountry">{data["Nationality"]}</p>
+<p id="scoresCompetitor">
+  {`${data["First Name"]} ${data["Last Name"]}`}
+</p>
+{#each scores as score, i}
+  <p class="scores" id="scoresResult{i + 1}">
+    {score}
+  </p>
+{/each}
 
 <style>
-  #scores--wrapper {
-    width: 1920px;
-    height: 1080px;
-    z-index: 0;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-  }
-
   #scoresBackground {
     top: 802px;
     left: 187px;
@@ -192,7 +172,7 @@
     width: 68px;
     height: 48px;
     line-height: 48px;
-    top: 922px;
+    top: 927px;
     color: rgb(28, 59, 113);
     transform-origin: left center;
     opacity: 0;
