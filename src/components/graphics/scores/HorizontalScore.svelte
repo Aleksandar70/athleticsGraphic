@@ -42,6 +42,11 @@
         "<"
       )
       .to(
+        ".metrics",
+        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
+        "<0.15"
+      )
+      .to(
         ".scores",
         { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<0.15"
@@ -69,8 +74,11 @@
   {`${data["First Name"]} ${data["Last Name"]}`}
 </p>
 {#each data["Scores"] as score, i}
+  <p class="metrics" id="scoresMetric{i + 1}">
+    {Object.keys(score)[0]}
+  </p>
   <p class="scores" id="scoresResult{i + 1}">
-    {score}
+    {Object.values(score)[0]}
   </p>
 {/each}
 
@@ -157,6 +165,45 @@
     transform-origin: left center;
     opacity: 0;
     transform: scaleX(0);
+  }
+
+  .metrics {
+    font-family: "Montserrat-SemiBold";
+    font-size: 18pt;
+    position: fixed;
+    text-align: center;
+    width: 68px;
+    height: 48px;
+    line-height: 48px;
+    top: 922px;
+    color: white;
+    transform-origin: left center;
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  #scoresMetric1 {
+    left: 355px;
+  }
+
+  #scoresMetric2 {
+    left: 475px;
+  }
+
+  #scoresMetric3 {
+    left: 595px;
+  }
+
+  #scoresMetric4 {
+    left: 720px;
+  }
+
+  #scoresMetric5 {
+    left: 840px;
+  }
+
+  #scoresMetric6 {
+    left: 960px;
   }
 
   .scores {
