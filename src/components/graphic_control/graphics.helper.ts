@@ -51,8 +51,8 @@ const getFieldValueFromParticipant = (key: string): string =>
 
 const getCompetitors = (): Record<string, string>[] =>
   get(competitors).map((competitor) => ({
-    Name: `${competitor.firstName} ${competitor.lastName}`,
-    Nationality: competitor.nationality,
+    name: `${competitor.firstName} ${competitor.lastName}`,
+    nationality: competitor.nationality,
   }));
 
 const getScores = (): unknown[] =>

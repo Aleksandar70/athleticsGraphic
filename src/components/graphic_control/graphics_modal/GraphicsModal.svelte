@@ -38,7 +38,7 @@
     metric?: string,
     idx?: number
   ) => {
-    if (name === "Scores") {
+    if (name === "Scores" || name === "Competitors") {
       _data[name][idx][metric] = (target as HTMLInputElement).value;
       return;
     }
@@ -68,6 +68,28 @@
                   value={Object.values(score)[0]}
                   on:input={(event) =>
                     inputChange(event.target, name, Object.keys(score)[0], i)}
+                />
+              </div>
+            {/each}
+          {:else if name === "Competitors"}
+            {#each value as competitor, i}
+              <div class="score">
+                <img
+                  alt={competitor.nationality}
+                  src="/img/flags/{competitor.nationality}.png"
+                />
+                <Input
+                  class="score-metric"
+                  value={competitor.nationality}
+                  on:input={(event) =>
+                    inputChange(event.target, name, "nationality", i)}
+                />
+                <Input
+                  class="score-input"
+                  type="text"
+                  value={competitor.name}
+                  on:input={(event) =>
+                    inputChange(event.target, name, "name", i)}
                 />
               </div>
             {/each}

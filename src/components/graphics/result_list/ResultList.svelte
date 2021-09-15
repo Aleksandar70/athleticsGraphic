@@ -47,7 +47,7 @@
   $: if (clear) {
     timeline.reverse().then(() => {
       $clearChannel.postMessage(false);
-      visibleGraphics.set({ id: "", data: {} });
+      visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
   }
 </script>
