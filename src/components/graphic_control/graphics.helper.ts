@@ -1,5 +1,6 @@
 import { get } from "svelte/store";
 import { Graphics } from "../../../global/constants/constants";
+import type { TableField } from "../../../global/types";
 import {
   currentEventData,
   selectedParticipant,
@@ -23,7 +24,9 @@ export const getDataForPreviewModal = (
       data["Last Name"] = getFieldValueFromParticipant("lastName");
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
-      data["Scores"] = getScores();
+      get(selectedParticipant).filter((field) => isNumeric(field.id)).length
+        ? (data["Scores"] = getScores())
+        : (data["Result"] = getFieldValueFromParticipant("result"));
   }
   return data;
 };
@@ -31,7 +34,7 @@ export const getDataForPreviewModal = (
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
-const getScores = (): string[] =>
+const getScores = (): unknown[] =>
   get(selectedParticipant)
     .filter((field) => isNumeric(field.id))
-    .map((scores) => scores?.stringValue);
+    .map((score: TableField) => ({ [score.id]: score.stringValue }));

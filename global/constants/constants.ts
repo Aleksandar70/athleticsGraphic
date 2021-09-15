@@ -11,3 +11,9 @@ export enum Graphics {
   PERSONAL_SCORE = "personal_score",
   ANNOUNCEMENT = "announcement",
 }
+
+export enum EventType {
+  HORIZONTAL = "horizontal",
+  VERTICAL = "vertical",
+  RUNNING = "running",
+}
