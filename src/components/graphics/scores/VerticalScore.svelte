@@ -7,7 +7,7 @@
   export let clear = false;
 
   const scores =
-    data["Scores"].filter((score: string) => score).length > 6
+    data["Scores"].filter((score: string) => Object.values(score)[0]).length > 6
       ? data["Scores"].slice(0).slice(-6)
       : data["Scores"];
 
@@ -47,6 +47,11 @@
         "<"
       )
       .to(
+        ".metrics",
+        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
+        "<0.15"
+      )
+      .to(
         ".scores",
         { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<0.15"
@@ -74,8 +79,11 @@
   {`${data["First Name"]} ${data["Last Name"]}`}
 </p>
 {#each scores as score, i}
+  <p class="metrics" id="scoresResult{i + 1}">
+    {Object.keys(score)[0]}
+  </p>
   <p class="scores" id="scoresResult{i + 1}">
-    {score}
+    {Object.values(score)[0]}
   </p>
 {/each}
 
@@ -159,6 +167,21 @@
     top: 865px;
     left: 427px;
     color: rgb(28, 59, 113);
+    transform-origin: left center;
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .metrics {
+    font-family: "Montserrat-SemiBold";
+    font-size: 18pt;
+    position: fixed;
+    text-align: center;
+    width: 68px;
+    height: 48px;
+    line-height: 48px;
+    top: 902px;
+    color: white;
     transform-origin: left center;
     opacity: 0;
     transform: scaleX(0);
