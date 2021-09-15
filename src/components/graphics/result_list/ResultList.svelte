@@ -9,6 +9,7 @@
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
   const timeline = gsap.timeline();
+  const numberOfCompetitors = data.length;
 
   onMount(() => {
     timeline
@@ -168,7 +169,7 @@
   <img id="rezultatiListaImg16" src="" alt="" />
   <p id="rezultatiListaCountry16" />
   <p id="rezultatiListaIme16" />
-  <p id="rezultatiListaRezultat15" />
+  <p id="rezultatiListaRezultat16" />
 </div>
 
 <style>

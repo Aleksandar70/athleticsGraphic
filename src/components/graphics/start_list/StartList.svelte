@@ -9,7 +9,7 @@
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
   const timeline = gsap.timeline();
-  numberOfCompetitors = data.length;
+  const numberOfCompetitors = data.length;
  
   onMount(() => {
     timeline
