@@ -11,4 +11,5 @@ export enum Graphics {
   PERSONAL_SCORE = "personal_score",
   ANNOUNCEMENT = "announcement",
   START_LIST = "start_list",
+  RESULT_LIST = "result_list",
 }

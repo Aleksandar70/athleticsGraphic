@@ -9,7 +9,8 @@
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
   const timeline = gsap.timeline();
-
+  numberOfCompetitors = data.length;
+ 
   onMount(() => {
     timeline
       .to("#startnaListaHeader", 0.2, {
@@ -35,6 +36,1950 @@
         { opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       );
+    if (numberOfCompetitors <= 8) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+
+      for (let i = 0; i < numberOfCompetitors; i++) {
+        document.getElementById(pozicija + (i + 1)).innerHTML = i + 1;
+        document.getElementById(zastava + (i + 1)).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + (i + 1)).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + (i + 1)).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      // Animacija
+      for (let i = 0; i < numberOfCompetitors; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = numberOfCompetitors - 1; i >= 0; i--) {
+        if (i == numberOfCompetitors - 1) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + numberOfCompetitors * 0.5
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    } else if (numberOfCompetitors == 9) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+      let fstHalf = 1;
+      let sndHalf = 9;
+      for (let i = 0; i < 5; i++, fstHalf++) {
+        document.getElementById(pozicija + fstHalf).innerHTML = i + 1;
+        document.getElementById(zastava + fstHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + fstHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + fstHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      for (let i = 5; i < 9; i++, sndHalf++) {
+        document.getElementById(pozicija + sndHalf).innerHTML = i + 1;
+        document.getElementById(zastava + sndHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + sndHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + sndHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      // Animacija
+      for (let i = 0; i < fstHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = fstHalf - 2; i >= 0; i--) {
+        if (i == fstHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 5
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+      for (let i = 8; i < sndHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = sndHalf - 2; i >= 8; i--) {
+        if (i == sndHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 4
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    } else if (numberOfCompetitors == 10) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+      let fstHalf = 1;
+      let sndHalf = 9;
+      for (let i = 0; i < 5; i++, fstHalf++) {
+        document.getElementById(pozicija + fstHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + fstHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + fstHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + fstHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      for (let i = 5; i < 10; i++, sndHalf++) {
+        document.getElementById(pozicija + sndHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + sndHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + sndHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + sndHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      // Animacija
+      for (let i = 0; i < fstHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = fstHalf - 2; i >= 0; i--) {
+        if (i == fstHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 5
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+      for (let i = 8; i < sndHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = sndHalf - 2; i >= 8; i--) {
+        if (i == sndHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 5
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    } else if (numberOfCompetitors == 11) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+      let fstHalf = 1;
+      let sndHalf = 9;
+      for (let i = 0; i < 6; i++, fstHalf++) {
+        document.getElementById(pozicija + fstHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + fstHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + fstHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + fstHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      for (let i = 6; i < 11; i++, sndHalf++) {
+        document.getElementById(pozicija + sndHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + sndHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + sndHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + sndHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      // Animacija
+      for (let i = 0; i < fstHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = fstHalf - 2; i >= 0; i--) {
+        if (i == fstHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 6
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+      for (let i = 8; i < sndHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = sndHalf - 2; i >= 8; i--) {
+        if (i == sndHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 5
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    } else if (numberOfCompetitors == 12) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+      let fstHalf = 1;
+      let sndHalf = 9;
+      for (let i = 1; i < 6; i++, fstHalf++) {
+        document.getElementById(pozicija + fstHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + fstHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + fstHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + fstHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      for (let i = 6; i < 12; i++, sndHalf++) {
+        document.getElementById(pozicija + sndHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + sndHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + sndHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + sndHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      // Animacija
+      for (let i = 0; i < fstHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = fstHalf - 2; i >= 0; i--) {
+        if (i == fstHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 6
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+      for (let i = 8; i < sndHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = sndHalf - 2; i >= 8; i--) {
+        if (i == sndHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 6
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    } else if (numberOfCompetitors == 13) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+      let fstHalf = 1;
+      let sndHalf = 9;
+      for (let i = 0; i < 7; i++, fstHalf++) {
+        document.getElementById(pozicija + fstHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + fstHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + fstHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + fstHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      for (let i = 7; i < 13; i++, sndHalf++) {
+        document.getElementById(pozicija + sndHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + sndHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + sndHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + sndHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      // Animacija
+      for (let i = 0; i < fstHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = fstHalf - 2; i >= 0; i--) {
+        if (i == fstHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 7
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+      for (let i = 8; i < sndHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = sndHalf - 2; i >= 8; i--) {
+        if (i == sndHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 6
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    } else if (numberOfCompetitors == 14) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+      let fstHalf = 1;
+      let sndHalf = 9;
+      for (let i = 0; i < 7; i++, fstHalf++) {
+        document.getElementById(pozicija + fstHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + fstHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + fstHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + fstHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      for (let i = 7; i < 14; i++, sndHalf++) {
+        document.getElementById(pozicija + sndHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + sndHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + sndHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + sndHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      // Animacija
+      for (let i = 0; i < fstHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = fstHalf - 2; i >= 0; i--) {
+        if (i == fstHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 7
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+      for (let i = 8; i < sndHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = sndHalf - 2; i >= 8; i--) {
+        if (i == sndHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 7
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    } else if (numberOfCompetitors == 15) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+      let fstHalf = 1;
+      let sndHalf = 9;
+      for (let i = 1; i < 8; i++, fstHalf++) {
+        document.getElementById(pozicija + fstHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + fstHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + fstHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + fstHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      for (let i = 8; i < 15; i++, sndHalf++) {
+        document.getElementById(pozicija + sndHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + sndHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + sndHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + sndHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      // Animacija
+      for (let i = 0; i < fstHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = fstHalf - 2; i >= 0; i--) {
+        if (i == fstHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 8
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+      for (let i = 8; i < sndHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = sndHalf - 2; i >= 8; i--) {
+        if (i == sndHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 7
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    } else if (numberOfCompetitors == 16) {
+      let pozicija = "startnaListaPozicija";
+      let zastava = "startnaListaImg";
+      let zemlja = "startnaListaCountry";
+      let ime = "startnaListaIme";
+
+      for (let i = 1; i < 8; i++, fstHalf++) {
+        document.getElementById(pozicija + fstHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + fstHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + fstHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+        document.getElementById(ime + fstHalf).innerHTML =
+          competitors[i].competitorId.firstName +
+          " " +
+          competitors[i].competitorId.lastName;
+      }
+      for (let i = 8; i < 16; i++, sndHalf++) {
+        document.getElementById(pozicija + sndHalf).innerHTML = fstHalf;
+        document.getElementById(zastava + sndHalf).src =
+          "../flags/" + competitors[i].competitorId.teamId + ".png";
+        document.getElementById(zemlja + sndHalf).innerHTML =
+          competitors[i].competitorId.teamId;
+      }
+      // Animacija
+      for (let i = 0; i < fstHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = fstHalf - 2; i >= 0; i--) {
+        if (i == fstHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 8
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+      for (let i = 8; i < sndHalf - 1; i++) {
+        timeline
+          .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          })
+          .to(
+            "#startnaListaPozicija" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaImg" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaCountry" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          )
+          .to(
+            "#startnaListaIme" + (i + 1),
+            0.15,
+            { opacity: 1, scaleY: 1, ease: "power2.out" },
+            "<"
+          );
+      }
+      for (let i = sndHalf - 2; i >= 8; i--) {
+        if (i == sndHalf - 2) {
+          timeline
+            .to(
+              "#startnaListaTakmicar" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "+=" + 0.5 * 8
+            )
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        } else {
+          timeline
+            .to("#startnaListaTakmicar" + (i + 1), 0.15, {
+              opacity: 0,
+              scaleY: 0,
+              ease: "power2.out",
+            })
+            .to(
+              "#startnaListaPozicija" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaImg" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaCountry" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            )
+            .to(
+              "#startnaListaIme" + (i + 1),
+              0.15,
+              { opacity: 0, scaleY: 0, ease: "power2.out" },
+              "<"
+            );
+        }
+      }
+    }
+    timeline
+      .to("#startnaListaHash", 0.15, {
+        opacity: 0,
+        scaleY: 0,
+        ease: "power2.out",
+      })
+      .to(
+        "#startnaListaDisciplina",
+        0.15,
+        { opacity: 0, scaleY: 0, ease: "power2.out" },
+        "<"
+      )
+      .to(
+        "#startnaListaNaslov",
+        0.15,
+        { opacity: 0, scaleY: 0, ease: "power2.out" },
+        "<"
+      )
+      .to(
+        "#startnaListaHeader",
+        0.2,
+        { opacity: 0, scaleY: 0, ease: "power2.out" },
+        "<"
+      );
   });
 
   $: if (clear) {
@@ -47,22 +1992,86 @@
 
 <div id="startnaLista" class="startnaLista">
   <img id="startnaListaHeader" src="/img/graphics/listaHeader.png" alt="" />
-  <img id="startnaListaTakmicar1" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar2" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar3" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar4" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar5" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar6" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar7" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar8" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar9" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar10" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar11" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar12" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar13" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar14" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar15" src="/img/graphics/listaTakmicar.png" alt="" />
-  <img id="startnaListaTakmicar16" src="/img/graphics/listaTakmicar.png" alt="" />
+  <img
+    id="startnaListaTakmicar1"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar2"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar3"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar4"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar5"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar6"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar7"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar8"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar9"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar10"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar11"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar12"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar13"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar14"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar15"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
+  <img
+    id="startnaListaTakmicar16"
+    src="/img/graphics/listaTakmicar.png"
+    alt=""
+  />
   <p id="startnaListaNaslov">{data["Competition"]}</p>
   <p id="startnaListaDisciplina">{data["Event Name"]}</p>
   <p id="startnaListaHash">{data["Hashtag"]}</p>

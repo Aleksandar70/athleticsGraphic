@@ -1,5 +1,7 @@
 import { get } from "svelte/store";
 import { Graphics } from "../../../global/constants/constants";
+import type { ICompetitor } from "../../../global/interfaces";
+import { getCompetitorsForEvent } from "../../api/competitor.api";
 import {
   currentEventData,
   selectedParticipant,
@@ -24,12 +26,18 @@ export const getDataForPreviewModal = (
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
       data["Scores"] = getScores();
+      break;
     case Graphics.START_LIST:
       data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
-      data["Competitors"] = getCompetitorsForEvent("name");
+      data["Competitors"] = getCompetitorsForEvent2("event");
       break;
+    case Graphics.RESULT_LIST:
+      data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
+      data["Hashtag"] = "#belgrade2021";
+      data["Event Name"] = get(currentEventData)["name"];
+      data["Competitors"] = getCompetitorsForEvent2("event");
   }
   return data;
 };
@@ -37,8 +45,11 @@ export const getDataForPreviewModal = (
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
-const getCompetitorsForEvent = (key: string): string => {
-  return null;
+const getCompetitorsForEvent2 = async (key: string): Promise<ICompetitor[]> => {
+  console.log("eventId: ", getFieldValueFromParticipant("event"));
+  const competitorData = await getCompetitorsForEvent("F01");
+  console.log("competitors: ", competitorData);
+  return competitorData;
 };
 
 const getScores = (): string[] =>
