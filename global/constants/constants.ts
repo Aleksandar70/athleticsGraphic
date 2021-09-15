@@ -13,3 +13,9 @@ export enum Graphics {
   START_LIST = "start_list",
   RESULT_LIST = "result_list",
 }
+
+export enum EventType {
+  HORIZONTAL = "horizontal",
+  VERTICAL = "vertical",
+  RUNNING = "running",
+}

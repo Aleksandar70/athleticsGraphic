@@ -1,7 +1,7 @@
 <script lang="ts">
   import "./streampage.style.css";
   import { Graphics } from "../../../global/constants/constants";
-  import ScoreRounds from "../../components/graphics/score_rounds/ScoreRounds.svelte";
+  import Scores from "../../components/graphics/scores/Score.svelte";
   import EventAnnouncement from "../../components/graphics/event_announcement/EventAnnouncement.svelte";
   import { streamChannel, visibleGraphics } from "../../stores/stream.store";
   import StartList from "../../components/graphics/start_list/StartList.svelte";
@@ -14,7 +14,7 @@
 
 <div class="graphics--wrapper">
   {#if $visibleGraphics.id == Graphics.PERSONAL_SCORE}
-    <ScoreRounds data={$visibleGraphics.data} />
+    <Scores data={$visibleGraphics.data} type={$visibleGraphics.type} />
   {:else if $visibleGraphics.id == Graphics.ANNOUNCEMENT}
     <EventAnnouncement data={$visibleGraphics.data} />
   {:else if $visibleGraphics.id == Graphics.START_LIST}

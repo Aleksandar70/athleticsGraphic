@@ -6,8 +6,6 @@
   export let data = {};
   export let clear = false;
 
-  $clearChannel.addEventListener("message", (event) => (clear = event.data));
-
   const timeline = gsap.timeline();
 
   onMount(() => {
@@ -44,7 +42,7 @@
         "<"
       )
       .to(
-        ".scores",
+        "#score",
         { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<0.15"
       );
@@ -53,41 +51,26 @@
   $: if (clear) {
     timeline.reverse().then(() => {
       $clearChannel.postMessage(false);
-      visibleGraphics.set({ id: "", data: {} });
+      visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
   }
 </script>
 
-<div id="scores--wrapper">
-  <img
-    id="scoresBackground"
-    alt="score_rounds"
-    src="/img/graphics/score_rounds.png"
-  />
-  <p id="scoresEventName">{data["Event Name"]}</p>
-  <p id="scoresBib">{data["ID"]}</p>
-  <img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
-  <p id="scoresCountry">{data["Nationality"]}</p>
-  <p id="scoresCompetitor">
-    {`${data["First Name"]} ${data["Last Name"]}`}
-  </p>
-  {#each data["Scores"] as score, i}
-    <p class="scores" id="scoresResult{i + 1}">
-      {score}
-    </p>
-  {/each}
-</div>
+<img
+  id="scoresBackground"
+  alt="score_rounds"
+  src="/img/graphics/score_running.png"
+/>
+<p id="scoresEventName">{data["Event Name"]}</p>
+<p id="scoresBib">{data["ID"]}</p>
+<img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
+<p id="scoresCountry">{data["Nationality"]}</p>
+<p id="scoresCompetitor">
+  {`${data["First Name"]} ${data["Last Name"]}`}
+</p>
+<p id="score">{data["Result"]}</p>
 
 <style>
-  #scores--wrapper {
-    width: 1920px;
-    height: 1080px;
-    z-index: 0;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-  }
-
   #scoresBackground {
     top: 802px;
     left: 187px;
@@ -172,42 +155,19 @@
     transform: scaleX(0);
   }
 
-  .scores {
+  #score {
     font-family: "Montserrat-SemiBold";
-    font-size: 18pt;
+    font-size: 24pt;
     position: fixed;
     text-align: center;
     width: 68px;
     height: 48px;
     line-height: 48px;
-    top: 922px;
-    color: rgb(28, 59, 113);
+    top: 912px;
+    left: 769px;
+    color: white;
     transform-origin: left center;
     opacity: 0;
     transform: scaleX(0);
-  }
-
-  #scoresResult1 {
-    left: 409px;
-  }
-
-  #scoresResult2 {
-    left: 529px;
-  }
-
-  #scoresResult3 {
-    left: 649px;
-  }
-
-  #scoresResult4 {
-    left: 769px;
-  }
-
-  #scoresResult5 {
-    left: 889px;
-  }
-
-  #scoresResult6 {
-    left: 1009px;
   }
 </style>

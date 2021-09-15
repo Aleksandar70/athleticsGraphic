@@ -1,7 +1,6 @@
 import { get } from "svelte/store";
 import { Graphics } from "../../../global/constants/constants";
-import type { ICompetitor } from "../../../global/interfaces";
-import { getCompetitorsForEvent } from "../../api/competitor.api";
+import type { TableField } from "../../../global/types";
 import {
   competitors,
   currentEventData,
@@ -26,7 +25,9 @@ export const getDataForPreviewModal = (
       data["Last Name"] = getFieldValueFromParticipant("lastName");
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
-      data["Scores"] = getScores();
+      get(selectedParticipant).filter((field) => isNumeric(field.id)).length
+      ? (data["Scores"] = getScores())
+      : (data["Result"] = getFieldValueFromParticipant("result"));
       break;
     case Graphics.START_LIST:
       data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
@@ -54,7 +55,7 @@ const getCompetitors = (): Record<string, string>[] =>
     Nationality: competitor.nationality,
   }));
 
-const getScores = (): string[] =>
+const getScores = (): unknown[] =>
   get(selectedParticipant)
     .filter((field) => isNumeric(field.id))
-    .map((scores) => scores?.stringValue);
+    .map((score: TableField) => ({ [score.id]: score.stringValue }));
