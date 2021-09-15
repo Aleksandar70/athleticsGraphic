@@ -2,9 +2,11 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+  import { EventType } from "../../../../global/constants/constants";
 
   export let data = {};
   export let clear = false;
+  export let type = EventType.HORIZONTAL;
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
@@ -53,29 +55,39 @@
   $: if (clear) {
     timeline.reverse().then(() => {
       $clearChannel.postMessage(false);
-      visibleGraphics.set({ id: "", data: {} });
+      visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
   }
 </script>
 
 <div id="scores--wrapper">
-  <img
-    id="scoresBackground"
-    alt="score_rounds"
-    src="/img/graphics/score_rounds.png"
-  />
-  <p id="scoresEventName">{data["Event Name"]}</p>
-  <p id="scoresBib">{data["ID"]}</p>
-  <img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
-  <p id="scoresCountry">{data["Nationality"]}</p>
-  <p id="scoresCompetitor">
-    {`${data["First Name"]} ${data["Last Name"]}`}
-  </p>
-  {#each data["Scores"] as score, i}
-    <p class="scores" id="scoresResult{i + 1}">
-      {score}
+  {#if type === EventType.HORIZONTAL}
+    <img
+      id="scoresBackground"
+      alt="score_rounds"
+      src="/img/graphics/score_rounds.png"
+    />
+    <p id="scoresEventName">{data["Event Name"]}</p>
+    <p id="scoresBib">{data["ID"]}</p>
+    <img
+      id="scoresFlag"
+      alt={data["Flag"]}
+      src="/img/flags/{data['Flag']}.png"
+    />
+    <p id="scoresCountry">{data["Nationality"]}</p>
+    <p id="scoresCompetitor">
+      {`${data["First Name"]} ${data["Last Name"]}`}
     </p>
-  {/each}
+    {#each data["Scores"] as score, i}
+      <p class="scores" id="scoresResult{i + 1}">
+        {score}
+      </p>
+    {/each}
+  {:else if type === EventType.VERTICAL}
+    <h1>Vertical</h1>
+  {:else}
+    <h1>rUNNING</h1>
+  {/if}
 </div>
 
 <style>

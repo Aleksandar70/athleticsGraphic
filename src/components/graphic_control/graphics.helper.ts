@@ -23,7 +23,9 @@ export const getDataForPreviewModal = (
       data["Last Name"] = getFieldValueFromParticipant("lastName");
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
-      data["Scores"] = getScores();
+      get(selectedParticipant).filter((field) => isNumeric(field.id)).length
+        ? (data["Scores"] = getScores())
+        : (data["Result"] = getFieldValueFromParticipant("result"));
   }
   return data;
 };

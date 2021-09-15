@@ -9,17 +9,24 @@
     Form,
     Button,
   } from "sveltestrap";
-  import type { Graphics } from "../../../../global/constants/constants";
+  import { EventType, Graphics } from "../../../../global/constants/constants";
   import { streamChannel } from "../../../stores/stream.store";
+  import { isNumeric } from "../../../utils/string.utils";
 
   export let isOpen: boolean;
   export let id: Graphics;
-  export let data: Record<string, string | number> = {};
+  export let data: Record<string, string | number | string[]> = {};
 
   const toggle = () => (isOpen = !isOpen);
 
+  $: type = data["Scores"]
+    ? (data["Scores"] as string[]).filter((score) => isNumeric(score)).length
+      ? EventType.HORIZONTAL
+      : EventType.VERTICAL
+    : EventType.RUNNING;
+
   const sendGraphics = () => {
-    $streamChannel.postMessage({ id: id, data: data });
+    $streamChannel.postMessage({ id: id, data: data, type: type });
     toggle();
   };
 
