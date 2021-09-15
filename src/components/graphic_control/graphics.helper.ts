@@ -31,12 +31,14 @@ export const getDataForPreviewModal = (
       data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
+      data["Title"] = "STARTING LIST";
       data["Competitors"] = getCompetitorsForEvent2("event");
       break;
     case Graphics.RESULT_LIST:
       data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
+      data["Title"] = "RESULTS";
       data["Competitors"] = getCompetitorsForEvent2("event");
   }
   return data;

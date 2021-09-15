@@ -19,7 +19,7 @@
     <EventAnnouncement data={$visibleGraphics.data} />
   {:else if $visibleGraphics.id == Graphics.START_LIST}
     <StartList data={$visibleGraphics.data} />
-  {:else if $visibleGraphics.id == Graphics.START_LIST}
+  {:else if $visibleGraphics.id == Graphics.RESULT_LIST}
     <Resultlist data={$visibleGraphics.data} />
   {/if}
 </div>

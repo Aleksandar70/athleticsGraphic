@@ -70,10 +70,10 @@
   <img id="rezultatiListaTakmicar14" src="/img/listaTakmicar.png" alt="" />
   <img id="rezultatiListaTakmicar15" src="/img/listaTakmicar.png" alt="" />
   <img id="rezultatiListaTakmicar16" src="/img/listaTakmicar.png" alt="" />
-  <p id="rezultatiListaNaslov">6th SERBIAN OPEN INDOOR MEETING</p>
+  <p id="rezultatiListaNaslov">{data["Competition"]}</p>
   <p id="rezultatiListaDisciplina" />
-  <p id="rezultatiListaHash">#belgrade2021</p>
-  <p id="rezultatiListaTitle">RESULTS</p>
+  <p id="rezultatiListaHash">{data["Hashtag"]}</p>
+  <p id="rezultatiListaTitle">{data["Title"]}</p>
 
   <p id="rezultatiListaPozicija1" />
   <img id="rezultatiListaImg1" src="" alt="" />

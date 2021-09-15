@@ -54,7 +54,7 @@
         <Button color="primary" on:click={() => action(Graphics.START_LIST)}
           >{UIText.START_LIST}</Button
         >
-        <Button color="primary" on:click={() => action(Graphics.START_LIST)}
+        <Button color="primary" on:click={() => action(Graphics.RESULT_LIST)}
           >{UIText.RESULT_LIST}</Button
         >
         <Button color="primary">{UIText.TIME}</Button>
