@@ -16,7 +16,7 @@
     <Scores data={$visibleGraphics.data} type={$visibleGraphics.type} />
   {:else if $visibleGraphics.id == Graphics.EVENT_ANNOUNCEMENT}
     <EventAnnouncement data={$visibleGraphics.data} />
-    {:else if $visibleGraphics.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
+  {:else if $visibleGraphics.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
     <DisciplineAnnouncement data={$visibleGraphics.data} />
   {/if}
 </div>
