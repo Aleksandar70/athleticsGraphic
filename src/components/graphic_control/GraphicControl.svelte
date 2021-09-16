@@ -48,9 +48,14 @@
       <div class="graphic-events">
         <Label>Event</Label>
         <Button color="primary">{UIText.EVENTS}</Button>
-        <Button color="primary" on:click={() => action(Graphics.ANNOUNCEMENT)}
+        <Button color="primary" on:click={() => action(Graphics.EVENT_ANNOUNCEMENT)}
           >{UIText.EVENT_ANNOUNCEMENT}</Button
         >
+        <Button
+        color="primary"
+        on:click={() => action(Graphics.DISCIPLINE_ANNOUNCEMENT)}
+        >{UIText.DISCIPLINE_ANNOUNCEMENT}</Button
+      >
         <Button color="primary">{UIText.TIME}</Button>
         <Button color="primary">{UIText.START_TIME}</Button>
         <Button color="primary">{UIText.STOP_TIME}</Button>
@@ -59,7 +64,7 @@
       </div>
       <div class="graphic-personal">
         <Label>Personal</Label>
-        <Button color="primary" on:click={() => action(Graphics.PERSONAL_SCORE)}
+        <Button color="primary" on:click={() => action(Graphics.PERSONAL_BEST)}
           >{UIText.SHOW_PERSONAL_BEST}</Button
         >
         <Button color="primary">{UIText.SHOW_PERSONAL_DATA}</Button>

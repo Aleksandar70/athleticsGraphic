@@ -8,8 +8,9 @@ export enum SOURCE {
 }
 
 export enum Graphics {
-  PERSONAL_SCORE = "personal_score",
-  ANNOUNCEMENT = "announcement",
+  PERSONAL_BEST = "personal_best",
+  EVENT_ANNOUNCEMENT = "announcement",
+  DISCIPLINE_ANNOUNCEMENT = "discipline announcement",
 }
 
 export enum EventType {
