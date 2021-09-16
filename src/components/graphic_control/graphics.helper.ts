@@ -13,7 +13,7 @@ export const getDataForPreviewModal = (
 ): Record<string, string> => {
   const data = {};
   switch (id) {
-    case Graphics.ANNOUNCEMENT:
+    case Graphics.EVENT_ANNOUNCEMENT:
       data["Event Name"] = "6th SERBIAN OPEN INDOOR MEETING";
       data["Location"] = "BELGRADE, FEBRUARY 2021";
       data["Hashtag"] = "#belgrade2021";
@@ -26,8 +26,8 @@ export const getDataForPreviewModal = (
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
       get(selectedParticipant).filter((field) => isNumeric(field.id)).length
-      ? (data["Scores"] = getScores())
-      : (data["Result"] = getFieldValueFromParticipant("result"));
+        ? (data["Scores"] = getScores())
+        : (data["Result"] = getFieldValueFromParticipant("result"));
       break;
     case Graphics.START_LIST:
       data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
@@ -42,6 +42,11 @@ export const getDataForPreviewModal = (
       data["Event Name"] = get(currentEventData)["name"];
       data["Title"] = "RESULTS";
       data["Competitors"] = getCompetitors();
+      break;
+    case Graphics.DISCIPLINE_ANNOUNCEMENT:
+      data["Discipline Name"] = get(currentEventData)["name"];
+      data["Note"] = "NEXT";
+      data["Time"] = get(currentEventData)["r1Time"];
   }
   return data;
 };
