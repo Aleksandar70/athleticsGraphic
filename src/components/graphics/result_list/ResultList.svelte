@@ -86,6 +86,16 @@
             ease: "power2.out",
           },
           `<0.05`
+        )
+        .to(
+          `#startnaListaResult-${i}`,
+          {
+            duration: 0.15,
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          },
+          `<0.05`
         );
     }
   });
@@ -143,12 +153,12 @@
       {competitor.name}
     </p>
     <p
-    style="top: {347 + 59 * i}px"
-    class="startnaListaResult"
-    id="startnaListaResult-{i}"
-  >
-    {competitor.result}
-  </p>
+      style="top: {347 + 59 * i}px"
+      class="startnaListaResult"
+      id="startnaListaResult-{i}"
+    >
+      {competitor.result}
+    </p>
   {/each}
 </div>
 
@@ -305,8 +315,8 @@
     width: 56px;
     height: 56px;
     line-height: 56px;
-    left: 648px;
-    color: rgb(255, 255, 255);
+    left: 1320px;
+    color: rgb(28, 59, 113);
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
