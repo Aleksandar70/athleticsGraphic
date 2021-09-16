@@ -18,7 +18,7 @@ export abstract class UIText {
   static readonly EVENTS: string = "Events";
   static readonly EVENT_ANNOUNCEMENT: string = "Event Announcement";
   static readonly DISCIPLINE_ANNOUNCEMENT: string = "Discipline Announcement";
-  static readonly SHOW_PERSONAL_BEST: string = "Personal Best";
+  static readonly SHOW_PERSONAL_SCORE: string = "Personal Score";
   static readonly SHOW_PERSONAL_DATA: string = "Personal Data";
   static readonly MEDALS: string = "Medals";
   static readonly RESULTS: string = "Results";

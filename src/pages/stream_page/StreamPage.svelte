@@ -12,7 +12,7 @@
 </script>
 
 <div class="graphics--wrapper">
-  {#if $visibleGraphics.id == Graphics.PERSONAL_BEST}
+  {#if $visibleGraphics.id == Graphics.PERSONAL_SCORE}
     <Scores data={$visibleGraphics.data} type={$visibleGraphics.type} />
   {:else if $visibleGraphics.id == Graphics.EVENT_ANNOUNCEMENT}
     <EventAnnouncement data={$visibleGraphics.data} />

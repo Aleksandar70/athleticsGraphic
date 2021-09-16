@@ -17,7 +17,7 @@ export const getDataForPreviewModal = (
       data["Location"] = "BELGRADE, FEBRUARY 2021";
       data["Hashtag"] = "#belgrade2021";
       break;
-    case Graphics.PERSONAL_BEST:
+    case Graphics.PERSONAL_SCORE:
       data["Event Name"] = get(currentEventData)["name"];
       data["ID"] = getFieldValueFromParticipant("competitorId");
       data["First Name"] = getFieldValueFromParticipant("firstName");
