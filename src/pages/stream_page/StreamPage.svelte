@@ -4,6 +4,7 @@
   import Scores from "../../components/graphics/scores/Score.svelte";
   import EventAnnouncement from "../../components/graphics/event_announcement/EventAnnouncement.svelte";
   import { streamChannel, visibleGraphics } from "../../stores/stream.store";
+  import DisciplineAnnouncement from "../../components/graphics/discipline_announcement/DisciplineAnnouncement.svelte";
 
   $streamChannel.addEventListener("message", (event) =>
     visibleGraphics.set(event.data)
@@ -13,7 +14,9 @@
 <div class="graphics--wrapper">
   {#if $visibleGraphics.id == Graphics.PERSONAL_SCORE}
     <Scores data={$visibleGraphics.data} type={$visibleGraphics.type} />
-  {:else if $visibleGraphics.id == Graphics.ANNOUNCEMENT}
+  {:else if $visibleGraphics.id == Graphics.EVENT_ANNOUNCEMENT}
     <EventAnnouncement data={$visibleGraphics.data} />
+  {:else if $visibleGraphics.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
+    <DisciplineAnnouncement data={$visibleGraphics.data} />
   {/if}
 </div>
