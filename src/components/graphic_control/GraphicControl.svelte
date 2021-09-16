@@ -14,17 +14,27 @@
   import { getDataForPreviewModal } from "./graphics.helper";
   import GraphicsModal from "./graphics_modal/GraphicsModal.svelte";
   import { clearChannel, streamChannel } from "../../stores/stream.store";
+  import { Alert } from "sveltestrap";
+  import { get } from "svelte/store";
+  import { selectedParticipant } from "../../stores/table.store";
 
   let displayData = {};
   let action_id: Graphics;
 
+  let isAlertVisible = false;
+  let isModalOpen = false;
+
   const action = (id: Graphics) => {
     displayData = getDataForPreviewModal(id);
     action_id = id;
-    isModalOpen = true;
+    if (get(selectedParticipant).length === 0) {
+      isAlertVisible = true;
+      isModalOpen = false;
+    } else {
+      isAlertVisible = false;
+      isModalOpen = true;
+    }
   };
-
-  let isModalOpen = false;
 </script>
 
 <div class="graphic-controls">
@@ -68,7 +78,6 @@
         <Button color="primary">{UIText.START_TIME}</Button>
         <Button color="primary">{UIText.STOP_TIME}</Button>
         <Button color="primary">{UIText.MEDALS}</Button>
-        <Button color="primary">{UIText.RESULTS}</Button>
       </div>
       <div class="graphic-personal">
         <Label>Personal</Label>
@@ -79,5 +88,14 @@
       </div>
     </CardBody>
   </Card>
+  <Alert
+    class="graphic-control-alert"
+    bind:isOpen={isAlertVisible}
+    color="info"
+    fade={isAlertVisible}
+    dismissible
+  >
+    {UIText.PERSONAL_SCORE_ALERT_TEXT}
+  </Alert>
 </div>
 <GraphicsModal id={action_id} bind:isOpen={isModalOpen} data={displayData} />

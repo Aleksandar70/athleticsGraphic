@@ -25,9 +25,11 @@ export const getDataForPreviewModal = (
       data["Last Name"] = getFieldValueFromParticipant("lastName");
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
-      get(selectedParticipant).filter((field) => isNumeric(field.id)).length
-        ? (data["Scores"] = getScores())
-        : (data["Result"] = getFieldValueFromParticipant("result"));
+      if (get(selectedParticipant).length === 0) {
+        get(selectedParticipant).filter((field) => isNumeric(field.id)).length
+          ? (data["Scores"] = getScores())
+          : (data["Result"] = getFieldValueFromParticipant("result"));
+      }
       break;
     case Graphics.START_LIST:
       data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";

@@ -13,24 +13,24 @@
 
   onMount(() => {
     timeline
-      .to("#startnaListaHeader", {
+      .to("#resultListaHeader", {
         duration: 0.2,
         opacity: 1,
         scaleY: 1,
         ease: "power2.out",
       })
       .to(
-        "#startnaListaNaslov",
+        "#resultListaNaslov",
         { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       )
       .to(
-        "#startnaListaDisciplina",
+        "#resultListaDisciplina",
         { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.1"
       )
       .to(
-        "#startnaListaHash",
+        "#resultListaHash",
         { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       );
@@ -48,7 +48,7 @@
           `<0.05`
         )
         .to(
-          `#startnaListaPozicija-${i}`,
+          `#resultListaPozicija-${i}`,
           {
             duration: 0.15,
             opacity: 1,
@@ -58,7 +58,7 @@
           `<0.05`
         )
         .to(
-          `#startnaListaImg-${i}`,
+          `#resultListaImg-${i}`,
           {
             duration: 0.15,
             opacity: 1,
@@ -68,7 +68,7 @@
           `<0.05`
         )
         .to(
-          `#startnaListaCountry-${i}`,
+          `#resultListaCountry-${i}`,
           {
             duration: 0.15,
             opacity: 1,
@@ -78,7 +78,7 @@
           `<0.05`
         )
         .to(
-          `#startnaListaIme-${i}`,
+          `#resultListaIme-${i}`,
           {
             duration: 0.15,
             opacity: 1,
@@ -88,7 +88,7 @@
           `<0.05`
         )
         .to(
-          `#startnaListaResult-${i}`,
+          `#resultListaResult-${i}`,
           {
             duration: 0.15,
             opacity: 1,
@@ -108,13 +108,13 @@
   }
 </script>
 
-<div id="startnaLista" class="startnaLista">
-  <img id="startnaListaHeader" src="/img/graphics/listaHeader.png" alt="" />
+<div id="resultLista" class="resultLista">
+  <img id="resultListaHeader" src="/img/graphics/listaHeader.png" alt="" />
 
-  <p id="startnaListaNaslov">{data["Competition"]}</p>
-  <p id="startnaListaDisciplina">{data["Event Name"]}</p>
-  <p id="startnaListaHash">{data["Hashtag"]}</p>
-  <p id="startnaListaTitle">{data["Title"]}</p>
+  <p id="resultListaNaslov">{data["Competition"]}</p>
+  <p id="resultListaDisciplina">{data["Event Name"]}</p>
+  <p id="resultListaHash">{data["Hashtag"]}</p>
+  <p id="resultListaTitle">{data["Title"]}</p>
 
   {#each data["Competitors"] as competitor, i}
     <img
@@ -126,36 +126,36 @@
     />
     <p
       style="top: {347 + 59 * i}px"
-      class="startnaListaPozicija"
-      id="startnaListaPozicija-{i}"
+      class="resultListaPozicija"
+      id="resultListaPozicija-{i}"
     >
       {i + 1}
     </p>
     <img
       style="top: {347 + 59 * i}px"
-      class="startnaListaImg"
-      id="startnaListaImg-{i}"
+      class="resultListaImg"
+      id="resultListaImg-{i}"
       src="/img/flags/{competitor.nationality}.png"
       alt={competitor.nationality}
     />
     <p
       style="top: {347 + 59 * i}px"
-      class="startnaListaCountry"
-      id="startnaListaCountry-{i}"
+      class="resultListaCountry"
+      id="resultListaCountry-{i}"
     >
       {competitor.nationality}
     </p>
     <p
       style="top: {347 + 59 * i}px"
-      class="startnaListaIme"
-      id="startnaListaIme-{i}"
+      class="resultListaIme"
+      id="resultListaIme-{i}"
     >
       {competitor.name}
     </p>
     <p
       style="top: {347 + 59 * i}px"
-      class="startnaListaResult"
-      id="startnaListaResult-{i}"
+      class="resultListaResult"
+      id="resultListaResult-{i}"
     >
       {competitor.result}
     </p>
@@ -164,7 +164,7 @@
 
 <style>
   /* START LIST */
-  #startnaLista {
+  #resultLista {
     width: 1920px;
     height: 1080px;
     z-index: 0;
@@ -173,7 +173,7 @@
     left: 0px;
   }
 
-  #startnaListaHeader {
+  #resultListaHeader {
     top: 212px;
     left: 485px;
     position: fixed;
@@ -182,7 +182,7 @@
     transform: scaleY(0);
   }
 
-  #startnaListaTitle {
+  #resultListaTitle {
     font-family: "Montserrat-Semibold";
     font-size: 15pt;
     position: fixed;
@@ -198,7 +198,7 @@
     transform: scaleY(0);
   }
 
-  #startnaListaNaslov {
+  #resultListaNaslov {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -214,7 +214,7 @@
     transform: scaleY(0);
   }
 
-  #startnaListaDisciplina {
+  #resultListaDisciplina {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -230,7 +230,7 @@
     transform: scaleY(0);
   }
 
-  #startnaListaHash {
+  #resultListaHash {
     font-family: "Montserrat-MediumItalic";
     font-size: 15pt;
     position: fixed;
@@ -254,7 +254,7 @@
     transform: scaleY(0);
   }
 
-  .startnaListaPozicija {
+  .resultListaPozicija {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -269,7 +269,7 @@
     transform: scaleY(0);
   }
 
-  .startnaListaImg {
+  .resultListaImg {
     position: fixed;
     height: 48px;
     width: 48px;
@@ -279,7 +279,7 @@
     transform: scaleY(0);
   }
 
-  .startnaListaCountry {
+  .resultListaCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -293,7 +293,7 @@
     opacity: 0;
     transform: scaleY(0);
   }
-  .startnaListaIme {
+  .resultListaIme {
     font-family: "Montserrat-SemiBold";
     font-size: 22pt;
     position: fixed;
@@ -307,7 +307,7 @@
     opacity: 0;
     transform: scaleY(0);
   }
-  .startnaListaResult {
+  .resultListaResult {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
