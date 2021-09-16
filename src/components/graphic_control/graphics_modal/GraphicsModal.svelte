@@ -12,10 +12,17 @@
   import { EventType, Graphics } from "../../../../global/constants/constants";
   import { streamChannel } from "../../../stores/stream.store";
   import { isHeight } from "../../../utils/event.utils";
+  import "./graphicsmodal.style.css";
 
   export let isOpen: boolean;
   export let id: Graphics;
   export let data: Record<string, any> = {};
+
+  let competitors: Record<string, string>[] = [];
+
+  $: if (data["Competitors"]) {
+    competitors = data["Competitors"];
+  }
 
   $: _data = { ...data };
 
@@ -72,14 +79,14 @@
               </div>
             {/each}
           {:else if name === "Competitors"}
-            {#each value as competitor, i}
+            {#each competitors as competitor, i}
               <div class="score">
                 <img
                   alt={competitor.nationality}
                   src="/img/flags/{competitor.nationality}.png"
                 />
                 <Input
-                  class="score-metric"
+                  class="nationality-input"
                   value={competitor.nationality}
                   on:input={(event) =>
                     inputChange(event.target, name, "nationality", i)}
@@ -109,14 +116,3 @@
     <Button on:click={toggle}>Cancel</Button>
   </ModalFooter>
 </Modal>
-
-<style>
-  .score {
-    display: flex;
-    margin-bottom: 10px;
-  }
-
-  .score-metric {
-    margin-right: 15px;
-  }
-</style>

@@ -9,63 +9,83 @@
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
   const timeline = gsap.timeline();
-  const numberOfCompetitors = data.length;
+  $: numberOfCompetitors = data["Competitors"].length;
 
   onMount(() => {
     timeline
-      .to("#startnaListaHeader", 0.2, {
+      .to("#startnaListaHeader", {
+        duration: 0.2,
         opacity: 1,
         scaleY: 1,
         ease: "power2.out",
       })
       .to(
         "#startnaListaNaslov",
-        0.15,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
+        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       )
       .to(
         "#startnaListaDisciplina",
-        0.15,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
+        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.1"
       )
       .to(
         "#startnaListaHash",
-        0.15,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
+        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       );
 
     for (let i = 0; i < numberOfCompetitors; i++) {
-      tl.to("#startnaListaTakmicar", 0.15, {
-        opacity: 1,
-        scaleY: 1,
-        ease: "power2.out",
-      })
+      timeline
         .to(
-          "#startnaListaPozicija",
-          0.15,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          `#competitor-info-${i}`,
+          {
+            duration: 0.15,
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          },
+          `<0.05`
         )
         .to(
-          "#startnaListaImg",
-          0.15,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          `#startnaListaPozicija-${i}`,
+          {
+            duration: 0.15,
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          },
+          `<0.05`
         )
         .to(
-          "#startnaListaCountry",
-          0.15,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          `#startnaListaImg-${i}`,
+          {
+            duration: 0.15,
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          },
+          `<0.05`
         )
         .to(
-          "#startnaListaIme",
-          0.15,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          `#startnaListaCountry-${i}`,
+          {
+            duration: 0.15,
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          },
+          `<0.05`
+        )
+        .to(
+          `#startnaListaIme-${i}`,
+          {
+            duration: 0.15,
+            opacity: 1,
+            scaleY: 1,
+            ease: "power2.out",
+          },
+          `<0.05`
         );
     }
   });
@@ -80,21 +100,49 @@
 
 <div id="startnaLista" class="startnaLista">
   <img id="startnaListaHeader" src="/img/graphics/listaHeader.png" alt="" />
-  <img
-    id="startnaListaTakmicar"
-    src="/img/graphics/listaTakmicar.png"
-    alt=""
-  />
 
   <p id="startnaListaNaslov">{data["Competition"]}</p>
   <p id="startnaListaDisciplina">{data["Event Name"]}</p>
   <p id="startnaListaHash">{data["Hashtag"]}</p>
   <p id="startnaListaTitle">{data["Title"]}</p>
 
-  <p id="startnaListaPozicija" />
-  <img id="startnaListaImg" src="" alt="" />
-  <p id="startnaListaCountry" />
-  <p id="startnaListaIme" />
+  {#each data["Competitors"] as competitor, i}
+    <img
+      style="top: {347 + 59 * i}px"
+      class="competitor-info"
+      id="competitor-info-{i}"
+      src="/img/graphics/listaTakmicar.png"
+      alt="listaTakmicar"
+    />
+    <p
+      style="top: {347 + 59 * i}px"
+      class="startnaListaPozicija"
+      id="startnaListaPozicija-{i}"
+    >
+      {i + 1}
+    </p>
+    <img
+      style="top: {347 + 59 * i}px"
+      class="startnaListaImg"
+      id="startnaListaImg-{i}"
+      src="/img/flags/{competitor.nationality}.png"
+      alt={competitor.nationality}
+    />
+    <p
+      style="top: {347 + 59 * i}px"
+      class="startnaListaCountry"
+      id="startnaListaCountry-{i}"
+    >
+      {competitor.nationality}
+    </p>
+    <p
+      style="top: {347 + 59 * i}px"
+      class="startnaListaIme"
+      id="startnaListaIme-{i}"
+    >
+      {competitor.name}
+    </p>
+  {/each}
 </div>
 
 <style>
@@ -128,15 +176,6 @@
     top: 292px;
     left: 1135px;
     color: rgb(255, 255, 255);
-    transform-origin: top center;
-    opacity: 0;
-    transform: scaleY(0);
-  }
-
-  #startnaListaTakmicar {
-    top: 347px;
-    left: 485px;
-    position: fixed;
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
@@ -190,7 +229,15 @@
     transform: scaleY(0);
   }
 
-  #startnaListaPozicija {
+  .competitor-info {
+    left: 485px;
+    position: fixed;
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  .startnaListaPozicija {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -198,7 +245,6 @@
     width: 100px;
     height: 56px;
     line-height: 56px;
-    top: 317px;
     left: 487px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
@@ -206,18 +252,17 @@
     transform: scaleY(0);
   }
 
-  #startnaListaImg {
+  .startnaListaImg {
     position: fixed;
     height: 48px;
     width: 48px;
-    top: 352px;
     left: 590px;
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
   }
 
-  #startnaListaCountry {
+  .startnaListaCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -225,14 +270,13 @@
     width: 56px;
     height: 56px;
     line-height: 56px;
-    top: 321px;
     left: 648px;
     color: rgb(255, 255, 255);
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
   }
-  #startnaListaIme {
+  .startnaListaIme {
     font-family: "Montserrat-SemiBold";
     font-size: 22pt;
     position: fixed;
@@ -240,7 +284,6 @@
     width: 800px;
     height: 48px;
     line-height: 48px;
-    top: 324px;
     left: 730px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
