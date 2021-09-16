@@ -8,7 +8,7 @@ export enum SOURCE {
 }
 
 export enum Graphics {
-  PERSONAL_BEST = "personal_best",
+  PERSONAL_SCORE = "personal_score",
   EVENT_ANNOUNCEMENT = "announcement",
   DISCIPLINE_ANNOUNCEMENT = "discipline announcement",
 }
