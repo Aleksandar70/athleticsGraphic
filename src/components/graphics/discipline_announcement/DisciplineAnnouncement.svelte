@@ -1,9 +1,15 @@
 <script lant="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
+  import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+
   export let data;
+  export let clear = false;
+
+  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+  const timeline = gsap.timeline();
+
   onMount(() => {
-    const timeline = gsap.timeline();
     timeline
       .to("#disciplineAnnouncement", {
         duration: 0.5,
@@ -27,6 +33,13 @@
         "<"
       );
   });
+
+  $: if (clear) {
+    timeline.reverse().then(() => {
+      $clearChannel.postMessage(false);
+      visibleGraphics.set({ id: "", data: {} });
+    });
+  }
 </script>
 
 <div id="discipline--wrapper">
