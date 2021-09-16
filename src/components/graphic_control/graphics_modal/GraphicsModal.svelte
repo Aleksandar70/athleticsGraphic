@@ -98,6 +98,12 @@
                   on:input={(event) =>
                     inputChange(event.target, name, "name", i)}
                 />
+                <Input
+                class="result-input"
+                value={competitor.result}
+                on:input={(event) =>
+                  inputChange(event.target, name, "result", i)}
+              />
               </div>
             {/each}
           {:else}

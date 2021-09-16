@@ -58,6 +58,7 @@ const getCompetitors = (): Record<string, string>[] =>
   get(competitors).map((competitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
+    result: competitor.result,
   }));
 
 const getScores = (): unknown[] =>
