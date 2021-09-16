@@ -27,7 +27,10 @@
   const action = (id: Graphics) => {
     displayData = getDataForPreviewModal(id);
     action_id = id;
-    if (get(selectedParticipant).length === 0) {
+    if (
+      id === Graphics.PERSONAL_SCORE &&
+      get(selectedParticipant).length === 0
+    ) {
       isAlertVisible = true;
       isModalOpen = false;
     } else {
