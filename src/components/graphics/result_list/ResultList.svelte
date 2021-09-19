@@ -33,6 +33,11 @@
         "#resultListaHash",
         { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
+      )
+      .to(
+        "#resultListaTitle",
+        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
+        "<"
       );
 
     for (let i = 0; i < numberOfCompetitors; i++) {
@@ -190,9 +195,9 @@
     width: 350px;
     height: 38px;
     line-height: 38px;
-    top: 292px;
-    left: 1135px;
-    color: rgb(255, 255, 255);
+    top: 313px;
+    left: 1180px;
+    color:rgb(255, 255, 255);
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
@@ -238,7 +243,7 @@
     width: 300px;
     height: 38px;
     line-height: 38px;
-    top: 260px;
+    top: 279px;
     left: 1000px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
