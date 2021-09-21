@@ -19,7 +19,7 @@
   $: competitorsRange = data["Competitors"].slice(minIndex, maxIndex);
 
   onMount(() => {
-    headerAnimation(timelineHeader);
+    animateHeader(timelineHeader);
     animateCompetitors();
   });
 
