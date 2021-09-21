@@ -7,12 +7,21 @@
   export let clear = false;
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
-
-  const timeline = gsap.timeline();
   $: numberOfCompetitors = data["Competitors"].length;
 
+  const timelineHeader = gsap.timeline();
+  const timelineCompetitors = gsap.timeline();
+
+  const limitCompetitors = 8;
+  let minIndex = 0;
+  $: maxIndex = Math.ceil(
+    numberOfCompetitors / Math.ceil(numberOfCompetitors / limitCompetitors)
+  );
+
+  $: competitorsRange = data["Competitors"].slice(minIndex, maxIndex);
+
   onMount(() => {
-    timeline
+    timelineHeader
       .to("#startnaListaHeader", {
         duration: 0.2,
         opacity: 1,
@@ -39,9 +48,8 @@
         { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       );
-
     for (let i = 0; i < numberOfCompetitors; i++) {
-      timeline
+      timelineCompetitors
         .to(
           `#competitor-info-${i}`,
           {
@@ -96,7 +104,7 @@
   });
 
   $: if (clear) {
-    timeline.reverse().then(() => {
+    timelineHeader.reverse().then(() => {
       $clearChannel.postMessage(false);
       visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
@@ -111,7 +119,7 @@
   <p id="startnaListaHash">{data["Hashtag"]}</p>
   <p id="startnaListaTitle">{data["Title"]}</p>
 
-  {#each data["Competitors"] as competitor, i}
+  {#each competitorsRange as competitor, i}
     <img
       style="top: {347 + 59 * i}px"
       class="competitor-info"
@@ -180,7 +188,7 @@
     line-height: 38px;
     top: 313px;
     left: 980px;
-    color:rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
