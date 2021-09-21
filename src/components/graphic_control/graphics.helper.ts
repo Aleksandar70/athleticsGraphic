@@ -34,14 +34,14 @@ export const getDataForPreviewModal = (
       data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
-      data["Title"] = "STARTING LIST";
+      data["Description"] = "STARTING LIST";
       data["Competitors"] = getCompetitors();
       break;
     case Graphics.RESULT_LIST:
       data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
-      data["Title"] = "RESULTS";
+      data["Description"] = "RESULTS";
       data["Competitors"] = getCompetitors();
       break;
     case Graphics.DISCIPLINE_ANNOUNCEMENT:

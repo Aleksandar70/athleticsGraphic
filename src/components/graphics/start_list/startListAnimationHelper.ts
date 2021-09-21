@@ -1,28 +1,28 @@
 export const headerAnimation = (timelineHeader: any): void => {
   timelineHeader
-    .to("#startnaListaHeader", {
+    .to("#startListHeader", {
       duration: 0.2,
       opacity: 1,
       scaleY: 1,
       ease: "power2.out",
     })
     .to(
-      "#startnaListaNaslov",
+      "#startListCompetitonTitle",
       { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
       "<"
     )
     .to(
-      "#startnaListaDisciplina",
+      "#startListDiscipline",
       { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
       "<.1"
     )
     .to(
-      "#startnaListaHash",
+      "#startListHash",
       { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
       "<"
     )
     .to(
-      "#startnaListaTitle",
+      "#startListDescription",
       { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
       "<"
     );

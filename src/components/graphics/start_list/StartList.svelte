@@ -39,7 +39,7 @@
             `<0.05`
           )
           .to(
-            `#startnaListaPozicija-${index}`,
+            `#startListPosition-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -49,7 +49,7 @@
             `<0.05`
           )
           .to(
-            `#startnaListaImg-${index}`,
+            `#startListFlag-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -59,7 +59,7 @@
             `<0.05`
           )
           .to(
-            `#startnaListaCountry-${index}`,
+            `#startListCountry-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -69,7 +69,7 @@
             `<0.05`
           )
           .to(
-            `#startnaListaIme-${index}`,
+            `#startListName-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -104,12 +104,12 @@
   }
 </script>
 
-<div id="startnaLista" class="startnaLista">
-  <img id="startnaListaHeader" src="/img/graphics/listaHeader.png" alt="" />
-  <p id="startnaListaNaslov">{data["Competition"]}</p>
-  <p id="startnaListaDisciplina">{data["Event Name"]}</p>
-  <p id="startnaListaHash">{data["Hashtag"]}</p>
-  <p id="startnaListaTitle">{data["Title"]}</p>
+<div id="startList" class="startList">
+  <img id="startListHeader" src="/img/graphics/listaHeader.png" alt="" />
+  <p id="startListCompetitonTitle">{data["Competition"]}</p>
+  <p id="startListDiscipline">{data["Event Name"]}</p>
+  <p id="startListHash">{data["Hashtag"]}</p>
+  <p id="startListDescription">{data["Description"]}</p>
 
   {#each competitorsRange as competitor, i}
     <img
@@ -121,29 +121,29 @@
     />
     <p
       style="top: {347 + 59 * i}px"
-      class="startnaListaPozicija"
-      id="startnaListaPozicija-{i}"
+      class="startListPosition"
+      id="startListPosition-{i}"
     >
       {i + minIndex + 1}
     </p>
     <img
       style="top: {347 + 59 * i}px"
-      class="startnaListaImg"
-      id="startnaListaImg-{i}"
+      class="startListFlag"
+      id="startListFlag-{i}"
       src="/img/flags/{competitor.nationality}.png"
       alt={competitor.nationality}
     />
     <p
       style="top: {347 + 59 * i}px"
-      class="startnaListaCountry"
-      id="startnaListaCountry-{i}"
+      class="startListCountry"
+      id="startListCountry-{i}"
     >
       {competitor.nationality}
     </p>
     <p
       style="top: {347 + 59 * i}px"
-      class="startnaListaIme"
-      id="startnaListaIme-{i}"
+      class="startListName"
+      id="startListName-{i}"
     >
       {competitor.name}
     </p>
@@ -152,7 +152,7 @@
 
 <style>
   /* START LIST */
-  #startnaLista {
+  #startList {
     width: 1920px;
     height: 1080px;
     z-index: 0;
@@ -161,7 +161,7 @@
     left: 0px;
   }
 
-  #startnaListaHeader {
+  #startListHeader {
     top: 212px;
     left: 485px;
     position: fixed;
@@ -170,7 +170,7 @@
     transform: scaleY(0);
   }
 
-  #startnaListaTitle {
+  #startListDescription {
     font-family: "Montserrat-Semibold";
     font-size: 15pt;
     position: fixed;
@@ -186,7 +186,7 @@
     transform: scaleY(0);
   }
 
-  #startnaListaNaslov {
+  #startListCompetitonTitle {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -202,7 +202,7 @@
     transform: scaleY(0);
   }
 
-  #startnaListaDisciplina {
+  #startListDiscipline {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -218,7 +218,7 @@
     transform: scaleY(0);
   }
 
-  #startnaListaHash {
+  #startListHash {
     font-family: "Montserrat-MediumItalic";
     font-size: 15pt;
     position: fixed;
@@ -242,7 +242,7 @@
     transform: scaleY(0);
   }
 
-  .startnaListaPozicija {
+  .startListPosition {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -257,7 +257,7 @@
     transform: scaleY(0);
   }
 
-  .startnaListaImg {
+  .startListFlag {
     position: fixed;
     height: 48px;
     width: 48px;
@@ -267,7 +267,7 @@
     transform: scaleY(0);
   }
 
-  .startnaListaCountry {
+  .startListCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -281,7 +281,7 @@
     opacity: 0;
     transform: scaleY(0);
   }
-  .startnaListaIme {
+  .startListName {
     font-family: "Montserrat-SemiBold";
     font-size: 22pt;
     position: fixed;

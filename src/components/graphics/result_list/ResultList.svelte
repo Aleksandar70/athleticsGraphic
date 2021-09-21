@@ -39,7 +39,7 @@
             `<0.05`
           )
           .to(
-            `#resultListaPozicija-${index}`,
+            `#resultListPosition-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -49,7 +49,7 @@
             `<0.05`
           )
           .to(
-            `#resultListaImg-${index}`,
+            `#resultListFlag-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -59,7 +59,7 @@
             `<0.05`
           )
           .to(
-            `#resultListaCountry-${index}`,
+            `#resultListCountry-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -69,7 +69,7 @@
             `<0.05`
           )
           .to(
-            `#resultListaIme-${index}`,
+            `#resultListName-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -79,7 +79,7 @@
             `<0.05`
           )
           .to(
-            `#resultListaResult-${index}`,
+            `#resultListScore-${index}`,
             {
               duration: 0.15,
               opacity: 1,
@@ -114,12 +114,13 @@
   }
 </script>
 
-<div id="resultLista" class="resultLista">
-  <img id="resultListaHeader" src="/img/graphics/listaHeader.png" alt="" />
-  <p id="resultListaNaslov">{data["Competition"]}</p>
-  <p id="resultListaDisciplina">{data["Event Name"]}</p>
-  <p id="resultListaHash">{data["Hashtag"]}</p>
-  <p id="resultListaTitle">{data["Title"]}</p>
+<div id="resultList" class="resultList">
+  <img id="resultListHeader" src="/img/graphics/listaHeader.png" alt="" />
+
+  <p id="resultListCompetitionTitle">{data["Competition"]}</p>
+  <p id="resultListDiscipline">{data["Event Name"]}</p>
+  <p id="resultListHash">{data["Hashtag"]}</p>
+  <p id="resultListDescription">{data["Description"]}</p>
 
   {#each competitorsRange as competitor, i}
     <img
@@ -131,36 +132,36 @@
     />
     <p
       style="top: {347 + 59 * i}px"
-      class="resultListaPozicija"
-      id="resultListaPozicija-{i}"
+      class="resultListPosition"
+      id="resultListPosition-{i}"
     >
       {i + minIndex + 1}
     </p>
     <img
       style="top: {347 + 59 * i}px"
-      class="resultListaImg"
-      id="resultListaImg-{i}"
+      class="resultListFlag"
+      id="resultListFlag-{i}"
       src="/img/flags/{competitor.nationality}.png"
       alt={competitor.nationality}
     />
     <p
       style="top: {347 + 59 * i}px"
-      class="resultListaCountry"
-      id="resultListaCountry-{i}"
+      class="resultListCountry"
+      id="resultListCountry-{i}"
     >
       {competitor.nationality}
     </p>
     <p
       style="top: {347 + 59 * i}px"
-      class="resultListaIme"
-      id="resultListaIme-{i}"
+      class="resultListName"
+      id="resultListName-{i}"
     >
       {competitor.name}
     </p>
     <p
       style="top: {347 + 59 * i}px"
-      class="resultListaResult"
-      id="resultListaResult-{i}"
+      class="resultListScore"
+      id="resultListScore-{i}"
     >
       {competitor.result}
     </p>
@@ -169,7 +170,7 @@
 
 <style>
   /* START LIST */
-  #resultLista {
+  #resultList {
     width: 1920px;
     height: 1080px;
     z-index: 0;
@@ -178,7 +179,7 @@
     left: 0px;
   }
 
-  #resultListaHeader {
+  #resultListHeader {
     top: 212px;
     left: 485px;
     position: fixed;
@@ -187,7 +188,7 @@
     transform: scaleY(0);
   }
 
-  #resultListaTitle {
+  #resultListDescription {
     font-family: "Montserrat-Semibold";
     font-size: 15pt;
     position: fixed;
@@ -203,7 +204,7 @@
     transform: scaleY(0);
   }
 
-  #resultListaNaslov {
+  #resultListCompetitionTitle {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -219,7 +220,7 @@
     transform: scaleY(0);
   }
 
-  #resultListaDisciplina {
+  #resultListDiscipline {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -235,7 +236,7 @@
     transform: scaleY(0);
   }
 
-  #resultListaHash {
+  #resultListHash {
     font-family: "Montserrat-MediumItalic";
     font-size: 15pt;
     position: fixed;
@@ -259,7 +260,7 @@
     transform: scaleY(0);
   }
 
-  .resultListaPozicija {
+  .resultListPosition {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -274,7 +275,7 @@
     transform: scaleY(0);
   }
 
-  .resultListaImg {
+  .resultListFlag {
     position: fixed;
     height: 48px;
     width: 48px;
@@ -284,7 +285,7 @@
     transform: scaleY(0);
   }
 
-  .resultListaCountry {
+  .resultListCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -298,7 +299,7 @@
     opacity: 0;
     transform: scaleY(0);
   }
-  .resultListaIme {
+  .resultListName {
     font-family: "Montserrat-SemiBold";
     font-size: 22pt;
     position: fixed;
@@ -312,7 +313,7 @@
     opacity: 0;
     transform: scaleY(0);
   }
-  .resultListaResult {
+  .resultListScore {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
