@@ -134,7 +134,7 @@
       class="resultListaPozicija"
       id="resultListaPozicija-{i}"
     >
-      {i + 1}
+      {i + minIndex + 1}
     </p>
     <img
       style="top: {347 + 59 * i}px"

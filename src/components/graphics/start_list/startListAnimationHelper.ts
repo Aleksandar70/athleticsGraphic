@@ -1,4 +1,6 @@
-export const headerAnimation = (timelineHeader): void => {
+import { gsap } from "gsap";
+
+export const headerAnimation = (timelineHeader: gsap.core.Timeline): void => {
   timelineHeader
     .to("#startnaListaHeader", {
       duration: 0.2,
