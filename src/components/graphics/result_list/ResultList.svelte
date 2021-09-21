@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
-  import { headerAnimation } from "./resultListAnimationHelper";
+  import { animateHeader } from "./resultListAnimation.helper";
 
   export let data;
   export let clear = false;
