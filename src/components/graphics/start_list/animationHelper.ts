@@ -1,4 +1,4 @@
-export const headerAnimation = (timelineHeader) => {
+export const headerAnimation = (timelineHeader): void => {
   timelineHeader
     .to("#startnaListaHeader", {
       duration: 0.2,

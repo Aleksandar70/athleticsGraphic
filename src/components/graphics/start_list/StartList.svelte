@@ -8,7 +8,6 @@
   export let clear = false;
   const limitCompetitors = 8;
   const timelineHeader = gsap.timeline();
-  const timelineCompetitors = gsap.timeline();
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
   $: numberOfCompetitors = data["Competitors"].length;
@@ -19,9 +18,16 @@
 
   $: competitorsRange = data["Competitors"].slice(minIndex, maxIndex);
 
+  $: console.log("comp", data["Competitors"]);
+
   onMount(() => {
     headerAnimation(timelineHeader);
-    for (let i = 0; i < iterationNumber; i++) {
+    aniamteCompetitors();
+  });
+
+  export const aniamteCompetitors = () => {
+    const timelineCompetitors = gsap.timeline();
+    if (minIndex < numberOfCompetitors) {
       for (let index = 0; index < limitCompetitors; index++) {
         timelineCompetitors
           .to(
@@ -75,11 +81,18 @@
             `<0.05`
           );
       }
-      // timelineCompetitors.reverse();
-      minIndex = maxIndex; //7//14
-      maxIndex *= 2; //14//28
+      gsap.delayedCall(10, () => {
+        timelineCompetitors.reverse();
+      });
+      gsap.delayedCall(13, () => {
+        minIndex = maxIndex;
+        maxIndex *= 2;
+        aniamteCompetitors();
+      });
+    } else {
+      timelineCompetitors.reverse().then(timelineHeader.reverse());
     }
-  });
+  };
 
   $: if (clear) {
     timelineHeader.reverse().then(() => {
