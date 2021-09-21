@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
-  import { headerAnimation } from "./animationHelper";
+  import { headerAnimation } from "./startListAnimationHelper";
 
   export let data;
   export let clear = false;
@@ -106,7 +106,6 @@
 
 <div id="startnaLista" class="startnaLista">
   <img id="startnaListaHeader" src="/img/graphics/listaHeader.png" alt="" />
-
   <p id="startnaListaNaslov">{data["Competition"]}</p>
   <p id="startnaListaDisciplina">{data["Event Name"]}</p>
   <p id="startnaListaHash">{data["Hashtag"]}</p>

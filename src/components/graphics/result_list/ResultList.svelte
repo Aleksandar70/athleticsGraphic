@@ -2,111 +2,112 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+  import { headerAnimation } from "./resultListAnimationHelper";
 
   export let data;
   export let clear = false;
+  const limitCompetitors = 8;
+  const timelineHeader = gsap.timeline();
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
-
-  const timeline = gsap.timeline();
   $: numberOfCompetitors = data["Competitors"].length;
+  $: iterationNumber = Math.ceil(numberOfCompetitors / limitCompetitors);
+
+  let minIndex = 0;
+  $: maxIndex = Math.ceil(numberOfCompetitors / iterationNumber);
+
+  $: competitorsRange = data["Competitors"].slice(minIndex, maxIndex);
 
   onMount(() => {
-    timeline
-      .to("#resultListaHeader", {
-        duration: 0.2,
-        opacity: 1,
-        scaleY: 1,
-        ease: "power2.out",
-      })
-      .to(
-        "#resultListaNaslov",
-        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<"
-      )
-      .to(
-        "#resultListaDisciplina",
-        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.1"
-      )
-      .to(
-        "#resultListaHash",
-        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<"
-      )
-      .to(
-        "#resultListaTitle",
-        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<"
-      );
-
-    for (let i = 0; i < numberOfCompetitors; i++) {
-      timeline
-        .to(
-          `#competitor-info-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#resultListaPozicija-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#resultListaImg-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#resultListaCountry-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#resultListaIme-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#resultListaResult-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        );
-    }
+    headerAnimation(timelineHeader);
+    animateCompetitors();
   });
 
+  export const animateCompetitors = () => {
+    const timelineCompetitors = gsap.timeline();
+    if (minIndex < numberOfCompetitors) {
+      for (let index = 0; index < limitCompetitors; index++) {
+        timelineCompetitors
+          .to(
+            `#competitor-info-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#resultListaPozicija-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#resultListaImg-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#resultListaCountry-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#resultListaIme-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#resultListaResult-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          );
+      }
+      gsap.delayedCall(7, () => {
+        timelineCompetitors.reverse();
+      });
+      gsap.delayedCall(10, () => {
+        minIndex = maxIndex;
+        maxIndex *= 2;
+        animateCompetitors();
+      });
+    } else {
+      timelineCompetitors.reverse().then(() => {
+        timelineHeader.reverse();
+        visibleGraphics.set({ id: "", data: {}, type: undefined });
+      });
+    }
+  };
+
   $: if (clear) {
-    timeline.reverse().then(() => {
+    timelineCompetitors.reverse().then(() => {
+      timelineHeader.reverse();
       $clearChannel.postMessage(false);
       visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
@@ -115,13 +116,12 @@
 
 <div id="resultLista" class="resultLista">
   <img id="resultListaHeader" src="/img/graphics/listaHeader.png" alt="" />
-
   <p id="resultListaNaslov">{data["Competition"]}</p>
   <p id="resultListaDisciplina">{data["Event Name"]}</p>
   <p id="resultListaHash">{data["Hashtag"]}</p>
   <p id="resultListaTitle">{data["Title"]}</p>
 
-  {#each data["Competitors"] as competitor, i}
+  {#each competitorsRange as competitor, i}
     <img
       style="top: {347 + 59 * i}px"
       class="competitor-info"
@@ -197,7 +197,7 @@
     line-height: 38px;
     top: 313px;
     left: 1180px;
-    color:rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
