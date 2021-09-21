@@ -1,0 +1,18 @@
+.score {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.nationality-input {
+  width: 60px !important;
+  margin: 0 5px;
+}
+
+.result-input {
+  width: 60px !important;
+  margin: 0 5px;
+}
+
+.score-metric {
+  margin-right: 15px;
+}
