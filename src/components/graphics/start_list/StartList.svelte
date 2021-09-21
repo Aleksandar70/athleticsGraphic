@@ -18,14 +18,12 @@
 
   $: competitorsRange = data["Competitors"].slice(minIndex, maxIndex);
 
-  $: console.log("comp", data["Competitors"]);
-
   onMount(() => {
     headerAnimation(timelineHeader);
-    aniamteCompetitors();
+    animateCompetitors();
   });
 
-  export const aniamteCompetitors = () => {
+  export const animateCompetitors = () => {
     const timelineCompetitors = gsap.timeline();
     if (minIndex < numberOfCompetitors) {
       for (let index = 0; index < limitCompetitors; index++) {
@@ -81,21 +79,25 @@
             `<0.05`
           );
       }
-      gsap.delayedCall(10, () => {
+      gsap.delayedCall(7, () => {
         timelineCompetitors.reverse();
       });
-      gsap.delayedCall(13, () => {
+      gsap.delayedCall(10, () => {
         minIndex = maxIndex;
         maxIndex *= 2;
-        aniamteCompetitors();
+        animateCompetitors();
       });
     } else {
-      timelineCompetitors.reverse().then(timelineHeader.reverse());
+      timelineCompetitors.reverse().then(() => {
+        timelineHeader.reverse();
+        visibleGraphics.set({ id: "", data: {}, type: undefined });
+      });
     }
   };
 
   $: if (clear) {
-    timelineHeader.reverse().then(() => {
+    timelineCompetitors.reverse().then(() => {
+      timelineHeader.reverse();
       $clearChannel.postMessage(false);
       visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
