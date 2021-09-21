@@ -29,7 +29,7 @@ export abstract class Paths {
 export abstract class OpenTrack {
   static readonly COMPETITION_YEAR = 2021;
   static readonly COMPETITION_COUNTRY = "SRB";
-  static readonly COMPETITION_ID = "balkan_u18"; 
+  static readonly COMPETITION_ID = "srbopenindoor"; 
   static readonly OPEN_TRACK_API = `https://data.opentrack.run/en-gb/x/${OpenTrack.COMPETITION_YEAR}/${OpenTrack.COMPETITION_COUNTRY}/${OpenTrack.COMPETITION_ID}`;
 
   static readonly OPEN_TRACK_API_EVENT = `${OpenTrack.OPEN_TRACK_API}/event`;

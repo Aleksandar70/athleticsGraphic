@@ -51,6 +51,7 @@ https://sveltestrap.js.org/?path=/story/components--get-started
 year - competitionID
 country = SRB
 
+2021 - srbopenindoor
 2020 - ps-u20
 2021 - ec21_0640
 2021 - ps_10km

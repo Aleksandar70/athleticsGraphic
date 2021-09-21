@@ -26,21 +26,19 @@ export const getDataForPreviewModal = (
       data["Last Name"] = getFieldValueFromParticipant("lastName");
       data["Flag"] = getFieldValueFromParticipant("nationality");
       data["Nationality"] = getFieldValueFromParticipant("nationality");
-      if (get(selectedParticipant).length === 0) {
-        get(selectedParticipant).filter((field) => isNumeric(field.id)).length
-          ? (data["Scores"] = getScores())
-          : (data["Result"] = getFieldValueFromParticipant("result"));
-      }
+      get(selectedParticipant).filter((field) => isNumeric(field.id)).length
+        ? (data["Scores"] = getScores())
+        : (data["Result"] = getFieldValueFromParticipant("result"));
       break;
     case Graphics.START_LIST:
-      data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
+      data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
       data["Title"] = "STARTING LIST";
       data["Competitors"] = getCompetitors();
       break;
     case Graphics.RESULT_LIST:
-      data["Competition"] = "6th SERBIAN OPEN INDOOR MEETING";
+      data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
       data["Title"] = "RESULTS";
