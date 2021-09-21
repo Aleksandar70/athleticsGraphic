@@ -17,6 +17,7 @@ import {
 } from "../../../global/defaults";
 import {
   competitors,
+  currentCompetitionData,
   currentEventData,
   currentEventId,
   lockedColumns,
@@ -25,6 +26,7 @@ import {
 } from "../../stores/table.store";
 import { get } from "svelte/store";
 import { isNumeric } from "../../utils/string.utils";
+import { getOTCompetitionData } from "../../../backend/src/api/opentrack.api";
 
 export const getDefaultColumns = (): string[] => {
   return get(currentEventId) === "events"
@@ -54,8 +56,10 @@ export const getCompetitorResultsData = async (
   eventId: string
 ): Promise<IHeatEventData[] | ICompetitor[]> => {
   const eventData = await getEventData(eventId);
+  const { competitionData } = await getOTCompetitionData();
 
   currentEventData.set(eventData);
+  currentCompetitionData.set(competitionData);
 
   const competitorData = await getCompetitorsForEvent(eventId);
   competitors.set(competitorData);

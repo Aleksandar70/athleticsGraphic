@@ -3,6 +3,7 @@ import { Graphics } from "../../../global/constants/constants";
 import type { TableField } from "../../../global/types";
 import {
   competitors,
+  currentCompetitionData,
   currentEventData,
   selectedParticipant,
 } from "../../stores/table.store";
@@ -14,7 +15,7 @@ export const getDataForPreviewModal = (
   const data = {};
   switch (id) {
     case Graphics.EVENT_ANNOUNCEMENT:
-      data["Event Name"] = "6th SERBIAN OPEN INDOOR MEETING";
+      data["Event Name"] = get(currentCompetitionData)["englishName"];
       data["Location"] = "BELGRADE, FEBRUARY 2021";
       data["Hashtag"] = "#belgrade2021";
       break;
