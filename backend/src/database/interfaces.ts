@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import type { ObjectId } from "mongoose";
 
 export interface IEvent {
   _id?: ObjectId;
