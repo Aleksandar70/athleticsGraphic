@@ -2,104 +2,82 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+  import { headerAnimation } from "./animationHelper";
 
   export let data;
   export let clear = false;
-
-  $clearChannel.addEventListener("message", (event) => (clear = event.data));
-  $: numberOfCompetitors = data["Competitors"].length;
-
+  const limitCompetitors = 8;
   const timelineHeader = gsap.timeline();
   const timelineCompetitors = gsap.timeline();
 
-  const limitCompetitors = 8;
+  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+  $: numberOfCompetitors = data["Competitors"].length;
+  $: iterationNumber = Math.ceil(numberOfCompetitors / limitCompetitors);
+
   let minIndex = 0;
-  $: maxIndex = Math.ceil(
-    numberOfCompetitors / Math.ceil(numberOfCompetitors / limitCompetitors)
-  );
+  $: maxIndex = Math.ceil(numberOfCompetitors / iterationNumber);
 
   $: competitorsRange = data["Competitors"].slice(minIndex, maxIndex);
 
   onMount(() => {
-    timelineHeader
-      .to("#startnaListaHeader", {
-        duration: 0.2,
-        opacity: 1,
-        scaleY: 1,
-        ease: "power2.out",
-      })
-      .to(
-        "#startnaListaNaslov",
-        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<"
-      )
-      .to(
-        "#startnaListaDisciplina",
-        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.1"
-      )
-      .to(
-        "#startnaListaHash",
-        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<"
-      )
-      .to(
-        "#startnaListaTitle",
-        { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<"
-      );
-    for (let i = 0; i < numberOfCompetitors; i++) {
-      timelineCompetitors
-        .to(
-          `#competitor-info-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#startnaListaPozicija-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#startnaListaImg-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#startnaListaCountry-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        )
-        .to(
-          `#startnaListaIme-${i}`,
-          {
-            duration: 0.15,
-            opacity: 1,
-            scaleY: 1,
-            ease: "power2.out",
-          },
-          `<0.05`
-        );
+    headerAnimation(timelineHeader);
+    for (let i = 0; i < iterationNumber; i++) {
+      for (let index = 0; index < limitCompetitors; index++) {
+        timelineCompetitors
+          .to(
+            `#competitor-info-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#startnaListaPozicija-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#startnaListaImg-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#startnaListaCountry-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          )
+          .to(
+            `#startnaListaIme-${index}`,
+            {
+              duration: 0.15,
+              opacity: 1,
+              scaleY: 1,
+              ease: "power2.out",
+            },
+            `<0.05`
+          );
+      }
+      // timelineCompetitors.reverse();
+      minIndex = maxIndex; //7//14
+      maxIndex *= 2; //14//28
     }
   });
 
