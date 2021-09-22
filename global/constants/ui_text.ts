@@ -16,12 +16,15 @@ export abstract class UIText {
 
   static readonly TV_GRAPHIC_CONTROL: string = "Controls";
   static readonly EVENTS: string = "Events";
+  static readonly START_LIST: string = "Start list";
+  static readonly RESULT_LIST: string = "Result list";
+  static readonly SHOW_PERSONAL_BEST: string = "Personal Best";
   static readonly EVENT_ANNOUNCEMENT: string = "Event Announcement";
   static readonly DISCIPLINE_ANNOUNCEMENT: string = "Discipline Announcement";
   static readonly SHOW_PERSONAL_SCORE: string = "Personal Score";
   static readonly SHOW_PERSONAL_DATA: string = "Personal Data";
+  static readonly PERSONAL_SCORE_ALERT_TEXT: string = "Please select one of the competitors in the table!";
   static readonly MEDALS: string = "Medals";
-  static readonly RESULTS: string = "Results";
   static readonly TIME: string = "Time";
   static readonly START_TIME: string = "Start time";
   static readonly STOP_TIME: string = "Stop time";

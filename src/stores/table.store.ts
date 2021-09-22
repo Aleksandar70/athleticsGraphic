@@ -6,6 +6,7 @@ export const currentColumn = writable(0);
 export const currentRow = writable(0);
 
 export const currentEventData = writable({});
+export const currentCompetitionData = writable({});
 
 const columns = localStorage.getItem("columns");
 export const visibleColumns = writable(columns ? JSON.parse(columns) : {});
@@ -20,6 +21,8 @@ lockedColumns.subscribe((value) =>
 );
 
 export const selectedParticipant = writable([]);
+
+export const competitors = writable([]);
 
 currentEventId.subscribe(() => {
   selectedParticipant.set([]);
