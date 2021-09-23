@@ -59,7 +59,7 @@ export const getCompetitorResultsData = async (
   const eventData = await getEventData(eventId);
   const { competitionData } = await getOTCompetitionData();
   const relayTeams = await getRelayTeamsForEvent(eventId);
-  console.log("teams: ", relayTeams);
+
   currentEventData.set(eventData);
   currentCompetitionData.set(competitionData);
 
@@ -68,20 +68,28 @@ export const getCompetitorResultsData = async (
 
   const data: IHeatEventData[] = [];
   const units = eventData.units;
-  let relayTeamsData = Object.values(relayTeams);
-
-  for (const relayTeam of relayTeamsData) {
-    const _competitors = competitorData.filter((competitor) =>
-      relayTeam?.runners.includes(competitor.competitorId)
-    );
-  }
+  console.log("competitorData ", competitorData);
 
   for (const unit of units) {
     const _results = unit.results;
     const _resultBibs = _results.map((result) => result.bib);
-    const _competitors = competitorData.filter((competitor) =>
+    let _competitors = competitorData.filter((competitor) =>
       _resultBibs.includes(competitor.competitorId)
     );
+    if (_competitors.length == 0) {
+      let runners = [];
+      for (const relayTeam of Object.values(relayTeams)) {
+        _competitors = competitorData.filter((competitor) =>
+          relayTeam?.runners.includes(competitor.competitorId)
+        );
+        if (_competitors.length !== 0) {
+          runners.push(..._competitors);
+        }
+      }
+      _competitors = runners;
+      console.log("_competitors ", _competitors);
+    }
+
     const _trials = unit.trials;
     for (const competitor of _competitors) {
       if (unit.rounds) {
@@ -156,9 +164,9 @@ export const getTableData = (rawData: RawData): TableData => {
     return Object.entries(row).map(([key, value]) => {
       return {
         value: value,
-        stringValue: value.toString(),
+        stringValue: value?.toString(),
         changed: false,
-        link: links?.get(value.toString()),
+        link: links?.get(value?.toString()),
         height: isHeight(key),
         round: isRound(key),
         id: key,
