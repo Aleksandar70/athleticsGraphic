@@ -3,9 +3,11 @@ import { OpenTrack } from "../../../global/constants/api";
 import { getOTCompetitionData } from "../api/opentrack.api";
 import { createCompetition } from "./repository/competition.repo";
 import { createCompetitors } from "./repository/competitor.repo";
+import { createRelayTeams } from "./repository/relayTeams.repo";
 import { createDefaultConfig } from "./repository/config.repo";
 import { createEvents } from "./repository/event.repo";
 import level from "level-ts";
+
 export const levelMap = new level("./levelDB");
 
 let database: mongoose.Connection;
@@ -45,6 +47,7 @@ export const initialize = async (): Promise<void> => {
   await createCompetition(otCompetitionData.competitionData);
   await createEvents(otCompetitionData.eventsData);
   await createCompetitors(otCompetitionData.competitorsData);
+  await createRelayTeams(otCompetitionData.relayTeamsData);
   console.log("Initialization complete.");
 };
 

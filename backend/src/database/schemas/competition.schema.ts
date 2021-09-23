@@ -56,7 +56,6 @@ const CompetitionSchema = new Schema({
     required: false,
     default: "",
   },
-  // relayTeams
   shortName: {
     type: String,
     required: false,

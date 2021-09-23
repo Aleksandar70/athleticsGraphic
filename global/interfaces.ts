@@ -58,4 +58,5 @@ export interface IResult {
 
 export interface ICompetitor {
   competitorId: string;
+  event: string
 }
