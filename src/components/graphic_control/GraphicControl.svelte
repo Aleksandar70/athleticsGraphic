@@ -73,7 +73,9 @@
         <Button color="primary">{UIText.TIME}</Button>
         <Button color="primary">{UIText.START_TIME}</Button>
         <Button color="primary">{UIText.STOP_TIME}</Button>
-        <Button color="primary">{UIText.MEDALS}</Button>
+        <Button color="primary" on:click={() => action(Graphics.MEDALS)}
+          >{UIText.MEDALS}</Button
+        >
       </div>
       <div class="graphic-personal">
         <Label>Personal</Label>

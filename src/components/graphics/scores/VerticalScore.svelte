@@ -148,7 +148,7 @@
     width: 56px;
     height: 56px;
     line-height: 56px;
-    top: 865px;
+    top: 860px;
     left: 343px;
     color: rgb(255, 255, 255);
     transform-origin: left center;

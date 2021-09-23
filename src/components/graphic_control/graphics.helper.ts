@@ -48,6 +48,12 @@ export const getDataForPreviewModal = (
       data["Discipline Name"] = get(currentEventData)["name"];
       data["Note"] = "NEXT";
       data["Time"] = get(currentEventData)["r1Time"];
+      break;
+    case Graphics.MEDALS:
+      data["Competition"] = get(currentCompetitionData)["englishName"];
+      data["Event Name"] = get(currentEventData)["name"];  
+      data["Hashtag"] = "#belgrade2021";
+      data["Description"] = "MEDALS";
   }
   return data;
 };
