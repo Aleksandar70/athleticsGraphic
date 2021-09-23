@@ -58,7 +58,6 @@ export const getCompetitorResultsData = async (
 ): Promise<IHeatEventData[] | ICompetitor[]> => {
   const eventData = await getEventData(eventId);
   const { competitionData } = await getOTCompetitionData();
-  const relayTeams = await getRelayTeamsForEvent(eventId);
 
   currentEventData.set(eventData);
   currentCompetitionData.set(competitionData);
@@ -76,7 +75,10 @@ export const getCompetitorResultsData = async (
     let _competitors = competitorData.filter((competitor) =>
       _resultBibs.includes(competitor.competitorId)
     );
+    
     if (_competitors.length == 0) {
+      const relayTeams = await getRelayTeamsForEvent(eventId);
+      console.log("relayTeams ", relayTeams);
       let runners = [];
       for (const relayTeam of Object.values(relayTeams)) {
         _competitors = competitorData.filter((competitor) =>
