@@ -20,3 +20,9 @@ export const createRelayTeams = async (
 export const getRelayTeams = async (): Promise<IRelayTeams[]> => {
   return await RelayTeamModel.find();
 };
+
+export const getRelayTeamsForEvent = async (
+  eventId: string
+): Promise<IRelayTeams[]> => {
+  return await RelayTeamModel.find({ eventId: eventId });
+};

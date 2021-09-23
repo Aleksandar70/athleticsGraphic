@@ -27,7 +27,7 @@ import {
 import { get } from "svelte/store";
 import { isNumeric } from "../../utils/string.utils";
 import { getOTCompetitionData } from "../../../backend/src/api/opentrack.api";
-import { getRelayTeams } from "../../api/relayTeams.api";
+import { getRelayTeamsForEvent } from "../../api/relayTeams.api";
 
 export const getDefaultColumns = (): string[] => {
   return get(currentEventId) === "events"
@@ -58,32 +58,30 @@ export const getCompetitorResultsData = async (
 ): Promise<IHeatEventData[] | ICompetitor[]> => {
   const eventData = await getEventData(eventId);
   const { competitionData } = await getOTCompetitionData();
-  const relayTeamsData =  await getRelayTeams();
-  console.log("relayTeamsData ", relayTeamsData);
+  const relayTeams = await getRelayTeamsForEvent(eventId);
+  console.log("teams: ", relayTeams);
   currentEventData.set(eventData);
   currentCompetitionData.set(competitionData);
-  console.log("eventId: ", eventId);
 
   const competitorData = await getCompetitorsForEvent(eventId);
-  console.log("competitorData: ", competitorData);
   competitors.set(competitorData);
 
   const data: IHeatEventData[] = [];
-
   const units = eventData.units;
+  let relayTeamsData = Object.values(relayTeams);
+
+  for (const relayTeam of relayTeamsData) {
+    const _competitors = competitorData.filter((competitor) =>
+      relayTeam?.runners.includes(competitor.competitorId)
+    );
+  }
 
   for (const unit of units) {
     const _results = unit.results;
     const _resultBibs = _results.map((result) => result.bib);
-    //_competitors are empty
-    //povezi po heat-u i event-u
     const _competitors = competitorData.filter((competitor) =>
-      _resultBibs.includes(competitor.event)
+      _resultBibs.includes(competitor.competitorId)
     );
-    console.log("_results: ", _results);
-    //_resultBibs are nationalities
-
-    //trials are empty
     const _trials = unit.trials;
     for (const competitor of _competitors) {
       if (unit.rounds) {
