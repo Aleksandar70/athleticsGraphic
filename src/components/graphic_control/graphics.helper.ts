@@ -51,9 +51,10 @@ export const getDataForPreviewModal = (
       break;
     case Graphics.MEDALS:
       data["Competition"] = get(currentCompetitionData)["englishName"];
-      data["Event Name"] = get(currentEventData)["name"];  
+      data["Event Name"] = get(currentEventData)["name"];
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
+      data["Competitors"] = getCompetitors();
   }
   return data;
 };
@@ -72,3 +73,12 @@ const getScores = (): unknown[] =>
   get(selectedParticipant)
     .filter((field) => isNumeric(field.id))
     .map((score: TableField) => ({ [score.id]: score.stringValue }));
+
+const getMedals = (): Record<string, string>[] =>
+  get(competitors).map((competitor) => (
+    
+    {
+    name: `${competitor.firstName} ${competitor.lastName}`,
+    nationality: competitor.nationality,
+    result: competitor.result,
+  }));

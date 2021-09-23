@@ -2,43 +2,77 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+  import { animateHeader } from "./medals.helper";
 
   export let data = {};
   export let clear = false;
 
-  const timeline = gsap.timeline();
+  const timelineHeader = gsap.timeline();
+  const timelineCompetitors = gsap.timeline();
+  $: numberOfCompetitors = data["Competitors"].length;
 
   onMount(() => {
-    timeline
-      .to("#medaljeBG", 0.4, { opacity: 1, scaleY: 1, ease: "power2.out" })
-      .to(
-        "#medaljeCompetition",
-        0.3,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<0.05"
-      )
-      .to(
-        "#medaljeHash",
-        0.3,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<0.05"
-      )
-      .to(
-        "#medaljeEvent",
-        0.3,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<0.05"
-      )
-      .to(
-        "#medaljeTitle",
-        0.3,
-        { opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<0.05"
-      );
+    animateHeader(timelineHeader);
+    animateCompetitors();
   });
 
+  export const animateCompetitors = () => {
+    for (let index = 0; index < 3; index++) {
+      timelineCompetitors
+        .to(
+          `#medaljePlace-${index}`,
+          0.1,
+          { opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<0.05"
+        )
+        .to(
+          `#medaljeFlag-${index}`,
+          0.1,
+          { opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<"
+        )
+        .to(
+          `#medaljeCountry-${index}`,
+          0.1,
+          { opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<"
+        )
+        .to(
+          `#medaljeTakmicar-${index}`,
+          0.1,
+          { opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<"
+        )
+        .to(
+          `#medaljePerformance-${index}`,
+          0.1,
+          { opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<"
+        )
+        .to(
+          "#medaljeGoldMedal",
+          0.1,
+          { opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<"
+        )
+        .to(
+          "#medaljeSilverMedal",
+          0.1,
+          { opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<"
+        )
+        .to(
+          "#medaljeBronzeMedal",
+          0.1,
+          { opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<"
+        );
+    }
+  };
+
   $: if (clear) {
-    timeline.reverse().then(() => {
+    timelineCompetitors.reverse().then(() => {
+      timelineHeader.reverse();
       $clearChannel.postMessage(false);
       visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
@@ -50,6 +84,21 @@
 <p id="medaljeEvent">{data["Event Name"]}</p>
 <p id="medaljeHash">{data["Hashtag"]}</p>
 <p id="medaljeTitle">{data["Description"]}</p>
+
+{#each numberOfCompetitors as competitor, i}
+  <p id="medaljePlace">{i + 1}</p>
+  <img id="medaljeFlag-{i}" src="" alt="" />
+  <p id="medaljeCountry-{i}" />
+  <p id="medaljeTakmicar-{i}" />
+  <p id="medaljePerformance-{i}" />
+  {#if i == 0}
+    <img id="medaljeGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
+  {:else if i == 1}
+    <img id="medaljeSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
+  {:else}
+    <img id="medaljeBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
+  {/if}
+{/each}
 
 <style>
   #medaljeBG {
@@ -114,6 +163,81 @@
     left: 695px;
     color: rgb(255, 255, 255);
     z-index: 1;
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  #medaljePlace {
+    font-family: "Montserrat-SemiBold";
+    font-size: 24pt;
+    position: fixed;
+    text-align: center;
+    width: 100px;
+    height: 56px;
+    line-height: 56px;
+    top: 771px;
+    left: 487px;
+    color: rgb(28, 59, 113);
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  #medaljeFlag {
+    position: fixed;
+    height: 48px;
+    width: 48px;
+    top: 807px;
+    left: 590px;
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  #medaljeCountry {
+    font-family: "Montserrat-SemiBold";
+    font-size: 20pt;
+    position: fixed;
+    text-align: left;
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
+    top: 775px;
+    left: 645px;
+    color: rgb(255, 255, 255);
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  #medaljeTakmicar {
+    font-family: "Montserrat-SemiBold";
+    font-size: 22pt;
+    position: fixed;
+    text-align: left;
+    width: 800px;
+    height: 48px;
+    line-height: 48px;
+    top: 778px;
+    left: 730px;
+    color: rgb(28, 59, 113);
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  #medaljePerformance {
+    font-family: "Montserrat-SemiBold";
+    font-size: 22pt;
+    position: fixed;
+    text-align: right;
+    width: 800px;
+    height: 48px;
+    line-height: 48px;
+    top: 778px;
+    right: 550px;
+    color: rgb(28, 59, 113);
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
