@@ -7,6 +7,7 @@ import ConfigRouter from "./api/routers/config.router";
 import DatabaseRouter from "./api/routers/database.router";
 import TrialsRouter from "./api/routers/trials.router";
 import ResultsRouter from "./api/routers/results.router";
+import RelayTeamsRouter from "./api/routers/relayTeams.router";
 import { Paths } from "../../global/constants/api";
 import { json } from "body-parser";
 
@@ -23,6 +24,7 @@ app.use(Paths.EVENTS_PATH, EventRouter);
 app.use(Paths.COMPETITOR_PATH, CompetitorRouter);
 app.use(Paths.TRIALS_PATH, TrialsRouter);
 app.use(Paths.RESULTS_PATH, ResultsRouter);
+app.use(Paths.RELAY_TEAMS_PATH, RelayTeamsRouter);
 app.use(Paths.CONFIG_PATH, ConfigRouter);
 app.use(Paths.DATABASE_PATH, DatabaseRouter);
 

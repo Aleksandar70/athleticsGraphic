@@ -27,6 +27,7 @@ import {
 import { get } from "svelte/store";
 import { isNumeric } from "../../utils/string.utils";
 import { getOTCompetitionData } from "../../../backend/src/api/opentrack.api";
+import { getRelayTeams } from "../../api/relayTeams.api";
 
 export const getDefaultColumns = (): string[] => {
   return get(currentEventId) === "events"
@@ -57,7 +58,8 @@ export const getCompetitorResultsData = async (
 ): Promise<IHeatEventData[] | ICompetitor[]> => {
   const eventData = await getEventData(eventId);
   const { competitionData } = await getOTCompetitionData();
-
+  const relayTeamsData =  await getRelayTeams();
+  console.log("relayTeamsData ", relayTeamsData);
   currentEventData.set(eventData);
   currentCompetitionData.set(competitionData);
   console.log("eventId: ", eventId);

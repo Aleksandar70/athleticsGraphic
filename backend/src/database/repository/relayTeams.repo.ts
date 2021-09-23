@@ -16,3 +16,7 @@ export const createRelayTeams = async (
 
   return await RelayTeamModel.insertMany(relayTeamModels);
 };
+
+export const getRelayTeams = async (): Promise<IRelayTeams[]> => {
+  return await RelayTeamModel.find();
+};

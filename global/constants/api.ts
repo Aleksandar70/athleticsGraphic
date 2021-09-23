@@ -16,6 +16,9 @@ export abstract class Paths {
   static readonly COMPETITOR = "competitor";
   static readonly COMPETITOR_PATH = `${Paths.ROOT_PATH}${Paths.COMPETITOR}`;
 
+  static readonly RELAY_TEAMS = "relayTeams";
+  static readonly RELAY_TEAMS_PATH = `${Paths.ROOT_PATH}${Paths.RELAY_TEAMS}`;
+
   static readonly CONFIG = "config";
   static readonly CONFIG_PATH = `${Paths.ROOT_PATH}${Paths.CONFIG}`;
 
