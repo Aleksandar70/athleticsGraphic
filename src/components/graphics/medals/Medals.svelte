@@ -6,10 +6,12 @@
 
   export let data = {};
   export let clear = false;
-
   const timelineHeader = gsap.timeline();
   const timelineCompetitors = gsap.timeline();
-  $: numberOfCompetitors = data["Competitors"].length;
+
+  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+
+  $: numberOfCompetitors = data["Medals"].length;
 
   onMount(() => {
     animateHeader(timelineHeader);

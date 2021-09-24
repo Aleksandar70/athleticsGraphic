@@ -54,7 +54,7 @@ export const getDataForPreviewModal = (
       data["Event Name"] = get(currentEventData)["name"];
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
-      data["Competitors"] = getCompetitors();
+      data["Medals"] = getBestPlaces();
   }
   return data;
 };
@@ -74,11 +74,13 @@ const getScores = (): unknown[] =>
     .filter((field) => isNumeric(field.id))
     .map((score: TableField) => ({ [score.id]: score.stringValue }));
 
-const getMedals = (): Record<string, string>[] =>
-  get(competitors).map((competitor) => (
-    
-    {
+const getBestPlaces = async (): Promise<Record<string, string>[]> => {
+  console.log("get(currentEventData) ", get(currentEventData)["units"]);
+  const units = get(currentEventData)["units"];
+  console.log("results ", get(units["results"])); //how to access this?
+  return get(competitors).map((competitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
     result: competitor.result,
   }));
+};
