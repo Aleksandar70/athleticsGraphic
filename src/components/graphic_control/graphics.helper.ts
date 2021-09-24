@@ -83,18 +83,7 @@ const getBestResults = (): Record<string, string>[] => {
       (result) => result.place == 1 || result.place == 2 || result.place == 3
     );
   }
-  const resultBibsForMedals = bestResults.map((bestResult) => bestResult.bib);
-  console.log(
-    get(competitors)
-      .filter((competitor) =>
-        resultBibsForMedals.includes(competitor.competitorId)
-      )
-      .map((competitor) => ({
-        name: `${competitor.firstName} ${competitor.lastName}`,
-        nationality: competitor.nationality,
-        result: competitor.result,
-      }))
-  );
+  const resultBibsForMedals = bestResults.map((bestResult) => bestResult?.bib);
 
   return get(competitors)
     .filter((competitor) =>

@@ -89,8 +89,10 @@
 <p id="medaljeTitle">{data["Description"]}</p>
 
 {#each bestCompetitors as bestCompetitor, i}
-  <!-- <p id="medaljePlace">{i + 1}</p>
-  <p id="medaljePerformance-{i}" /> -->
+  <p style="top: {771 + 59 * i}px" class="medaljePlace" id="medaljePlace-{i}">
+    {i + 1}
+  </p>
+
   <img
     style="top: {807 + 65 * i}px"
     class="medaljeFlag"
@@ -98,6 +100,7 @@
     src="/img/flags/{bestCompetitor.nationality}.png"
     alt={bestCompetitor.nationality}
   />
+
   <p
     style="top: {775 + 58 * i}px"
     class="medaljeCountry"
@@ -111,15 +114,23 @@
     id="medaljeTakmicar-{i}"
   >
     {bestCompetitor.name}
+  </p>
+  <p
+    style="top: {347 + 59 * i}px"
+    class="medaljePerformance"
+    id="medaljePerformance-{i}"
+  >
+    {bestCompetitor.result}
+  </p>
 
-    {#if i == 0}
-      <img id="medaljeGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
-    {:else if i == 1}
-      <img id="medaljeSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
-    {:else}
-      <img id="medaljeBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
-    {/if}
-  </p>{/each}
+  {#if i == 0}
+    <img id="medaljeGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
+  {:else if i == 1}
+    <img id="medaljeSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
+  {:else}
+    <img id="medaljeBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
+  {/if}
+{/each}
 
 <style>
   #medaljeBG {
@@ -197,7 +208,6 @@
     width: 100px;
     height: 56px;
     line-height: 56px;
-    top: 771px;
     left: 487px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
