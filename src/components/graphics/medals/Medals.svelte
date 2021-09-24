@@ -11,7 +11,8 @@
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
-  $: numberOfCompetitors = data["Medals"].length;
+  $: numberOfBestCompetitors = data["Medals"].length;
+  $: bestCompetitors = data["Medals"];
 
   onMount(() => {
     animateHeader(timelineHeader);
@@ -19,7 +20,7 @@
   });
 
   export const animateCompetitors = () => {
-    for (let index = 0; index < 3; index++) {
+    for (let index = 0; index < numberOfBestCompetitors; index++) {
       timelineCompetitors
         .to(
           `#medaljePlace-${index}`,
@@ -87,20 +88,38 @@
 <p id="medaljeHash">{data["Hashtag"]}</p>
 <p id="medaljeTitle">{data["Description"]}</p>
 
-{#each numberOfCompetitors as competitor, i}
-  <p id="medaljePlace">{i + 1}</p>
-  <img id="medaljeFlag-{i}" src="" alt="" />
-  <p id="medaljeCountry-{i}" />
-  <p id="medaljeTakmicar-{i}" />
-  <p id="medaljePerformance-{i}" />
-  {#if i == 0}
-    <img id="medaljeGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
-  {:else if i == 1}
-    <img id="medaljeSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
-  {:else}
-    <img id="medaljeBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
-  {/if}
-{/each}
+{#each bestCompetitors as bestCompetitor, i}
+  <!-- <p id="medaljePlace">{i + 1}</p>
+  <p id="medaljePerformance-{i}" /> -->
+  <img
+    style="top: {807 + 65 * i}px"
+    class="medaljeFlag"
+    id="medaljeFlag-{i}"
+    src="/img/flags/{bestCompetitor.nationality}.png"
+    alt={bestCompetitor.nationality}
+  />
+  <p
+    style="top: {775 + 58 * i}px"
+    class="medaljeCountry"
+    id="medaljeCountry-{i}"
+  >
+    {bestCompetitor.nationality}
+  </p>
+  <p
+    style="top: {778 + 58 * i}px"
+    class="medaljeTakmicar"
+    id="medaljeTakmicar-{i}"
+  >
+    {bestCompetitor.name}
+
+    {#if i == 0}
+      <img id="medaljeGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
+    {:else if i == 1}
+      <img id="medaljeSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
+    {:else}
+      <img id="medaljeBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
+    {/if}
+  </p>{/each}
 
 <style>
   #medaljeBG {

@@ -8,6 +8,7 @@ import {
   selectedParticipant,
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
+import { getCompetitorResultsData } from "../data_table/table.helper";
 
 export const getDataForPreviewModal = (
   id: Graphics
@@ -54,7 +55,7 @@ export const getDataForPreviewModal = (
       data["Event Name"] = get(currentEventData)["name"];
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
-      data["Medals"] = getBestPlaces();
+      data["Medals"] = getBestResults();
   }
   return data;
 };
@@ -74,13 +75,34 @@ const getScores = (): unknown[] =>
     .filter((field) => isNumeric(field.id))
     .map((score: TableField) => ({ [score.id]: score.stringValue }));
 
-const getBestPlaces = async (): Promise<Record<string, string>[]> => {
-  console.log("get(currentEventData) ", get(currentEventData)["units"]);
+const getBestResults = (): Record<string, string>[] => {
   const units = get(currentEventData)["units"];
-  console.log("results ", get(units["results"])); //how to access this?
-  return get(competitors).map((competitor) => ({
-    name: `${competitor.firstName} ${competitor.lastName}`,
-    nationality: competitor.nationality,
-    result: competitor.result,
-  }));
+  let bestResults = [];
+  for (const unit of units) {
+    bestResults = unit["results"].filter(
+      (result) => result.place == 1 || result.place == 2 || result.place == 3
+    );
+  }
+  const resultBibsForMedals = bestResults.map((bestResult) => bestResult.bib);
+  console.log(
+    get(competitors)
+      .filter((competitor) =>
+        resultBibsForMedals.includes(competitor.competitorId)
+      )
+      .map((competitor) => ({
+        name: `${competitor.firstName} ${competitor.lastName}`,
+        nationality: competitor.nationality,
+        result: competitor.result,
+      }))
+  );
+
+  return get(competitors)
+    .filter((competitor) =>
+      resultBibsForMedals.includes(competitor.competitorId)
+    )
+    .map((competitor) => ({
+      name: `${competitor.firstName} ${competitor.lastName}`,
+      nationality: competitor.nationality,
+      result: competitor.result,
+    }));
 };
