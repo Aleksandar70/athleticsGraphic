@@ -19,9 +19,14 @@
   export let data: Record<string, any> = {};
 
   let competitors: Record<string, string>[] = [];
+  let bestCompetitors: Record<string, string>[] = [];
 
   $: if (data["Competitors"]) {
     competitors = data["Competitors"];
+  }
+
+  $: if (data["Medals"]) {
+    bestCompetitors = data["Medals"];
   }
 
   $: _data = { ...data };
@@ -102,6 +107,36 @@
                   <Input
                     class="result-input"
                     value={competitor.result}
+                    on:input={(event) =>
+                      inputChange(event.target, name, "result", i)}
+                  />
+                {/if}
+              </div>
+            {/each}
+          {:else if name === "Medals"}
+            {#each bestCompetitors as bestCompetitor, i}
+              <div class="score">
+                <img
+                  alt={bestCompetitor.nationality}
+                  src="/img/flags/{bestCompetitor.nationality}.png"
+                />
+                <Input
+                  class="nationality-input"
+                  value={bestCompetitor.nationality}
+                  on:input={(event) =>
+                    inputChange(event.target, name, "nationality", i)}
+                />
+                <Input
+                  class="score-input"
+                  type="text"
+                  value={bestCompetitor.name}
+                  on:input={(event) =>
+                    inputChange(event.target, name, "name", i)}
+                />
+                {#if id === Graphics.RESULT_LIST}
+                  <Input
+                    class="result-input"
+                    value={bestCompetitor.result}
                     on:input={(event) =>
                       inputChange(event.target, name, "result", i)}
                   />

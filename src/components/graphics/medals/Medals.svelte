@@ -116,7 +116,7 @@
     {bestCompetitor.name}
   </p>
   <p
-    style="top: {347 + 59 * i}px"
+    style="top: {778 + 58 * i}px"
     class="medaljePerformance"
     id="medaljePerformance-{i}"
   >
@@ -200,7 +200,40 @@
     transform: scaleY(0);
   }
 
-  #medaljePlace {
+  #medaljeGoldMedal {
+    position: fixed;
+    width: 35px;
+    height: 46px;
+    top: 807px;
+    left: 1370px;
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  #medaljeSilverMedal {
+    position: fixed;
+    width: 35px;
+    height: 46px;
+    top: 865px;
+    left: 1370px;
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  #medaljeBronzeMedal {
+    position: fixed;
+    width: 35px;
+    height: 46px;
+    top: 922px;
+    left: 1370px;
+    transform-origin: top center;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  .medaljePlace {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -215,18 +248,17 @@
     transform: scaleY(0);
   }
 
-  #medaljeFlag {
+  .medaljeFlag {
     position: fixed;
     height: 48px;
     width: 48px;
-    top: 807px;
     left: 590px;
     transform-origin: top center;
     opacity: 0;
     transform: scaleY(0);
   }
 
-  #medaljeCountry {
+  .medaljeCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -234,7 +266,6 @@
     width: 56px;
     height: 56px;
     line-height: 56px;
-    top: 775px;
     left: 645px;
     color: rgb(255, 255, 255);
     transform-origin: top center;
@@ -242,7 +273,7 @@
     transform: scaleY(0);
   }
 
-  #medaljeTakmicar {
+  .medaljeTakmicar {
     font-family: "Montserrat-SemiBold";
     font-size: 22pt;
     position: fixed;
@@ -250,7 +281,6 @@
     width: 800px;
     height: 48px;
     line-height: 48px;
-    top: 778px;
     left: 730px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
@@ -258,7 +288,7 @@
     transform: scaleY(0);
   }
 
-  #medaljePerformance {
+  .medaljePerformance {
     font-family: "Montserrat-SemiBold";
     font-size: 22pt;
     position: fixed;
@@ -266,7 +296,6 @@
     width: 800px;
     height: 48px;
     line-height: 48px;
-    top: 778px;
     right: 550px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
