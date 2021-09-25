@@ -4,7 +4,6 @@
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
 
   export let data = {};
-  export let clear = false;
 
   const timeline = gsap.timeline();
 
@@ -47,6 +46,9 @@
         "<0.15"
       );
   });
+
+  let clear = false;
+  $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
   $: if (clear) {
     timeline.reverse().then(() => {

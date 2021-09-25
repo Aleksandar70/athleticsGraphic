@@ -4,7 +4,8 @@
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
 
   export let data;
-  export let clear = false;
+
+  let clear = false;
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 

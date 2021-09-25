@@ -6,19 +6,16 @@
   import RunningScore from "./RunningScore.svelte";
 
   export let data = {};
-  export let clear = false;
   export let type = EventType.HORIZONTAL;
-
-  $clearChannel.addEventListener("message", (event) => (clear = event.data));
 </script>
 
 <div id="scores--wrapper">
   {#if type === EventType.HORIZONTAL}
-    <HorizontalScore {data} bind:clear />
+    <HorizontalScore {data} />
   {:else if type === EventType.VERTICAL}
-    <VerticalScore {data} bind:clear />
+    <VerticalScore {data} />
   {:else}
-    <RunningScore {data} bind:clear />
+    <RunningScore {data} />
   {/if}
 </div>
 
