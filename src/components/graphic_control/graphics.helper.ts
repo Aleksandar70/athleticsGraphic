@@ -79,7 +79,8 @@ const getBestResults = (): Record<string, string>[] => {
   let bestResults = [];
   for (const unit of units) {
     bestResults = unit["results"].filter(
-      (result) => result.place == 1 || result.place == 2 || result.place == 3
+      (result: any) =>
+        result.place == 1 || result.place == 2 || result.place == 3
     );
   }
   const resultBibsForMedals = bestResults.map((bestResult) => bestResult?.bib);
@@ -92,6 +93,13 @@ const getBestResults = (): Record<string, string>[] => {
       nationality: competitor.nationality,
       result: competitor.result,
     }));
+  sortByDescendingOrder(bestCompetitors);
+  return bestCompetitors;
+};
+
+const sortByDescendingOrder = (
+  bestCompetitors: Record<string, string>[]
+): void => {
   bestCompetitors.sort((n1, n2) => {
     if (n1.result < n2.result) {
       return 1;
@@ -101,5 +109,4 @@ const getBestResults = (): Record<string, string>[] => {
     }
     return 0;
   });
-  return bestCompetitors;
 };

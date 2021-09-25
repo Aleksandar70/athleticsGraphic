@@ -1,4 +1,4 @@
-<script lang="ts">
+<script lant="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
@@ -6,7 +6,7 @@
 
   export let data = {};
   let clear = false;
-  
+
   const timelineHeader = gsap.timeline();
   const timelineCompetitors = gsap.timeline();
 
