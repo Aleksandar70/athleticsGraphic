@@ -47,7 +47,7 @@
   <img
     id="disciplineAnnouncement"
     alt="img"
-    src="/img/graphics/najavaDiscipline.png"
+    src="/img/graphics/disciplineAnnouncement.png"
   />
   <p id="disciplineTitle">{data["Discipline Name"]}</p>
   <p id="disciplineNextNote">{data["Note"]}</p>

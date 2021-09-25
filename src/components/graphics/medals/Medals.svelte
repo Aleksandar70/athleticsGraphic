@@ -83,7 +83,7 @@
 </script>
 
 <div id="medals" class="medals">
-  <img id="medalsBG" src="/img/graphics/medalje.png" alt="" />
+  <img id="medalsBG" src="/img/graphics/medals.png" alt="medals" />
   <p id="medalsCompetition">{data["Competition"]}</p>
   <p id="medalsEvent">{data["Event Name"]}</p>
   <p id="medalsHash">{data["Hashtag"]}</p>
