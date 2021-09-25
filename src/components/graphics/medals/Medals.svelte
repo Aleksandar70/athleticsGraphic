@@ -82,57 +82,65 @@
   }
 </script>
 
-<img id="medaljeBG" src="/img/graphics/medalje.png" alt="" />
-<p id="medaljeCompetition">{data["Competition"]}</p>
-<p id="medaljeEvent">{data["Event Name"]}</p>
-<p id="medaljeHash">{data["Hashtag"]}</p>
-<p id="medaljeTitle">{data["Description"]}</p>
+<div id="medalje" class="medalje">
+  <img id="medaljeBG" src="/img/graphics/medalje.png" alt="" />
+  <p id="medaljeCompetition">{data["Competition"]}</p>
+  <p id="medaljeEvent">{data["Event Name"]}</p>
+  <p id="medaljeHash">{data["Hashtag"]}</p>
+  <p id="medaljeTitle">{data["Description"]}</p>
 
-{#each bestCompetitors as bestCompetitor, i}
-  <p style="top: {771 + 59 * i}px" class="medaljePlace" id="medaljePlace-{i}">
-    {i + 1}
-  </p>
+  {#each bestCompetitors as bestCompetitor, i}
+    <p style="top: {805 + 59 * i}px" class="medaljePlace" id="medaljePlace-{i}">
+      {i + 1}
+    </p>
+    <img
+      style="top: {805 + 59 * i}px"
+      class="medaljeFlag"
+      id="medaljeFlag-{i}"
+      src="/img/flags/{bestCompetitor.nationality}.png"
+      alt={bestCompetitor.nationality}
+    />
+    <p
+      style="top: {805 + 58 * i}px"
+      class="medaljeCountry"
+      id="medaljeCountry-{i}"
+    >
+      {bestCompetitor.nationality}
+    </p>
+    <p
+      style="top: {805 + 58 * i}px"
+      class="medaljeTakmicar"
+      id="medaljeTakmicar-{i}"
+    >
+      {bestCompetitor.name}
+    </p>
+    <p
+      style="top: {805 + 58 * i}px"
+      class="medaljePerformance"
+      id="medaljePerformance-{i}"
+    >
+      {bestCompetitor.result}
+    </p>
 
-  <img
-    style="top: {807 + 65 * i}px"
-    class="medaljeFlag"
-    id="medaljeFlag-{i}"
-    src="/img/flags/{bestCompetitor.nationality}.png"
-    alt={bestCompetitor.nationality}
-  />
-
-  <p
-    style="top: {775 + 58 * i}px"
-    class="medaljeCountry"
-    id="medaljeCountry-{i}"
-  >
-    {bestCompetitor.nationality}
-  </p>
-  <p
-    style="top: {778 + 58 * i}px"
-    class="medaljeTakmicar"
-    id="medaljeTakmicar-{i}"
-  >
-    {bestCompetitor.name}
-  </p>
-  <p
-    style="top: {778 + 58 * i}px"
-    class="medaljePerformance"
-    id="medaljePerformance-{i}"
-  >
-    {bestCompetitor.result}
-  </p>
-
-  {#if i == 0}
-    <img id="medaljeGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
-  {:else if i == 1}
-    <img id="medaljeSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
-  {:else}
-    <img id="medaljeBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
-  {/if}
-{/each}
+    {#if i == 0}
+      <img id="medaljeGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
+    {:else if i == 1}
+      <img id="medaljeSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
+    {:else}
+      <img id="medaljeBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
+    {/if}
+  {/each}
+</div>
 
 <style>
+  #medalje {
+    width: 1920px;
+    height: 1080px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+  }
   #medaljeBG {
     top: 666px;
     left: 484px;
@@ -175,7 +183,7 @@
     width: 350px;
     height: 38px;
     line-height: 38px;
-    top: 765px;
+    top: 770px;
     left: 940px;
     color: rgb(255, 255, 255);
     transform-origin: top center;
@@ -296,7 +304,7 @@
     width: 800px;
     height: 48px;
     line-height: 48px;
-    right: 550px;
+    right: 450px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
     opacity: 0;
