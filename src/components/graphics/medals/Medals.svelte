@@ -279,7 +279,7 @@
     width: 100px;
     height: 48px;
     line-height: 48px;
-    right: 450px;
+    left: 1250px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
     opacity: 0;
