@@ -50,7 +50,7 @@
     metric?: string,
     idx?: number
   ) => {
-    if (name === "Scores" || name === "Competitors"|| name === "Medals") {
+    if (name === "Scores" || name === "Competitors" || name === "Medals") {
       _data[name][idx][metric] = (target as HTMLInputElement).value;
       return;
     }
@@ -134,14 +134,6 @@
                     on:input={(event) =>
                       inputChange(event.target, name, "name", i)}
                   />
-                  {#if id === Graphics.RESULT_LIST}
-                    <Input
-                      class="result-input"
-                      value={bestCompetitor.result}
-                      on:input={(event) =>
-                        inputChange(event.target, name, "result", i)}
-                    />
-                  {/if}
                 </div>
               {/each}
             {:else}

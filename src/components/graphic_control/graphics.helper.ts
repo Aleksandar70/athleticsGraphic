@@ -1,4 +1,8 @@
 import { get } from "svelte/store";
+import type {
+  ICompetitor,
+  IResult,
+} from "../../../backend/src/database/interfaces";
 import { Graphics } from "../../../global/constants/constants";
 import type { TableField } from "../../../global/types";
 import {
@@ -62,12 +66,14 @@ export const getDataForPreviewModal = (
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
-const getCompetitors = (): Record<string, string>[] =>
-  get(competitors).map((competitor) => ({
+const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
+  const competitorList = list ? list : get(competitors);
+  return competitorList.map((competitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
     result: competitor.result,
   }));
+};
 
 const getScores = (): unknown[] =>
   get(selectedParticipant)
@@ -79,20 +85,15 @@ const getBestResults = (): Record<string, string>[] => {
   let bestResults = [];
   for (const unit of units) {
     bestResults = unit["results"].filter(
-      (result: any) =>
-        result.place == 1 || result.place == 2 || result.place == 3
+      (result: IResult) => result.place <= 3
     );
   }
   const resultBibsForMedals = bestResults.map((bestResult) => bestResult?.bib);
-  const bestCompetitors = get(competitors)
-    .filter((competitor) =>
-      resultBibsForMedals.includes(competitor.competitorId)
-    )
-    .map((competitor) => ({
-      name: `${competitor.firstName} ${competitor.lastName}`,
-      nationality: competitor.nationality,
-      result: competitor.result,
-    }));
+
+  const filteredBestCompetitors = get(competitors).filter((competitor) =>
+    resultBibsForMedals.includes(competitor.competitorId)
+  );
+  const bestCompetitors = getCompetitors(filteredBestCompetitors);
   sortByDescendingOrder(bestCompetitors);
   return bestCompetitors;
 };
