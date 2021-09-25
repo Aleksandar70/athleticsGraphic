@@ -5,7 +5,8 @@
   import { animateHeader } from "./medals.helper";
 
   export let data = {};
-  export let clear = false;
+  let clear = false;
+  
   const timelineHeader = gsap.timeline();
   const timelineCompetitors = gsap.timeline();
 
@@ -72,7 +73,7 @@
 
 <div id="medals" class="medals">
   <img id="medalsBG" src="/img/graphics/medals.png" alt="medals" />
-  
+
   <p id="medalsCompetition">{data["Competition"]}</p>
   <p id="medalsEvent">{data["Event Name"]}</p>
   <p id="medalsHash">{data["Hashtag"]}</p>
