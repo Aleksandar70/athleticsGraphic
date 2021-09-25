@@ -23,49 +23,49 @@
     for (let index = 0; index < numberOfBestCompetitors; index++) {
       timelineCompetitors
         .to(
-          `#medaljePlace-${index}`,
+          `#medalsPlace-${index}`,
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<0.05"
         )
         .to(
-          `#medaljeFlag-${index}`,
+          `#medalsFlag-${index}`,
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<"
         )
         .to(
-          `#medaljeCountry-${index}`,
+          `#medalsCountry-${index}`,
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<"
         )
         .to(
-          `#medaljeTakmicar-${index}`,
+          `#medalsCompetitor-${index}`,
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<"
         )
         .to(
-          `#medaljePerformance-${index}`,
+          `#medalsPerformance-${index}`,
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<"
         )
         .to(
-          "#medaljeGoldMedal",
+          "#medalsGoldMedal",
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<"
         )
         .to(
-          "#medaljeSilverMedal",
+          "#medalsSilverMedal",
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<"
         )
         .to(
-          "#medaljeBronzeMedal",
+          "#medalsBronzeMedal",
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<"
@@ -82,58 +82,58 @@
   }
 </script>
 
-<div id="medalje" class="medalje">
-  <img id="medaljeBG" src="/img/graphics/medalje.png" alt="" />
-  <p id="medaljeCompetition">{data["Competition"]}</p>
-  <p id="medaljeEvent">{data["Event Name"]}</p>
-  <p id="medaljeHash">{data["Hashtag"]}</p>
-  <p id="medaljeTitle">{data["Description"]}</p>
+<div id="medals" class="medals">
+  <img id="medalsBG" src="/img/graphics/medalje.png" alt="" />
+  <p id="medalsCompetition">{data["Competition"]}</p>
+  <p id="medalsEvent">{data["Event Name"]}</p>
+  <p id="medalsHash">{data["Hashtag"]}</p>
+  <p id="medalsTitle">{data["Description"]}</p>
 
   {#each bestCompetitors as bestCompetitor, i}
-    <p style="top: {805 + 59 * i}px" class="medaljePlace" id="medaljePlace-{i}">
+    <p style="top: {805 + 59 * i}px" class="medalsPlace" id="medalsPlace-{i}">
       {i + 1}
     </p>
     <img
       style="top: {805 + 59 * i}px"
-      class="medaljeFlag"
-      id="medaljeFlag-{i}"
+      class="medalsFlag"
+      id="medalsFlag-{i}"
       src="/img/flags/{bestCompetitor.nationality}.png"
       alt={bestCompetitor.nationality}
     />
     <p
       style="top: {805 + 58 * i}px"
-      class="medaljeCountry"
-      id="medaljeCountry-{i}"
+      class="medalsCountry"
+      id="medalsCountry-{i}"
     >
       {bestCompetitor.nationality}
     </p>
     <p
       style="top: {805 + 58 * i}px"
-      class="medaljeTakmicar"
-      id="medaljeTakmicar-{i}"
+      class="medalsCompetitor"
+      id="medalsCompetitor-{i}"
     >
       {bestCompetitor.name}
     </p>
     <p
       style="top: {805 + 58 * i}px"
-      class="medaljePerformance"
-      id="medaljePerformance-{i}"
+      class="medalsPerformance"
+      id="medalsPerformance-{i}"
     >
       {bestCompetitor.result}
     </p>
 
     {#if i == 0}
-      <img id="medaljeGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
+      <img id="medalsGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
     {:else if i == 1}
-      <img id="medaljeSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
+      <img id="medalsSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
     {:else}
-      <img id="medaljeBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
+      <img id="medalsBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
     {/if}
   {/each}
 </div>
 
 <style>
-  #medalje {
+  #medals {
     width: 1920px;
     height: 1080px;
     position: fixed;
@@ -141,7 +141,7 @@
     left: 0px;
     z-index: 0;
   }
-  #medaljeBG {
+  #medalsBG {
     top: 666px;
     left: 484px;
     position: fixed;
@@ -149,7 +149,7 @@
     opacity: 0;
     transform: scaleY(0);
   }
-  #medaljeCompetition {
+  #medalsCompetition {
     font-family: "Montserrat-Bold";
     font-size: 24pt;
     position: fixed;
@@ -160,7 +160,7 @@
     opacity: 0;
     transform: scaleY(0);
   }
-  #medaljeHash {
+  #medalsHash {
     font-family: "Montserrat-MediumItalic";
     font-size: 15pt;
     position: fixed;
@@ -175,7 +175,7 @@
     opacity: 0;
     transform: scaleY(0);
   }
-  #medaljeTitle {
+  #medalsTitle {
     font-family: "Montserrat-Semibold";
     font-size: 15pt;
     position: fixed;
@@ -191,7 +191,7 @@
     transform: scaleY(0);
   }
 
-  #medaljeEvent {
+  #medalsEvent {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -208,7 +208,7 @@
     transform: scaleY(0);
   }
 
-  #medaljeGoldMedal {
+  #medalsGoldMedal {
     position: fixed;
     width: 35px;
     height: 46px;
@@ -219,7 +219,7 @@
     transform: scaleY(0);
   }
 
-  #medaljeSilverMedal {
+  #medalsSilverMedal {
     position: fixed;
     width: 35px;
     height: 46px;
@@ -230,7 +230,7 @@
     transform: scaleY(0);
   }
 
-  #medaljeBronzeMedal {
+  #medalsBronzeMedal {
     position: fixed;
     width: 35px;
     height: 46px;
@@ -241,7 +241,7 @@
     transform: scaleY(0);
   }
 
-  .medaljePlace {
+  .medalsPlace {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -256,7 +256,7 @@
     transform: scaleY(0);
   }
 
-  .medaljeFlag {
+  .medalsFlag {
     position: fixed;
     height: 48px;
     width: 48px;
@@ -266,7 +266,7 @@
     transform: scaleY(0);
   }
 
-  .medaljeCountry {
+  .medalsCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -281,7 +281,7 @@
     transform: scaleY(0);
   }
 
-  .medaljeTakmicar {
+  .medalsCompetitor {
     font-family: "Montserrat-SemiBold";
     font-size: 22pt;
     position: fixed;
@@ -296,7 +296,7 @@
     transform: scaleY(0);
   }
 
-  .medaljePerformance {
+  .medalsPerformance {
     font-family: "Montserrat-SemiBold";
     font-size: 22pt;
     position: fixed;
