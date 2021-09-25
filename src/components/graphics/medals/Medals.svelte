@@ -276,7 +276,7 @@
     font-size: 22pt;
     position: fixed;
     text-align: right;
-    width: 800px;
+    width: 100px;
     height: 48px;
     line-height: 48px;
     right: 450px;

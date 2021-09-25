@@ -50,7 +50,7 @@
     metric?: string,
     idx?: number
   ) => {
-    if (name === "Scores" || name === "Competitors") {
+    if (name === "Scores" || name === "Competitors"|| name === "Medals") {
       _data[name][idx][metric] = (target as HTMLInputElement).value;
       return;
     }
