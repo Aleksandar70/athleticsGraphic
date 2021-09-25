@@ -4,7 +4,7 @@
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
   import { animateHeader } from "./medals.helper";
 
-  export let data = {};
+  export let data;
   let clear = false;
 
   const timelineHeader = gsap.timeline();
@@ -25,39 +25,33 @@
       timelineCompetitors
         .to(
           `#medalsPlace-${index}`,
-          0.1,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<0.05"
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.05`
         )
         .to(
           `#medalsFlag-${index}`,
-          0.1,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<`
         )
         .to(
           `#medalsCountry-${index}`,
-          0.1,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<`
         )
         .to(
           `#medalsCompetitor-${index}`,
-          0.1,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<`
         )
         .to(
           `#medalsPerformance-${index}`,
-          0.1,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<`
         )
         .to(
           `#medalsMedal-${index}`,
-          0.1,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<`
         );
     }
   };
