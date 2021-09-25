@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { clearChannel } from "../../../stores/stream.store";
   import { EventType } from "../../../../global/constants/constants";
   import HorizontalScore from "./HorizontalScore.svelte";
   import VerticalScore from "./VerticalScore.svelte";
