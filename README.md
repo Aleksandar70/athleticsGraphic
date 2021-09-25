@@ -47,6 +47,9 @@ To better check `.svelte` files run command `npm run check` in frontend director
 ## Bootstrap v5
 https://sveltestrap.js.org/?path=/story/components--get-started
 
+## Time ticker
+Sending time as XML data through sockets.
+Unzip time-ticker.zip -> npm install -> node index.js
 ## Test cases
 year - competitionID
 country = SRB

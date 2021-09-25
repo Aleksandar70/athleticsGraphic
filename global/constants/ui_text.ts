@@ -15,7 +15,6 @@ export abstract class UIText {
     "Setting fields to active will prevent them from being overwritten in the database when new data comes from the API";
 
   static readonly TV_GRAPHIC_CONTROL: string = "Controls";
-  static readonly EVENTS: string = "Events";
   static readonly START_LIST: string = "Start list";
   static readonly RESULT_LIST: string = "Result list";
   static readonly SHOW_PERSONAL_BEST: string = "Personal Best";
@@ -26,8 +25,6 @@ export abstract class UIText {
   static readonly PERSONAL_SCORE_ALERT_TEXT: string = "Please select one of the competitors in the table!";
   static readonly MEDALS: string = "Medals";
   static readonly TIME: string = "Time";
-  static readonly START_TIME: string = "Start time";
-  static readonly STOP_TIME: string = "Stop time";
   static readonly CLEAR_ALL: string = "Clear all";
   static readonly CLEAR_SEQUENCE: string = "Clear";
 
