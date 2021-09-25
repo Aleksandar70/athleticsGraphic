@@ -8,7 +8,6 @@ import {
   selectedParticipant,
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
-import { getCompetitorResultsData } from "../data_table/table.helper";
 
 export const getDataForPreviewModal = (
   id: Graphics
@@ -84,8 +83,7 @@ const getBestResults = (): Record<string, string>[] => {
     );
   }
   const resultBibsForMedals = bestResults.map((bestResult) => bestResult?.bib);
-
-  return get(competitors)
+  const bestCompetitors = get(competitors)
     .filter((competitor) =>
       resultBibsForMedals.includes(competitor.competitorId)
     )
@@ -94,4 +92,14 @@ const getBestResults = (): Record<string, string>[] => {
       nationality: competitor.nationality,
       result: competitor.result,
     }));
+  bestCompetitors.sort((n1, n2) => {
+    if (n1.result < n2.result) {
+      return 1;
+    }
+    if (n1.result > n2.result) {
+      return -1;
+    }
+    return 0;
+  });
+  return bestCompetitors;
 };
