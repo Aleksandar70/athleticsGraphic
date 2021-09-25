@@ -16,3 +16,12 @@
 .score-metric {
   margin-right: 15px;
 }
+
+.body-info {
+  font-size: larger;
+  margin: 15px;
+}
+
+.id-span {
+  text-decoration: underline;
+}

@@ -45,7 +45,8 @@
         >
         <Button
           color="danger"
-          on:click={() => $streamChannel.postMessage({ id: "", data: {} })}
+          on:click={() =>
+            $streamChannel.postMessage({ id: "", data: {}, type: undefined })}
           >{UIText.CLEAR_ALL}</Button
         >
       </div>
@@ -70,7 +71,9 @@
           on:click={() => action(Graphics.DISCIPLINE_ANNOUNCEMENT)}
           >{UIText.DISCIPLINE_ANNOUNCEMENT}</Button
         >
-        <Button color="primary">{UIText.TIME}</Button>
+        <Button color="primary" on:click={() => action(Graphics.TIME)}
+          >{UIText.TIME}</Button
+        >
         <Button color="primary">{UIText.START_TIME}</Button>
         <Button color="primary">{UIText.STOP_TIME}</Button>
         <Button color="primary" on:click={() => action(Graphics.MEDALS)}

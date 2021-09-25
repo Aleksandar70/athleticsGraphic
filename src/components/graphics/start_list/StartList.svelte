@@ -5,7 +5,9 @@
   import { animateHeader } from "./startListAnimation.helper";
 
   export let data;
-  export let clear = false;
+
+  let clear = false;
+
   const limitCompetitors = 8;
   const timelineHeader = gsap.timeline();
 

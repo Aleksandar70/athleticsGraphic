@@ -4,7 +4,6 @@
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
 
   export let data = {};
-  export let clear = false;
 
   const scores =
     data["Scores"].filter((score: string) => Object.values(score)[0]).length > 6
@@ -57,6 +56,9 @@
         "<0.15"
       );
   });
+
+  let clear = false;
+  $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
   $: if (clear) {
     timeline.reverse().then(() => {
