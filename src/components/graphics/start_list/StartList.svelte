@@ -107,7 +107,7 @@
 </script>
 
 <div id="startList" class="startList">
-  <img id="startListHeader" src="/img/graphics/listHeader.png" alt="" />
+  <img id="startListHeader" src="/img/graphics/listHeader.png" alt="listHeader" />
   <p id="startListCompetitonTitle">{data["Competition"]}</p>
   <p id="startListDiscipline">{data["Event Name"]}</p>
   <p id="startListHash">{data["Hashtag"]}</p>

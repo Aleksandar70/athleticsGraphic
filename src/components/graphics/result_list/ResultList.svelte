@@ -117,7 +117,7 @@
 </script>
 
 <div id="resultList" class="resultList">
-  <img id="resultListHeader" src="/img/graphics/listHeader.png" alt="" />
+  <img id="resultListHeader" src="/img/graphics/listHeader.png" alt="listHeader" />
 
   <p id="resultListCompetitionTitle">{data["Competition"]}</p>
   <p id="resultListDiscipline">{data["Event Name"]}</p>

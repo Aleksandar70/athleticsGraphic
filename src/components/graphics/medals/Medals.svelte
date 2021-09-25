@@ -53,19 +53,7 @@
           "<"
         )
         .to(
-          "#medalsGoldMedal",
-          0.1,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
-        )
-        .to(
-          "#medalsSilverMedal",
-          0.1,
-          { opacity: 1, scaleY: 1, ease: "power2.out" },
-          "<"
-        )
-        .to(
-          "#medalsBronzeMedal",
+          `#medalsMedal-${index}`,
           0.1,
           { opacity: 1, scaleY: 1, ease: "power2.out" },
           "<"
@@ -84,6 +72,7 @@
 
 <div id="medals" class="medals">
   <img id="medalsBG" src="/img/graphics/medals.png" alt="medals" />
+  
   <p id="medalsCompetition">{data["Competition"]}</p>
   <p id="medalsEvent">{data["Event Name"]}</p>
   <p id="medalsHash">{data["Hashtag"]}</p>
@@ -121,14 +110,27 @@
     >
       {bestCompetitor.result}
     </p>
-
-    {#if i == 0}
-      <img id="medalsGoldMedal" src="/img/graphics/goldMedal.png" alt="" />
-    {:else if i == 1}
-      <img id="medalsSilverMedal" src="/img/graphics/silverMedal.png" alt="" />
-    {:else}
-      <img id="medalsBronzeMedal" src="/img/graphics/bronzeMedal.png" alt="" />
-    {/if}
+    <p style="top: {805 + 58 * i}px" class="medalsMedal" id="medalsMedal-{i}">
+      {#if i == 0}
+        <img
+          id="medalsMedal-{i}"
+          src="/img/graphics/goldMedal.png"
+          alt="goldMedal"
+        />
+      {:else if i == 1}
+        <img
+          id="medalsMedal-{i}"
+          src="/img/graphics/silverMedal.png"
+          alt="silverMedal"
+        />
+      {:else}
+        <img
+          id="medalsMedal-{i}"
+          src="/img/graphics/bronzeMedal.png"
+          alt="bronzeMedal"
+        />
+      {/if}
+    </p>
   {/each}
 </div>
 
@@ -208,33 +210,11 @@
     transform: scaleY(0);
   }
 
-  #medalsGoldMedal {
+  .medalsMedal {
     position: fixed;
     width: 35px;
     height: 46px;
     top: 807px;
-    left: 1370px;
-    transform-origin: top center;
-    opacity: 0;
-    transform: scaleY(0);
-  }
-
-  #medalsSilverMedal {
-    position: fixed;
-    width: 35px;
-    height: 46px;
-    top: 865px;
-    left: 1370px;
-    transform-origin: top center;
-    opacity: 0;
-    transform: scaleY(0);
-  }
-
-  #medalsBronzeMedal {
-    position: fixed;
-    width: 35px;
-    height: 46px;
-    top: 922px;
     left: 1370px;
     transform-origin: top center;
     opacity: 0;
