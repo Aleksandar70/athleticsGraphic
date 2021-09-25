@@ -97,10 +97,8 @@ const getBestResults = (): Record<string, string>[] => {
   return bestCompetitors;
 };
 
-const sortByDescendingOrder = (
-  bestCompetitors: Record<string, string>[]
-): void => {
-  bestCompetitors.sort((n1, n2) => {
+const sortByDescendingOrder = (objectArray: Record<string, string>[]): void => {
+  objectArray.sort((n1, n2) => {
     if (n1.result < n2.result) {
       return 1;
     }
