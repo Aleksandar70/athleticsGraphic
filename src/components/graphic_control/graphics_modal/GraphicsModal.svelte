@@ -28,7 +28,6 @@
   $: if (data["Medals"]) {
     bestCompetitors = data["Medals"];
   }
-  $: console.log(bestCompetitors);
 
   $: _data = { ...data };
 

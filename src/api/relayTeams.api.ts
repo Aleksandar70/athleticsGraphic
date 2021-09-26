@@ -15,3 +15,7 @@ export const getRelayTeamsForEvent = async (
   });
   return response.data as IRelayTeams[];
 };
+
+export const updateRelayTeams = (): Record<string, string>[] => {
+  return null;
+};

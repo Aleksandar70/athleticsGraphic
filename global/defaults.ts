@@ -59,6 +59,12 @@ export const uneditableFields = [
   "name",
 ];
 
+export const defaultEventRelayTeamsColumns = [
+  "team",
+  "names",
+  "result",
+];
+
 export const allEditableFields = [
   ...eventColumnsUI,
   ...eventCompetitorsColumnsUI,
