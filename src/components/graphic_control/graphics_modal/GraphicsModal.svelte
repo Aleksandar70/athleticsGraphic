@@ -118,12 +118,7 @@
             {:else if name === "Medals"}
               {#each bestCompetitors as bestCompetitor, i}
                 <div class="medals">
-                  <Input
-                    class="place-input"
-                    value={i + 1}
-                    on:input={(event) =>
-                      inputChange(event.target, name, "place", i)}
-                  />
+                  <Input class="place-input" value={i + 1} readonly />
                   <img
                     alt={bestCompetitor.nationality}
                     src="/img/flags/{bestCompetitor.nationality}.png"
