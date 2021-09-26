@@ -23,7 +23,7 @@
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
 
-  currentEventId.set((tableData[0]?.event as string) ?? "events");
+  currentEventId.set((tableData?.[0]?.event as string) ?? "events");
   const currentEvent = $visibleColumns[$currentEventId];
   if (!currentEvent) {
     const newVisibleColumns = $visibleColumns;

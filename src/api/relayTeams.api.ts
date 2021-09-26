@@ -9,9 +9,9 @@ export const getRelayTeams = async (): Promise<IRelayTeams> => {
 
 export const getRelayTeamsForEvent = async (
   eventId: string
-): Promise<IRelayTeams> => {
+): Promise<IRelayTeams[]> => {
   const response = await getRequest(`${Paths.RELAY_TEAMS}/${eventId}`, {
     eventId: eventId,
   });
-  return response.data as IRelayTeams;
+  return response.data as IRelayTeams[];
 };

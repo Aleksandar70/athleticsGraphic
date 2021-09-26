@@ -48,7 +48,8 @@ export interface ITrial {
 
 export interface IHeatEventData {
   heatName: string;
-  competitors: ICompetitor[];
+  relayTeams?: IRelayTeams[];
+  competitors?: ICompetitor[];
 }
 
 export interface IResult {
@@ -57,6 +58,15 @@ export interface IResult {
 }
 
 export interface ICompetitor {
-  competitorId: string;
-  event: string
+  competitorId?: string;
+  event?: string;
+}
+
+export interface IRelayTeams {
+  eventId?: string;
+  name: string;
+  nonScorer: false;
+  relayTeamId: string;
+  runners: ICompetitor[];
+  teamId: string;
 }

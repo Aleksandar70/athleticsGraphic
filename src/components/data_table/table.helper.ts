@@ -67,7 +67,7 @@ export const getCompetitorResultsData = async (
 
   const data: IHeatEventData[] = [];
   const units = eventData.units;
-  console.log("competitorData ", competitorData);
+  const relayTeams = await getRelayTeamsForEvent(eventId);
 
   for (const unit of units) {
     const _results = unit.results;
@@ -75,21 +75,26 @@ export const getCompetitorResultsData = async (
     let _competitors = competitorData.filter((competitor) =>
       _resultBibs.includes(competitor.competitorId)
     );
-    
+
     if (_competitors.length == 0) {
-      const relayTeams = await getRelayTeamsForEvent(eventId);
-      console.log("relayTeams ", relayTeams);
-      let runners = [];
-      for (const relayTeam of Object.values(relayTeams)) {
-        _competitors = competitorData.filter((competitor) =>
-          relayTeam?.runners.includes(competitor.competitorId)
+      const unitRelayTeams = relayTeams.filter((relayTeam) =>
+        _resultBibs.includes(relayTeam.relayTeamId)
+      );
+      for (const unitRelayTeam of unitRelayTeams) {
+        unitRelayTeam.runners = unitRelayTeam.runners.map((runnerId) =>
+          competitorData.find(
+            (competitor) => competitor.competitorId === runnerId
+          )
         );
-        if (_competitors.length !== 0) {
-          runners.push(..._competitors);
-        }
       }
-      _competitors = runners;
-      console.log("_competitors ", _competitors);
+      console.log("unitRelayTeams ", unitRelayTeams);
+
+      const _data = {
+        heatName: unit.heatName,
+        relayTeams: unitRelayTeams,
+      };
+      data.push(_data);
+      return data;
     }
 
     const _trials = unit.trials;
