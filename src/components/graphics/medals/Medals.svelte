@@ -25,32 +25,32 @@
       timelineCompetitors
         .to(
           `#medalsPlace-${index}`,
-          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
           `<0.05`
         )
         .to(
           `#medalsFlag-${index}`,
-          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
           `<`
         )
         .to(
           `#medalsCountry-${index}`,
-          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
           `<`
         )
         .to(
           `#medalsCompetitor-${index}`,
-          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
           `<`
         )
         .to(
           `#medalsPerformance-${index}`,
-          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
           `<`
         )
         .to(
           `#medalsMedal-${index}`,
-          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
           `<`
         );
     }
