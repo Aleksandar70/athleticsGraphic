@@ -28,6 +28,7 @@
   $: if (data["Medals"]) {
     bestCompetitors = data["Medals"];
   }
+  $: console.log(bestCompetitors);
 
   $: _data = { ...data };
 
@@ -86,7 +87,7 @@
               {/each}
             {:else if name === "Competitors"}
               {#each competitors as competitor, i}
-                <div class="score">
+                <div class="competitor">
                   <img
                     alt={competitor.nationality}
                     src="/img/flags/{competitor.nationality}.png"
@@ -98,7 +99,7 @@
                       inputChange(event.target, name, "nationality", i)}
                   />
                   <Input
-                    class="score-input"
+                    class="competitor-input"
                     type="text"
                     value={competitor.name}
                     on:input={(event) =>
@@ -116,7 +117,13 @@
               {/each}
             {:else if name === "Medals"}
               {#each bestCompetitors as bestCompetitor, i}
-                <div class="score">
+                <div class="medals">
+                  <Input
+                    class="place-input"
+                    value={i + 1}
+                    on:input={(event) =>
+                      inputChange(event.target, name, "place", i)}
+                  />
                   <img
                     alt={bestCompetitor.nationality}
                     src="/img/flags/{bestCompetitor.nationality}.png"
@@ -128,11 +135,18 @@
                       inputChange(event.target, name, "nationality", i)}
                   />
                   <Input
-                    class="score-input"
+                    class="competitor-input"
                     type="text"
                     value={bestCompetitor.name}
                     on:input={(event) =>
                       inputChange(event.target, name, "name", i)}
+                  />
+                  <Input
+                    class="result-input"
+                    type="text"
+                    value={bestCompetitor.result}
+                    on:input={(event) =>
+                      inputChange(event.target, name, "result", i)}
                   />
                 </div>
               {/each}

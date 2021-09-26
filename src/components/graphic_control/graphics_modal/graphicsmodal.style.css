@@ -1,4 +1,6 @@
-.score {
+.score,
+.competitor,
+.medals {
   display: flex;
   margin-bottom: 10px;
 }
@@ -15,6 +17,11 @@
 
 .score-metric {
   margin-right: 15px;
+}
+
+.place-input {
+  width: 60px !important;
+  margin: 0 5px;
 }
 
 .body-info {
