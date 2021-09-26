@@ -1,4 +1,9 @@
-import type { ICompetitor, IHeatEventData } from "../../../global/interfaces";
+import type {
+  ICompetitor,
+  IHeatEventData,
+  IRelayTeam,
+  IUnit,
+} from "../../../global/interfaces";
 import type {
   RawData,
   TableData,
@@ -56,82 +61,123 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
 export const getCompetitorResultsData = async (
   eventId: string
 ): Promise<IHeatEventData[] | ICompetitor[]> => {
-  const eventData = await getEventData(eventId);
   const { competitionData } = await getOTCompetitionData();
+
+  const eventData = await getEventData(eventId);
+  const competitorData = await getCompetitorsForEvent(eventId);
+  const relayTeamsData = await getRelayTeamsForEvent(eventId);
+
+  const isTeamEvent = !!relayTeamsData.length;
 
   currentEventData.set(eventData);
   currentCompetitionData.set(competitionData);
-
-  const competitorData = await getCompetitorsForEvent(eventId);
   competitors.set(competitorData);
 
   const data: IHeatEventData[] = [];
   const units = eventData.units;
-  const relayTeams = await getRelayTeamsForEvent(eventId);
 
   for (const unit of units) {
-    const _results = unit.results;
-    const _resultBibs = _results.map((result) => result.bib);
-    let _competitors = competitorData.filter((competitor) =>
-      _resultBibs.includes(competitor.competitorId)
-    );
+    const tableData = isTeamEvent
+      ? getRelayTeamsForUnit(relayTeamsData, unit)
+      : getCompetitorsForUnit(unit);
 
-    if (_competitors.length == 0) {
-      const unitRelayTeams = relayTeams.filter((relayTeam) =>
-        _resultBibs.includes(relayTeam.relayTeamId)
-      );
-      for (const unitRelayTeam of unitRelayTeams) {
-        unitRelayTeam.runners = unitRelayTeam.runners.map((runnerId) =>
-          competitorData.find(
-            (competitor) => competitor.competitorId === runnerId
-          )
-        );
-      }
-      console.log("unitRelayTeams ", unitRelayTeams);
-
-      const _data = {
-        heatName: unit.heatName,
-        relayTeams: unitRelayTeams,
-      };
-      data.push(_data);
-      return data;
+    if (!isTeamEvent) {
+      addRoundsOrHeightsToCompetitorsForUnit(tableData as ICompetitor[], unit);
+      populateTrialsToCompetitorsForUnit(tableData as ICompetitor[], unit);
     }
+    populateResultsOfTableDataForUnit(tableData, unit);
 
-    const _trials = unit.trials;
-    for (const competitor of _competitors) {
-      if (unit.rounds) {
-        let round = 1;
-        while (round <= unit.rounds) {
-          competitor[round++] = "";
-        }
-      } else if (unit.heights.length > 0) {
-        const heights = unit.heights;
-        for (const height of heights) {
-          competitor[height] = "";
-        }
-      }
+    if (units.length === 1) return tableData as ICompetitor[];
 
-      for (const trial of _trials) {
-        if (trial.bib === competitor.competitorId) {
-          if (unit.rounds) {
-            competitor[trial.round] = trial.result;
-          } else if (unit.heights.length > 0) {
-            competitor[trial.height] = trial.result;
-          }
-        }
-      }
+    const heatData: IHeatEventData = isTeamEvent
+      ? { heatName: unit.heatName, relayTeams: tableData as IRelayTeam[] }
+      : { heatName: unit.heatName, competitors: tableData as ICompetitor[] };
 
-      competitor["result"] = _results.find(
-        (result) => result.bib === competitor.competitorId
-      )?.performance;
-    }
-
-    if (units.length === 1) return _competitors;
-    const _data = { heatName: unit.heatName, competitors: _competitors };
-    data.push(_data);
+    data.push(heatData);
   }
 
   return data;
+};
+
+const getRelayTeamsForUnit = (
+  relayTeamsData: IRelayTeam[],
+  unit: IUnit
+): IRelayTeam[] => {
+  const resultBibs = unit.results.map((result) => result.bib);
+  const unitRelayTeams = relayTeamsData.filter((relayTeam) =>
+    resultBibs.includes(relayTeam.relayTeamId)
+  );
+  for (const unitRelayTeam of unitRelayTeams) {
+    unitRelayTeam.runners = unitRelayTeam.runners.map((runnerId) =>
+      get(competitors).find(
+        (competitor) => competitor.competitorId === runnerId
+      )
+    );
+  }
+  return unitRelayTeams;
+};
+
+const getCompetitorsForUnit = (unit: IUnit): ICompetitor[] => {
+  const resultBibs = unit.results.map((result) => result.bib);
+  return get(competitors).filter((competitor) =>
+    resultBibs.includes(competitor.competitorId)
+  );
+};
+
+const addRoundsOrHeightsToCompetitorsForUnit = (
+  competitors: ICompetitor[],
+  unit: IUnit
+): void => {
+  for (const competitor of competitors) {
+    if (unit.rounds) {
+      let round = 1;
+      while (round <= unit.rounds) {
+        competitor[round++] = "";
+      }
+    } else if (unit.heights.length > 0) {
+      const heights = unit.heights;
+      for (const height of heights) {
+        competitor[height] = "";
+      }
+    }
+  }
+};
+
+const populateTrialsToCompetitorsForUnit = (
+  competitors: ICompetitor[],
+  unit: IUnit
+): void => {
+  const _trials = unit.trials;
+  for (const competitor of competitors) {
+    for (const trial of _trials) {
+      if (trial.bib === competitor.competitorId) {
+        if (unit.rounds) {
+          competitor[trial.round] = trial.result;
+        } else if (unit.heights.length > 0) {
+          competitor[trial.height] = trial.result;
+        }
+      }
+    }
+  }
+};
+
+const populateResultsOfTableDataForUnit = (
+  tableData: ICompetitor[] | IRelayTeam[],
+  unit: IUnit
+) => {
+  if ("competitorId" in tableData?.[0]) {
+    for (const data of tableData as ICompetitor[]) {
+      data["result"] = unit.results.find(
+        (result) => result.bib === data.competitorId
+      )?.performance;
+    }
+  } else {
+    for (const data of tableData as IRelayTeam[]) {
+      data["result"] = unit.results.find(
+        (result) => result.bib === data.relayTeamId
+      )?.performance;
+    }
+  }
 };
 
 export const getCompetitorIdFromRow = (row: TableRow): string =>
