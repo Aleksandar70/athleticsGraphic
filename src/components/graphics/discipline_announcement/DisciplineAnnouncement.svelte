@@ -4,7 +4,8 @@
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
 
   export let data;
-  export let clear = false;
+
+  let clear = false;
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
   const timeline = gsap.timeline();
@@ -46,7 +47,7 @@
   <img
     id="disciplineAnnouncement"
     alt="img"
-    src="/img/graphics/najavaDiscipline.png"
+    src="/img/graphics/disciplineAnnouncement.png"
   />
   <p id="disciplineTitle">{data["Discipline Name"]}</p>
   <p id="disciplineNextNote">{data["Note"]}</p>

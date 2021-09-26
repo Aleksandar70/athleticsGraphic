@@ -19,10 +19,16 @@
   export let data: Record<string, any> = {};
 
   let competitors: Record<string, string>[] = [];
+  let bestCompetitors: Record<string, string>[] = [];
 
   $: if (data["Competitors"]) {
     competitors = data["Competitors"];
   }
+
+  $: if (data["Medals"]) {
+    bestCompetitors = data["Medals"];
+  }
+  $: console.log(bestCompetitors);
 
   $: _data = { ...data };
 
@@ -45,7 +51,7 @@
     metric?: string,
     idx?: number
   ) => {
-    if (name === "Scores" || name === "Competitors") {
+    if (name === "Scores" || name === "Competitors" || name === "Medals") {
       _data[name][idx][metric] = (target as HTMLInputElement).value;
       return;
     }
@@ -55,69 +61,105 @@
 
 <Modal {isOpen} {toggle} scrollable>
   <ModalBody>
-    <Form>
-      {#each Object.entries(data) as [name, value]}
-        <FormGroup>
-          <Label for={name}>{name}</Label>
-          {#if name === "Flag"}
-            <img
-              alt={value?.toString()}
-              src="/img/flags/{value?.toString()}.png"
-            />
-          {/if}
-          {#if name === "Scores"}
-            {#each value as score, i}
-              <div class="score">
-                <span class="score-metric">{Object.keys(score)[0]}</span>
-                <Input
-                  class="score-input"
-                  type="text"
-                  value={Object.values(score)[0]}
-                  on:input={(event) =>
-                    inputChange(event.target, name, Object.keys(score)[0], i)}
-                />
-              </div>
-            {/each}
-          {:else if name === "Competitors"}
-            {#each competitors as competitor, i}
-              <div class="score">
-                <img
-                  alt={competitor.nationality}
-                  src="/img/flags/{competitor.nationality}.png"
-                />
-                <Input
-                  class="nationality-input"
-                  value={competitor.nationality}
-                  on:input={(event) =>
-                    inputChange(event.target, name, "nationality", i)}
-                />
-                <Input
-                  class="score-input"
-                  type="text"
-                  value={competitor.name}
-                  on:input={(event) =>
-                    inputChange(event.target, name, "name", i)}
-                />
-                {#if id === Graphics.RESULT_LIST}
+    {#if Object.keys(data).length}
+      <Form>
+        {#each Object.entries(data) as [name, value]}
+          <FormGroup>
+            <Label for={name}>{name}</Label>
+            {#if name === "Flag"}
+              <img
+                alt={value?.toString()}
+                src="/img/flags/{value?.toString()}.png"
+              />
+            {/if}
+            {#if name === "Scores"}
+              {#each value as score, i}
+                <div class="score">
+                  <span class="score-metric">{Object.keys(score)[0]}</span>
+                  <Input
+                    class="score-input"
+                    type="text"
+                    value={Object.values(score)[0]}
+                    on:input={(event) =>
+                      inputChange(event.target, name, Object.keys(score)[0], i)}
+                  />
+                </div>
+              {/each}
+            {:else if name === "Competitors"}
+              {#each competitors as competitor, i}
+                <div class="competitor">
+                  <img
+                    alt={competitor.nationality}
+                    src="/img/flags/{competitor.nationality}.png"
+                  />
+                  <Input
+                    class="nationality-input"
+                    value={competitor.nationality}
+                    on:input={(event) =>
+                      inputChange(event.target, name, "nationality", i)}
+                  />
+                  <Input
+                    class="competitor-input"
+                    type="text"
+                    value={competitor.name}
+                    on:input={(event) =>
+                      inputChange(event.target, name, "name", i)}
+                  />
+                  {#if id === Graphics.RESULT_LIST}
+                    <Input
+                      class="result-input"
+                      value={competitor.result}
+                      on:input={(event) =>
+                        inputChange(event.target, name, "result", i)}
+                    />
+                  {/if}
+                </div>
+              {/each}
+            {:else if name === "Medals"}
+              {#each bestCompetitors as bestCompetitor, i}
+                <div class="medals">
+                  <Input class="place-input" value={i + 1} readonly />
+                  <img
+                    alt={bestCompetitor.nationality}
+                    src="/img/flags/{bestCompetitor.nationality}.png"
+                  />
+                  <Input
+                    class="nationality-input"
+                    value={bestCompetitor.nationality}
+                    on:input={(event) =>
+                      inputChange(event.target, name, "nationality", i)}
+                  />
+                  <Input
+                    class="competitor-input"
+                    type="text"
+                    value={bestCompetitor.name}
+                    on:input={(event) =>
+                      inputChange(event.target, name, "name", i)}
+                  />
                   <Input
                     class="result-input"
-                    value={competitor.result}
+                    type="text"
+                    value={bestCompetitor.result}
                     on:input={(event) =>
                       inputChange(event.target, name, "result", i)}
                   />
-                {/if}
-              </div>
-            {/each}
-          {:else}
-            <Input
-              type="text"
-              bind:value
-              on:change={(event) => inputChange(event.target, name)}
-            />
-          {/if}
-        </FormGroup>
-      {/each}
-    </Form>
+                </div>
+              {/each}
+            {:else}
+              <Input
+                type="text"
+                bind:value
+                on:change={(event) => inputChange(event.target, name)}
+              />
+            {/if}
+          </FormGroup>
+        {/each}
+      </Form>
+    {:else}
+      <p class="body-info">
+        You are about to show graphics for <span class="id-span">{id}</span>
+      </p>
+    {/if}
   </ModalBody>
   <ModalFooter>
     <Button on:click={() => sendGraphics()}>Show</Button>

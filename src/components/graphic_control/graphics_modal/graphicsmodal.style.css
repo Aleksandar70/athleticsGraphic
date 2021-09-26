@@ -1,4 +1,6 @@
-.score {
+.score,
+.competitor,
+.medals {
   display: flex;
   margin-bottom: 10px;
 }
@@ -9,10 +11,24 @@
 }
 
 .result-input {
-  width: 60px !important;
+  width: 70px !important;
   margin: 0 5px;
 }
 
 .score-metric {
   margin-right: 15px;
+}
+
+.place-input {
+  width: 60px !important;
+  margin: 0 5px;
+}
+
+.body-info {
+  font-size: larger;
+  margin: 15px;
+}
+
+.id-span {
+  text-decoration: underline;
 }

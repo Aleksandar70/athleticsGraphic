@@ -4,7 +4,8 @@
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
 
   export let data;
-  export let clear = false;
+
+  let clear = false;
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
@@ -44,7 +45,7 @@
 </script>
 
 <div id="event--wrapper">
-  <img id="eventBackground" alt="img" src="/img/graphics/najava.png" />
+  <img id="eventBackground" alt="img" src="/img/graphics/eventAnnouncement.png" />
   <p id="eventTitle">{data["Event Name"]}</p>
   <p id="eventLocation">{data["Location"]}</p>
   <p id="eventHashtag">{data["Hashtag"]}</p>
