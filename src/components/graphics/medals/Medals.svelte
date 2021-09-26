@@ -25,33 +25,33 @@
       timelineCompetitors
         .to(
           `#medalsPlace-${index}`,
-          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
+          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
           `<0.05`
         )
         .to(
           `#medalsFlag-${index}`,
-          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<`
+          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.05`
         )
         .to(
           `#medalsCountry-${index}`,
-          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<`
+          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.05`
         )
         .to(
           `#medalsCompetitor-${index}`,
-          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<`
+          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.05`
         )
         .to(
           `#medalsPerformance-${index}`,
-          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<`
+          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.05`
         )
         .to(
           `#medalsMedal-${index}`,
-          { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<`
+          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.05`
         );
     }
   };
