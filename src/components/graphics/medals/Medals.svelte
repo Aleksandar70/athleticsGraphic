@@ -2,13 +2,11 @@
   import { onMount } from "svelte";
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
-  import { animateHeader } from "./medals.helper";
 
   export let data;
   let clear = false;
 
-  const timelineHeader = gsap.timeline();
-  const timelineCompetitors = gsap.timeline();
+  const timeline = gsap.timeline();
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
 
@@ -16,49 +14,69 @@
   $: bestCompetitors = data["Medals"];
 
   onMount(() => {
-    animateHeader(timelineHeader);
-    animateCompetitors();
-  });
-
-  export const animateCompetitors = () => {
     for (let index = 0; index < numberOfBestCompetitors; index++) {
-      timelineCompetitors
+      timeline
+        .to("#medalsBG", {
+          duration: 0.2,
+          opacity: 1,
+          scaleY: 1,
+          ease: "power2.out",
+        })
+        .to(
+          "#medalsCompetition",
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<.03"
+        )
+        .to(
+          "#medalsHash",
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<.03"
+        )
+        .to(
+          "#medalsEvent",
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<.03"
+        )
+        .to(
+          "#medalsTitle",
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          "<.03"
+        )
         .to(
           `#medalsPlace-${index}`,
-          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<0.05`
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.03`
         )
         .to(
           `#medalsFlag-${index}`,
-          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<0.05`
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.03`
         )
         .to(
           `#medalsCountry-${index}`,
-          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<0.05`
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.03`
         )
         .to(
           `#medalsCompetitor-${index}`,
-          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<0.05`
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.03`
         )
         .to(
           `#medalsPerformance-${index}`,
-          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<0.05`
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.03`
         )
         .to(
           `#medalsMedal-${index}`,
-          { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
-          `<0.05`
+          { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
+          `<0.03`
         );
     }
-  };
+  });
 
   $: if (clear) {
-    timelineCompetitors.reverse().then(() => {
-      timelineHeader.reverse();
+    timeline.reverse().then(() => {
       $clearChannel.postMessage(false);
       visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
