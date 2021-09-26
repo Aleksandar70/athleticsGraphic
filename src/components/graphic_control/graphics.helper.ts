@@ -1,4 +1,8 @@
 import { get } from "svelte/store";
+import type {
+  ICompetitor,
+  IResult,
+} from "../../../backend/src/database/interfaces";
 import { Graphics } from "../../../global/constants/constants";
 import type { TableField } from "../../../global/types";
 import {
@@ -48,6 +52,13 @@ export const getDataForPreviewModal = (
       data["Discipline Name"] = get(currentEventData)["name"];
       data["Note"] = "NEXT";
       data["Time"] = get(currentEventData)["r1Time"];
+      break;
+    case Graphics.MEDALS:
+      data["Competition"] = get(currentCompetitionData)["englishName"];
+      data["Event Name"] = get(currentEventData)["name"];
+      data["Hashtag"] = "#belgrade2021";
+      data["Description"] = "MEDALS";
+      data["Medals"] = getBestResults();
   }
   return data;
 };
@@ -55,14 +66,46 @@ export const getDataForPreviewModal = (
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
-const getCompetitors = (): Record<string, string>[] =>
-  get(competitors).map((competitor) => ({
+const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
+  const competitorList = list ? list : get(competitors);
+  return competitorList.map((competitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
     result: competitor.result,
   }));
+};
 
 const getScores = (): unknown[] =>
   get(selectedParticipant)
     .filter((field) => isNumeric(field.id))
     .map((score: TableField) => ({ [score.id]: score.stringValue }));
+
+const getBestResults = (): Record<string, string>[] => {
+  const units = get(currentEventData)["units"];
+  let bestResults = [];
+  for (const unit of units) {
+    bestResults = unit["results"].filter(
+      (result: IResult) => result.place <= 3
+    );
+  }
+  const resultBibsForMedals = bestResults.map((bestResult) => bestResult?.bib);
+
+  const filteredBestCompetitors = get(competitors).filter((competitor) =>
+    resultBibsForMedals.includes(competitor.competitorId)
+  );
+  const bestCompetitors = getCompetitors(filteredBestCompetitors);
+  sortByDescendingOrder(bestCompetitors);
+  return bestCompetitors;
+};
+
+const sortByDescendingOrder = (objectArray: Record<string, string>[]): void => {
+  objectArray.sort((n1, n2) => {
+    if (n1.result < n2.result) {
+      return 1;
+    }
+    if (n1.result > n2.result) {
+      return -1;
+    }
+    return 0;
+  });
+};

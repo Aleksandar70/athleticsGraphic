@@ -6,6 +6,7 @@
     CardHeader,
     CardTitle,
     Label,
+    CardFooter,
   } from "sveltestrap";
   import { UIText } from "../../../global/constants/ui_text";
   import { Icon } from "sveltestrap";
@@ -28,7 +29,7 @@
     displayData = getDataForPreviewModal(id);
     action_id = id;
     isAlertVisible =
-      id === Graphics.PERSONAL_SCORE && !get(selectedParticipant);
+      id === Graphics.PERSONAL_SCORE && get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
   };
 </script>
@@ -54,11 +55,15 @@
     <CardBody class="graphic-control--body">
       <div class="graphic-events">
         <Label>Event</Label>
-        <Button color="primary">{UIText.EVENTS}</Button>
         <Button
           color="primary"
           on:click={() => action(Graphics.EVENT_ANNOUNCEMENT)}
           >{UIText.EVENT_ANNOUNCEMENT}</Button
+        >
+        <Button
+          color="primary"
+          on:click={() => action(Graphics.DISCIPLINE_ANNOUNCEMENT)}
+          >{UIText.DISCIPLINE_ANNOUNCEMENT}</Button
         >
         <Button color="primary" on:click={() => action(Graphics.START_LIST)}
           >{UIText.START_LIST}</Button
@@ -66,17 +71,9 @@
         <Button color="primary" on:click={() => action(Graphics.RESULT_LIST)}
           >{UIText.RESULT_LIST}</Button
         >
-        <Button
-          color="primary"
-          on:click={() => action(Graphics.DISCIPLINE_ANNOUNCEMENT)}
-          >{UIText.DISCIPLINE_ANNOUNCEMENT}</Button
+        <Button color="primary" on:click={() => action(Graphics.MEDALS)}
+          >{UIText.MEDALS}</Button
         >
-        <Button color="primary" on:click={() => action(Graphics.TIME)}
-          >{UIText.TIME}</Button
-        >
-        <Button color="primary">{UIText.START_TIME}</Button>
-        <Button color="primary">{UIText.STOP_TIME}</Button>
-        <Button color="primary">{UIText.MEDALS}</Button>
       </div>
       <div class="graphic-personal">
         <Label>Personal</Label>
@@ -86,6 +83,11 @@
         <Button color="primary">{UIText.SHOW_PERSONAL_DATA}</Button>
       </div>
     </CardBody>
+    <CardFooter>
+      <Button color="primary" on:click={() => action(Graphics.TIME)}
+        >{UIText.TIME}</Button
+      ></CardFooter
+    >
   </Card>
   <Alert
     class="graphic-control-alert"

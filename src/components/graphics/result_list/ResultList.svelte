@@ -117,7 +117,7 @@
 </script>
 
 <div id="resultList" class="resultList">
-  <img id="resultListHeader" src="/img/graphics/listaHeader.png" alt="" />
+  <img id="resultListHeader" src="/img/graphics/listHeader.png" alt="listHeader" />
 
   <p id="resultListCompetitionTitle">{data["Competition"]}</p>
   <p id="resultListDiscipline">{data["Event Name"]}</p>
@@ -129,8 +129,8 @@
       style="top: {347 + 59 * i}px"
       class="competitor-info"
       id="competitor-info-{i}"
-      src="/img/graphics/listaTakmicar.png"
-      alt="listaTakmicar"
+      src="/img/graphics/listCompetitor.png"
+      alt="listCompetitor"
     />
     <p
       style="top: {347 + 59 * i}px"

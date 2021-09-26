@@ -107,7 +107,7 @@
 </script>
 
 <div id="startList" class="startList">
-  <img id="startListHeader" src="/img/graphics/listaHeader.png" alt="" />
+  <img id="startListHeader" src="/img/graphics/listHeader.png" alt="listHeader" />
   <p id="startListCompetitonTitle">{data["Competition"]}</p>
   <p id="startListDiscipline">{data["Event Name"]}</p>
   <p id="startListHash">{data["Hashtag"]}</p>
@@ -118,8 +118,8 @@
       style="top: {347 + 59 * i}px"
       class="competitor-info"
       id="competitor-info-{i}"
-      src="/img/graphics/listaTakmicar.png"
-      alt="listaTakmicar"
+      src="/img/graphics/listCompetitor.png"
+      alt="listCompetitor"
     />
     <p
       style="top: {347 + 59 * i}px"
