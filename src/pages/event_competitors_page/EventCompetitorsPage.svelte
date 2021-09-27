@@ -42,6 +42,7 @@
     <Spinner />
   {:else if !hasHeats}
     <GraphicControl />
+    <!-- todo -->
     <Canvas
       {tableData}
       defaultColumns={defaultEventCompetitorsColumns}

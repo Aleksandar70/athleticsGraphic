@@ -50,6 +50,20 @@ export const eventCompetitorsColumnsUI = [
   "result",
 ];
 
+export const eventRelayTeamsColumnsUI = [
+  "teamId",
+  "name",
+  "result",
+  "relayTeamId",
+  "runners",
+];
+
+export const defaultEventRelayTeamsColumns = [
+  "teamId",
+  "result",
+  "runners",
+];
+
 export const uneditableFields = [
   "competitorId",
   "event",
@@ -57,12 +71,6 @@ export const uneditableFields = [
   "eventCode",
   "flagUrl",
   "name",
-];
-
-export const defaultEventRelayTeamsColumns = [
-  "team",
-  "names",
-  "result",
 ];
 
 export const allEditableFields = [

@@ -16,8 +16,10 @@ import { isHeight, isRound } from "../../utils/event.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
+  defaultEventRelayTeamsColumns,
   eventColumnsUI,
   eventCompetitorsColumnsUI,
+  eventRelayTeamsColumnsUI,
   uneditableFields,
 } from "../../../global/defaults";
 import {
@@ -25,6 +27,7 @@ import {
   currentCompetitionData,
   currentEventData,
   currentEventId,
+  isRelayTeamEvent,
   lockedColumns,
   selectedParticipant,
   visibleColumns,
@@ -35,12 +38,22 @@ import { getOTCompetitionData } from "../../../backend/src/api/opentrack.api";
 import { getRelayTeamsForEvent } from "../../api/relayTeams.api";
 
 export const getDefaultColumns = (): string[] => {
+  if (get(isRelayTeamEvent)) {
+    return get(currentEventId) === "events"
+      ? defaultEventColumns
+      : defaultEventRelayTeamsColumns;
+  }
   return get(currentEventId) === "events"
     ? defaultEventColumns
     : defaultEventCompetitorsColumns;
 };
 
 export const getColumnsForDisplay = (): string[] => {
+  if (get(isRelayTeamEvent)) {
+    return get(currentEventId) === "events"
+      ? eventColumnsUI
+      : eventRelayTeamsColumnsUI;
+  }
   return get(currentEventId) === "events"
     ? eventColumnsUI
     : eventCompetitorsColumnsUI;
@@ -68,6 +81,7 @@ export const getCompetitorResultsData = async (
   const relayTeamsData = await getRelayTeamsForEvent(eventId);
 
   const isTeamEvent = !!relayTeamsData.length;
+  isRelayTeamEvent.set(isTeamEvent);
 
   currentEventData.set(eventData);
   currentCompetitionData.set(competitionData);
