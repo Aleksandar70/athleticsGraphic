@@ -29,6 +29,8 @@ export interface ISearch {
 }
 export interface IEvent {
   units: IUnit[];
+  event: string;
+  eventId: string;
 }
 
 export interface IUnit {
@@ -59,6 +61,8 @@ export interface IResult {
 
 export interface ICompetitor {
   competitorId?: string;
+  firstName?: string;
+  lastName?: string;
   event?: string;
 }
 

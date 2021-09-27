@@ -38,25 +38,19 @@ import { getOTCompetitionData } from "../../../backend/src/api/opentrack.api";
 import { getRelayTeamsForEvent } from "../../api/relayTeams.api";
 
 export const getDefaultColumns = (): string[] => {
-  if (get(isRelayTeamEvent)) {
-    return get(currentEventId) === "events"
-      ? defaultEventColumns
-      : defaultEventRelayTeamsColumns;
-  }
+  const singleEventColumns = get(isRelayTeamEvent)
+    ? defaultEventRelayTeamsColumns
+    : defaultEventCompetitorsColumns;
   return get(currentEventId) === "events"
     ? defaultEventColumns
-    : defaultEventCompetitorsColumns;
+    : singleEventColumns;
 };
 
 export const getColumnsForDisplay = (): string[] => {
-  if (get(isRelayTeamEvent)) {
-    return get(currentEventId) === "events"
-      ? eventColumnsUI
-      : eventRelayTeamsColumnsUI;
-  }
-  return get(currentEventId) === "events"
-    ? eventColumnsUI
+  const singleEventColumns = get(isRelayTeamEvent)
+    ? eventRelayTeamsColumnsUI
     : eventCompetitorsColumnsUI;
+  return get(currentEventId) === "events" ? eventColumnsUI : singleEventColumns;
 };
 
 export const getCurrentColumns = (): string => {
@@ -81,6 +75,8 @@ export const getCompetitorResultsData = async (
   const relayTeamsData = await getRelayTeamsForEvent(eventId);
 
   const isTeamEvent = !!relayTeamsData.length;
+
+  currentEventId.set(eventData?.eventId);
   isRelayTeamEvent.set(isTeamEvent);
 
   currentEventData.set(eventData);
@@ -194,13 +190,18 @@ const populateResultsOfTableDataForUnit = (
   }
 };
 
-export const getCompetitorIdFromRow = (row: TableRow): string =>
-  row.find((field) => field.id === "competitorId")?.stringValue ?? "events";
+export const getCompetitorIdFromRow = (row: TableRow): string => {
+  const id = get(isRelayTeamEvent) ? "teamId" : "competitorId";
+  return row.find((field) => field.id === id)?.stringValue ?? "events";
+};
 
-export const isRowSelected = (row: TableRow): boolean =>
-  get(currentEventId) !== "events" &&
-  getCompetitorIdFromRow(get(selectedParticipant)) ===
-    getCompetitorIdFromRow(row);
+export const isRowSelected = (row: TableRow): boolean => {
+  const temp =
+    get(currentEventId) !== "events" &&
+    getCompetitorIdFromRow(get(selectedParticipant)) ===
+      getCompetitorIdFromRow(row);
+  return temp;
+};
 
 export const setLock = (value: string): string =>
   get(lockedColumns)?.[get(currentEventId)]?.includes(value) ? " 🔒" : "";
@@ -231,7 +232,10 @@ export const getTableData = (rawData: RawData): TableData => {
     return Object.entries(row).map(([key, value]) => {
       return {
         value: value,
-        stringValue: value?.toString(),
+        stringValue:
+          key === "runners"
+            ? getRunnersNames(value as ICompetitor[])
+            : value?.toString(),
         changed: false,
         link: links?.get(value?.toString()),
         height: isHeight(key),
@@ -243,6 +247,11 @@ export const getTableData = (rawData: RawData): TableData => {
 
   return filterRowData(tableData);
 };
+
+const getRunnersNames = (runners: ICompetitor[]): string =>
+  runners
+    ?.map((runner) => `${runner?.firstName} ${runner?.lastName}`)
+    .join(", ");
 
 export const getHeaderData = (rawData: RawData): Headers => {
   if (!rawData?.length) return [];
@@ -311,6 +320,7 @@ export const updatedTableValues = (tableData: TableData): RawData => {
 
 export const filterHeaderData = (headers: Headers): Headers => {
   const columnsForModal = getColumnsForDisplay();
+  console.log("columnsForModal -> ", columnsForModal);
   const headersCopy = [...headers];
   headersCopy.forEach((headerData) => {
     if (
@@ -324,6 +334,7 @@ export const filterHeaderData = (headers: Headers): Headers => {
       headers.push(headers.splice(headers.indexOf(headerData), 1)[0]);
     }
   });
+
   return headers;
 };
 

@@ -14,25 +14,14 @@
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
   import { isNumeric } from "../../utils/string.utils";
-  import {
-    currentEventId,
-    isRelayTeamEvent,
-    visibleColumns,
-  } from "../../stores/table.store";
+  import { currentEventId, visibleColumns } from "../../stores/table.store";
   import ColumnLockOptions from "../column_lock_options/ColumnLockOptions.svelte";
   import "./canvas.style.css";
-  import { get } from "svelte/store";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
-
-  if (get(isRelayTeamEvent)) {
-    currentEventId.set(tableData[0]?.eventId as string);
-  } else {
-    currentEventId.set((tableData[0]?.event as string) ?? "events");
-  }
 
   const currentEvent = $visibleColumns[$currentEventId];
   if (!currentEvent) {
