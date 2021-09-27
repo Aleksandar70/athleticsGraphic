@@ -10,6 +10,7 @@
 
 {#if result !== undefined}
   {#if result}
+  {console.log("result: ", result)}
     <span>{UIText.UPDATE_SAVED}</span>
   {:else}
     <span>{UIText.UPDATE_NOT_SAVED}</span>

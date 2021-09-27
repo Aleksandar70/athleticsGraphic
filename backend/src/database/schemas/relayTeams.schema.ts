@@ -6,11 +6,6 @@ const RelayTeamsSchema = new Schema({
     required: false,
     default: "",
   },
-  name: {
-    type: String,
-    required: false,
-    default: "",
-  },
   nonScorer: {
     type: Boolean,
     required: false,
@@ -20,15 +15,20 @@ const RelayTeamsSchema = new Schema({
     type: String,
     required: false,
   },
-  runners: {
-    type: Array,
-    required: false,
-    default: [],
-  },
   teamId: {
     type: String,
     required: false,
     default: "",
+  },
+  name: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  runners: {
+    type: Array,
+    required: false,
+    default: [],
   },
 });
 

@@ -112,8 +112,8 @@ export interface IRelayTeams {
   name: string;
   nonScorer: false;
   relayTeamId: string;
-  runners: ICompetitor[];
   teamId: string;
+  runners: ICompetitor[];
 }
 
 export interface ICompetition {

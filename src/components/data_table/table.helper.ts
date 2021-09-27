@@ -295,6 +295,7 @@ export const checkIfChanged = (tableData: TableData): boolean => {
 };
 
 export const updatedTableValues = (tableData: TableData): RawData => {
+  console.log("Tabledata: ", tableData);
   return tableData
     .map((row) =>
       Object.fromEntries(
@@ -320,7 +321,6 @@ export const updatedTableValues = (tableData: TableData): RawData => {
 
 export const filterHeaderData = (headers: Headers): Headers => {
   const columnsForModal = getColumnsForDisplay();
-  console.log("columnsForModal -> ", columnsForModal);
   const headersCopy = [...headers];
   headersCopy.forEach((headerData) => {
     if (

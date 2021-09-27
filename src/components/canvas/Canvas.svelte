@@ -52,7 +52,9 @@
   const onUpdate = async (): Promise<void> => {
     if (!checkIfChanged(rowData)) return;
     const eventId = tableData?.[0].event as string;
+    console.log("rowData ", rowData);
     const updatedValue = updatedTableValues(rowData);
+    console.log("updatedValue ", updatedValue);
     updateResult = await updateAction(updatedValue, eventId);
   };
 </script>
