@@ -113,6 +113,11 @@
                     />
                   {/if}
                 </div>
+                {#if i === 8}
+                  <div class="separation-line">
+                    <hr />
+                  </div>
+                {/if}
               {/each}
             {:else if name === "Medals"}
               {#each bestCompetitors as bestCompetitor, i}
