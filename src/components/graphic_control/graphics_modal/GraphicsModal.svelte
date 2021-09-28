@@ -33,6 +33,10 @@
 
   const toggle = () => (isOpen = !isOpen);
 
+  const limitCompetitors = 8;
+  $: iterationNumber = Math.ceil(competitors.length / limitCompetitors);
+  $: maxIndex = Math.ceil(competitors.length / iterationNumber) - 1;
+
   $: type = data["Scores"]
     ? isHeight(Object.keys(data["Scores"]?.[0])?.[0])
       ? EventType.VERTICAL
@@ -113,7 +117,7 @@
                     />
                   {/if}
                 </div>
-                {#if i === 8}
+                {#if i >= maxIndex && i % maxIndex === 0}
                   <div class="separation-line">
                     <hr />
                   </div>
