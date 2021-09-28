@@ -51,9 +51,7 @@
 
   const onUpdate = async (): Promise<void> => {
     if (!checkIfChanged(rowData)) return;
-    console.log("TABLE DATA1: ", tableData);
     const updatedValue = updatedTableValues(rowData);
-    console.log("updatedValue ", updatedValue);
     updateResult = await updateAction(updatedValue);
   };
 </script>

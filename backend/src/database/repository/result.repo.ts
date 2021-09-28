@@ -16,15 +16,11 @@ export const updateResults = async (
     (product, current) => product.concat(current.results as IResult),
     [] as IResult[]
   );
-  console.log("updatedResults:", updatedResults);
-  console.log("allResults:", allResults);
 
   for (const updatedResult of updatedResults) {
     const { competitorId, teamId, result } = updatedResult;
     const id = competitorId ?? teamId;
-    const resultId = allResults.find(
-      (_result) => _result.bib === id
-    )?._id;
+    const resultId = allResults.find((_result) => _result.bib === id)?._id;
 
     await ResultModel.findByIdAndUpdate(resultId, { performance: result });
   }

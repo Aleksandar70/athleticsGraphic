@@ -21,7 +21,6 @@ router.get("/:eventId", async (req: Request, res: Response) => {
 
 router.put("/", async (req: Request, res: Response) => {
   const newData: IRelayTeam[] = req.body;
-  console.log("newData: ", newData);
   const result = await updateRelayTeams(newData);
   return res.status(200).json(result);
 });

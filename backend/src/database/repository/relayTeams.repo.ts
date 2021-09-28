@@ -32,7 +32,6 @@ export const updateRelayTeams = async (
   relayTeams: IRelayTeam[]
 ): Promise<boolean> => {
   let result = true;
-  console.log("relayTeams: ", relayTeams);
   for (const relayTeam of relayTeams) {
     const status = await RelayTeamModel.updateOne(
       { relayTeamId: relayTeam.relayTeamId },

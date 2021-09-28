@@ -25,8 +25,7 @@ export const updateCompetitors = async (
       trialNumbers
     )) as unknown as boolean;
   }
-  console.log("tableData2: ", tableData);
-  const result = getResultData(tableData, get(currentEventId));
+  const result = getResultData(tableData);
   let resultsUpdated = true;
   if (result?.length) {
     resultsUpdated = (await putRequest(
@@ -34,7 +33,6 @@ export const updateCompetitors = async (
       result
     )) as unknown as boolean;
   }
-  console.log("tableData ", tableData);
   return (
     trialsUpdated &&
     resultsUpdated &&
@@ -57,19 +55,14 @@ const getTrialData = (tableData: RawData): Record<string, string>[] => {
     .filter((data) => Object.keys(data)?.length > 1);
 };
 
-const getResultData = (
-  tableData: RawData,
-  eventId: string
-): Record<string, string>[] => {
+const getResultData = (tableData: RawData): Record<string, string>[] => {
   return tableData
     .map((data) => {
       const resultData: Record<string, string> = {};
-      console.log("data ", data);
       resultData["competitorId"] = data.competitorId as string;
       resultData["teamId"] = data.teamId as string;
       resultData["result"] = data.result as string;
-      resultData["eventId"] = eventId;
-      resultData["runners"] = data.runners as string;
+      resultData["eventId"] = get(currentEventId);
       delete data.result;
       return resultData;
     })
