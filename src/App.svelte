@@ -11,6 +11,7 @@
   import { dataSource } from "./stores/config.store";
 
   import "./app.style.css";
+  import PreviewPage from "./pages/preview_page/PreviewPage.svelte";
 
   onMount(async () => {
     const config = await getConfig();
@@ -18,11 +19,13 @@
     navigate(window.location.pathname);
   });
 
-  const isStream = window.location.pathname === "/stream";
+  const isGraphicPage =
+    window.location.pathname === "/stream" ||
+    window.location.pathname === "/preview";
 </script>
 
 <Router url={Paths.CLIENT_URL}>
-  {#if !isStream}
+  {#if !isGraphicPage}
     <div class="app">
       <section class="header-section">
         <Header />
@@ -39,4 +42,5 @@
     </div>
   {/if}
   <Route path={Paths.STREAM}><StreamPage /></Route>
+  <Route path={Paths.PREVIEW}><PreviewPage /></Route>
 </Router>
