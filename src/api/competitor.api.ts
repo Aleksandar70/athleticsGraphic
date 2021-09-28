@@ -1,6 +1,8 @@
+import { get } from "svelte/store";
 import { Paths } from "../../global/constants/api";
 import type { ICompetitor } from "../../global/interfaces";
 import type { RawData } from "../../global/types";
+import { currentEventId } from "../stores/table.store";
 import { getRequest, putRequest } from "../utils/api.utils";
 import { isNumeric } from "../utils/string.utils";
 
@@ -12,8 +14,7 @@ export const getCompetitorsForEvent = async (
 };
 
 export const updateCompetitors = async (
-  tableData: RawData,
-  eventId: string
+  tableData: RawData
 ): Promise<boolean> => {
   const trialNumbers = getTrialData(tableData);
   let trialsUpdated = true;
@@ -24,17 +25,16 @@ export const updateCompetitors = async (
       trialNumbers
     )) as unknown as boolean;
   }
-
-  const result = getResultData(tableData, eventId);
+  console.log("tableData2: ", tableData);
+  const result = getResultData(tableData, get(currentEventId));
   let resultsUpdated = true;
-
   if (result?.length) {
     resultsUpdated = (await putRequest(
       Paths.RESULTS,
       result
     )) as unknown as boolean;
   }
-
+  console.log("tableData ", tableData);
   return (
     trialsUpdated &&
     resultsUpdated &&
@@ -64,9 +64,12 @@ const getResultData = (
   return tableData
     .map((data) => {
       const resultData: Record<string, string> = {};
+      console.log("data ", data);
       resultData["competitorId"] = data.competitorId as string;
+      resultData["teamId"] = data.teamId as string;
       resultData["result"] = data.result as string;
       resultData["eventId"] = eventId;
+      resultData["runners"] = data.runners as string;
       delete data.result;
       return resultData;
     })

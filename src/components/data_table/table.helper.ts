@@ -295,7 +295,6 @@ export const checkIfChanged = (tableData: TableData): boolean => {
 };
 
 export const updatedTableValues = (tableData: TableData): RawData => {
-  console.log("Tabledata: ", tableData);
   return tableData
     .map((row) =>
       Object.fromEntries(
@@ -304,7 +303,8 @@ export const updatedTableValues = (tableData: TableData): RawData => {
             (_row) =>
               _row.changed ||
               _row.id === "eventId" ||
-              _row.id === "competitorId"
+              _row.id === "competitorId" ||
+              _row.id === "teamId"
           )
           .map((field) => {
             const parsedValue =

@@ -11,7 +11,6 @@
   import { Collapse } from "sveltestrap";
   import GraphicControl from "../../components/graphic_control/GraphicControl.svelte";
   import "./eventcompetitorspage.style.css";
-  import { updateRelayTeams } from "../../api/relayTeams.api";
 
   export let eventId: string;
 
@@ -63,7 +62,7 @@
             <Canvas
               tableData={heatTableData.relayTeams}
               defaultColumns={defaultEventRelayTeamsColumns}
-              updateAction={updateRelayTeams}
+              updateAction={updateCompetitors}
             />
           {:else}
             <Canvas
