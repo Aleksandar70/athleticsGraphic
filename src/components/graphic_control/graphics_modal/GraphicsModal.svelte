@@ -35,7 +35,7 @@
 
   const limitCompetitors = 8;
   $: iterationNumber = Math.ceil(competitors.length / limitCompetitors);
-  $: maxIndex = Math.ceil(competitors.length / iterationNumber) - 1;
+  $: maxIndex = Math.ceil(competitors.length / iterationNumber);
 
   $: type = data["Scores"]
     ? isHeight(Object.keys(data["Scores"]?.[0])?.[0])
@@ -117,7 +117,7 @@
                     />
                   {/if}
                 </div>
-                {#if i >= maxIndex && i % maxIndex === 0}
+                {#if (i + 1) % maxIndex === 0}
                   <div class="separation-line">
                     <hr />
                   </div>
