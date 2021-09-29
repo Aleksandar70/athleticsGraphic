@@ -1,5 +1,12 @@
 import type { ObjectId } from "mongoose";
 
+export interface IOTCompetitionData {
+  competitionData: ICompetition;
+  competitorsData: ICompetitor[];
+  eventsData: IEvent[];
+  relayTeamsData: IRelayTeams[];
+}
+
 export interface IEvent {
   _id?: ObjectId;
   ageGroups?: string[];

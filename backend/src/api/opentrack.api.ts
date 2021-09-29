@@ -1,18 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { OpenTrack } from "../../../global/constants/api";
-import type {
-  ICompetition,
-  ICompetitor,
-  IEvent,
-  IRelayTeams,
-} from "../database/interfaces";
-
-interface IOTCompetitionData {
-  competitionData: ICompetition;
-  competitorsData: ICompetitor[];
-  eventsData: IEvent[];
-  relayTeamsData: IRelayTeams[];
-}
+import type { ICompetition, IOTCompetitionData } from "../database/interfaces";
 
 export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
   try {

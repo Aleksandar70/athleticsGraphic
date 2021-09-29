@@ -1,4 +1,4 @@
-import { get } from "svelte/store";
+import { get, Readable } from "svelte/store";
 import type {
   ICompetitor,
   IResult,
@@ -12,6 +12,7 @@ import {
   selectedParticipant,
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
+import { _ } from "svelte-i18n";
 
 export const getDataForPreviewModal = (
   id: Graphics
@@ -19,12 +20,15 @@ export const getDataForPreviewModal = (
   const data = {};
   switch (id) {
     case Graphics.EVENT_ANNOUNCEMENT:
-      data["Event Name"] = get(currentCompetitionData)["englishName"];
+      data["Event Name"] = getValueFromTranslation(
+        "englishName",
+        currentCompetitionData
+      );
       data["Location"] = "BELGRADE, FEBRUARY 2021";
       data["Hashtag"] = "#belgrade2021";
       break;
     case Graphics.PERSONAL_SCORE:
-      data["Event Name"] = get(currentEventData)["name"];
+      data["Event Name"] = getValueFromTranslation("name", currentEventData);
       data["ID"] = getFieldValueFromParticipant("competitorId");
       data["First Name"] = getFieldValueFromParticipant("firstName");
       data["Last Name"] = getFieldValueFromParticipant("lastName");
@@ -35,27 +39,39 @@ export const getDataForPreviewModal = (
         : (data["Result"] = getFieldValueFromParticipant("result"));
       break;
     case Graphics.START_LIST:
-      data["Competition"] = get(currentCompetitionData)["englishName"];
+      data["Competition"] = getValueFromTranslation(
+        "englishName",
+        currentCompetitionData
+      );
       data["Hashtag"] = "#belgrade2021";
-      data["Event Name"] = get(currentEventData)["name"];
+      data["Event Name"] = getValueFromTranslation("name", currentEventData);
       data["Description"] = "STARTING LIST";
       data["Competitors"] = getCompetitors();
       break;
     case Graphics.RESULT_LIST:
-      data["Competition"] = get(currentCompetitionData)["englishName"];
+      data["Competition"] = getValueFromTranslation(
+        "englishName",
+        currentCompetitionData
+      );
       data["Hashtag"] = "#belgrade2021";
-      data["Event Name"] = get(currentEventData)["name"];
+      data["Event Name"] = getValueFromTranslation("name", currentEventData);
       data["Description"] = "RESULTS";
       data["Competitors"] = getCompetitors();
       break;
     case Graphics.DISCIPLINE_ANNOUNCEMENT:
-      data["Discipline Name"] = get(currentEventData)["name"];
+      data["Discipline Name"] = getValueFromTranslation(
+        "name",
+        currentEventData
+      );
       data["Note"] = "NEXT";
-      data["Time"] = get(currentEventData)["r1Time"];
+      data["Time"] = getValueFromTranslation("r1Time", currentEventData);
       break;
     case Graphics.MEDALS:
-      data["Competition"] = get(currentCompetitionData)["englishName"];
-      data["Event Name"] = get(currentEventData)["name"];
+      data["Competition"] = getValueFromTranslation(
+        "englishName",
+        currentCompetitionData
+      );
+      data["Event Name"] = getValueFromTranslation("name", currentEventData);
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
       data["Medals"] = getBestResults();
@@ -65,6 +81,18 @@ export const getDataForPreviewModal = (
 
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
+
+const getValueFromTranslation = (
+  key: string,
+  fallbackStore: Readable<Record<string, string>>
+): string => {
+  const localeKey =
+    fallbackStore === currentCompetitionData
+      ? key
+      : `${key}_${get(currentEventData)["eventId"]}`;
+  const hasTranslation = get(_)(localeKey) !== localeKey;
+  return hasTranslation ? get(_)(localeKey) : get(fallbackStore)[key];
+};
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   const competitorList = list ? list : get(competitors);

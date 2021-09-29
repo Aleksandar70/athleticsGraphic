@@ -10,10 +10,12 @@ import ResultsRouter from "./api/routers/results.router";
 import RelayTeamsRouter from "./api/routers/relayTeams.router";
 import { Paths } from "../../global/constants/api";
 import { json } from "body-parser";
+import { createDefaultLocale } from "./i18n.util";
 
 connectDatabase().catch((err) =>
   console.log("Error while connecting to the databsae: ", err.message)
 );
+createDefaultLocale();
 
 const app = express();
 const port = Paths.SERVER_PORT;
