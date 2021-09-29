@@ -21,18 +21,11 @@
   import { isHeight } from "../../utils/event.utils";
   import { previewChannel } from "../../stores/preview.store";
 
-  export let data: Record<string, any> = {};
   let displayData = {};
   let action_id: Graphics;
 
   let isAlertVisible = false;
   let isModalOpen = false;
-
-  $: type = data["Scores"]
-    ? isHeight(Object.keys(data["Scores"]?.[0])?.[0])
-      ? EventType.VERTICAL
-      : EventType.HORIZONTAL
-    : EventType.RUNNING;
 
   const action = (id: Graphics) => {
     displayData = getDataForPreviewModal(id);
@@ -41,6 +34,11 @@
       id === Graphics.PERSONAL_SCORE && get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
     if (!isAlertVisible) {
+      let type = displayData["Scores"]
+        ? isHeight(Object.keys(displayData["Scores"]?.[0])?.[0])
+          ? EventType.VERTICAL
+          : EventType.HORIZONTAL
+        : EventType.RUNNING;
       $previewChannel.postMessage({ id: id, data: displayData, type: type });
     }
   };

@@ -9,12 +9,9 @@
 </script>
 
 <div id="scores--wrapper">
-  {console.log("type ", type)}
   {#if type === EventType.HORIZONTAL}
-    {console.log("USAO1")}
     <HorizontalScorePreviewPage {data} />
   {:else if type === EventType.VERTICAL}
-    {console.log("USAO2")}
     <VerticalScorePreviewPage {data} />
   {:else}
     <RunningScorePreviewPage {data} />

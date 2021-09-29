@@ -5,7 +5,6 @@
     data["Scores"].filter((score: string) => Object.values(score)[0]).length > 6
       ? data["Scores"].slice(0).slice(-6)
       : data["Scores"];
-      console.log("scores1: ", scores);
 </script>
 
 <img
@@ -20,7 +19,6 @@
 <p id="scoresCompetitor">
   {`${data["First Name"]} ${data["Last Name"]}`}
 </p>
-{console.log("scores2 ", data["Scores"])}
 {#each scores as score, i}
   <p class="metrics" id="scoresResult{i + 1}">
     {Object.keys(score)[0]}

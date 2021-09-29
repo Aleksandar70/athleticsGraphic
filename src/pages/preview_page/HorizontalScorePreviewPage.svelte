@@ -1,6 +1,5 @@
 <script lang="ts">
   export let data = {};
-  console.log("scores ", data["Scores"])
 </script>
 
 <img
@@ -15,7 +14,6 @@
 <p id="scoresCompetitor">
   {`${data["First Name"]} ${data["Last Name"]}`}
 </p>
-{console.log("scores ", data["Scores"])}
 {#each data["Scores"] as score, i}
   <p class="metrics" id="scoresMetric{i + 1}">
     {Object.keys(score)[0]}
@@ -146,8 +144,6 @@
     top: 922px;
     color: rgb(28, 59, 113);
     transform-origin: left center;
-    opacity: 0;
-    transform: scaleX(0);
   }
 
   #scoresResult1 {
