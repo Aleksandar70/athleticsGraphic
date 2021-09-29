@@ -12,6 +12,7 @@
 
   import "./app.style.css";
   import PreviewPage from "./pages/preview_page/PreviewPage.svelte";
+  import { visibleGraphics } from "../src/stores/stream.store";
 
   onMount(async () => {
     const config = await getConfig();
@@ -42,5 +43,7 @@
     </div>
   {/if}
   <Route path={Paths.STREAM}><StreamPage /></Route>
-  <Route path={Paths.PREVIEW}><PreviewPage /></Route>
+  <Route path={Paths.PREVIEW}
+    ><PreviewPage data={$visibleGraphics.data} /></Route
+  >
 </Router>

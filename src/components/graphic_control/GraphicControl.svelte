@@ -31,6 +31,7 @@
     isAlertVisible =
       id === Graphics.PERSONAL_SCORE && get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
+    //show on preview page
   };
 </script>
 
