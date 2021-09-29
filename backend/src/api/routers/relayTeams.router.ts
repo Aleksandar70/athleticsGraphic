@@ -1,17 +1,11 @@
 import express, { Request, Response } from "express";
 import { IRelayTeam } from "../../../../global/interfaces";
 import {
-  getRelayTeams,
   getRelayTeamsForEvent,
   updateRelayTeams,
 } from "../../database/repository/relayTeams.repo";
 
 const router = express.Router();
-
-router.get("/", async (req: Request, res: Response) => {
-  const relayTeams = await getRelayTeams();
-  return res.status(200).json(relayTeams);
-});
 
 router.get("/:eventId", async (req: Request, res: Response) => {
   const { eventId } = req.query;
@@ -19,6 +13,7 @@ router.get("/:eventId", async (req: Request, res: Response) => {
   return res.status(200).json(relayTeams);
 });
 
+//NOT USED AT THE MOMENT.
 router.put("/", async (req: Request, res: Response) => {
   const newData: IRelayTeam[] = req.body;
   const result = await updateRelayTeams(newData);

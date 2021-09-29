@@ -18,16 +18,13 @@ export const createRelayTeams = async (
   return await RelayTeamModel.insertMany(relayTeamModels);
 };
 
-export const getRelayTeams = async (): Promise<IRelayTeams[]> => {
-  return await RelayTeamModel.find();
-};
-
 export const getRelayTeamsForEvent = async (
   eventId: string
 ): Promise<IRelayTeams[]> => {
   return await RelayTeamModel.find({ eventId: eventId });
 };
 
+//NOT USED AT THE MOMENT.
 export const updateRelayTeams = async (
   relayTeams: IRelayTeam[]
 ): Promise<boolean> => {

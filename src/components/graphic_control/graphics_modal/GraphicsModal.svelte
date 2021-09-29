@@ -9,7 +9,11 @@
     Form,
     Button,
   } from "sveltestrap";
-  import { EventType, Graphics } from "../../../../global/constants/constants";
+  import {
+    Constants,
+    EventType,
+    Graphics,
+  } from "../../../../global/constants/constants";
   import { streamChannel } from "../../../stores/stream.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
@@ -33,8 +37,7 @@
 
   const toggle = () => (isOpen = !isOpen);
 
-  const limitCompetitors = 8;
-  $: iterationNumber = Math.ceil(competitors.length / limitCompetitors);
+  $: iterationNumber = Math.ceil(competitors.length / Constants.ROWS_PER_TABLE);
   $: maxIndex = Math.ceil(competitors.length / iterationNumber);
 
   $: type = data["Scores"]
