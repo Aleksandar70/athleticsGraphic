@@ -15,6 +15,7 @@
     Graphics,
   } from "../../../../global/constants/constants";
   import { UIText } from "../../../../global/constants/ui_text";
+  import { previewChannel } from "../../../stores/preview.store";
   import { streamChannel } from "../../../stores/stream.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
@@ -60,9 +61,14 @@
   ) => {
     if (name === "Scores" || name === "Competitors" || name === "Medals") {
       _data[name][idx][metric] = (target as HTMLInputElement).value;
+      sendPreview(_data);
       return;
     }
     _data[name] = (target as HTMLInputElement).value;
+  };
+
+  const sendPreview = (data: Record<string, any>) => {
+    $previewChannel.postMessage({ id: id, data: data, type: type });
   };
 </script>
 
