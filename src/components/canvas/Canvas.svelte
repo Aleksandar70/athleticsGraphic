@@ -23,7 +23,6 @@
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
 
-  currentEventId.set((tableData[0]?.event as string) ?? "events");
   const currentEvent = $visibleColumns[$currentEventId];
   if (!currentEvent) {
     const newVisibleColumns = $visibleColumns;
@@ -52,9 +51,8 @@
 
   const onUpdate = async (): Promise<void> => {
     if (!checkIfChanged(rowData)) return;
-    const eventId = tableData?.[0].event as string;
     const updatedValue = updatedTableValues(rowData);
-    updateResult = await updateAction(updatedValue, eventId);
+    updateResult = await updateAction(updatedValue);
   };
 </script>
 

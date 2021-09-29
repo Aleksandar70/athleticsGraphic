@@ -3,7 +3,10 @@
   import Canvas from "../../components/canvas/Canvas.svelte";
   import { getCompetitorResultsData } from "../../components/data_table/table.helper";
   import Spinner from "../../components/spinner/Spinner.svelte";
-  import { defaultEventCompetitorsColumns } from "../../../global/defaults";
+  import {
+    defaultEventCompetitorsColumns,
+    defaultEventRelayTeamsColumns,
+  } from "../../../global/defaults";
   import { updateCompetitors } from "../../api/competitor.api";
   import { Collapse } from "sveltestrap";
   import GraphicControl from "../../components/graphic_control/GraphicControl.svelte";
@@ -54,11 +57,19 @@
           {heatTableData.heatName}
         </div>
         <Collapse isOpen={heatToggle.get(heatTableData.heatName)}>
-          <Canvas
-            tableData={heatTableData.competitors}
-            defaultColumns={defaultEventCompetitorsColumns}
-            updateAction={updateCompetitors}
-          />
+          {#if heatTableData?.relayTeams}
+            <Canvas
+              tableData={heatTableData.relayTeams}
+              defaultColumns={defaultEventRelayTeamsColumns}
+              updateAction={updateCompetitors}
+            />
+          {:else}
+            <Canvas
+              tableData={heatTableData?.competitors}
+              defaultColumns={defaultEventCompetitorsColumns}
+              updateAction={updateCompetitors}
+            />
+          {/if}
         </Collapse>
       {/each}
     </div>

@@ -106,6 +106,16 @@ export interface ICompetitor {
   teamName?: string;
 }
 
+export interface IRelayTeams {
+  _id?: ObjectId;
+  eventId?: string;
+  name: string;
+  nonScorer: false;
+  relayTeamId: string;
+  teamId: string;
+  runners: ICompetitor[];
+}
+
 export interface ICompetition {
   _id?: ObjectId;
   address?: string;
@@ -121,6 +131,7 @@ export interface ICompetition {
   latitude?: number;
   longitude?: number;
   organiser?: string;
+  relayTeams?: IRelayTeams[];
   shortName?: string;
   slug?: string;
   teamTypes?: string;

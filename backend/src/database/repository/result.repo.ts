@@ -11,17 +11,16 @@ export const updateResults = async (
 ): Promise<void> => {
   const eventId = updatedResults?.[0].eventId;
   const event: IEvent = await getEventLocal(eventId);
-  const units: IUnit[] = event[0].units ?? [];
+  const units: IUnit[] = event.units ?? [];
   const allResults = units.reduce(
     (product, current) => product.concat(current.results as IResult),
     [] as IResult[]
   );
 
   for (const updatedResult of updatedResults) {
-    const { competitorId, result } = updatedResult;
-    const resultId = allResults.find(
-      (_result) => _result.bib === competitorId
-    )?._id;
+    const { competitorId, teamId, result } = updatedResult;
+    const id = competitorId ?? teamId;
+    const resultId = allResults.find((_result) => _result.bib === id)?._id;
 
     await ResultModel.findByIdAndUpdate(resultId, { performance: result });
   }

@@ -3,17 +3,19 @@
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
   import { animateHeader } from "./startListAnimation.helper";
+  import { Constants } from "../../../../global/constants/constants";
 
   export let data;
 
   let clear = false;
 
-  const limitCompetitors = 8;
   const timelineHeader = gsap.timeline();
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
   $: numberOfCompetitors = data["Competitors"].length;
-  $: iterationNumber = Math.ceil(numberOfCompetitors / limitCompetitors);
+  $: iterationNumber = Math.ceil(
+    numberOfCompetitors / Constants.ROWS_PER_TABLE
+  );
 
   let minIndex = 0;
   $: maxIndex = Math.ceil(numberOfCompetitors / iterationNumber);
@@ -28,7 +30,7 @@
   export const animateCompetitors = () => {
     const timelineCompetitors = gsap.timeline();
     if (minIndex < numberOfCompetitors) {
-      for (let index = 0; index < limitCompetitors; index++) {
+      for (let index = 0; index < Constants.ROWS_PER_TABLE; index++) {
         timelineCompetitors
           .to(
             `#competitor-info-${index}`,
@@ -107,7 +109,11 @@
 </script>
 
 <div id="startList" class="startList">
-  <img id="startListHeader" src="/img/graphics/listHeader.png" alt="listHeader" />
+  <img
+    id="startListHeader"
+    src="/img/graphics/listHeader.png"
+    alt="listHeader"
+  />
   <p id="startListCompetitonTitle">{data["Competition"]}</p>
   <p id="startListDiscipline">{data["Event Name"]}</p>
   <p id="startListHash">{data["Hashtag"]}</p>

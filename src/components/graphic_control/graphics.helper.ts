@@ -94,16 +94,16 @@ const getBestResults = (): Record<string, string>[] => {
     resultBibsForMedals.includes(competitor.competitorId)
   );
   const bestCompetitors = getCompetitors(filteredBestCompetitors);
-  sortByDescendingOrder(bestCompetitors);
+  sortByAscendingOrder(bestCompetitors);
   return bestCompetitors;
 };
 
-const sortByDescendingOrder = (objectArray: Record<string, string>[]): void => {
+const sortByAscendingOrder = (objectArray: Record<string, string>[]): void => {
   objectArray.sort((n1, n2) => {
-    if (n1.result < n2.result) {
+    if (n1.result > n2.result) {
       return 1;
     }
-    if (n1.result > n2.result) {
+    if (n1.result < n2.result) {
       return -1;
     }
     return 0;

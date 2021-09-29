@@ -9,7 +9,11 @@
     Form,
     Button,
   } from "sveltestrap";
-  import { EventType, Graphics } from "../../../../global/constants/constants";
+  import {
+    Constants,
+    EventType,
+    Graphics,
+  } from "../../../../global/constants/constants";
   import { streamChannel } from "../../../stores/stream.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
@@ -28,11 +32,13 @@
   $: if (data["Medals"]) {
     bestCompetitors = data["Medals"];
   }
-  $: console.log(bestCompetitors);
 
   $: _data = { ...data };
 
   const toggle = () => (isOpen = !isOpen);
+
+  $: iterationNumber = Math.ceil(competitors.length / Constants.ROWS_PER_TABLE);
+  $: maxIndex = Math.ceil(competitors.length / iterationNumber);
 
   $: type = data["Scores"]
     ? isHeight(Object.keys(data["Scores"]?.[0])?.[0])
@@ -114,6 +120,11 @@
                     />
                   {/if}
                 </div>
+                {#if (i + 1) % maxIndex === 0}
+                  <div class="separation-line">
+                    <hr />
+                  </div>
+                {/if}
               {/each}
             {:else if name === "Medals"}
               {#each bestCompetitors as bestCompetitor, i}

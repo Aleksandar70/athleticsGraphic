@@ -1,11 +1,17 @@
 import axios, { AxiosResponse } from "axios";
 import { OpenTrack } from "../../../global/constants/api";
-import type { ICompetition, ICompetitor, IEvent } from "../database/interfaces";
+import type {
+  ICompetition,
+  ICompetitor,
+  IEvent,
+  IRelayTeams,
+} from "../database/interfaces";
 
 interface IOTCompetitionData {
   competitionData: ICompetition;
   competitorsData: ICompetitor[];
   eventsData: IEvent[];
+  relayTeamsData: IRelayTeams[];
 }
 
 export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
@@ -18,6 +24,7 @@ export const getOTCompetitionData = async (): Promise<IOTCompetitionData> => {
       competitionData: unwrapCompetition(competitionData),
       competitorsData: competitionData.competitors ?? [],
       eventsData: competitionData.events ?? [],
+      relayTeamsData: competitionData.relayTeams ?? [],
     };
   } catch (err) {
     console.error(err);
@@ -38,7 +45,6 @@ const unwrapCompetition = ({
   latitude,
   longitude,
   organiser,
-  // relayTeams
   shortName,
   slug,
   teamTypes,
@@ -60,7 +66,6 @@ const unwrapCompetition = ({
   latitude,
   longitude,
   organiser,
-  // relayTeams
   shortName,
   slug,
   teamTypes,
