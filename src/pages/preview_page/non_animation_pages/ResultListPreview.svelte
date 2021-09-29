@@ -1,5 +1,5 @@
 <script lant="ts">
-  import { Constants } from "../../../global/constants/constants";
+  import { Constants } from "../../../../global/constants/constants";
 
   export let data;
 

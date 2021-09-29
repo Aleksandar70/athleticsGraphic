@@ -2,13 +2,13 @@
   import "./previewpage.style.css";
   import { Graphics } from "../../../global/constants/constants";
   import { previewChannel, visiblePreview } from "../../stores/preview.store";
-  import DisciplineAnnouncementPreviewPage from "./DisciplineAnnouncementPreviewPage.svelte";
-  import EventAnnouncementPreviewPage from "./EventAnnouncementPreviewPage.svelte";
-  import TimePreviewPage from "./TimePreviewPage.svelte";
-  import MedalsPreviewPage from "./MedalsPreviewPage.svelte";
-  import StartListPreviewPage from "./StartListPreviewPage.svelte";
-  import ResultListPreviewPage from "./ResultListPreviewPage.svelte";
-  import ScorePreviewPage from "./ScorePreviewPage.svelte";
+  import DisciplineAnnouncementPreview from "./non_animation_pages/DisciplineAnnouncementPreview.svelte";
+  import EventAnnouncementPreview from "./non_animation_pages/EventAnnouncementPreview.svelte";
+  import TimePreview from "./non_animation_pages/TimePreview.svelte";
+  import MedalsPreview from "./non_animation_pages/MedalsPreview.svelte";
+  import StartListPreview from "./non_animation_pages/StartListPreview.svelte";
+  import ResultListPreview from "./non_animation_pages/ResultListPreview.svelte";
+  import ScorePreview from "./non_animation_pages/ScorePreview.svelte";
 
   $previewChannel.addEventListener("message", (event) =>
     visiblePreview.set(event.data)
@@ -17,18 +17,18 @@
 
 <div class="graphics--wrapper">
   {#if $visiblePreview.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
-    <DisciplineAnnouncementPreviewPage data={$visiblePreview.data} />
+    <DisciplineAnnouncementPreview data={$visiblePreview.data} />
   {:else if $visiblePreview.id == Graphics.EVENT_ANNOUNCEMENT}
-    <EventAnnouncementPreviewPage data={$visiblePreview.data} />
+    <EventAnnouncementPreview data={$visiblePreview.data} />
   {:else if $visiblePreview.id == Graphics.START_LIST}
-    <StartListPreviewPage data={$visiblePreview.data} />
+    <StartListPreview data={$visiblePreview.data} />
   {:else if $visiblePreview.id == Graphics.RESULT_LIST}
-    <ResultListPreviewPage data={$visiblePreview.data} />
+    <ResultListPreview data={$visiblePreview.data} />
   {:else if $visiblePreview.id == Graphics.MEDALS}
-    <MedalsPreviewPage data={$visiblePreview.data} />
+    <MedalsPreview data={$visiblePreview.data} />
   {:else if $visiblePreview.id == Graphics.PERSONAL_SCORE}
-    <ScorePreviewPage data={$visiblePreview.data} type={$visiblePreview.type} />
+    <ScorePreview data={$visiblePreview.data} type={$visiblePreview.type} />
   {:else if $visiblePreview.id == Graphics.TIME}
-    <TimePreviewPage />
+    <TimePreview />
   {/if}
 </div>
