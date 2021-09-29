@@ -4,7 +4,10 @@
   import Spinner from "../../components/spinner/Spinner.svelte";
   import { defaultEventColumns } from "../../../global/defaults";
   import { UIText } from "../../../global/constants/ui_text";
+  import { currentEventId } from "../../stores/table.store";
   import "./eventlistpage.style.css";
+
+  currentEventId.set("events");
 </script>
 
 <div class="event-list--page">

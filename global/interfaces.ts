@@ -29,6 +29,8 @@ export interface ISearch {
 }
 export interface IEvent {
   units: IUnit[];
+  event: string;
+  eventId: string;
 }
 
 export interface IUnit {
@@ -48,7 +50,8 @@ export interface ITrial {
 
 export interface IHeatEventData {
   heatName: string;
-  competitors: ICompetitor[];
+  relayTeams?: IRelayTeam[];
+  competitors?: ICompetitor[];
 }
 
 export interface IResult {
@@ -57,5 +60,13 @@ export interface IResult {
 }
 
 export interface ICompetitor {
-  competitorId: string;
+  competitorId?: string;
+  firstName?: string;
+  lastName?: string;
+  event?: string;
+}
+
+export interface IRelayTeam {
+  relayTeamId: string;
+  runners: ICompetitor[];
 }

@@ -16,6 +16,9 @@ export abstract class Paths {
   static readonly COMPETITOR = "competitor";
   static readonly COMPETITOR_PATH = `${Paths.ROOT_PATH}${Paths.COMPETITOR}`;
 
+  static readonly RELAY_TEAMS = "relayTeams";
+  static readonly RELAY_TEAMS_PATH = `${Paths.ROOT_PATH}${Paths.RELAY_TEAMS}`;
+
   static readonly CONFIG = "config";
   static readonly CONFIG_PATH = `${Paths.ROOT_PATH}${Paths.CONFIG}`;
 
@@ -32,7 +35,7 @@ export abstract class Paths {
 export abstract class OpenTrack {
   static readonly COMPETITION_YEAR = 2021;
   static readonly COMPETITION_COUNTRY = "SRB";
-  static readonly COMPETITION_ID = "srbopenindoor";
+  static readonly COMPETITION_ID = "balkan_u18"; 
   static readonly OPEN_TRACK_API = `https://data.opentrack.run/en-gb/x/${OpenTrack.COMPETITION_YEAR}/${OpenTrack.COMPETITION_COUNTRY}/${OpenTrack.COMPETITION_ID}`;
 
   static readonly OPEN_TRACK_API_EVENT = `${OpenTrack.OPEN_TRACK_API}/event`;

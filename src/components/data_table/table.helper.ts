@@ -1,4 +1,9 @@
-import type { ICompetitor, IHeatEventData } from "../../../global/interfaces";
+import type {
+  ICompetitor,
+  IHeatEventData,
+  IRelayTeam,
+  IUnit,
+} from "../../../global/interfaces";
 import type {
   RawData,
   TableData,
@@ -11,8 +16,10 @@ import { isHeight, isRound } from "../../utils/event.utils";
 import {
   defaultEventColumns,
   defaultEventCompetitorsColumns,
+  defaultEventRelayTeamsColumns,
   eventColumnsUI,
   eventCompetitorsColumnsUI,
+  eventRelayTeamsColumnsUI,
   uneditableFields,
 } from "../../../global/defaults";
 import {
@@ -20,6 +27,7 @@ import {
   currentCompetitionData,
   currentEventData,
   currentEventId,
+  isRelayTeamEvent,
   lockedColumns,
   selectedParticipant,
   visibleColumns,
@@ -27,17 +35,22 @@ import {
 import { get } from "svelte/store";
 import { isNumeric } from "../../utils/string.utils";
 import { getOTCompetitionData } from "../../../backend/src/api/opentrack.api";
+import { getRelayTeamsForEvent } from "../../api/relayTeams.api";
 
 export const getDefaultColumns = (): string[] => {
+  const singleEventColumns = get(isRelayTeamEvent)
+    ? defaultEventRelayTeamsColumns
+    : defaultEventCompetitorsColumns;
   return get(currentEventId) === "events"
     ? defaultEventColumns
-    : defaultEventCompetitorsColumns;
+    : singleEventColumns;
 };
 
 export const getColumnsForDisplay = (): string[] => {
-  return get(currentEventId) === "events"
-    ? eventColumnsUI
+  const singleEventColumns = get(isRelayTeamEvent)
+    ? eventRelayTeamsColumnsUI
     : eventCompetitorsColumnsUI;
+  return get(currentEventId) === "events" ? eventColumnsUI : singleEventColumns;
 };
 
 export const getCurrentColumns = (): string => {
@@ -55,69 +68,140 @@ export const getFieldLinks = (rows: RawData): Map<string, string> => {
 export const getCompetitorResultsData = async (
   eventId: string
 ): Promise<IHeatEventData[] | ICompetitor[]> => {
-  const eventData = await getEventData(eventId);
   const { competitionData } = await getOTCompetitionData();
+
+  const eventData = await getEventData(eventId);
+  const competitorData = await getCompetitorsForEvent(eventId);
+  const relayTeamsData = await getRelayTeamsForEvent(eventId);
+
+  const isTeamEvent = !!relayTeamsData.length;
+
+  currentEventId.set(eventData?.eventId);
+  isRelayTeamEvent.set(isTeamEvent);
 
   currentEventData.set(eventData);
   currentCompetitionData.set(competitionData);
-
-  const competitorData = await getCompetitorsForEvent(eventId);
   competitors.set(competitorData);
 
   const data: IHeatEventData[] = [];
-
   const units = eventData.units;
 
   for (const unit of units) {
-    const _results = unit.results;
-    const _resultBibs = _results.map((result) => result.bib);
-    const _competitors = competitorData.filter((competitor) =>
-      _resultBibs.includes(competitor.competitorId)
-    );
-    const _trials = unit.trials;
-    for (const competitor of _competitors) {
-      if (unit.rounds) {
-        let round = 1;
-        while (round <= unit.rounds) {
-          competitor[round++] = "";
-        }
-      } else if (unit.heights.length > 0) {
-        const heights = unit.heights;
-        for (const height of heights) {
-          competitor[height] = "";
-        }
-      }
+    const tableData = isTeamEvent
+      ? getRelayTeamsForUnit(relayTeamsData, unit)
+      : getCompetitorsForUnit(unit);
 
-      for (const trial of _trials) {
-        if (trial.bib === competitor.competitorId) {
-          if (unit.rounds) {
-            competitor[trial.round] = trial.result;
-          } else if (unit.heights.length > 0) {
-            competitor[trial.height] = trial.result;
-          }
-        }
-      }
-
-      competitor["result"] = _results.find(
-        (result) => result.bib === competitor.competitorId
-      )?.performance;
+    if (!isTeamEvent) {
+      addRoundsOrHeightsToCompetitorsForUnit(tableData as ICompetitor[], unit);
+      populateTrialsToCompetitorsForUnit(tableData as ICompetitor[], unit);
     }
+    populateResultsOfTableDataForUnit(tableData, unit);
 
-    if (units.length === 1) return _competitors;
-    const _data = { heatName: unit.heatName, competitors: _competitors };
-    data.push(_data);
+    if (units.length === 1) return tableData as ICompetitor[];
+
+    const heatData: IHeatEventData = isTeamEvent
+      ? { heatName: unit.heatName, relayTeams: tableData as IRelayTeam[] }
+      : { heatName: unit.heatName, competitors: tableData as ICompetitor[] };
+
+    data.push(heatData);
   }
 
   return data;
 };
 
-export const getCompetitorIdFromRow = (row: TableRow): string =>
-  row.find((field) => field.id === "competitorId")?.stringValue ?? "events";
+const getRelayTeamsForUnit = (
+  relayTeamsData: IRelayTeam[],
+  unit: IUnit
+): IRelayTeam[] => {
+  const resultBibs = unit.results.map((result) => result.bib);
+  const unitRelayTeams = relayTeamsData.filter((relayTeam) =>
+    resultBibs.includes(relayTeam.relayTeamId)
+  );
+  for (const unitRelayTeam of unitRelayTeams) {
+    unitRelayTeam.runners = unitRelayTeam.runners.map((runnerId) =>
+      get(competitors).find(
+        (competitor) => competitor.competitorId === runnerId
+      )
+    );
+  }
+  return unitRelayTeams;
+};
 
-export const isRowSelected = (row: TableRow): boolean =>
-  get(currentEventId) !== "events" &&
-  getCompetitorIdFromRow(get(selectedParticipant)) ===
-    getCompetitorIdFromRow(row);
+const getCompetitorsForUnit = (unit: IUnit): ICompetitor[] => {
+  const resultBibs = unit.results.map((result) => result.bib);
+  return get(competitors).filter((competitor) =>
+    resultBibs.includes(competitor.competitorId)
+  );
+};
+
+const addRoundsOrHeightsToCompetitorsForUnit = (
+  competitors: ICompetitor[],
+  unit: IUnit
+): void => {
+  for (const competitor of competitors) {
+    if (unit.rounds) {
+      let round = 1;
+      while (round <= unit.rounds) {
+        competitor[round++] = "";
+      }
+    } else if (unit.heights.length > 0) {
+      const heights = unit.heights;
+      for (const height of heights) {
+        competitor[height] = "";
+      }
+    }
+  }
+};
+
+const populateTrialsToCompetitorsForUnit = (
+  competitors: ICompetitor[],
+  unit: IUnit
+): void => {
+  const _trials = unit.trials;
+  for (const competitor of competitors) {
+    for (const trial of _trials) {
+      if (trial.bib === competitor.competitorId) {
+        if (unit.rounds) {
+          competitor[trial.round] = trial.result;
+        } else if (unit.heights.length > 0) {
+          competitor[trial.height] = trial.result;
+        }
+      }
+    }
+  }
+};
+
+const populateResultsOfTableDataForUnit = (
+  tableData: ICompetitor[] | IRelayTeam[],
+  unit: IUnit
+) => {
+  if ("competitorId" in tableData?.[0]) {
+    for (const data of tableData as ICompetitor[]) {
+      data["result"] = unit.results.find(
+        (result) => result.bib === data.competitorId
+      )?.performance;
+    }
+  } else {
+    for (const data of tableData as IRelayTeam[]) {
+      data["result"] = unit.results.find(
+        (result) => result.bib === data.relayTeamId
+      )?.performance;
+    }
+  }
+};
+
+export const getCompetitorIdFromRow = (row: TableRow): string => {
+  const id = get(isRelayTeamEvent) ? "teamId" : "competitorId";
+  return row.find((field) => field.id === id)?.stringValue ?? "events";
+};
+
+export const isRowSelected = (row: TableRow): boolean => {
+  const temp =
+    get(currentEventId) !== "events" &&
+    getCompetitorIdFromRow(get(selectedParticipant)) ===
+      getCompetitorIdFromRow(row);
+  return temp;
+};
 
 export const setLock = (value: string): string =>
   get(lockedColumns)?.[get(currentEventId)]?.includes(value) ? " 🔒" : "";
@@ -148,9 +232,12 @@ export const getTableData = (rawData: RawData): TableData => {
     return Object.entries(row).map(([key, value]) => {
       return {
         value: value,
-        stringValue: value.toString(),
+        stringValue:
+          key === "runners"
+            ? getRunnersNames(value as ICompetitor[])
+            : value?.toString(),
         changed: false,
-        link: links?.get(value.toString()),
+        link: links?.get(value?.toString()),
         height: isHeight(key),
         round: isRound(key),
         id: key,
@@ -160,6 +247,11 @@ export const getTableData = (rawData: RawData): TableData => {
 
   return filterRowData(tableData);
 };
+
+const getRunnersNames = (runners: ICompetitor[]): string =>
+  runners
+    ?.map((runner) => `${runner?.firstName} ${runner?.lastName}`)
+    .join(", ");
 
 export const getHeaderData = (rawData: RawData): Headers => {
   if (!rawData?.length) return [];
@@ -211,7 +303,8 @@ export const updatedTableValues = (tableData: TableData): RawData => {
             (_row) =>
               _row.changed ||
               _row.id === "eventId" ||
-              _row.id === "competitorId"
+              _row.id === "competitorId" ||
+              _row.id === "teamId"
           )
           .map((field) => {
             const parsedValue =
@@ -241,6 +334,7 @@ export const filterHeaderData = (headers: Headers): Headers => {
       headers.push(headers.splice(headers.indexOf(headerData), 1)[0]);
     }
   });
+
   return headers;
 };
 
