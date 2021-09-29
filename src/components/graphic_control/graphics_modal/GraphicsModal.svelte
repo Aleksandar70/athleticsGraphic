@@ -65,6 +65,7 @@
       return;
     }
     _data[name] = (target as HTMLInputElement).value;
+    sendPreview(_data);
   };
 
   const sendPreview = (data: Record<string, any>) => {
