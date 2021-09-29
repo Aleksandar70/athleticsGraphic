@@ -41,9 +41,7 @@
       id === Graphics.PERSONAL_SCORE && get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
     //show on preview page
-    if (id === Graphics.DISCIPLINE_ANNOUNCEMENT) {
-      $previewChannel.postMessage({ id: id, data: displayData, type: type });
-    }
+    $previewChannel.postMessage({ id: id, data: displayData, type: type });
   };
 </script>
 

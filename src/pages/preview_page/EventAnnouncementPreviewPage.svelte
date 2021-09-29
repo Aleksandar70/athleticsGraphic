@@ -27,8 +27,6 @@
     left: 517px;
     position: fixed;
     transform-origin: top center;
-    opacity: 0;
-    transform: scaleY(0);
   }
 
   #eventTitle {
@@ -39,8 +37,6 @@
     left: 730px;
     color: rgb(28, 59, 113);
     transform-origin: top center;
-    opacity: 0;
-    transform: scaleY(0);
   }
 
   #eventLocation {
@@ -51,8 +47,6 @@
     left: 775px;
     color: white;
     transform-origin: top center;
-    opacity: 0;
-    transform: scaleY(0);
   }
 
   #eventHashtag {
@@ -63,7 +57,5 @@
     left: 890px;
     color: white;
     transform-origin: top center;
-    opacity: 0;
-    transform: scaleY(0);
   }
 </style>

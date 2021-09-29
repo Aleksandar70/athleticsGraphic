@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "./previewpage.style.css";
   import { Graphics } from "../../../global/constants/constants";
   import { previewChannel, visiblePreview } from "../../stores/preview.store";
   import DisciplineAnnouncementPreviewPage from "./DisciplineAnnouncementPreviewPage.svelte";
@@ -12,6 +13,12 @@
 <div class="graphics--wrapper">
   {#if $visiblePreview.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
     <DisciplineAnnouncementPreviewPage data={$visiblePreview.data} />
+  {:else if $visiblePreview.id == Graphics.EVENT_ANNOUNCEMENT}
+    <EventAnnouncementPreviewPage data={$visiblePreview.data} />
+  {:else if $visiblePreview.id == Graphics.EVENT_ANNOUNCEMENT}
+    <EventAnnouncementPreviewPage data={$visiblePreview.data} />
+  {:else if $visiblePreview.id == Graphics.EVENT_ANNOUNCEMENT}
+    <EventAnnouncementPreviewPage data={$visiblePreview.data} />
   {:else if $visiblePreview.id == Graphics.EVENT_ANNOUNCEMENT}
     <EventAnnouncementPreviewPage data={$visiblePreview.data} />
   {/if}
