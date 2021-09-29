@@ -5,6 +5,7 @@
   import { defaultEventColumns } from "../../../global/defaults";
   import { UIText } from "../../../global/constants/ui_text";
   import { currentEventId } from "../../stores/table.store";
+  import { _ } from "svelte-i18n";
   import "./eventlistpage.style.css";
 
   currentEventId.set("events");
