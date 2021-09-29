@@ -33,6 +33,10 @@
     isAlertVisible =
       id === Graphics.PERSONAL_SCORE && get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
+    sendPreview(id);
+  };
+
+  const sendPreview = (id: String) => {
     if (!isAlertVisible) {
       let type = displayData["Scores"]
         ? isHeight(Object.keys(displayData["Scores"]?.[0])?.[0])
