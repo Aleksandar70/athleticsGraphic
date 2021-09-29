@@ -55,7 +55,7 @@
     </CardHeader>
     <CardBody class="graphic-control--body">
       <div class="graphic-events">
-        <Label>Event</Label>
+        <Label>{UIText.LABEL_EVENT}</Label>
         <Button
           color="primary"
           on:click={() => action(Graphics.EVENT_ANNOUNCEMENT)}
@@ -77,7 +77,7 @@
         >
       </div>
       <div class="graphic-personal">
-        <Label>Personal</Label>
+        <Label>{UIText.LABEL_PERSONAL}</Label>
         <Button color="primary" on:click={() => action(Graphics.PERSONAL_SCORE)}
           >{UIText.SHOW_PERSONAL_SCORE}</Button
         >

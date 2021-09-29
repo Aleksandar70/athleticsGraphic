@@ -22,11 +22,18 @@ export abstract class UIText {
   static readonly DISCIPLINE_ANNOUNCEMENT: string = "Discipline Announcement";
   static readonly SHOW_PERSONAL_SCORE: string = "Personal Score";
   static readonly SHOW_PERSONAL_DATA: string = "Personal Data";
-  static readonly PERSONAL_SCORE_ALERT_TEXT: string = "Please select one of the competitors in the table!";
+  static readonly PERSONAL_SCORE_ALERT_TEXT: string =
+    "Please select one of the competitors in the table!";
   static readonly MEDALS: string = "Medals";
   static readonly TIME: string = "Time";
   static readonly CLEAR_ALL: string = "Clear all";
   static readonly CLEAR_SEQUENCE: string = "Clear";
+
+  static readonly LABEL_EVENT: string = "Event";
+  static readonly LABEL_PERSONAL: string = "Personal";
+  static readonly BUTTON_SHOW: string = "Show";
+  static readonly BUTTON_CANCEL: string = "Cancel";
+  static readonly TIME_MESSAGE: string = "You are about to show graphics for";
 
   static readonly INIT_WARNING: string = "⚠️ All existing data will be lost";
   static readonly INIT_BUTTON: string = "Initialize";

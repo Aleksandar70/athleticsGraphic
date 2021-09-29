@@ -14,6 +14,7 @@
     EventType,
     Graphics,
   } from "../../../../global/constants/constants";
+  import { UIText } from "../../../../global/constants/ui_text";
   import { streamChannel } from "../../../stores/stream.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
@@ -168,12 +169,12 @@
       </Form>
     {:else}
       <p class="body-info">
-        You are about to show graphics for <span class="id-span">{id}</span>
+        {UIText.TIME_MESSAGE} <span class="id-span">{id}</span>
       </p>
     {/if}
   </ModalBody>
   <ModalFooter>
-    <Button on:click={() => sendGraphics()}>Show</Button>
-    <Button on:click={toggle}>Cancel</Button>
+    <Button on:click={() => sendGraphics()}>{UIText.BUTTON_SHOW}</Button>
+    <Button on:click={toggle}>{UIText.BUTTON_CANCEL}</Button>
   </ModalFooter>
 </Modal>
