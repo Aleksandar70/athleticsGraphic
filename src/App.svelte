@@ -9,10 +9,8 @@
   import { Paths } from "../global/constants/api";
   import { getConfig } from "./api/config.api";
   import { dataSource } from "./stores/config.store";
-
   import "./app.style.css";
   import PreviewPage from "./pages/preview_page/PreviewPage.svelte";
-  import { visibleGraphics } from "../src/stores/stream.store";
 
   onMount(async () => {
     const config = await getConfig();
