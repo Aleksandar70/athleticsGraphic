@@ -11,19 +11,28 @@
   import { UIText } from "../../../global/constants/ui_text";
   import { Icon } from "sveltestrap";
   import "./graphicControl.style.css";
-  import { Graphics } from "../../../global/constants/constants";
+  import { EventType, Graphics } from "../../../global/constants/constants";
   import { getDataForPreviewModal } from "./graphics.helper";
   import GraphicsModal from "./graphics_modal/GraphicsModal.svelte";
   import { clearChannel, streamChannel } from "../../stores/stream.store";
   import { Alert } from "sveltestrap";
   import { get } from "svelte/store";
   import { selectedParticipant } from "../../stores/table.store";
+  import { isHeight } from "../../utils/event.utils";
+  import { previewChannel } from "../../stores/preview.store";
 
+  export let data: Record<string, any> = {};
   let displayData = {};
   let action_id: Graphics;
 
   let isAlertVisible = false;
   let isModalOpen = false;
+
+  $: type = data["Scores"]
+    ? isHeight(Object.keys(data["Scores"]?.[0])?.[0])
+      ? EventType.VERTICAL
+      : EventType.HORIZONTAL
+    : EventType.RUNNING;
 
   const action = (id: Graphics) => {
     displayData = getDataForPreviewModal(id);
@@ -32,6 +41,9 @@
       id === Graphics.PERSONAL_SCORE && get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
     //show on preview page
+    if (id === Graphics.DISCIPLINE_ANNOUNCEMENT) {
+      $previewChannel.postMessage({ id: id, data: displayData, type: type });
+    }
   };
 </script>
 

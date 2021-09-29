@@ -43,7 +43,5 @@
     </div>
   {/if}
   <Route path={Paths.STREAM}><StreamPage /></Route>
-  <Route path={Paths.PREVIEW}
-    ><PreviewPage data={$visibleGraphics.data} /></Route
-  >
+  <Route path={Paths.PREVIEW}><PreviewPage /></Route>
 </Router>
