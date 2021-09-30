@@ -90,9 +90,15 @@ const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
-  const competitorList = list
-    ? list
-    : transformCompetitor(get(heatTableParticipants));
+  let competitorList;
+  if (isRunningDiscipline()) {
+    competitorList = list
+      ? list
+      : transformCompetitor(get(heatTableParticipants));
+  } else {
+    competitorList = list ? list : get(competitors);
+  }
+
   return competitorList.map((competitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
@@ -105,6 +111,7 @@ const getScores = (): unknown[] =>
     .filter((field) => isNumeric(field.id))
     .map((score: TableField) => ({ [score.id]: score.stringValue }));
 
+// Get from FINAL heat results
 const getBestResults = (): Record<string, string>[] => {
   const units = get(currentEventData)["units"];
   let bestResults = [];
@@ -115,8 +122,8 @@ const getBestResults = (): Record<string, string>[] => {
   }
   const resultBibsForMedals = bestResults.map((bestResult) => bestResult?.bib);
 
-  const filteredBestCompetitors = get(competitors).filter(
-    (competitor) => resultBibsForMedals.includes(competitor.competitorId)
+  const filteredBestCompetitors = get(competitors).filter((competitor) =>
+    resultBibsForMedals.includes(competitor.competitorId)
   );
   const bestCompetitors = getCompetitors(filteredBestCompetitors);
   sortByAscendingOrder(bestCompetitors);
@@ -147,7 +154,7 @@ const getHeatName = (): String => {
 const isRunningDiscipline = (): Boolean => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
-    if (unit.heights.length == 0 && unit.trials.length == 0) {
+    if (unit.heights.length === 0 && unit.trials.length === 0) {
       return true;
     }
   }
