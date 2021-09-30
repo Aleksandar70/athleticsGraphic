@@ -60,6 +60,9 @@ export const getDataForPreviewModal = (
       break;
     case Graphics.DISCIPLINE_ANNOUNCEMENT:
       data["Discipline Name"] = get(currentEventData)["name"];
+      if (isRunningDiscipline()) {
+        data["Heat"] = getHeatName();
+      }
       data["Note"] = "NEXT";
       data["Time"] = get(currentEventData)["r1Time"];
       break;
