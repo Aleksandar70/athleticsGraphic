@@ -14,6 +14,8 @@
     EventType,
     Graphics,
   } from "../../../../global/constants/constants";
+  import { UIText } from "../../../../global/constants/ui_text";
+  import { previewChannel } from "../../../stores/preview.store";
   import { streamChannel } from "../../../stores/stream.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
@@ -59,9 +61,15 @@
   ) => {
     if (name === "Scores" || name === "Competitors" || name === "Medals") {
       _data[name][idx][metric] = (target as HTMLInputElement).value;
+      sendPreview(_data);
       return;
     }
     _data[name] = (target as HTMLInputElement).value;
+    sendPreview(_data);
+  };
+
+  const sendPreview = (data: Record<string, any>) => {
+    $previewChannel.postMessage({ id: id, data: data, type: type });
   };
 </script>
 
@@ -160,7 +168,7 @@
               <Input
                 type="text"
                 bind:value
-                on:change={(event) => inputChange(event.target, name)}
+                on:input={(event) => inputChange(event.target, name)}
               />
             {/if}
           </FormGroup>
@@ -168,12 +176,12 @@
       </Form>
     {:else}
       <p class="body-info">
-        You are about to show graphics for <span class="id-span">{id}</span>
+        {UIText.TIME_MESSAGE} <span class="id-span">{id}</span>
       </p>
     {/if}
   </ModalBody>
   <ModalFooter>
-    <Button on:click={() => sendGraphics()}>Show</Button>
-    <Button on:click={toggle}>Cancel</Button>
+    <Button on:click={() => sendGraphics()}>{UIText.BUTTON_SHOW}</Button>
+    <Button on:click={toggle}>{UIText.BUTTON_CANCEL}</Button>
   </ModalFooter>
 </Modal>

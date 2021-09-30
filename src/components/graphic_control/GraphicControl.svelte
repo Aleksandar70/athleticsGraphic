@@ -11,13 +11,15 @@
   import { UIText } from "../../../global/constants/ui_text";
   import { Icon } from "sveltestrap";
   import "./graphicControl.style.css";
-  import { Graphics } from "../../../global/constants/constants";
+  import { EventType, Graphics } from "../../../global/constants/constants";
   import { getDataForPreviewModal } from "./graphics.helper";
   import GraphicsModal from "./graphics_modal/GraphicsModal.svelte";
   import { clearChannel, streamChannel } from "../../stores/stream.store";
   import { Alert } from "sveltestrap";
   import { get } from "svelte/store";
   import { selectedParticipant } from "../../stores/table.store";
+  import { isHeight } from "../../utils/event.utils";
+  import { previewChannel } from "../../stores/preview.store";
 
   let displayData = {};
   let action_id: Graphics;
@@ -31,6 +33,18 @@
     isAlertVisible =
       id === Graphics.PERSONAL_SCORE && get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
+    sendPreview(id);
+  };
+
+  const sendPreview = (id: String) => {
+    if (!isAlertVisible) {
+      let type = displayData["Scores"]
+        ? isHeight(Object.keys(displayData["Scores"]?.[0])?.[0])
+          ? EventType.VERTICAL
+          : EventType.HORIZONTAL
+        : EventType.RUNNING;
+      $previewChannel.postMessage({ id: id, data: displayData, type: type });
+    }
   };
 </script>
 
@@ -54,7 +68,7 @@
     </CardHeader>
     <CardBody class="graphic-control--body">
       <div class="graphic-events">
-        <Label>Event</Label>
+        <Label>{UIText.LABEL_EVENT}</Label>
         <Button
           color="primary"
           on:click={() => action(Graphics.EVENT_ANNOUNCEMENT)}
@@ -76,7 +90,7 @@
         >
       </div>
       <div class="graphic-personal">
-        <Label>Personal</Label>
+        <Label>{UIText.LABEL_PERSONAL}</Label>
         <Button color="primary" on:click={() => action(Graphics.PERSONAL_SCORE)}
           >{UIText.SHOW_PERSONAL_SCORE}</Button
         >

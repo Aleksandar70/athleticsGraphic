@@ -25,6 +25,9 @@ export abstract class Paths {
   static readonly STREAM = "stream";
   static readonly STREAM_PATH = `${Paths.ROOT_PATH}${Paths.STREAM}`;
 
+  static readonly PREVIEW = "preview";
+  static readonly PREVIEW_PATH = `${Paths.ROOT_PATH}${Paths.PREVIEW}`;
+
   static readonly DATABASE = "database";
   static readonly DATABASE_PATH = `${Paths.ROOT_PATH}${Paths.DATABASE}`;
 }
