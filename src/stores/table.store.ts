@@ -8,6 +8,8 @@ export const currentRow = writable(0);
 export const currentEventData = writable({});
 export const currentCompetitionData = writable({});
 export const isRelayTeamEvent = writable(false);
+export const currentHeatName = writable({});
+export const isHeatOpened = writable(false);
 
 const columns = localStorage.getItem("columns");
 export const visibleColumns = writable(columns ? JSON.parse(columns) : {});

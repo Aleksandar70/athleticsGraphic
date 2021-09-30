@@ -9,6 +9,7 @@ import {
   competitors,
   currentCompetitionData,
   currentEventData,
+  currentHeatName,
   selectedParticipant,
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
@@ -25,6 +26,8 @@ export const getDataForPreviewModal = (
       break;
     case Graphics.PERSONAL_SCORE:
       data["Event Name"] = get(currentEventData)["name"];
+      data["Round"] = getRound();
+      data["Heat"] = getHeat();
       data["ID"] = getFieldValueFromParticipant("competitorId");
       data["First Name"] = getFieldValueFromParticipant("firstName");
       data["Last Name"] = getFieldValueFromParticipant("lastName");
@@ -38,6 +41,8 @@ export const getDataForPreviewModal = (
       data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
+      data["Round"] = getRound();
+      data["Heat"] = getHeat();
       data["Description"] = "STARTING LIST";
       data["Competitors"] = getCompetitors();
       break;
@@ -45,6 +50,8 @@ export const getDataForPreviewModal = (
       data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
+      data["Round"] = getRound();
+      data["Heat"] = getHeat();
       data["Description"] = "RESULTS";
       data["Competitors"] = getCompetitors();
       break;
@@ -108,4 +115,22 @@ const sortByAscendingOrder = (objectArray: Record<string, string>[]): void => {
     }
     return 0;
   });
+};
+
+const getRound = (): String => {
+  const units = get(currentEventData)["units"];
+  for (const unit of units) {
+    if (unit.heatName === get(currentHeatName)) {
+      return "Round " + unit.round;
+    }
+  }
+};
+
+const getHeat = (): String => {
+  const units = get(currentEventData)["units"];
+  for (const unit of units) {
+    if (unit.heatName === get(currentHeatName)) {
+      return "Heat " + unit.heat;
+    }
+  }
 };
