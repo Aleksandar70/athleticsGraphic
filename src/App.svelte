@@ -8,13 +8,14 @@
   import Footer from "./components/footer/Footer.svelte";
   import { Paths } from "../global/constants/api";
   import { getConfig } from "./api/config.api";
-  import { dataSource } from "./stores/config.store";
+  import { dataSource, language } from "./stores/config.store";
 
   import "./app.style.css";
 
   onMount(async () => {
     const config = await getConfig();
     dataSource.set(config?.dataSource);
+    language.set(config?.selectedLanguage);
     navigate(window.location.pathname);
   });
 

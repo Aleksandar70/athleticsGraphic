@@ -151,4 +151,5 @@ export interface ICompetition {
 export interface IConfig {
   _id?: ObjectId;
   dataSource?: string;
+  selectedLanguage?: string;
 }

@@ -13,5 +13,5 @@ export const getConfig = async (): Promise<IConfig[]> =>
 
 export const getDataSource = async (): Promise<string> => {
   const config = await getConfig();
-  return config?.[0]?.dataSource;
+  return config?.[0]?.dataSource ?? "";
 };

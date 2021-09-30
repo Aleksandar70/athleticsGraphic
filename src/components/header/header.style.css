@@ -11,5 +11,13 @@ img:hover {
 }
 
 .options {
+  display: flex;
+}
+
+.option {
+  margin-left: 15px;
+}
+
+.data-source-options {
   display: table;
 }

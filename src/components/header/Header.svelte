@@ -2,6 +2,7 @@
   import { navigate } from "svelte-routing";
   import { Paths } from "../../../global/constants/api";
   import DataSourceOptions from "../data_source_options/DataSourceOptions.svelte";
+  import LocaleDropdown from "../locale_dropdown/LocaleDropdown.svelte";
   import "./header.style.css";
 </script>
 
@@ -12,6 +13,12 @@
     alt="Elegra Logo"
   />
   <div class="options">
-    <DataSourceOptions />
+    <div class="locale-options option">
+      <LocaleDropdown />
+    </div>
+    <hr />
+    <div class="data-source-options option">
+      <DataSourceOptions />
+    </div>
   </div>
 </header>

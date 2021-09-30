@@ -4,8 +4,13 @@ import { SOURCE } from "../../../../global/constants/constants";
 const ConfigSchema = new Schema({
   dataSource: {
     type: String,
-    required: true,
+    required: false,
     default: SOURCE.REMOTE,
+  },
+  selectedLanguage: {
+    type: String,
+    required: false,
+    default: "default",
   },
 });
 
