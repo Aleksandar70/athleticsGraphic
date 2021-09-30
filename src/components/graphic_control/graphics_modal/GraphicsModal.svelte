@@ -168,7 +168,7 @@
               <Input
                 type="text"
                 bind:value
-                on:change={(event) => inputChange(event.target, name)}
+                on:input={(event) => inputChange(event.target, name)}
               />
             {/if}
           </FormGroup>
