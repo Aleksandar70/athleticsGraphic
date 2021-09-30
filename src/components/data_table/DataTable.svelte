@@ -25,6 +25,7 @@
     visibleColumns,
     currentColumn,
     currentRow,
+    heatTableParticipants,
   } from "../../stores/table.store";
   import { uneditableFields } from "../../../global/defaults";
   import "./table.style.css";
@@ -156,7 +157,10 @@
           class="table-row {$selectedParticipant && isRowSelected(row)
             ? 'selected'
             : ''}"
-          on:click={() => selectedParticipant.set(row)}
+          on:click={() => {
+            heatTableParticipants.set(sortedRows);
+            selectedParticipant.set(row);
+          }}
         >
           {#each row as data}
             {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}

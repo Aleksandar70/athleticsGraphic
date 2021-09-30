@@ -4,12 +4,13 @@ import type {
   IResult,
 } from "../../../backend/src/database/interfaces";
 import { Graphics } from "../../../global/constants/constants";
-import type { TableField } from "../../../global/types";
+import type { TableData, TableField } from "../../../global/types";
 import {
   competitors,
   currentCompetitionData,
   currentEventData,
   currentHeatName,
+  heatTableParticipants,
   selectedParticipant,
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
@@ -76,11 +77,22 @@ export const getDataForPreviewModal = (
   return data;
 };
 
+const transformCompetitor = (competitorList: TableData): any =>
+  competitorList.map((competitorData) => {
+    const competitors = {};
+    competitorData.forEach(
+      (data: TableField) => (competitors[data.id] = data.stringValue)
+    );
+    return competitors;
+  });
+
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
-  const competitorList = list ? list : get(competitors);
+  const competitorList = list
+    ? list
+    : transformCompetitor(get(heatTableParticipants));
   return competitorList.map((competitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
@@ -103,8 +115,8 @@ const getBestResults = (): Record<string, string>[] => {
   }
   const resultBibsForMedals = bestResults.map((bestResult) => bestResult?.bib);
 
-  const filteredBestCompetitors = get(competitors).filter((competitor) =>
-    resultBibsForMedals.includes(competitor.competitorId)
+  const filteredBestCompetitors = get(competitors).filter(
+    (competitor) => resultBibsForMedals.includes(competitor.competitorId)
   );
   const bestCompetitors = getCompetitors(filteredBestCompetitors);
   sortByAscendingOrder(bestCompetitors);
