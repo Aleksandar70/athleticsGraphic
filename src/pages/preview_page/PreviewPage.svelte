@@ -15,7 +15,7 @@
   );
 </script>
 
-<div class="graphics--wrapper">
+<div class="preview--wrapper">
   {#if $visiblePreview.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
     <DisciplineAnnouncementPreview data={$visiblePreview.data} />
   {:else if $visiblePreview.id == Graphics.EVENT_ANNOUNCEMENT}
