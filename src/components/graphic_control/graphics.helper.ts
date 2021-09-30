@@ -26,8 +26,9 @@ export const getDataForPreviewModal = (
       break;
     case Graphics.PERSONAL_SCORE:
       data["Event Name"] = get(currentEventData)["name"];
-      data["Round"] = getRound();
-      data["Heat"] = getHeat();
+      if (isRunningDiscipline()) {
+        data["Heat"] = getHeatName();
+      }
       data["ID"] = getFieldValueFromParticipant("competitorId");
       data["First Name"] = getFieldValueFromParticipant("firstName");
       data["Last Name"] = getFieldValueFromParticipant("lastName");
@@ -41,8 +42,9 @@ export const getDataForPreviewModal = (
       data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
-      data["Round"] = getRound();
-      data["Heat"] = getHeat();
+      if (isRunningDiscipline()) {
+        data["Heat"] = getHeatName();
+      }
       data["Description"] = "STARTING LIST";
       data["Competitors"] = getCompetitors();
       break;
@@ -50,8 +52,9 @@ export const getDataForPreviewModal = (
       data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
-      data["Round"] = getRound();
-      data["Heat"] = getHeat();
+      if (isRunningDiscipline()) {
+        data["Heat"] = getHeatName();
+      }
       data["Description"] = "RESULTS";
       data["Competitors"] = getCompetitors();
       break;
@@ -117,20 +120,21 @@ const sortByAscendingOrder = (objectArray: Record<string, string>[]): void => {
   });
 };
 
-const getRound = (): String => {
+const getHeatName = (): String => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
     if (unit.heatName === get(currentHeatName)) {
-      return "Round " + unit.round;
+      return unit.heatName;
     }
   }
 };
 
-const getHeat = (): String => {
+const isRunningDiscipline = (): Boolean => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
-    if (unit.heatName === get(currentHeatName)) {
-      return "Heat " + unit.heat;
+    if (unit.heights.length == 0 && unit.trials.length == 0) {
+      return true;
     }
   }
+  return false;
 };
