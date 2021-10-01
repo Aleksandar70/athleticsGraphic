@@ -152,4 +152,5 @@ export interface IConfig {
   _id?: ObjectId;
   dataSource?: string;
   selectedLanguage?: string;
+  languages?: string[];
 }

@@ -10,7 +10,7 @@
     Button,
   } from "sveltestrap";
   import { addNewLocale } from "../../../api/config.api";
-  import { language } from "../../../stores/config.store";
+  import { allLanguages, language } from "../../../stores/config.store";
   import EditLocaleModal from "../edit_locale_modal/EditLocaleModal.svelte";
   import "./addlocalemodal.style.css";
 
@@ -24,6 +24,7 @@
 
   const addLocaleAction = async () => {
     language.set(localeName);
+    allLanguages.set([...$allLanguages, localeName]);
     defaultLocaleData = await addNewLocale(localeName);
     register(localeName, () => import(`../../../../i18n/${localeName}.json`));
     toggleModal();

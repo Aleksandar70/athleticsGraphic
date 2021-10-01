@@ -9,7 +9,7 @@
     DropdownToggle,
   } from "sveltestrap";
   import { updateConfig } from "../../api/config.api";
-  import { language } from "../../stores/config.store";
+  import { allLanguages, language } from "../../stores/config.store";
   import AddLocaleModal from "./add_locale_modal/AddLocaleModal.svelte";
   import EditLocaleModal from "./edit_locale_modal/EditLocaleModal.svelte";
   import "./localeoptions.style.css";
@@ -32,11 +32,13 @@
   >
   <DropdownMenu class="locale--dropdown">
     <DropdownItem header>Select language</DropdownItem>
-    <DropdownItem
-      class="locale-item"
-      active={isActive("default")}
-      on:click={() => valueChange("default")}>default</DropdownItem
-    >
+    {#each $allLanguages as lang}
+      <DropdownItem
+        class="locale-item"
+        active={isActive(lang)}
+        on:click={() => valueChange(lang)}>{lang}</DropdownItem
+      >
+    {/each}
   </DropdownMenu>
 </Dropdown>
 <Button on:click={() => (addModalOpen = true)}>+</Button>

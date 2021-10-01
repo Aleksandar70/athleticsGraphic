@@ -4,7 +4,26 @@ import fs from "fs";
 import * as defaultLocale from "../../../../i18n/default.json";
 
 export const createDefaultConfig = async (): Promise<IConfig> => {
-  return await ConfigModel.create({});
+  await ConfigModel.create({});
+
+  const localeFiles = getLocaleFileNames();
+
+  if (localeFiles.length) {
+    await updateConfig({ languages: localeFiles });
+  }
+
+  return getConfig()?.[0];
+};
+
+const getLocaleFileNames = (): string[] => {
+  const localeFiles: string[] = [];
+  const pathToNewLocale = process.cwd().replace(/([^\\]+$)/g, `i18n`);
+  const fileNames = fs.readdirSync(pathToNewLocale);
+  for (const file of fileNames) {
+    const localeName = file.match(/[^.]*/gm)?.[0] ?? "";
+    localeFiles.push(localeName);
+  }
+  return localeFiles;
 };
 
 export const updateConfig = async (config: IConfig): Promise<IConfig[]> =>
@@ -21,6 +40,7 @@ export const getDataSource = async (): Promise<string> => {
 export const addNewLocale = async (
   name: string
 ): Promise<Record<string, string>> => {
+  await ConfigModel.updateOne({}, { $push: { languages: name } });
   const pathToNewLocale = process
     .cwd()
     .replace(/([^\\]+$)/g, `i18n\\${name}.json`);

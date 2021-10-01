@@ -12,6 +12,11 @@ const ConfigSchema = new Schema({
     required: false,
     default: "default",
   },
+  languages: {
+    type: Array,
+    required: false,
+    default: ["default"],
+  },
 });
 
 export default ConfigSchema;
