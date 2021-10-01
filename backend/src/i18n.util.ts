@@ -5,14 +5,25 @@ import fs from "fs";
 export const createDefaultLocale = async () => {
   const defaultLocale = {};
 
+  let localeJsonCreated = false;
+  const pathToDefaultLocale = process
+    .cwd()
+    .replace(/([^\\]+$)/g, "i18n\\default.json");
+
+  try {
+    const localeJson = await import(pathToDefaultLocale);
+    localeJsonCreated = Object.keys(localeJson).length > 1;
+  } catch (error) {
+    localeJsonCreated = false;
+  }
+
+  if (localeJsonCreated) return;
+
   const { competitionData, eventsData } = await getOTCompetitionData();
   createDefaultCompetitionLocale(defaultLocale, competitionData);
   createDefaulteventLocale(defaultLocale, eventsData);
   createDefaultUnitsLocale(defaultLocale, eventsData);
-  fs.writeFileSync(
-    process.cwd().replace(/([^\\]+$)/g, "i18n\\default.json"),
-    JSON.stringify(defaultLocale)
-  );
+  fs.writeFileSync(pathToDefaultLocale, JSON.stringify(defaultLocale));
 };
 
 const createDefaultCompetitionLocale = (
