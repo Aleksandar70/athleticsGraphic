@@ -5,6 +5,7 @@ import {
   getConfig,
   addNewLocale,
   editLocale,
+  getLocalePair,
 } from "../../database/repository/config.repo";
 
 const router = express.Router();
@@ -29,6 +30,12 @@ router.post("/locale", async (req: Request, res: Response) => {
 router.put("/locale", async (req: Request, res: Response) => {
   const { name, data } = req.body;
   const val = await editLocale(name, data);
+  return res.status(200).json(val);
+});
+
+router.get("/locale", (req: Request, res: Response) => {
+  const { name } = req.query;
+  const val = getLocalePair(name?.toString() ?? "");
   return res.status(200).json(val);
 });
 

@@ -27,3 +27,10 @@ export const editLocale = async (
     name: name,
   });
 };
+
+export const getLanguageData = async (
+  name: string
+): Promise<Record<string, Record<string, string>>> => {
+  const response = await getRequest(`${Paths.CONFIG}/locale`, { name: name });
+  return response.data as Record<string, Record<string, string>>;
+};

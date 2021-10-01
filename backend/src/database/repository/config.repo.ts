@@ -41,9 +41,7 @@ export const addNewLocale = async (
   name: string
 ): Promise<Record<string, string>> => {
   await ConfigModel.updateOne({}, { $push: { languages: name } });
-  const pathToNewLocale = process
-    .cwd()
-    .replace(/([^\\]+$)/g, `i18n\\${name}.json`);
+  const pathToNewLocale = getLocalePath(name);
   const newLocaleData = {};
   Object.keys(defaultLocale).forEach((key) => (newLocaleData[key] = ""));
   fs.writeFileSync(pathToNewLocale, JSON.stringify(newLocaleData));
@@ -54,8 +52,19 @@ export const editLocale = async (
   locale: string,
   editedLocale: Record<string, string>
 ) => {
-  const pathToEditedLocale = process
-    .cwd()
-    .replace(/([^\\]+$)/g, `i18n\\${locale}.json`);
+  const pathToEditedLocale = getLocalePath(locale);
   fs.writeFileSync(pathToEditedLocale, JSON.stringify(editedLocale));
 };
+
+export const getLocalePair = (locale: string) => {
+  const pathToDefaultLocale = getLocalePath("default");
+  const pathToEditedLocale = getLocalePath(locale);
+  const defaultJson = JSON.parse(
+    fs.readFileSync(pathToDefaultLocale).toString()
+  );
+  const editedJson = JSON.parse(fs.readFileSync(pathToEditedLocale).toString());
+  return { default: defaultJson, locale: editedJson };
+};
+
+const getLocalePath = (name: string) =>
+  process.cwd().replace(/([^\\]+$)/g, `i18n\\${name}.json`);

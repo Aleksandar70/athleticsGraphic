@@ -8,19 +8,26 @@
     DropdownMenu,
     DropdownToggle,
   } from "sveltestrap";
-  import { updateConfig } from "../../api/config.api";
+  import { getLanguageData, updateConfig } from "../../api/config.api";
   import { allLanguages, language } from "../../stores/config.store";
   import AddLocaleModal from "./add_locale_modal/AddLocaleModal.svelte";
   import EditLocaleModal from "./edit_locale_modal/EditLocaleModal.svelte";
   import "./localeoptions.style.css";
 
   let addModalOpen = false;
+
   let editModalOpen = false;
+  let languagesData = {};
 
   const valueChange = async (selectedLanguage: string) => {
     await updateConfig({ selectedLanguage: selectedLanguage });
     language.set(selectedLanguage);
     locale.set(selectedLanguage);
+  };
+
+  const openEditModal = async () => {
+    languagesData = await getLanguageData($language);
+    editModalOpen = true;
   };
 
   $: isActive = (value: string) => $language === value;
@@ -42,6 +49,10 @@
   </DropdownMenu>
 </Dropdown>
 <Button on:click={() => (addModalOpen = true)}>+</Button>
-<Button on:click={() => (editModalOpen = true)}>Edit</Button>
+<Button on:click={() => openEditModal()}>Edit</Button>
 <AddLocaleModal bind:isModalOpen={addModalOpen} />
-<EditLocaleModal bind:isModalOpen={editModalOpen} />
+<EditLocaleModal
+  bind:isModalOpen={editModalOpen}
+  defaultData={languagesData["default"]}
+  localeData={languagesData["locale"]}
+/>
