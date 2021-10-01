@@ -245,7 +245,7 @@ export const getTableData = (rawData: RawData): TableData => {
     });
   });
 
-  return filterRowData(tableData);
+  return filterAndSortRowData(tableData);
 };
 
 const getRunnersNames = (runners: ICompetitor[]): string =>
@@ -338,7 +338,7 @@ export const filterHeaderData = (headers: Headers): Headers => {
   return headers;
 };
 
-export const filterRowData = (tableData: TableData): TableData => {
+export const filterAndSortRowData = (tableData: TableData): TableData => {
   const columnsForModal = getColumnsForDisplay();
   tableData.forEach((rowData) => {
     const rowDataCopy = [...rowData];
@@ -352,5 +352,28 @@ export const filterRowData = (tableData: TableData): TableData => {
       }
     });
   });
+  sortByDescendingOrder(tableData);
   return tableData;
+};
+
+const sortByDescendingOrder = (tableData: TableData): void => {
+  tableData.sort((n1, n2) => {
+    let result1 = getResultValue(n1);
+    let result2 = getResultValue(n2);
+    if (result1 < result2) {
+      return 1;
+    }
+    if (result1 > result2) {
+      return -1;
+    }
+    return 0;
+  });
+};
+
+const getResultValue = (rowData: TableRow): string => {
+  let result = rowData.find((el) => el.id === "result")?.stringValue;
+  if (isNumeric(result)) {
+    return result;
+  }
+  return "0";
 };

@@ -90,7 +90,7 @@ const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
-  let competitorList;
+  let competitorList: ICompetitor[];
   if (isRunningDiscipline()) {
     competitorList = list
       ? list
@@ -99,7 +99,7 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
     competitorList = list ? list : get(competitors);
   }
 
-  return competitorList.map((competitor) => ({
+  return competitorList.map((competitor: ICompetitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
     result: competitor.result,
@@ -111,7 +111,6 @@ const getScores = (): unknown[] =>
     .filter((field) => isNumeric(field.id))
     .map((score: TableField) => ({ [score.id]: score.stringValue }));
 
-// Get from FINAL heat results
 const getBestResults = (): Record<string, string>[] => {
   const units = get(currentEventData)["units"];
   let bestResults = [];
