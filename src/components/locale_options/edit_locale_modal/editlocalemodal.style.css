@@ -1,0 +1,9 @@
+.edit-locale-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.edit-locale-input {
+  width: 200px !important;
+}

@@ -4,6 +4,7 @@ import {
   updateConfig,
   getConfig,
   addNewLocale,
+  editLocale,
 } from "../../database/repository/config.repo";
 
 const router = express.Router();
@@ -22,6 +23,12 @@ router.put("/", async (req: Request, res: Response) => {
 router.post("/locale", async (req: Request, res: Response) => {
   const { name } = req.body;
   const val = await addNewLocale(name);
+  return res.status(200).json(val);
+});
+
+router.put("/locale", async (req: Request, res: Response) => {
+  const { name, data } = req.body;
+  const val = await editLocale(name, data);
   return res.status(200).json(val);
 });
 

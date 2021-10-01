@@ -11,9 +11,11 @@
   import { updateConfig } from "../../api/config.api";
   import { language } from "../../stores/config.store";
   import AddLocaleModal from "./add_locale_modal/AddLocaleModal.svelte";
+  import EditLocaleModal from "./edit_locale_modal/EditLocaleModal.svelte";
   import "./localeoptions.style.css";
 
   let addModalOpen = false;
+  let editModalOpen = false;
 
   const valueChange = async (selectedLanguage: string) => {
     await updateConfig({ selectedLanguage: selectedLanguage });
@@ -34,12 +36,10 @@
       class="locale-item"
       active={isActive("default")}
       on:click={() => valueChange("default")}>default</DropdownItem
-    ><DropdownItem
-      class="locale-item"
-      active={isActive("en")}
-      on:click={() => valueChange("en")}>en</DropdownItem
     >
   </DropdownMenu>
 </Dropdown>
-<Button on:click={() => (addModalOpen = true)}>+</Button><Button>Edit</Button>
-<AddLocaleModal isModalOpen={addModalOpen} />
+<Button on:click={() => (addModalOpen = true)}>+</Button>
+<Button on:click={() => (editModalOpen = true)}>Edit</Button>
+<AddLocaleModal bind:isModalOpen={addModalOpen} />
+<EditLocaleModal bind:isModalOpen={editModalOpen} />

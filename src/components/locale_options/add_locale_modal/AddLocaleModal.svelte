@@ -10,18 +10,24 @@
     Button,
   } from "sveltestrap";
   import { addNewLocale } from "../../../api/config.api";
+  import { language } from "../../../stores/config.store";
+  import EditLocaleModal from "../edit_locale_modal/EditLocaleModal.svelte";
   import "./addlocalemodal.style.css";
 
   export let isModalOpen = false;
 
   let localeName = "";
+  let editModalOpen = false;
+  let defaultLocaleData = {};
 
   const toggleModal = () => (isModalOpen = !isModalOpen);
 
   const addLocaleAction = async () => {
-    const localeData = await addNewLocale(localeName);
+    language.set(localeName);
+    defaultLocaleData = await addNewLocale(localeName);
     register(localeName, () => import(`../../../../i18n/${localeName}.json`));
-    console.log("localeData -> ", localeData);
+    toggleModal();
+    editModalOpen = true;
   };
 </script>
 
@@ -40,3 +46,7 @@
     <Button color="secondary" on:click={toggleModal}>Cancel</Button>
   </ModalFooter>
 </Modal>
+<EditLocaleModal
+  defaultData={defaultLocaleData}
+  bind:isModalOpen={editModalOpen}
+/>

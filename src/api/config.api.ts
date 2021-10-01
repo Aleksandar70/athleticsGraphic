@@ -17,3 +17,13 @@ export const addNewLocale = async (
   const response = await postRequest(`${Paths.CONFIG}/locale`, { name: name });
   return response.data as Record<string, string>;
 };
+
+export const editLocale = async (
+  editedLocale: Record<string, string>,
+  name: string
+): Promise<void> => {
+  await putRequest(`${Paths.CONFIG}/locale`, {
+    data: editedLocale,
+    name: name,
+  });
+};

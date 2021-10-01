@@ -29,3 +29,13 @@ export const addNewLocale = async (
   fs.writeFileSync(pathToNewLocale, JSON.stringify(newLocaleData));
   return defaultLocale;
 };
+
+export const editLocale = async (
+  locale: string,
+  editedLocale: Record<string, string>
+) => {
+  const pathToEditedLocale = process
+    .cwd()
+    .replace(/([^\\]+$)/g, `i18n\\${locale}.json`);
+  fs.writeFileSync(pathToEditedLocale, JSON.stringify(editedLocale));
+};
