@@ -23,7 +23,7 @@
   };
 </script>
 
-<Modal isOpen={isModalOpen} backdrop="static" size="lg" toggle={toggleModal}>
+<Modal isOpen={isModalOpen} size="lg" toggle={toggleModal}>
   <ModalHeader toggle={toggleModal}>Enter translations</ModalHeader>
   <ModalBody class="edit-locale-body">
     {#each Object.entries(defaultData) as [key, value]}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { register } from "svelte-i18n";
+  import { register, locales, isLoading } from "svelte-i18n";
 
   import {
     Input,
@@ -26,13 +26,12 @@
     language.set(localeName);
     allLanguages.set([...$allLanguages, localeName]);
     defaultLocaleData = await addNewLocale(localeName);
-    register(localeName, () => import(`../../../../i18n/${localeName}.json`));
     toggleModal();
     editModalOpen = true;
   };
 </script>
 
-<Modal isOpen={isModalOpen} backdrop="static" toggle={toggleModal}>
+<Modal isOpen={isModalOpen} toggle={toggleModal}>
   <ModalHeader toggle={toggleModal}>Enter locale name</ModalHeader>
   <ModalBody class="add-locale-body">
     <Input

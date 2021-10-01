@@ -49,7 +49,9 @@
   </DropdownMenu>
 </Dropdown>
 <Button on:click={() => (addModalOpen = true)}>+</Button>
-<Button on:click={() => openEditModal()}>Edit</Button>
+<Button on:click={() => openEditModal()} disabled={$language === "default"}
+  >Edit</Button
+>
 <AddLocaleModal bind:isModalOpen={addModalOpen} />
 <EditLocaleModal
   bind:isModalOpen={editModalOpen}
