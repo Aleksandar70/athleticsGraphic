@@ -2,6 +2,7 @@
   import { locale } from "svelte-i18n";
 
   import {
+    Button,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -9,7 +10,10 @@
   } from "sveltestrap";
   import { updateConfig } from "../../api/config.api";
   import { language } from "../../stores/config.store";
-  import "./localedropdown.style.css";
+  import AddLocaleModal from "./add_locale_modal/AddLocaleModal.svelte";
+  import "./localeoptions.style.css";
+
+  let addModalOpen = false;
 
   const valueChange = async (selectedLanguage: string) => {
     await updateConfig({ selectedLanguage: selectedLanguage });
@@ -37,3 +41,5 @@
     >
   </DropdownMenu>
 </Dropdown>
+<Button on:click={() => (addModalOpen = true)}>+</Button><Button>Edit</Button>
+<AddLocaleModal isModalOpen={addModalOpen} />

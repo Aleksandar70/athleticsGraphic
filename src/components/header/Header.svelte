@@ -2,7 +2,7 @@
   import { navigate } from "svelte-routing";
   import { Paths } from "../../../global/constants/api";
   import DataSourceOptions from "../data_source_options/DataSourceOptions.svelte";
-  import LocaleDropdown from "../locale_dropdown/LocaleDropdown.svelte";
+  import LocaleOptions from "../locale_options/LocaleOptions.svelte";
   import "./header.style.css";
 </script>
 
@@ -14,7 +14,7 @@
   />
   <div class="options">
     <div class="locale-options option">
-      <LocaleDropdown />
+      <LocaleOptions />
     </div>
     <hr />
     <div class="data-source-options option">
