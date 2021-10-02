@@ -23,7 +23,7 @@
   export let isOpen: boolean;
   export let id: Graphics;
   export let data: Record<string, any> = {};
-  //not sorted
+
   let competitors: Record<string, string>[] = [];
   let bestCompetitors: Record<string, string>[] = [];
 
@@ -101,7 +101,6 @@
               {/each}
             {:else if name === "Competitors"}
               {#each competitors as competitor, i}
-                {console.log("comp ", competitors)}
                 <div class="competitor">
                   <img
                     alt={competitor.nationality}

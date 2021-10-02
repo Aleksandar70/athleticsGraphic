@@ -352,7 +352,9 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
       }
     });
   });
-  sortByDescendingOrder(tableData);
+  isRunningDiscipline()
+    ? sortByAscendingOrder(tableData)
+    : sortByDescendingOrder(tableData);
   return tableData;
 };
 
@@ -370,10 +372,34 @@ const sortByDescendingOrder = (tableData: TableData): void => {
   });
 };
 
+const sortByAscendingOrder = (tableData: TableData): void => {
+  tableData.sort((n1, n2) => {
+    let result1 = getResultValue(n1);
+    let result2 = getResultValue(n2);
+    if (result1 > result2) {
+      return 1;
+    }
+    if (result1 < result2) {
+      return -1;
+    }
+    return 0;
+  });
+};
+
 const getResultValue = (rowData: TableRow): string => {
   let result = rowData.find((el) => el.id === "result")?.stringValue;
   if (isNumeric(result)) {
     return result;
   }
   return "0";
+};
+
+const isRunningDiscipline = (): Boolean => {
+  const units = get(currentEventData)["units"];
+  for (const unit of units) {
+    if (unit.heights.length === 0 && unit.trials.length === 0) {
+      return true;
+    }
+  }
+  return false;
 };

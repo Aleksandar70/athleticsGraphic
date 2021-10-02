@@ -96,8 +96,8 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
       ? list
       : transformCompetitor(get(heatTableParticipants));
   } else {
-    //SORT IT
     competitorList = list ? list : get(competitors);
+    sortByDescendingOrder(competitorList);
   }
 
   return competitorList.map((competitor: ICompetitor) => ({
@@ -146,16 +146,27 @@ const sortByAscendingOrder = (objectArray: Record<string, string>[]): void => {
   });
 };
 
-const sortByDescendingOrder = (objectArray: Record<string, string>[]): void => {
+const sortByDescendingOrder = (
+  objectArray: Record<string, string>[] | ICompetitor[]
+): void => {
   objectArray.sort((n1, n2) => {
-    if (n1.result < n2.result) {
+    let result1 = getResultValue(n1.result);
+    let result2 = getResultValue(n2.result);
+    if (result1 < result2) {
       return 1;
     }
-    if (n1.result > n2.result) {
+    if (result1 > result2) {
       return -1;
     }
     return 0;
   });
+};
+
+const getResultValue = (result: string): string => {
+  if (isNumeric(result)) {
+    return result;
+  }
+  return "0";
 };
 
 const getHeatName = (): String => {
