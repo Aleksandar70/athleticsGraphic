@@ -1,12 +1,14 @@
 <script lang="ts">
   import { locale } from "svelte-i18n";
-
+  import Fa from "svelte-fa";
+  import { faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
   import {
     Button,
     Dropdown,
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
+    Icon,
   } from "sveltestrap";
   import { getLanguageData, updateConfig } from "../../api/config.api";
   import { allLanguages, language } from "../../stores/config.store";
@@ -48,9 +50,13 @@
     {/each}
   </DropdownMenu>
 </Dropdown>
-<Button on:click={() => (addModalOpen = true)}>+</Button>
-<Button on:click={() => openEditModal()} disabled={$language === "default"}
-  >Edit</Button
+<Button size="sm" on:click={() => (addModalOpen = true)}
+  ><Fa icon={faPlus} /></Button
+>
+<Button
+  size="sm"
+  on:click={() => openEditModal()}
+  disabled={$language === "default"}><Fa icon={faEdit} /></Button
 >
 <AddLocaleModal bind:isModalOpen={addModalOpen} />
 <EditLocaleModal
