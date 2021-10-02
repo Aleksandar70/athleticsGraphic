@@ -359,7 +359,7 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
 };
 
 const sortByDescendingOrder = (tableData: TableData): void => {
-  tableData.sort((n1, n2) => {
+  tableData.sort((n1: TableRow, n2: TableRow) => {
     let result1 = getResultValue(n1);
     let result2 = getResultValue(n2);
     if (result1 < result2) {
@@ -373,7 +373,7 @@ const sortByDescendingOrder = (tableData: TableData): void => {
 };
 
 const sortByAscendingOrder = (tableData: TableData): void => {
-  tableData.sort((n1, n2) => {
+  tableData.sort((n1: TableRow, n2: TableRow) => {
     let result1 = getResultValue(n1);
     let result2 = getResultValue(n2);
     if (result1 > result2) {

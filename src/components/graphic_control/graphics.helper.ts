@@ -132,12 +132,14 @@ const getBestResults = (): Record<string, string>[] => {
   return bestCompetitors;
 };
 
-const sortByAscendingOrder = (objectArray: Record<string, string>[]): void => {
-  objectArray.sort((n1, n2) => {
-    if (n1.result > n2.result) {
+const sortByAscendingOrder = (competitors: Record<string, string>[]): void => {
+  competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
+    let result1 = getResultValue(n1.result);
+    let result2 = getResultValue(n2.result);
+    if (result1 > result2) {
       return 1;
     }
-    if (n1.result < n2.result) {
+    if (result1 < result2) {
       return -1;
     }
     return 0;
@@ -145,9 +147,9 @@ const sortByAscendingOrder = (objectArray: Record<string, string>[]): void => {
 };
 
 const sortByDescendingOrder = (
-  objectArray: Record<string, string>[] | ICompetitor[]
+  competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
-  objectArray.sort((n1, n2) => {
+  competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
     let result1 = getResultValue(n1.result);
     let result2 = getResultValue(n2.result);
     if (result1 < result2) {
