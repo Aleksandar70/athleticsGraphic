@@ -387,7 +387,7 @@ const sortByAscendingOrder = (tableData: TableData): void => {
 };
 
 const getResultValue = (rowData: TableRow): string => {
-  let result = rowData.find((el) => el.id === "result")?.stringValue;
+  const result = rowData.find((el) => el.id === "result")?.stringValue;
   if (isNumeric(result)) {
     return result;
   }

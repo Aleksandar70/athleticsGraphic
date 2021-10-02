@@ -171,7 +171,7 @@ const getResultValue = (result: string): string => {
   return "0";
 };
 
-const getHeatName = (): String => {
+const getHeatName = (): string => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
     if (unit.heatName === get(currentHeatName)) {
