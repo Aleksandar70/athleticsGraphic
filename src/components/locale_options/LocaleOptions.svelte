@@ -35,29 +35,36 @@
   $: isActive = (value: string) => $language === value;
 </script>
 
-<Dropdown>
-  <DropdownToggle class="locale--dropdown text-dark" caret
-    >{$language ?? ""}</DropdownToggle
-  >
-  <DropdownMenu class="locale--dropdown">
-    <DropdownItem header>Select language</DropdownItem>
-    {#each $allLanguages as lang}
-      <DropdownItem
-        class="locale-item"
-        active={isActive(lang)}
-        on:click={() => valueChange(lang)}>{lang}</DropdownItem
-      >
-    {/each}
-  </DropdownMenu>
-</Dropdown>
-<Button size="sm" on:click={() => (addModalOpen = true)}
-  ><Fa icon={faPlus} /></Button
->
-<Button
-  size="sm"
-  on:click={() => openEditModal()}
-  disabled={$language === "default"}><Fa icon={faEdit} /></Button
->
+<div class="locale-wrapper">
+  <Dropdown>
+    <DropdownToggle class="locale--dropdown text-dark" caret
+      >{$language ?? ""}</DropdownToggle
+    >
+    <DropdownMenu class="locale--dropdown">
+      <DropdownItem header>Select language</DropdownItem>
+      {#each $allLanguages as lang}
+        <DropdownItem
+          class="locale-item"
+          active={isActive(lang)}
+          on:click={() => valueChange(lang)}>{lang}</DropdownItem
+        >
+      {/each}
+    </DropdownMenu>
+  </Dropdown>
+  <div class="local-buttons">
+    <Button
+      class="local-button"
+      size="sm"
+      on:click={() => (addModalOpen = true)}><Fa icon={faPlus} /></Button
+    >
+    <Button
+      class="local-button"
+      size="sm"
+      on:click={() => openEditModal()}
+      disabled={$language === "default"}><Fa icon={faEdit} /></Button
+    >
+  </div>
+</div>
 <AddLocaleModal bind:isModalOpen={addModalOpen} />
 <EditLocaleModal
   bind:isModalOpen={editModalOpen}
