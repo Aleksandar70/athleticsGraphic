@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { register, locales, isLoading } from "svelte-i18n";
-
   import {
     Input,
     Modal,
@@ -23,10 +21,11 @@
   const toggleModal = () => (isModalOpen = !isModalOpen);
 
   const addLocaleAction = async () => {
+    defaultLocaleData = await addNewLocale(localeName);
     language.set(localeName);
     allLanguages.set([...$allLanguages, localeName]);
-    defaultLocaleData = await addNewLocale(localeName);
     toggleModal();
+    localeName = "";
     editModalOpen = true;
   };
 </script>
