@@ -23,12 +23,12 @@
   };
 </script>
 
-<Modal isOpen={isModalOpen} size="lg" toggle={toggleModal}>
+<Modal isOpen={isModalOpen} size="lg" toggle={toggleModal} scrollable>
   <ModalHeader toggle={toggleModal}>Enter translations</ModalHeader>
   <ModalBody class="edit-locale-body">
     {#each Object.entries(defaultData) as [key, value]}
       <div class="edit-locale-row">
-        {key}
+        <span class="edit-locale-id">{key}</span>
         <Input class="edit-locale-input" bsSize="sm" type="text" bind:value />
         <Input
           class="edit-locale-input"

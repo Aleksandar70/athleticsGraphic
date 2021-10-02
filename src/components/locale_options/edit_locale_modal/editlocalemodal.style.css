@@ -4,6 +4,10 @@
   margin-bottom: 10px;
 }
 
+.edit-locale-id {
+  width: 25%;
+}
+
 .edit-locale-input {
-  width: 200px !important;
+  width: 32% !important;
 }
