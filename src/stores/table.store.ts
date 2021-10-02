@@ -33,4 +33,5 @@ currentEventId.subscribe(() => {
   currentRow.set(0);
   isRelayTeamEvent.set(false);
   heatTableParticipants.set([]);
+  currentHeatName.set({});
 });

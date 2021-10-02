@@ -123,7 +123,7 @@
   ) => {
     currentRow.set(row);
     currentColumn.set(editableColumns.findIndex((header) => header === column));
-    focusCell = target as HTMLTableDataCellElement;
+    focusCell = target as HTMLTableCellElement;
   };
 
   $: if (focusCell) {
@@ -158,6 +158,7 @@
             ? 'selected'
             : ''}"
           on:click={() => {
+            // currentHeatName.set(heatName); //setHeatName
             heatTableParticipants.set(sortedRows);
             selectedParticipant.set(row);
           }}

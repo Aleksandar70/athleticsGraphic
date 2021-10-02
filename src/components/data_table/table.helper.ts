@@ -360,8 +360,8 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
 
 const sortByDescendingOrder = (tableData: TableData): void => {
   tableData.sort((n1: TableRow, n2: TableRow) => {
-    let result1 = getResultValue(n1);
-    let result2 = getResultValue(n2);
+    const result1 = getResultValue(n1);
+    const result2 = getResultValue(n2);
     if (result1 < result2) {
       return 1;
     }
@@ -374,8 +374,8 @@ const sortByDescendingOrder = (tableData: TableData): void => {
 
 const sortByAscendingOrder = (tableData: TableData): void => {
   tableData.sort((n1: TableRow, n2: TableRow) => {
-    let result1 = getResultValue(n1);
-    let result2 = getResultValue(n2);
+    const result1 = getResultValue(n1);
+    const result2 = getResultValue(n2);
     if (result1 > result2) {
       return 1;
     }
@@ -394,7 +394,7 @@ const getResultValue = (rowData: TableRow): string => {
   return "0";
 };
 
-const isRunningDiscipline = (): Boolean => {
+const isRunningDiscipline = (): boolean => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
     if (unit.heights.length === 0 && unit.trials.length === 0) {

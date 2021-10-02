@@ -92,6 +92,8 @@ const getFieldValueFromParticipant = (key: string): string =>
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   let competitorList: ICompetitor[];
   if (isRunningDiscipline()) {
+    //set heat name
+    // currentHeatName.set(getHeatName());
     competitorList = list
       ? list
       : transformCompetitor(get(heatTableParticipants));
@@ -134,8 +136,8 @@ const getBestResults = (): Record<string, string>[] => {
 
 const sortByAscendingOrder = (competitors: Record<string, string>[]): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    let result1 = getResultValue(n1.result);
-    let result2 = getResultValue(n2.result);
+    const result1 = getResultValue(n1.result);
+    const result2 = getResultValue(n2.result);
     if (result1 > result2) {
       return 1;
     }
@@ -150,8 +152,8 @@ const sortByDescendingOrder = (
   competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    let result1 = getResultValue(n1.result);
-    let result2 = getResultValue(n2.result);
+    const result1 = getResultValue(n1.result);
+    const result2 = getResultValue(n2.result);
     if (result1 < result2) {
       return 1;
     }
@@ -178,7 +180,7 @@ const getHeatName = (): String => {
   }
 };
 
-const isRunningDiscipline = (): Boolean => {
+const isRunningDiscipline = (): boolean => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
     if (unit.heights.length === 0 && unit.trials.length === 0) {
