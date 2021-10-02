@@ -8,7 +8,6 @@
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
-    Icon,
   } from "sveltestrap";
   import { getLanguageData, updateConfig } from "../../api/config.api";
   import { allLanguages, language } from "../../stores/config.store";

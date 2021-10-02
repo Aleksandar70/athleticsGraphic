@@ -13,12 +13,7 @@
     alt="Elegra Logo"
   />
   <div class="options">
-    <div class="locale-options option">
-      <LocaleOptions />
-    </div>
-    <hr />
-    <div class="data-source-options option">
-      <DataSourceOptions />
-    </div>
+    <LocaleOptions />
+    <DataSourceOptions />
   </div>
 </header>
