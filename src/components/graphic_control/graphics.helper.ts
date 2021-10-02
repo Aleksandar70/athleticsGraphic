@@ -126,11 +126,9 @@ const getBestResults = (): Record<string, string>[] => {
     resultBibsForMedals.includes(competitor.competitorId)
   );
   const bestCompetitors = getCompetitors(filteredBestCompetitors);
-  if (isRunningDiscipline()) {
-    sortByAscendingOrder(bestCompetitors);
-  } else {
-    sortByDescendingOrder(bestCompetitors);
-  }
+  isRunningDiscipline()
+    ? sortByAscendingOrder(bestCompetitors)
+    : sortByDescendingOrder(bestCompetitors);
   return bestCompetitors;
 };
 
