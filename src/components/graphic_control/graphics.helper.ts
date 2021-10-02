@@ -96,6 +96,7 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
       ? list
       : transformCompetitor(get(heatTableParticipants));
   } else {
+    //SORT IT
     competitorList = list ? list : get(competitors);
   }
 
