@@ -29,6 +29,12 @@ export abstract class UIText {
   static readonly CLEAR_ALL: string = "Clear all";
   static readonly CLEAR_SEQUENCE: string = "Clear";
 
+  static readonly LABEL_EVENT: string = "Event";
+  static readonly LABEL_PERSONAL: string = "Personal";
+  static readonly BUTTON_SHOW: string = "Show";
+  static readonly BUTTON_CANCEL: string = "Cancel";
+  static readonly TIME_MESSAGE: string = "You are about to show graphics for";
+
   static readonly INIT_WARNING: string = "⚠️ All existing data will be lost";
   static readonly INIT_BUTTON: string = "Initialize";
   static readonly INIT_BODY: string = `This will delete your currect data and create a new one from the API. If you wish to proceed, click ${UIText.INIT_BUTTON}.`;
