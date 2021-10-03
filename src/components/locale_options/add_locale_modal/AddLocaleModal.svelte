@@ -7,6 +7,7 @@
     ModalFooter,
     Button,
   } from "sveltestrap";
+  import { UIText } from "../../../../global/constants/ui_text";
   import { addNewLocale } from "../../../api/config.api";
   import { allLanguages, language } from "../../../stores/config.store";
   import EditLocaleModal from "../edit_locale_modal/EditLocaleModal.svelte";
@@ -31,18 +32,24 @@
 </script>
 
 <Modal isOpen={isModalOpen} toggle={toggleModal}>
-  <ModalHeader toggle={toggleModal}>Enter locale name</ModalHeader>
+  <ModalHeader toggle={toggleModal}
+    >{UIText.ADD_LOCALE_MODAL_HEADER}</ModalHeader
+  >
   <ModalBody class="add-locale-body">
     <Input
       class="add-locale-input"
       bsSize="sm"
       type="text"
       bind:value={localeName}
-    />.json
+    />
   </ModalBody>
   <ModalFooter>
-    <Button color="danger" on:click={() => addLocaleAction()}>Save</Button>
-    <Button color="secondary" on:click={toggleModal}>Cancel</Button>
+    <Button color="danger" on:click={() => addLocaleAction()}
+      >{UIText.LOCALE_MODAL_SAVE}</Button
+    >
+    <Button color="secondary" on:click={toggleModal}
+      >{UIText.LOCALE_MODAL_CANCEL}</Button
+    >
   </ModalFooter>
 </Modal>
 <EditLocaleModal

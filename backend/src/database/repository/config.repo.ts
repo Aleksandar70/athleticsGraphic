@@ -2,6 +2,7 @@ import { IConfig } from "../../../../global/interfaces";
 import { ConfigModel } from "../models/config.model";
 import fs from "fs";
 import * as defaultLocale from "../../../../i18n/default.json";
+import { Regex } from "../../../../global/constants/constants";
 
 export const createDefaultConfig = async (): Promise<IConfig> => {
   await ConfigModel.create({});
@@ -17,10 +18,10 @@ export const createDefaultConfig = async (): Promise<IConfig> => {
 
 const getLocaleFileNames = (): string[] => {
   const localeFiles: string[] = [];
-  const pathToNewLocale = process.cwd().replace(/([^\\]+$)/g, `i18n`);
+  const pathToNewLocale = process.cwd().replace(Regex.AFTER_LAST_SLASH, `i18n`);
   const fileNames = fs.readdirSync(pathToNewLocale);
   for (const file of fileNames) {
-    const localeName = file.match(/[^.]*/gm)?.[0] ?? "";
+    const localeName = file.match(Regex.SPLIT_BY_DOT)?.[0] ?? "";
     localeFiles.push(localeName);
   }
   return localeFiles;
@@ -67,4 +68,4 @@ export const getLocalePair = (locale: string) => {
 };
 
 const getLocalePath = (name: string) =>
-  process.cwd().replace(/([^\\]+$)/g, `i18n\\${name}.json`);
+  process.cwd().replace(Regex.AFTER_LAST_SLASH, `i18n\\${name}.json`);

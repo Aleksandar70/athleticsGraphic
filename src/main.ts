@@ -6,5 +6,3 @@ const app = new App({
 });
 
 export default app;
-
-// \b.*[a-zA-Z]{2,}.*\b

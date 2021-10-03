@@ -1,6 +1,7 @@
-import { getOTCompetitionData } from "./api/opentrack.api";
-import { ICompetition, IEvent } from "./database/interfaces";
+import { getOTCompetitionData } from "../api/opentrack.api";
+import { ICompetition, IEvent } from "../database/interfaces";
 import fs from "fs";
+import { Regex } from "../../../global/constants/constants";
 
 export const createDefaultLocale = async () => {
   const defaultLocale = {};
@@ -8,7 +9,7 @@ export const createDefaultLocale = async () => {
   let localeJsonCreated = false;
   const pathToDefaultLocale = process
     .cwd()
-    .replace(/([^\\]+$)/g, "i18n\\default.json");
+    .replace(Regex.AFTER_LAST_SLASH, "i18n\\default.json");
 
   try {
     const localeJson = await import(pathToDefaultLocale);
@@ -33,7 +34,7 @@ const createDefaultCompetitionLocale = (
   for (const [key, value] of Object.entries(data)) {
     if (
       typeof value === "string" &&
-      value.toString().match(/\b.*[a-zA-Z]{3,}.*\b/)?.[0]
+      value.toString().match(Regex.FIND_WORDS)?.[0]
     ) {
       locale[key] = value;
     }
@@ -45,7 +46,7 @@ const createDefaulteventLocale = (
   data: IEvent[]
 ) => {
   for (const event of data) {
-    if (event?.name?.match(/\b.*[a-zA-Z]{3,}.*\b/)?.[0]) {
+    if (event?.name?.match(Regex.FIND_WORDS)?.[0]) {
       locale[`name_${event.eventId}`] = event.name;
     }
   }
@@ -62,7 +63,7 @@ const createDefaultUnitsLocale = (
         if (
           typeof value === "string" &&
           !key.toLowerCase().includes("status") &&
-          value.toString().match(/\b.*[a-zA-Z]{3,}.*\b/)?.[0]
+          value.toString().match(Regex.FIND_WORDS)?.[0]
         ) {
           if (!locale[`${key}_${event.eventId}`]) {
             locale[`${key}_${event.eventId}`] = value;

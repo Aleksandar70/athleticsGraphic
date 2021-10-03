@@ -14,6 +14,7 @@
   import AddLocaleModal from "./add_locale_modal/AddLocaleModal.svelte";
   import EditLocaleModal from "./edit_locale_modal/EditLocaleModal.svelte";
   import "./localeoptions.style.css";
+  import { UIText } from "../../../global/constants/ui_text";
 
   let addModalOpen = false;
 
@@ -40,7 +41,7 @@
       >{$language ?? ""}</DropdownToggle
     >
     <DropdownMenu class="locale--dropdown">
-      <DropdownItem header>Select language</DropdownItem>
+      <DropdownItem header>{UIText.LOCALE_DROPDOWN_HEADER}</DropdownItem>
       {#each $allLanguages as lang}
         <DropdownItem
           class="locale-item"

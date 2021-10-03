@@ -7,6 +7,7 @@
     ModalFooter,
     Button,
   } from "sveltestrap";
+  import { UIText } from "../../../../global/constants/ui_text";
   import { editLocale } from "../../../api/config.api";
   import { language } from "../../../stores/config.store";
   import "./editlocalemodal.style.css";
@@ -24,7 +25,9 @@
 </script>
 
 <Modal isOpen={isModalOpen} size="lg" toggle={toggleModal} scrollable>
-  <ModalHeader toggle={toggleModal}>Enter translations</ModalHeader>
+  <ModalHeader toggle={toggleModal}
+    >{UIText.EDIT_LOCALE_MODAL_HEADER}</ModalHeader
+  >
   <ModalBody class="edit-locale-body">
     {#each Object.entries(defaultData) as [key, value]}
       <div class="edit-locale-row">
@@ -40,7 +43,11 @@
     {/each}
   </ModalBody>
   <ModalFooter>
-    <Button color="danger" on:click={() => editLocaleAction()}>Save</Button>
-    <Button color="secondary" on:click={toggleModal}>Cancel</Button>
+    <Button color="danger" on:click={() => editLocaleAction()}
+      >{UIText.LOCALE_MODAL_SAVE}</Button
+    >
+    <Button color="secondary" on:click={toggleModal}
+      >{UIText.LOCALE_MODAL_CANCEL}</Button
+    >
   </ModalFooter>
 </Modal>
