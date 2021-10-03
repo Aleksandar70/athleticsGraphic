@@ -92,8 +92,6 @@ const getFieldValueFromParticipant = (key: string): string =>
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   let competitorList: ICompetitor[];
   if (isRunningDiscipline()) {
-    //set heat name
-    // currentHeatName.set(getHeatName());
     competitorList = list
       ? list
       : transformCompetitor(get(heatTableParticipants));
