@@ -352,9 +352,12 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
       }
     });
   });
-  isRunningDiscipline()
-    ? sortByAscendingOrder(tableData)
-    : sortByDescendingOrder(tableData);
+
+  if (Object.keys(get(currentEventData)).length !== 0) {
+    isRunningDiscipline()
+      ? sortByAscendingOrder(tableData)
+      : sortByDescendingOrder(tableData);
+  }
   return tableData;
 };
 
