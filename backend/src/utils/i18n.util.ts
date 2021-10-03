@@ -7,9 +7,11 @@ export const createDefaultLocale = async () => {
   const defaultLocale = {};
 
   let localeJsonCreated = false;
+
+  const slash = process.platform === "darwin" ? "/" : "\\";
   const pathToDefaultLocale = process
     .cwd()
-    .replace(Regex.AFTER_LAST_SLASH, "i18n\\default.json");
+    .replace(Regex.AFTER_LAST_SLASH, `i18n${slash}default.json`);
 
   try {
     const localeJson = await import(pathToDefaultLocale);
