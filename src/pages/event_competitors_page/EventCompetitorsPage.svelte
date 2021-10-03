@@ -64,12 +64,14 @@
         <Collapse isOpen={heatToggle.get(heatTableData.heatName)}>
           {#if heatTableData?.relayTeams}
             <Canvas
+              heatName={heatTableData.heatName}
               tableData={heatTableData.relayTeams}
               defaultColumns={defaultEventRelayTeamsColumns}
               updateAction={updateCompetitors}
             />
           {:else}
             <Canvas
+              heatName={heatTableData.heatName}
               tableData={heatTableData?.competitors}
               defaultColumns={defaultEventCompetitorsColumns}
               updateAction={updateCompetitors}

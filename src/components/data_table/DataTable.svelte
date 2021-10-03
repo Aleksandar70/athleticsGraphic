@@ -26,6 +26,7 @@
     currentColumn,
     currentRow,
     heatTableParticipants,
+    currentHeatName,
   } from "../../stores/table.store";
   import { uneditableFields } from "../../../global/defaults";
   import "./table.style.css";
@@ -36,6 +37,7 @@
   export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
+  export let heatName: string = "";
 
   let focusCell: HTMLTableCellElement;
   let editableColumns: string[] = [];
@@ -158,9 +160,9 @@
             ? 'selected'
             : ''}"
           on:click={() => {
-            // currentHeatName.set(heatName); //setHeatName
             heatTableParticipants.set(sortedRows);
             selectedParticipant.set(row);
+            currentHeatName.set(heatName);
           }}
         >
           {#each row as data}
