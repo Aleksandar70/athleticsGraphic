@@ -13,39 +13,44 @@
 
   onMount(() => {
     timeline
-      .to("#personalDataCompetitor", {
+      .to("#personalDataCompetitorImg", {
         duration: 0.5,
         opacity: 1,
         scaleY: 1,
         ease: "power2.out",
       })
       .to(
-        "#personalDataID",
+        "#personalDataCompetitorID",
         { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       )
       .to(
-        "#personalDataFlag",
+        "#personalDataCompetitorFlag",
         { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.2"
       )
       .to(
-        "#personalDataNationality",
+        "#personalDataCompetitorCountry",
         { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.1"
       )
       .to(
-        "#personalDataFirstName",
+        "#personalDataCompetitorName",
         { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<"
       )
       .to(
-        "#personalDataLastName",
+        "#personalDataCompetitorPB",
         { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.2"
       )
       .to(
-        "#personalDataAge",
+        "#personalDataCompetitorAge",
+        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
+        "<.2"
+      )
+      .to(
+        "#personalDataCompetitorPBImg",
         { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.2"
       );
@@ -61,16 +66,27 @@
 
 <div id="personalData--wrapper">
   <img
-    id="personalDataCompetitor"
-    alt="personalDataCompetitor"
+    id="personalDataCompetitorImg"
+    alt="personalDataCompetitorImg"
     src="/img/graphics/personalDataCompetitor.png"
   />
-  <p id="personalDataID">{data["ID"]}</p>
-  <p id="personalDataFlag">{data["Flag"]}</p>
-  <p id="personalDataNationality">{data["Nationality"]}</p>
-  <p id="personalDataFirstName">{data["First Name"]}</p>
-  <p id="personalDataLastName">{data["Last Name"]}</p>
-  <p id="personalDataAge">{data["Age"]}</p>
+  <p id="personalDataCompetitorID">{data["ID"]}</p>
+  <img
+    id="personalDataCompetitorFlag"
+    alt={data["Flag"]}
+    src="/img/flags/{data['Flag']}.png"
+  />
+  <p id="personalDataCompetitorCountry">{data["Nationality"]}</p>
+  <p id="personalDataCompetitorName">
+    {`${data["First Name"]} ${data["Last Name"]}`}
+  </p>
+  <p id="personalDataCompetitorAge">{data["Age"]}</p>
+  <p id="personalDataCompetitorPB">100</p>
+  <img
+    id="personalDataCompetitorPBImg"
+    alt="personalDataCompetitorPBImg"
+    src="/img/graphics/pb.png"
+  />
 </div>
 
 <style>
@@ -82,48 +98,114 @@
     left: 0px;
     z-index: 0;
   }
-  #personalDataCompetitor {
-    top: 274px;
-    left: 517px;
+  #personalDataCompetitorImg {
+    top: 863px;
+    left: 189px;
     position: fixed;
-    transform-origin: top center;
+    transform-origin: left center;
     opacity: 0;
-    transform: scaleY(0);
+    transform: scaleX(0);
   }
 
-  #personalDataID {
-    font-family: "Montserrat-Bold";
+  #personalDataCompetitorID {
+    font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
-    top: 295px;
-    left: 730px;
+    text-align: center;
+    width: 75px;
+    height: 48px;
+    line-height: 48px;
+    top: 836px;
+    left: 206px;
     color: rgb(28, 59, 113);
-    transform-origin: top center;
+    transform-origin: left center;
     opacity: 0;
-    transform: scaleY(0);
+    transform: scaleX(0);
   }
 
-  #personalDataFlag {
+  #personalDataCompetitorFlag {
+    position: fixed;
+    height: 48px;
+    width: 48px;
+    top: 866px;
+    left: 292px;
+    transform-origin: left center;
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  #personalDataCompetitorCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
-    top: 362px;
-    left: 775px;
-    color: white;
-    transform-origin: top center;
+    text-align: left;
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
+    top: 837px;
+    left: 341px;
+    color: rgb(255, 255, 255);
+    transform-origin: left center;
     opacity: 0;
-    transform: scaleY(0);
+    transform: scaleX(0);
   }
 
-  #personalDataNationality {
-    font-family: "Montserrat-MediumItalic";
-    font-size: 16pt;
+  #personalDataCompetitorName {
+    font-family: "Montserrat-SemiBold";
+    font-size: 24pt;
     position: fixed;
-    top: 678px;
-    left: 890px;
-    color: white;
-    transform-origin: top center;
+    text-align: left;
+    width: 800px;
+    height: 48px;
+    line-height: 48px;
+    top: 837px;
+    left: 427px;
+    color: rgb(28, 59, 113);
+    transform-origin: left center;
     opacity: 0;
-    transform: scaleY(0);
+    transform: scaleX(0);
+  }
+
+  #personalDataCompetitorAge {
+    font-family: "Montserrat-SemiBold";
+    font-size: 21pt;
+    position: fixed;
+    text-align: center;
+    width: 400px;
+    height: 48px;
+    line-height: 48px;
+    top: 890px;
+    left: 650px;
+    color: rgb(255, 255, 255);
+    transform-origin: left center;
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  #personalDataCompetitorPB {
+    font-family: "Montserrat-SemiBold";
+    font-size: 21pt;
+    position: fixed;
+    text-align: center;
+    width: 75px;
+    height: 48px;
+    line-height: 48px;
+    top: 892px;
+    left: 457px;
+    color: rgb(28, 59, 113);
+    transform-origin: left center;
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  #personalDataCompetitorPBImg {
+    position: fixed;
+    height: 36px;
+    width: 45px;
+    top: 927px;
+    left: 412px;
+    transform-origin: left center;
+    opacity: 0;
+    transform: scaleX(0);
   }
 </style>

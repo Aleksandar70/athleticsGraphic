@@ -25,6 +25,8 @@
     visibleColumns,
     currentColumn,
     currentRow,
+    heatTableParticipants,
+    currentHeatName,
   } from "../../stores/table.store";
   import { uneditableFields } from "../../../global/defaults";
   import "./table.style.css";
@@ -35,6 +37,7 @@
   export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
+  export let heatName: string = "";
 
   let focusCell: HTMLTableCellElement;
   let editableColumns: string[] = [];
@@ -122,7 +125,7 @@
   ) => {
     currentRow.set(row);
     currentColumn.set(editableColumns.findIndex((header) => header === column));
-    focusCell = target as HTMLTableDataCellElement;
+    focusCell = target as HTMLTableCellElement;
   };
 
   $: if (focusCell) {
@@ -156,7 +159,11 @@
           class="table-row {$selectedParticipant && isRowSelected(row)
             ? 'selected'
             : ''}"
-          on:click={() => selectedParticipant.set(row)}
+          on:click={() => {
+            heatTableParticipants.set(sortedRows);
+            selectedParticipant.set(row);
+            currentHeatName.set(heatName);
+          }}
         >
           {#each row as data}
             {#if _visibleColumns.includes(data.id) || shouldShowAllColumns}

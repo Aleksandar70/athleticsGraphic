@@ -22,6 +22,7 @@
   export let defaultColumns: string[];
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
+  export let heatName: string = "";
 
   const currentEvent = $visibleColumns[$currentEventId];
   if (!currentEvent) {
@@ -66,7 +67,13 @@
       on:input={(event) => doSearch(event.target)}
     />
   {/if}
-  <DataTable {headerData} {rowData} {updateResult} bind:currentPage />
+  <DataTable
+    {heatName}
+    {headerData}
+    {rowData}
+    {updateResult}
+    bind:currentPage
+  />
   <div class="table-options">
     <ColumnDisplayOptionsModal bind:headerData />
     <ColumnLockOptions bind:headerData />

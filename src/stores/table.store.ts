@@ -8,6 +8,7 @@ export const currentRow = writable(0);
 export const currentEventData = writable({});
 export const currentCompetitionData = writable({});
 export const isRelayTeamEvent = writable(false);
+export const currentHeatName = writable({});
 
 const columns = localStorage.getItem("columns");
 export const visibleColumns = writable(columns ? JSON.parse(columns) : {});
@@ -22,6 +23,7 @@ lockedColumns.subscribe((value) =>
 );
 
 export const selectedParticipant = writable([]);
+export const heatTableParticipants = writable([]);
 
 export const competitors = writable([]);
 
@@ -30,4 +32,6 @@ currentEventId.subscribe(() => {
   currentColumn.set(0);
   currentRow.set(0);
   isRelayTeamEvent.set(false);
+  heatTableParticipants.set([]);
+  currentHeatName.set({});
 });
