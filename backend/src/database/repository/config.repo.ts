@@ -16,7 +16,7 @@ export const createDefaultConfig = async (): Promise<IConfig> => {
   return getConfig()?.[0];
 };
 
-const getLocaleFileNames = (): string[] => {
+export const getLocaleFileNames = (): string[] => {
   const localeFiles: string[] = [];
   const pathToNewLocale = process.cwd().replace(Regex.AFTER_LAST_SLASH, `i18n`);
   const fileNames = fs.readdirSync(pathToNewLocale);
