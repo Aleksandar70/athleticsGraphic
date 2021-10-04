@@ -24,17 +24,15 @@ export const createDefaultLocale = async () => {
     localeJsonCreated = false;
   }
 
-  if (localeJsonCreated) {
-    const currentLocales = getLocaleFileNames();
-    await updateConfig({ languages: currentLocales });
-    return;
-  }
+  const currentLocales = getLocaleFileNames();
+  await updateConfig({ languages: currentLocales });
+
+  if (localeJsonCreated) return;
 
   const { competitionData, eventsData } = await getOTCompetitionData();
   createDefaultCompetitionLocale(defaultLocale, competitionData);
   createDefaulteventLocale(defaultLocale, eventsData);
   createDefaultUnitsLocale(defaultLocale, eventsData);
-  delete defaultLocale["default"];
   fs.writeFileSync(pathToDefaultLocale, JSON.stringify(defaultLocale));
 };
 
