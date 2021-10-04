@@ -4,11 +4,13 @@ import type {
   IResult,
 } from "../../../backend/src/database/interfaces";
 import { Graphics } from "../../../global/constants/constants";
-import type { TableField } from "../../../global/types";
+import type { TableData, TableField } from "../../../global/types";
 import {
   competitors,
   currentCompetitionData,
   currentEventData,
+  currentHeatName,
+  heatTableParticipants,
   selectedParticipant,
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
@@ -25,6 +27,9 @@ export const getDataForPreviewModal = (
       break;
     case Graphics.PERSONAL_SCORE:
       data["Event Name"] = get(currentEventData)["name"];
+      if (isRunningDiscipline()) {
+        data["Heat"] = getHeatName();
+      }
       data["ID"] = getFieldValueFromParticipant("competitorId");
       data["First Name"] = getFieldValueFromParticipant("firstName");
       data["Last Name"] = getFieldValueFromParticipant("lastName");
@@ -38,6 +43,9 @@ export const getDataForPreviewModal = (
       data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
+      if (isRunningDiscipline()) {
+        data["Heat"] = getHeatName();
+      }
       data["Description"] = "STARTING LIST";
       data["Competitors"] = getCompetitors();
       break;
@@ -45,11 +53,17 @@ export const getDataForPreviewModal = (
       data["Competition"] = get(currentCompetitionData)["englishName"];
       data["Hashtag"] = "#belgrade2021";
       data["Event Name"] = get(currentEventData)["name"];
+      if (isRunningDiscipline()) {
+        data["Heat"] = getHeatName();
+      }
       data["Description"] = "RESULTS";
       data["Competitors"] = getCompetitors();
       break;
     case Graphics.DISCIPLINE_ANNOUNCEMENT:
       data["Discipline Name"] = get(currentEventData)["name"];
+      if (isRunningDiscipline()) {
+        data["Heat"] = getHeatName();
+      }
       data["Note"] = "NEXT";
       data["Time"] = get(currentEventData)["r1Time"];
       break;
@@ -63,12 +77,30 @@ export const getDataForPreviewModal = (
   return data;
 };
 
+const transformCompetitor = (competitorList: TableData): any =>
+  competitorList.map((competitorData) => {
+    const competitors = {};
+    competitorData.forEach(
+      (data: TableField) => (competitors[data.id] = data.stringValue)
+    );
+    return competitors;
+  });
+
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
-  const competitorList = list ? list : get(competitors);
-  return competitorList.map((competitor) => ({
+  let competitorList: ICompetitor[];
+  if (isRunningDiscipline()) {
+    competitorList = list
+      ? list
+      : transformCompetitor(get(heatTableParticipants));
+  } else {
+    competitorList = list ? list : get(competitors);
+    sortCompetitorsByResult(competitorList);
+  }
+
+  return competitorList.map((competitor: ICompetitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
     result: competitor.result,
@@ -94,18 +126,53 @@ const getBestResults = (): Record<string, string>[] => {
     resultBibsForMedals.includes(competitor.competitorId)
   );
   const bestCompetitors = getCompetitors(filteredBestCompetitors);
-  sortByAscendingOrder(bestCompetitors);
+  sortCompetitorsByResult(bestCompetitors);
   return bestCompetitors;
 };
 
-const sortByAscendingOrder = (objectArray: Record<string, string>[]): void => {
-  objectArray.sort((n1, n2) => {
-    if (n1.result > n2.result) {
+const sortCompetitorsByResult = (
+  competitors: Record<string, string>[] | ICompetitor[]
+): void => {
+  competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
+    const runningDiscipline = isRunningDiscipline();
+    const result1 = getResultValue(n1.result);
+    const result2 = getResultValue(n2.result);
+    if (runningDiscipline) {
+      if (result1 < result2) {
+        return -1;
+      }
+      if (result1 > result2) {
+        return 1;
+      }
+    }
+    if (result1 < result2) {
       return 1;
     }
-    if (n1.result < n2.result) {
+    if (result1 > result2) {
       return -1;
     }
     return 0;
   });
+};
+
+const getResultValue = (result: string): string =>
+  isNumeric(result) ? result : "0";
+
+const getHeatName = (): string => {
+  const units = get(currentEventData)["units"];
+  for (const unit of units) {
+    if (unit.heatName === get(currentHeatName)) {
+      return unit.heatName;
+    }
+  }
+};
+
+const isRunningDiscipline = (): boolean => {
+  const units = get(currentEventData)["units"];
+  for (const unit of units) {
+    if (unit.heights.length === 0 && unit.trials.length === 0) {
+      return true;
+    }
+  }
+  return false;
 };

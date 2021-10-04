@@ -3,7 +3,7 @@
   import gsap from "gsap";
   import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
   import { animateHeader } from "./resultListAnimation.helper";
-import { Constants } from "../../../../global/constants/constants";
+  import { Constants } from "../../../../global/constants/constants";
 
   export let data;
 
@@ -13,7 +13,9 @@ import { Constants } from "../../../../global/constants/constants";
 
   $clearChannel.addEventListener("message", (event) => (clear = event.data));
   $: numberOfCompetitors = data["Competitors"].length;
-  $: iterationNumber = Math.ceil(numberOfCompetitors / Constants.ROWS_PER_TABLE);
+  $: iterationNumber = Math.ceil(
+    numberOfCompetitors / Constants.ROWS_PER_TABLE
+  );
 
   let minIndex = 0;
   $: maxIndex = Math.ceil(numberOfCompetitors / iterationNumber);
@@ -117,10 +119,19 @@ import { Constants } from "../../../../global/constants/constants";
 </script>
 
 <div id="resultList" class="resultList">
-  <img id="resultListHeader" src="/img/graphics/listHeader.png" alt="listHeader" />
+  <img
+    id="resultListHeader"
+    src="/img/graphics/listHeader.png"
+    alt="listHeader"
+  />
 
   <p id="resultListCompetitionTitle">{data["Competition"]}</p>
-  <p id="resultListDiscipline">{data["Event Name"]}</p>
+  <p id="resultListDiscipline">
+    {#if data["Heat"]}
+      {data["Heat"]}
+    {/if}
+    {data["Event Name"]}
+  </p>
   <p id="resultListHash">{data["Hashtag"]}</p>
   <p id="resultListDescription">{data["Description"]}</p>
 

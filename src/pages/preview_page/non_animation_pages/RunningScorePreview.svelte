@@ -7,7 +7,7 @@
   alt="score_rounds"
   src="/img/graphics/score_running.png"
 />
-<p id="scoresEventName">{data["Event Name"]}</p>
+<p id="scoresEventName">{data["Heat"]} {data["Event Name"]}</p>
 <p id="scoresBib">{data["ID"]}</p>
 <img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
 <p id="scoresCountry">{data["Nationality"]}</p>

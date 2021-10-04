@@ -11,6 +11,7 @@
   import { Collapse } from "sveltestrap";
   import GraphicControl from "../../components/graphic_control/GraphicControl.svelte";
   import "./eventcompetitorspage.style.css";
+  import { currentHeatName } from "../../stores/table.store";
 
   export let eventId: string;
 
@@ -23,6 +24,9 @@
     const currentState = heatToggle.get(heatName);
     heatToggle.set(heatName, !currentState);
     heatToggle = heatToggle;
+    if (heatToggle.get(heatName)) {
+      currentHeatName.set(heatName);
+    }
   };
 
   onMount(async () => {
@@ -32,6 +36,7 @@
       tableData.forEach((data, idx) => {
         heatToggle.set(data.heatName, idx === 0);
       });
+      currentHeatName.set(tableData[0].heatName);
     }
   });
 </script>
@@ -59,12 +64,14 @@
         <Collapse isOpen={heatToggle.get(heatTableData.heatName)}>
           {#if heatTableData?.relayTeams}
             <Canvas
+              heatName={heatTableData.heatName}
               tableData={heatTableData.relayTeams}
               defaultColumns={defaultEventRelayTeamsColumns}
               updateAction={updateCompetitors}
             />
           {:else}
             <Canvas
+              heatName={heatTableData.heatName}
               tableData={heatTableData?.competitors}
               defaultColumns={defaultEventCompetitorsColumns}
               updateAction={updateCompetitors}
