@@ -41,7 +41,10 @@ export const getDataSource = async (): Promise<string> => {
 export const addNewLocale = async (
   name: string
 ): Promise<Record<string, string>> => {
-  await ConfigModel.updateOne({}, { $push: { languages: name } });
+  await ConfigModel.updateOne(
+    {},
+    { $push: { languages: name }, $set: { selectedLanguage: name } }
+  );
   const pathToNewLocale = getLocalePath(name);
   const newLocaleData = {};
   Object.keys(defaultLocale).forEach((key) => (newLocaleData[key] = ""));
