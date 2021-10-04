@@ -162,12 +162,8 @@ const sortByDescendingOrder = (
   });
 };
 
-const getResultValue = (result: string): string => {
-  if (isNumeric(result)) {
-    return result;
-  }
-  return "0";
-};
+const getResultValue = (result: string): string =>
+  isNumeric(result) ? result : "0";
 
 const getHeatName = (): string => {
   const units = get(currentEventData)["units"];
