@@ -352,21 +352,27 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
       }
     });
   });
-
   if (Object.keys(get(currentEventData)).length !== 0) {
-    isRunningDiscipline()
-      ? sortByAscendingOrder(tableData)
-      : sortByDescendingOrder(tableData);
+    sortTableDataByResult(tableData);
   }
   return tableData;
 };
 
-const sortByDescendingOrder = (tableData: TableData): void => {
+const sortTableDataByResult = (tableData: TableData): void => {
+  let runningDiscipline = isRunningDiscipline();
   tableData.sort((n1: TableRow, n2: TableRow) => {
     const result1 = getResultValue(n1);
     const result2 = getResultValue(n2);
+    if (runningDiscipline) {
+      if (result1 < result2) {
+        return -1;
+      }
+      if (result1 > result2) {
+        return 1;
+      }
+    }
     if (result1 < result2) {
-      return 1;
+      return 11;
     }
     if (result1 > result2) {
       return -1;
