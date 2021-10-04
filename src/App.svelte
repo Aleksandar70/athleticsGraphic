@@ -15,7 +15,11 @@
   onMount(async () => {
     const config = await getConfig();
     dataSource.set(config?.dataSource);
-    language.set(config?.selectedLanguage);
+    if (config?.languages.includes(config?.selectedLanguage)) {
+      language.set(config?.selectedLanguage);
+    } else {
+      language.set("default");
+    }
     allLanguages.set(config?.languages ?? []);
     navigate(window.location.pathname);
   });
