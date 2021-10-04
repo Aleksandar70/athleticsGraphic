@@ -97,7 +97,7 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
       : transformCompetitor(get(heatTableParticipants));
   } else {
     competitorList = list ? list : get(competitors);
-    sortByDescendingOrder(competitorList);
+    sortCompetitorsByResult(competitorList);
   }
 
   return competitorList.map((competitor: ICompetitor) => ({
@@ -126,32 +126,25 @@ const getBestResults = (): Record<string, string>[] => {
     resultBibsForMedals.includes(competitor.competitorId)
   );
   const bestCompetitors = getCompetitors(filteredBestCompetitors);
-  isRunningDiscipline()
-    ? sortByAscendingOrder(bestCompetitors)
-    : sortByDescendingOrder(bestCompetitors);
+  sortCompetitorsByResult(bestCompetitors);
   return bestCompetitors;
 };
 
-const sortByAscendingOrder = (competitors: Record<string, string>[]): void => {
-  competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    const result1 = getResultValue(n1.result);
-    const result2 = getResultValue(n2.result);
-    if (result1 > result2) {
-      return 1;
-    }
-    if (result1 < result2) {
-      return -1;
-    }
-    return 0;
-  });
-};
-
-const sortByDescendingOrder = (
+const sortCompetitorsByResult = (
   competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
+    let runningDiscipline = isRunningDiscipline();
     const result1 = getResultValue(n1.result);
     const result2 = getResultValue(n2.result);
+    if (runningDiscipline) {
+      if (result1 < result2) {
+        return -1;
+      }
+      if (result1 > result2) {
+        return 1;
+      }
+    }
     if (result1 < result2) {
       return 1;
     }

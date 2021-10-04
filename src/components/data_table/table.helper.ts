@@ -372,7 +372,7 @@ const sortTableDataByResult = (tableData: TableData): void => {
       }
     }
     if (result1 < result2) {
-      return 11;
+      return 1;
     }
     if (result1 > result2) {
       return -1;
