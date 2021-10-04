@@ -16,7 +16,7 @@
     const config = await getConfig();
     dataSource.set(config?.dataSource);
     language.set(config?.selectedLanguage);
-    allLanguages.set(config?.languages);
+    allLanguages.set(config?.languages ?? []);
     navigate(window.location.pathname);
   });
 
