@@ -11,6 +11,7 @@
   import { allLanguages, dataSource, language } from "./stores/config.store";
   import PreviewPage from "./pages/preview_page/PreviewPage.svelte";
   import "./app.style.css";
+  import { locale } from "svelte-i18n";
 
   onMount(async () => {
     const config = await getConfig();
@@ -20,6 +21,7 @@
     } else {
       language.set("default");
     }
+    locale.set(config?.selectedLanguage);
     allLanguages.set(config?.languages ?? []);
     navigate(window.location.pathname);
   });
