@@ -381,20 +381,6 @@ const sortTableDataByResult = (tableData: TableData): void => {
   });
 };
 
-const sortByAscendingOrder = (tableData: TableData): void => {
-  tableData.sort((n1: TableRow, n2: TableRow) => {
-    const result1 = getResultValue(n1);
-    const result2 = getResultValue(n2);
-    if (result1 > result2) {
-      return 1;
-    }
-    if (result1 < result2) {
-      return -1;
-    }
-    return 0;
-  });
-};
-
 const getResultValue = (rowData: TableRow): string => {
   const result = rowData.find((el) => el.id === "result")?.stringValue;
   if (isNumeric(result)) {
