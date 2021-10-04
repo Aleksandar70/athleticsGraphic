@@ -40,17 +40,17 @@
         "<"
       )
       .to(
+        "#personalDataCompetitorPBImg",
+        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
+        "<.2"
+      )
+      .to(
         "#personalDataCompetitorPB",
         { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.2"
       )
       .to(
         "#personalDataCompetitorAge",
-        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.2"
-      )
-      .to(
-        "#personalDataCompetitorPBImg",
         { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
         "<.2"
       );
@@ -80,13 +80,13 @@
   <p id="personalDataCompetitorName">
     {`${data["First Name"]} ${data["Last Name"]}`}
   </p>
-  <p id="personalDataCompetitorAge">{data["Age"]}</p>
-  <p id="personalDataCompetitorPB">100</p>
+  <p id="personalDataCompetitorPB">{data["Personal Best"]}</p>
   <img
     id="personalDataCompetitorPBImg"
     alt="personalDataCompetitorPBImg"
     src="/img/graphics/pb.png"
   />
+  <p id="personalDataCompetitorAge">{data["Age"]}</p>
 </div>
 
 <style>
