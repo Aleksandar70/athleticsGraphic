@@ -69,6 +69,7 @@ export const getLocalePair = (locale: string) => {
 
 const getLocalePath = (name: string) => {
   const slash = process.platform === "darwin" ? "/" : "\\";
-  return process.cwd().replace(Regex.AFTER_LAST_SLASH, `i18n${slash}${name}.json`);
-}
-  
+  return process
+    .cwd()
+    .replace(Regex.AFTER_LAST_SLASH, `i18n${slash}${name}.json`);
+};

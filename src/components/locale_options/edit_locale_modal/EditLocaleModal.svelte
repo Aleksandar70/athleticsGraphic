@@ -16,6 +16,10 @@
   export let defaultData: Record<string, string> = {};
   export let localeData: Record<string, string> = {};
 
+  $: if (defaultData) {
+    delete defaultData["default"];
+  }
+
   const toggleModal = () => (isModalOpen = !isModalOpen);
 
   const editLocaleAction = async () => {
