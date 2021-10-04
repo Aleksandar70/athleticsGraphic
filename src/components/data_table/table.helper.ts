@@ -359,7 +359,7 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
 };
 
 const sortTableDataByResult = (tableData: TableData): void => {
-  let runningDiscipline = isRunningDiscipline();
+  const runningDiscipline = isRunningDiscipline();
   tableData.sort((n1: TableRow, n2: TableRow) => {
     const result1 = getResultValue(n1);
     const result2 = getResultValue(n2);

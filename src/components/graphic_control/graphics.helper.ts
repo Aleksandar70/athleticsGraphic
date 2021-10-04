@@ -134,7 +134,7 @@ const sortCompetitorsByResult = (
   competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    let runningDiscipline = isRunningDiscipline();
+    const runningDiscipline = isRunningDiscipline();
     const result1 = getResultValue(n1.result);
     const result2 = getResultValue(n2.result);
     if (runningDiscipline) {
