@@ -59,6 +59,14 @@ export const getDataForPreviewModal = (
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
       data["Medals"] = getBestResults();
+      break;
+    case Graphics.PERSONAL_DATA:
+      data["ID"] = getFieldValueFromParticipant("competitorId");
+      data["Flag"] = getFieldValueFromParticipant("nationality");
+      data["Nationality"] = getFieldValueFromParticipant("nationality");
+      data["First Name"] = getFieldValueFromParticipant("firstName");
+      data["Last Name"] = getFieldValueFromParticipant("lastName");
+      data["Age"] = getAge();
   }
   return data;
 };
@@ -73,6 +81,14 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
     nationality: competitor.nationality,
     result: competitor.result,
   }));
+};
+
+const getAge = () => {
+  const birthDate = new Date(getFieldValueFromParticipant("dateOfBirth"));
+  let timeDiff = Math.abs(Date.now() - birthDate.getTime());
+  let age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+  console.log("age ", age);
+  return age;
 };
 
 const getScores = (): unknown[] =>

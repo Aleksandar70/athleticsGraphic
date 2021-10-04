@@ -31,7 +31,8 @@
     displayData = getDataForPreviewModal(id);
     action_id = id;
     isAlertVisible =
-      id === Graphics.PERSONAL_SCORE && get(selectedParticipant).length === 0;
+      (id === Graphics.PERSONAL_SCORE || Graphics.PERSONAL_DATA) &&
+      get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
     sendPreview(id);
   };
@@ -94,7 +95,9 @@
         <Button color="primary" on:click={() => action(Graphics.PERSONAL_SCORE)}
           >{UIText.SHOW_PERSONAL_SCORE}</Button
         >
-        <Button color="primary">{UIText.SHOW_PERSONAL_DATA}</Button>
+        <Button color="primary" on:click={() => action(Graphics.PERSONAL_DATA)}
+          >{UIText.SHOW_PERSONAL_DATA}</Button
+        >
       </div>
     </CardBody>
     <CardFooter>

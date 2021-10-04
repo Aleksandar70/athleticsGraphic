@@ -9,6 +9,7 @@
   import DisciplineAnnouncement from "../../components/graphics/discipline_announcement/DisciplineAnnouncement.svelte";
   import Medals from "../../components/graphics/medals/Medals.svelte";
   import Time from "../../components/graphics/time/Time.svelte";
+  import PersonalData from "../../components/graphics/personal_data/PersonalData.svelte";
 
   $streamChannel.addEventListener("message", (event) =>
     visibleGraphics.set(event.data)
@@ -30,5 +31,7 @@
     <Medals data={$visibleGraphics.data} />
   {:else if $visibleGraphics.id == Graphics.TIME}
     <Time />
+  {:else if $visibleGraphics.id == Graphics.PERSONAL_DATA}
+    <PersonalData data={$visibleGraphics.data} />
   {/if}
 </div>
