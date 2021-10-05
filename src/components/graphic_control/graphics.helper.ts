@@ -80,7 +80,7 @@ export const getDataForPreviewModal = (
       data["Nationality"] = getFieldValueFromParticipant("nationality");
       data["First Name"] = getFieldValueFromParticipant("firstName");
       data["Last Name"] = getFieldValueFromParticipant("lastName");
-      data["Age"] = getCompetitorAge();
+      data["Age"] = getCompetitorAge("dateOfBirth");
       data["Personal Best"] = getFieldValueFromParticipant("pb");
       data["Season Best"] = getFieldValueFromParticipant("sb");
   }
@@ -117,10 +117,10 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   }));
 };
 
-const getCompetitorAge = () => {
-  const birthDate = new Date(getFieldValueFromParticipant("dateOfBirth"));
-  let timeDiff = Math.abs(Date.now() - birthDate.getTime());
-  let age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+const getCompetitorAge = (key: string) => {
+  const birthDate = new Date(getFieldValueFromParticipant(key));
+  const timeDiff = Math.abs(Date.now() - birthDate.getTime());
+  const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
   return age;
 };
 
