@@ -1,0 +1,28 @@
+.locale-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 110px;
+}
+
+.local-buttons {
+  display: flex;
+  justify-content: left;
+}
+
+.local-button {
+  margin: 5px 5px 0 0;
+}
+
+.locale--dropdown {
+  background-color: var(--main-light) !important;
+  color: black;
+}
+
+.locale-item.active,
+.locale-item:active {
+  background-color: var(--main-dark) !important;
+}
+
+.locale-item:hover {
+  background-color: var(--hover-color) !important;
+}

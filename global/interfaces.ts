@@ -20,7 +20,9 @@ export interface ISelectedRow {
 }
 
 export interface IConfig {
-  dataSource: string;
+  dataSource?: string;
+  selectedLanguage?: string;
+  languages?: string[];
 }
 
 export interface ISearch {

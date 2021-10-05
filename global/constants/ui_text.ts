@@ -40,4 +40,10 @@ export abstract class UIText {
   static readonly INIT_BODY: string = `This will delete your currect data and create a new one from the API. If you wish to proceed, click ${UIText.INIT_BUTTON}.`;
   static readonly INIT_CANCEL: string = "Cancel";
   static readonly INIT_IN_PROGRESS: string = "Initializing...";
+
+  static readonly LOCALE_DROPDOWN_HEADER: string = "Select language";
+  static readonly ADD_LOCALE_MODAL_HEADER: string = "Enter locale name";
+  static readonly LOCALE_MODAL_SAVE: string = "Save";
+  static readonly LOCALE_MODAL_CANCEL: string = "Cancel";
+  static readonly EDIT_LOCALE_MODAL_HEADER: string = "Enter translations";
 }

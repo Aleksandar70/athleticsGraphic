@@ -11,5 +11,5 @@ img:hover {
 }
 
 .options {
-  display: table;
+  display: flex;
 }

@@ -39,26 +39,35 @@
   $: isActive = (value: string) => $dataSource === value;
 </script>
 
-<Dropdown>
-  <DropdownToggle class="data-source--dropdown text-dark" caret
-    >{$dataSource ?? ""}</DropdownToggle
-  >
-  <DropdownMenu class="data-source--dropdown">
-    <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
-    <DropdownItem
-      class="source-item"
-      active={isActive(SOURCE.LOCAL)}
-      on:click={() => valueChange(SOURCE.LOCAL)}>{SOURCE.LOCAL}</DropdownItem
+<div class="data-source--wrapper">
+  <Dropdown>
+    <DropdownToggle class="data-source--dropdown text-dark" caret
+      >{$dataSource ?? ""}</DropdownToggle
     >
-    <DropdownItem
-      class="source-item"
-      active={isActive(SOURCE.REMOTE)}
-      on:click={() => valueChange(SOURCE.REMOTE)}>{SOURCE.REMOTE}</DropdownItem
+    <DropdownMenu class="data-source--dropdown">
+      <DropdownItem header>{UIText.SOURCES_HEADER}</DropdownItem>
+      <DropdownItem
+        class="source-item"
+        active={isActive(SOURCE.LOCAL)}
+        on:click={() => valueChange(SOURCE.LOCAL)}>{SOURCE.LOCAL}</DropdownItem
+      >
+      <DropdownItem
+        class="source-item"
+        active={isActive(SOURCE.REMOTE)}
+        on:click={() => valueChange(SOURCE.REMOTE)}
+        >{SOURCE.REMOTE}</DropdownItem
+      >
+    </DropdownMenu>
+  </Dropdown>
+  <div>
+    <Button
+      size="sm"
+      class="initialize-button"
+      on:click={() => toggleInitMoal()}
     >
-  </DropdownMenu>
-</Dropdown>
-<div class="initialize-button" on:click={() => toggleInitMoal()}>
-  <Fa icon={faDatabase} color="white" />
+      <Fa icon={faDatabase} color="white" />
+    </Button>
+  </div>
 </div>
 <Modal isOpen={isInitModalOpen} backdrop="static" toggle={toggleInitMoal}>
   {#if isInitializing}

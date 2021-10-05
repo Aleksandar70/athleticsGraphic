@@ -8,7 +8,8 @@
     "noImplicitThis": true,
     "noUnusedLocals": false,
     "allowSyntheticDefaultImports": true,
-    "removeComments": true
+    "removeComments": true,
+    "resolveJsonModule": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
