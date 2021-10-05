@@ -52,12 +52,12 @@ const createDefaultCompetitionLocale = (
   locale: Record<string, string>,
   data: ICompetition
 ) => {
-  for (const [key, value] of Object.entries(data)) {
+  for (const value of Object.values(data)) {
     if (
       typeof value === "string" &&
       value.toString().match(Regex.FIND_WORDS)?.[0]
     ) {
-      locale[key] = value;
+      locale[value] = value;
     }
   }
 };
@@ -68,7 +68,7 @@ const createDefaulteventLocale = (
 ) => {
   for (const event of data) {
     if (event?.name?.match(Regex.FIND_WORDS)?.[0]) {
-      locale[`name_${event.eventId}`] = event.name;
+      locale[event.name] = event.name;
     }
   }
 };
@@ -86,8 +86,8 @@ const createDefaultUnitsLocale = (
           !key.toLowerCase().includes("status") &&
           value.toString().match(Regex.FIND_WORDS)?.[0]
         ) {
-          if (!locale[`${key}_${event.eventId}`]) {
-            locale[`${key}_${event.eventId}`] = value;
+          if (!locale[value]) {
+            locale[value] = value;
           }
         }
       }

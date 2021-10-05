@@ -6,6 +6,9 @@
 
 .edit-locale-id {
   width: 25%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .edit-locale-input {

@@ -1,4 +1,4 @@
-import { get, Readable } from "svelte/store";
+import { get } from "svelte/store";
 import type {
   ICompetitor,
   IResult,
@@ -23,14 +23,15 @@ export const getDataForPreviewModal = (
   switch (id) {
     case Graphics.EVENT_ANNOUNCEMENT:
       data["Event Name"] = getValueFromTranslation(
-        "englishName",
-        currentCompetitionData
+        get(currentCompetitionData)["englishName"]
       );
       data["Location"] = "BELGRADE, FEBRUARY 2021";
       data["Hashtag"] = "#belgrade2021";
       break;
     case Graphics.PERSONAL_SCORE:
-      data["Event Name"] = getValueFromTranslation("name", currentEventData);
+      data["Event Name"] = getValueFromTranslation(
+        get(currentEventData)["name"]
+      );
       if (isRunningDiscipline()) {
         data["Heat"] = getHeatName();
       }
@@ -45,11 +46,12 @@ export const getDataForPreviewModal = (
       break;
     case Graphics.START_LIST:
       data["Competition"] = getValueFromTranslation(
-        "englishName",
-        currentCompetitionData
+        get(currentCompetitionData)["englishName"]
       );
       data["Hashtag"] = "#belgrade2021";
-      data["Event Name"] = getValueFromTranslation("name", currentEventData);
+      data["Event Name"] = getValueFromTranslation(
+        get(currentEventData)["name"]
+      );
       if (isRunningDiscipline()) {
         data["Heat"] = getHeatName();
       }
@@ -58,11 +60,12 @@ export const getDataForPreviewModal = (
       break;
     case Graphics.RESULT_LIST:
       data["Competition"] = getValueFromTranslation(
-        "englishName",
-        currentCompetitionData
+        get(currentCompetitionData)["englishName"]
       );
       data["Hashtag"] = "#belgrade2021";
-      data["Event Name"] = getValueFromTranslation("name", currentEventData);
+      data["Event Name"] = getValueFromTranslation(
+        get(currentEventData)["name"]
+      );
       if (isRunningDiscipline()) {
         data["Heat"] = getHeatName();
       }
@@ -71,21 +74,21 @@ export const getDataForPreviewModal = (
       break;
     case Graphics.DISCIPLINE_ANNOUNCEMENT:
       data["Discipline Name"] = getValueFromTranslation(
-        "name",
-        currentEventData
+        get(currentEventData)["name"]
       );
       if (isRunningDiscipline()) {
         data["Heat"] = getHeatName();
       }
       data["Note"] = "NEXT";
-      data["Time"] = getValueFromTranslation("r1Time", currentEventData);
+      data["Time"] = getValueFromTranslation(get(currentEventData)["r1Time"]);
       break;
     case Graphics.MEDALS:
       data["Competition"] = getValueFromTranslation(
-        "englishName",
-        currentCompetitionData
+        get(currentCompetitionData)["englishName"]
       );
-      data["Event Name"] = getValueFromTranslation("name", currentEventData);
+      data["Event Name"] = getValueFromTranslation(
+        get(currentEventData)["name"]
+      );
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
       data["Medals"] = getBestResults();
@@ -107,17 +110,7 @@ const transformCompetitor = (
 const getFieldValueFromParticipant = (key: string): string =>
   get(selectedParticipant).find((field) => field.id === key)?.stringValue;
 
-const getValueFromTranslation = (
-  key: string,
-  fallbackStore: Readable<Record<string, string>>
-): string => {
-  const localeKey =
-    fallbackStore === currentCompetitionData
-      ? key
-      : `${key}_${get(currentEventData)["eventId"]}`;
-  const hasTranslation = get(_)(localeKey) !== localeKey;
-  return hasTranslation ? get(_)(localeKey) : get(fallbackStore)[key];
-};
+const getValueFromTranslation = (key: string): string => get(_)(key);
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   let competitorList: ICompetitor[];
@@ -192,7 +185,7 @@ const getHeatName = (): string => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
     if (unit.heatName === get(currentHeatName)) {
-      return unit.heatName;
+      return getValueFromTranslation(unit.heatName);
     }
   }
 };
