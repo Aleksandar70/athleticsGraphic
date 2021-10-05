@@ -40,7 +40,7 @@ export const getDataSource = async (): Promise<string> => {
 
 export const addNewLocale = async (
   name: string
-): Promise<Record<string, string>> => {
+): Promise<Record<string, unknown>> => {
   await ConfigModel.updateOne(
     {},
     { $push: { languages: name }, $set: { selectedLanguage: name } }
@@ -49,7 +49,7 @@ export const addNewLocale = async (
   const newLocaleData = {};
   Object.keys(defaultLocale).forEach((key) => (newLocaleData[key] = ""));
   fs.writeFileSync(pathToNewLocale, JSON.stringify(newLocaleData));
-  return defaultLocale;
+  return getLocalePair(name);
 };
 
 export const editLocale = async (

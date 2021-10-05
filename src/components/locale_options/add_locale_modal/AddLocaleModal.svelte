@@ -19,12 +19,12 @@
 
   let localeName = "";
   let editModalOpen = false;
-  let defaultLocaleData = {};
+  let localePairData = {};
 
   const toggleModal = () => (isModalOpen = !isModalOpen);
 
   const addLocaleAction = async () => {
-    defaultLocaleData = await addNewLocale(localeName);
+    localePairData = await addNewLocale(localeName);
     language.set(localeName);
     locale.set(localeName);
     allLanguages.set([...$allLanguages, localeName]);
@@ -56,6 +56,7 @@
   </ModalFooter>
 </Modal>
 <EditLocaleModal
-  defaultData={defaultLocaleData}
+  defaultData={localePairData["default"]}
+  localeData={localePairData["locale"]}
   bind:isModalOpen={editModalOpen}
 />
