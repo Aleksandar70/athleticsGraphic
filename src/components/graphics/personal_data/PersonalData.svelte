@@ -86,28 +86,26 @@
     src="/img/graphics/pb.png"
   />
   <p id="potpis1BDPB">{data["Personal Best"]}</p>
-  <p id="potpis1BDAge">{data["Age"]}</p>
+  <p id="potpis1BDAge">Age: {data["Age"]}</p>
 </div>
 
 <style>
   #potpis1BD {
     width: 1920px;
     height: 1080px;
+    z-index: 0;
     position: fixed;
     top: 0px;
     left: 0px;
-    z-index: 0;
   }
-
   #potpis1BDBG {
-    top: 863px;
-    left: 189px;
+    bottom: 100px;
+    left: 30px;
     position: fixed;
     transform-origin: left center;
     opacity: 0;
     transform: scaleX(0);
   }
-
   #potpis1BDBib {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
@@ -116,8 +114,8 @@
     width: 75px;
     height: 48px;
     line-height: 48px;
-    top: 836px;
-    left: 206px;
+    bottom: 250px;
+    left: 230px;
     color: rgb(28, 59, 113);
     transform-origin: left center;
     opacity: 0;
@@ -128,13 +126,12 @@
     position: fixed;
     height: 48px;
     width: 48px;
-    top: 866px;
-    left: 292px;
+    bottom: 265px;
+    left: 325px;
     transform-origin: left center;
     opacity: 0;
     transform: scaleX(0);
   }
-
   #potpis1BDCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
@@ -143,14 +140,13 @@
     width: 56px;
     height: 56px;
     line-height: 56px;
-    top: 837px;
-    left: 341px;
+    bottom: 245px;
+    left: 375px;
     color: rgb(255, 255, 255);
     transform-origin: left center;
     opacity: 0;
     transform: scaleX(0);
   }
-
   #potpis1BDTakmicar {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
@@ -159,8 +155,8 @@
     width: 800px;
     height: 48px;
     line-height: 48px;
-    top: 837px;
-    left: 427px;
+    bottom: 250px;
+    left: 450px;
     color: rgb(28, 59, 113);
     transform-origin: left center;
     opacity: 0;
@@ -175,8 +171,8 @@
     width: 400px;
     height: 48px;
     line-height: 48px;
-    top: 890px;
-    left: 650px;
+    bottom: 195px;
+    left: 700px;
     color: rgb(255, 255, 255);
     transform-origin: left center;
     opacity: 0;
@@ -191,8 +187,8 @@
     width: 75px;
     height: 48px;
     line-height: 48px;
-    top: 892px;
-    left: 457px;
+    bottom: 195px;
+    left: 487px;
     color: rgb(28, 59, 113);
     transform-origin: left center;
     opacity: 0;
@@ -203,8 +199,8 @@
     position: fixed;
     height: 36px;
     width: 45px;
-    top: 927px;
-    left: 412px;
+    bottom: 215px;
+    left: 440px;
     transform-origin: left center;
     opacity: 0;
     transform: scaleX(0);
