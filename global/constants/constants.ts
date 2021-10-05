@@ -7,7 +7,7 @@ export abstract class Regex {
   static readonly AFTER_LAST_SLASH = /([^\\/]+$)/gm;
   /* Splits text into array of words separated by dot (eg. one.two.three -> [one, two, three]) */
   static readonly SPLIT_BY_DOT = /[^.]*/gm;
-  /* Finds text that has a least 3 alphabet letter in it, in sequence (eg. `123test` is correct, 'm 123ft' is not correct) */
+  /* Finds text that has a least 2 alphabet letter in it, in sequence (eg. `123test` is correct, 'm 123ft' is not correct) */
   static readonly FIND_WORDS = /\b.*[a-zA-Z]{2,}.*\b/;
   /* Finds text that is before first dot (eg. serbia.png => serbia) */
   static readonly BEFORE_FIRST_DOT = /.*(?=\.)/gm;
