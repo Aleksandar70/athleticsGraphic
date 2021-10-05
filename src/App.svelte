@@ -8,13 +8,21 @@
   import Footer from "./components/footer/Footer.svelte";
   import { Paths } from "../global/constants/api";
   import { getConfig } from "./api/config.api";
-  import { dataSource } from "./stores/config.store";
-  import "./app.style.css";
+  import { allLanguages, dataSource, language } from "./stores/config.store";
   import PreviewPage from "./pages/preview_page/PreviewPage.svelte";
+  import "./app.style.css";
+  import { locale } from "svelte-i18n";
 
   onMount(async () => {
     const config = await getConfig();
     dataSource.set(config?.dataSource);
+    if (config?.languages.includes(config?.selectedLanguage)) {
+      language.set(config?.selectedLanguage);
+    } else {
+      language.set("default");
+    }
+    locale.set(config?.selectedLanguage);
+    allLanguages.set(config?.languages ?? []);
     navigate(window.location.pathname);
   });
 

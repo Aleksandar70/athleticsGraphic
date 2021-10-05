@@ -1,3 +1,8 @@
+.data-source--wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .data-source--dropdown {
   background-color: var(--main-light) !important;
   color: black;
@@ -13,11 +18,7 @@
 }
 
 .initialize-button {
-  width: 30px;
-  cursor: pointer;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: right;
+  margin: 5px 5px 0 0;
 }
 
 .init-modal--spin-body {
