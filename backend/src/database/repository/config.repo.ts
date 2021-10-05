@@ -1,6 +1,6 @@
 import { IConfig } from "../../../../global/interfaces";
 import { ConfigModel } from "../models/config.model";
-import fs from "fs";
+import fs from "fs-extra";
 import * as defaultLocale from "../../../../i18n/default.json";
 import { Regex } from "../../../../global/constants/constants";
 

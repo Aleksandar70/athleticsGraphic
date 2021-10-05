@@ -40,9 +40,11 @@
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@types/fs-extra": "^9.0.13",
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "d3-array": "^3.0.1",
+    "fs-extra": "^10.0.0",
     "gsap": "^3.7.1",
     "mongoose": "^6.0.7",
     "sirv-cli": "^1.0.0",

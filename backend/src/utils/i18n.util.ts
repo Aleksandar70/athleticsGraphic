@@ -1,6 +1,6 @@
 import { getOTCompetitionData } from "../api/opentrack.api";
 import { ICompetition, IEvent } from "../database/interfaces";
-import fs from "fs";
+import fs from "fs-extra";
 import { Regex } from "../../../global/constants/constants";
 import {
   getLocaleFileNames,
@@ -17,19 +17,31 @@ export const createDefaultLocale = async () => {
     .cwd()
     .replace(Regex.AFTER_LAST_SLASH, `i18n${slash}default.json`);
 
+  let currentDefault;
+
   try {
-    const localeJson = await import(pathToDefaultLocale);
-    localeJsonCreated = Object.keys(localeJson).length > 1;
+    currentDefault = await import(pathToDefaultLocale);
+    localeJsonCreated = Object.keys(currentDefault).length > 1;
   } catch (error) {
     localeJsonCreated = false;
   }
 
+  const { competitionData, eventsData } = await getOTCompetitionData();
+
+  const newCompetition =
+    competitionData?.fullName !== currentDefault?.["fullName"];
+
   const currentLocales = getLocaleFileNames();
   await updateConfig({ languages: currentLocales });
 
-  if (localeJsonCreated) return;
+  if (localeJsonCreated && !newCompetition) return;
 
-  const { competitionData, eventsData } = await getOTCompetitionData();
+  fs.emptyDirSync(process.cwd().replace(Regex.AFTER_LAST_SLASH, `i18n`));
+
+  if (currentLocales.length > 1) {
+    await updateConfig({ languages: ["default"], selectedLanguage: "default" });
+  }
+
   createDefaultCompetitionLocale(defaultLocale, competitionData);
   createDefaulteventLocale(defaultLocale, eventsData);
   createDefaultUnitsLocale(defaultLocale, eventsData);
