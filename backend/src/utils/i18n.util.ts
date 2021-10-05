@@ -7,7 +7,7 @@ import {
   updateConfig,
 } from "../database/repository/config.repo";
 
-export const createDefaultLocale = async () => {
+export const createDefaultLocale = async (): Promise<void> => {
   const defaultLocale = {};
 
   let localeJsonCreated = false;

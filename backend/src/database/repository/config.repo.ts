@@ -55,12 +55,12 @@ export const addNewLocale = async (
 export const editLocale = async (
   locale: string,
   editedLocale: Record<string, string>
-) => {
+): Promise<void> => {
   const pathToEditedLocale = getLocalePath(locale);
   fs.writeFileSync(pathToEditedLocale, JSON.stringify(editedLocale));
 };
 
-export const getLocalePair = (locale: string) => {
+export const getLocalePair = (locale: string): Record<string, unknown> => {
   const pathToDefaultLocale = getLocalePath("default");
   const pathToEditedLocale = getLocalePath(locale);
   const defaultJson = JSON.parse(
