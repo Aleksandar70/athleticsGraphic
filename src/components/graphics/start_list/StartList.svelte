@@ -115,7 +115,12 @@
     alt="listHeader"
   />
   <p id="startListCompetitonTitle">{data["Competition"]}</p>
-  <p id="startListDiscipline">{data["Event Name"]}</p>
+  <p id="startListDiscipline">
+    {#if data["Heat"]}
+      {data["Heat"]}
+    {/if}
+    {data["Event Name"]}
+  </p>
   <p id="startListHash">{data["Hashtag"]}</p>
   <p id="startListDescription">{data["Description"]}</p>
 

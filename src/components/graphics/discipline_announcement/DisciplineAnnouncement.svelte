@@ -49,7 +49,12 @@
     alt="disciplineAnnouncement"
     src="/img/graphics/disciplineAnnouncement.png"
   />
-  <p id="disciplineTitle">{data["Discipline Name"]}</p>
+  <p id="disciplineTitle">
+    {#if data["Heat"]}
+      {data["Heat"]}
+    {/if}
+    {data["Discipline Name"]}
+  </p>
   <p id="disciplineNextNote">{data["Note"]}</p>
   <p id="disciplineTime">{data["Time"]}</p>
 </div>

@@ -22,7 +22,12 @@
   />
 
   <p id="resultListCompetitionTitle">{data["Competition"]}</p>
-  <p id="resultListDiscipline">{data["Event Name"]}</p>
+  <p id="resultListDiscipline">
+    {#if data["Heat"]}
+      {data["Heat"]}
+    {/if}
+    {data["Event Name"]}
+  </p>
   <p id="resultListHash">{data["Hashtag"]}</p>
   <p id="resultListDescription">{data["Description"]}</p>
 
