@@ -13,46 +13,46 @@
 
   onMount(() => {
     timeline
-      .to("#personalDataCompetitorImg", {
+      .to("#potpis1BDBG", {
         duration: 0.5,
         opacity: 1,
-        scaleY: 1,
+        scaleX: 1,
         ease: "power2.out",
       })
       .to(
-        "#personalDataCompetitorID",
-        { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
+        "#potpis1BDBib",
+        { duration: 0.2, opacity: 1, scaleX: 1, ease: "power2.out" },
+        "<0.1"
+      )
+      .to(
+        "#potpis1BDImg",
+        { duration: 0.2, opacity: 1, scaleX: 1, ease: "power2.out" },
+        "<0.1"
+      )
+      .to(
+        "#potpis1BDCountry",
+        { duration: 0.2, opacity: 1, scaleX: 1, ease: "power2.out" },
+        "<0.05"
+      )
+      .to(
+        "#potpis1BDTakmicar",
+        { duration: 0.2, opacity: 1, scaleX: 1, ease: "power2.out" },
+        "<0.05"
+      )
+      .to(
+        "#potpis1BDPBImg",
+        { duration: 0.25, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<"
       )
       .to(
-        "#personalDataCompetitorFlag",
-        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.2"
+        "#potpis1BDPB",
+        { duration: 0.25, opacity: 1, scaleX: 1, ease: "power2.out" },
+        "<0.1"
       )
       .to(
-        "#personalDataCompetitorCountry",
-        { duration: 0.1, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.1"
-      )
-      .to(
-        "#personalDataCompetitorName",
-        { duration: 0.5, opacity: 1, scaleY: 1, ease: "power2.out" },
+        "#potpis1BDAge",
+        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<"
-      )
-      .to(
-        "#personalDataCompetitorPBImg",
-        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.2"
-      )
-      .to(
-        "#personalDataCompetitorPB",
-        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.2"
-      )
-      .to(
-        "#personalDataCompetitorAge",
-        { duration: 0.3, opacity: 1, scaleY: 1, ease: "power2.out" },
-        "<.2"
       );
   });
 
@@ -64,33 +64,33 @@
   }
 </script>
 
-<div id="personalData--wrapper">
+<div id="potpis1BD">
   <img
-    id="personalDataCompetitorImg"
+    id="potpis1BDBG"
     alt="personalDataCompetitorImg"
     src="/img/graphics/personalDataCompetitor.png"
   />
-  <p id="personalDataCompetitorID">{data["ID"]}</p>
+  <p id="potpis1BDBib">{data["ID"]}</p>
   <img
-    id="personalDataCompetitorFlag"
+    id="potpis1BDImg"
     alt={data["Flag"]}
     src="/img/flags/{data['Flag']}.png"
   />
-  <p id="personalDataCompetitorCountry">{data["Nationality"]}</p>
-  <p id="personalDataCompetitorName">
+  <p id="potpis1BDCountry">{data["Nationality"]}</p>
+  <p id="potpis1BDTakmicar">
     {`${data["First Name"]} ${data["Last Name"]}`}
   </p>
-  <p id="personalDataCompetitorPB">{data["Personal Best"]}</p>
   <img
-    id="personalDataCompetitorPBImg"
+    id="potpis1BDPBImg"
     alt="personalDataCompetitorPBImg"
     src="/img/graphics/pb.png"
   />
-  <p id="personalDataCompetitorAge">{data["Age"]}</p>
+  <p id="potpis1BDPB">{data["Personal Best"]}</p>
+  <p id="potpis1BDAge">{data["Age"]}</p>
 </div>
 
 <style>
-  #personalData--wrapper {
+  #potpis1BD {
     width: 1920px;
     height: 1080px;
     position: fixed;
@@ -98,7 +98,8 @@
     left: 0px;
     z-index: 0;
   }
-  #personalDataCompetitorImg {
+
+  #potpis1BDBG {
     top: 863px;
     left: 189px;
     position: fixed;
@@ -107,7 +108,7 @@
     transform: scaleX(0);
   }
 
-  #personalDataCompetitorID {
+  #potpis1BDBib {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -123,7 +124,7 @@
     transform: scaleX(0);
   }
 
-  #personalDataCompetitorFlag {
+  #potpis1BDImg {
     position: fixed;
     height: 48px;
     width: 48px;
@@ -134,7 +135,7 @@
     transform: scaleX(0);
   }
 
-  #personalDataCompetitorCountry {
+  #potpis1BDCountry {
     font-family: "Montserrat-SemiBold";
     font-size: 20pt;
     position: fixed;
@@ -150,7 +151,7 @@
     transform: scaleX(0);
   }
 
-  #personalDataCompetitorName {
+  #potpis1BDTakmicar {
     font-family: "Montserrat-SemiBold";
     font-size: 24pt;
     position: fixed;
@@ -166,7 +167,7 @@
     transform: scaleX(0);
   }
 
-  #personalDataCompetitorAge {
+  #potpis1BDAge {
     font-family: "Montserrat-SemiBold";
     font-size: 21pt;
     position: fixed;
@@ -182,7 +183,7 @@
     transform: scaleX(0);
   }
 
-  #personalDataCompetitorPB {
+  #potpis1BDPB {
     font-family: "Montserrat-SemiBold";
     font-size: 21pt;
     position: fixed;
@@ -198,7 +199,7 @@
     transform: scaleX(0);
   }
 
-  #personalDataCompetitorPBImg {
+  #potpis1BDPBImg {
     position: fixed;
     height: 36px;
     width: 45px;

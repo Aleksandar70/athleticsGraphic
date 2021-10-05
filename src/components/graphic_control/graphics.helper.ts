@@ -81,7 +81,7 @@ export const getDataForPreviewModal = (
       data["First Name"] = getFieldValueFromParticipant("firstName");
       data["Last Name"] = getFieldValueFromParticipant("lastName");
       data["Age"] = getCompetitorAge();
-      data["Public Best"] = getFieldValueFromParticipant("pb");
+      data["Personal Best"] = getFieldValueFromParticipant("pb");
       data["Season Best"] = getFieldValueFromParticipant("sb");
   }
   return data;
