@@ -31,7 +31,7 @@
     displayData = getDataForPreviewModal(id);
     action_id = id;
     isAlertVisible =
-      (id === Graphics.PERSONAL_SCORE || Graphics.PERSONAL_DATA) &&
+      (id === Graphics.PERSONAL_SCORE || id === Graphics.PERSONAL_DATA) &&
       get(selectedParticipant).length === 0;
     isModalOpen = !isAlertVisible;
     sendPreview(id);
