@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "HOST=0.0.0.0 rollup -c -w",
-    "start": "sirv public --no-clear --single",
+    "dev": "rollup -c -w",
+    "start": "sirv public --host 192.168.0.15 --no-clear --single",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx,.svelte",
     "client": "npm run dev",
     "server": "cd backend && nodemon",

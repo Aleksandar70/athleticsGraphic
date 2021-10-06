@@ -1,7 +1,8 @@
 export abstract class Paths {
   static readonly SERVER_PORT = 5001;
-  static readonly SERVER_URL = `http://0.0.0.0:${Paths.SERVER_PORT}/`;
-  static readonly CLIENT_URL = "http://0.0.0.0:5000/";
+  static readonly IPV4 = "192.168.0.15";
+  static readonly SERVER_URL = `http://${Paths.IPV4}:${Paths.SERVER_PORT}/`;
+  static readonly CLIENT_URL = `http://${Paths.IPV4}:5000/`;
   static readonly ROOT_PATH = "/";
 
   static readonly RESULTS = "results";
@@ -35,7 +36,7 @@ export abstract class Paths {
 export abstract class OpenTrack {
   static readonly COMPETITION_YEAR = 2021;
   static readonly COMPETITION_COUNTRY = "SRB";
-  static readonly COMPETITION_ID = "balkan_u18"; 
+  static readonly COMPETITION_ID = "balkan_u18";
   static readonly OPEN_TRACK_API = `https://data.opentrack.run/en-gb/x/${OpenTrack.COMPETITION_YEAR}/${OpenTrack.COMPETITION_COUNTRY}/${OpenTrack.COMPETITION_ID}`;
 
   static readonly OPEN_TRACK_API_EVENT = `${OpenTrack.OPEN_TRACK_API}/event`;
