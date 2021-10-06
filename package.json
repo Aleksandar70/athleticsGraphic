@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "HOST=0.0.0.0 rollup -c -w",
     "start": "sirv public --no-clear --single",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx,.svelte",
     "client": "npm run dev",

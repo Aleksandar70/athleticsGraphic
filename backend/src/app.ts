@@ -30,4 +30,4 @@ app.use(Paths.RELAY_TEAMS_PATH, RelayTeamsRouter);
 app.use(Paths.CONFIG_PATH, ConfigRouter);
 app.use(Paths.DATABASE_PATH, DatabaseRouter);
 
-app.listen(port, () => console.log(`Server is up at port ${port}`));
+app.listen(port, "0.0.0.0", () => console.log(`Server is up at port ${port}`));

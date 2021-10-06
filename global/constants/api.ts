@@ -1,7 +1,7 @@
 export abstract class Paths {
   static readonly SERVER_PORT = 5001;
-  static readonly SERVER_URL = `http://localhost:${Paths.SERVER_PORT}/`;
-  static readonly CLIENT_URL = "http://localhost:5000/";
+  static readonly SERVER_URL = `http://0.0.0.0:${Paths.SERVER_PORT}/`;
+  static readonly CLIENT_URL = "http://0.0.0.0:5000/";
   static readonly ROOT_PATH = "/";
 
   static readonly RESULTS = "results";
