@@ -197,7 +197,7 @@
 
   #personalDataCompetitorPB {
     font-family: "Montserrat-SemiBold";
-    font-size: 21pt;
+    font-size: 16pt;
     position: fixed;
     text-align: center;
     width: 75px;
@@ -224,7 +224,7 @@
 
   #personalDataCompetitorSB {
     font-family: "Montserrat-SemiBold";
-    font-size: 21pt;
+    font-size: 16pt;
     position: fixed;
     text-align: center;
     width: 75px;

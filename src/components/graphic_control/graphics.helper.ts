@@ -32,7 +32,7 @@ export const getDataForPreviewModal = (
       data["Event Name"] = getValueFromTranslation(
         get(currentEventData)["name"]
       );
-      if (isRunningDiscipline()) {
+      if (heatExists()) {
         data["Heat"] = getHeatName();
       }
       data["ID"] = getFieldValueFromParticipant("competitorId");
@@ -52,7 +52,7 @@ export const getDataForPreviewModal = (
       data["Event Name"] = getValueFromTranslation(
         get(currentEventData)["name"]
       );
-      if (isRunningDiscipline()) {
+      if (heatExists()) {
         data["Heat"] = getHeatName();
       }
       data["Description"] = "STARTING LIST";
@@ -66,7 +66,7 @@ export const getDataForPreviewModal = (
       data["Event Name"] = getValueFromTranslation(
         get(currentEventData)["name"]
       );
-      if (isRunningDiscipline()) {
+      if (heatExists()) {
         data["Heat"] = getHeatName();
       }
       data["Description"] = "RESULTS";
@@ -76,7 +76,7 @@ export const getDataForPreviewModal = (
       data["Discipline Name"] = getValueFromTranslation(
         get(currentEventData)["name"]
       );
-      if (isRunningDiscipline()) {
+      if (heatExists()) {
         data["Heat"] = getHeatName();
       }
       data["Note"] = "NEXT";
@@ -124,7 +124,7 @@ const getValueFromTranslation = (key: string): string => get(_)(key);
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   let competitorList: ICompetitor[];
-  if (isRunningDiscipline()) {
+  if (heatExists()) {
     competitorList = list
       ? list
       : transformCompetitor(get(heatTableParticipants));
@@ -207,12 +207,22 @@ const getHeatName = (): string => {
   }
 };
 
-const isRunningDiscipline = (): boolean => {
+const heatExists = (): boolean => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
-    if (unit.heights.length === 0 && unit.trials.length === 0) {
+    if (unit.heatName) {
       return true;
     }
   }
   return false;
+};
+
+const isRunningDiscipline = (): boolean => {
+  const units = get(currentEventData)["units"];
+  for (const unit of units) {
+    if (unit.heights.length !== 0 || unit.trials.length !== 0) {
+      return false;
+    }
+  }
+  return true;
 };
