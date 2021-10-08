@@ -2,19 +2,7 @@
   import { Constants } from "../../../../global/constants/constants";
   import { visiblePreview } from "../../../stores/preview.store";
 
-  export let data = {};
-  export let modalOpened = true;
-
-  $: if (!modalOpened) {
-    visiblePreview.set({
-      id: "",
-      data: {},
-      type: undefined,
-      modalOpened: false,
-    });
-  }
-
-  $: numberOfCompetitors = data["Competitors"].length;
+  $: numberOfCompetitors = $visiblePreview.data["Competitors"].length;
   $: iterationNumber = Math.ceil(
     numberOfCompetitors / Constants.ROWS_PER_TABLE
   );
@@ -22,7 +10,10 @@
   let minIndex = 0;
   $: maxIndex = Math.ceil(numberOfCompetitors / iterationNumber);
 
-  $: competitorsRange = data["Competitors"].slice(minIndex, maxIndex);
+  $: competitorsRange = $visiblePreview.data["Competitors"].slice(
+    minIndex,
+    maxIndex
+  );
 </script>
 
 <div id="startList" class="startList">
@@ -31,15 +22,15 @@
     src="/img/graphics/listHeader.png"
     alt="listHeader"
   />
-  <p id="startListCompetitonTitle">{data["Competition"]}</p>
+  <p id="startListCompetitonTitle">{$visiblePreview.data["Competition"]}</p>
   <p id="startListDiscipline">
-    {#if data["Heat"]}
-      {data["Heat"]}
+    {#if $visiblePreview.data["Heat"]}
+      {$visiblePreview.data["Heat"]}
     {/if}
-    {data["Event Name"]}
+    {$visiblePreview.data["Event Name"]}
   </p>
-  <p id="startListHash">{data["Hashtag"]}</p>
-  <p id="startListDescription">{data["Description"]}</p>
+  <p id="startListHash">{$visiblePreview.data["Hashtag"]}</p>
+  <p id="startListDescription">{$visiblePreview.data["Description"]}</p>
 
   {#each competitorsRange as competitor, i}
     <img

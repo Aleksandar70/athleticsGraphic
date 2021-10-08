@@ -1,28 +1,16 @@
 <script lant="ts">
   import { visiblePreview } from "../../../stores/preview.store";
 
-  export let data = {};
-  export let modalOpened = true;
-
-  $: if (!modalOpened) {
-    visiblePreview.set({
-      id: "",
-      data: {},
-      type: undefined,
-      modalOpened: false,
-    });
-  }
-
-  $: bestCompetitors = data["Medals"];
+  $: bestCompetitors = $visiblePreview.data["Medals"];
 </script>
 
 <div id="medals" class="medals">
   <img id="medalsBG" src="/img/graphics/medals.png" alt="medals" />
 
-  <p id="medalsCompetition">{data["Competition"]}</p>
-  <p id="medalsEvent">{data["Event Name"]}</p>
-  <p id="medalsHash">{data["Hashtag"]}</p>
-  <p id="medalsTitle">{data["Description"]}</p>
+  <p id="medalsCompetition">{$visiblePreview.data["Competition"]}</p>
+  <p id="medalsEvent">{$visiblePreview.data["Event Name"]}</p>
+  <p id="medalsHash">{$visiblePreview.data["Hashtag"]}</p>
+  <p id="medalsTitle">{$visiblePreview.data["Description"]}</p>
 
   {#each bestCompetitors as bestCompetitor, i}
     <p style="top: {805 + 59 * i}px" class="medalsPlace" id="medalsPlace-{i}">

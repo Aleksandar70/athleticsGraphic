@@ -1,17 +1,5 @@
 <script lang="ts">
   import { visiblePreview } from "../../../stores/preview.store";
-
-  export let data = {};
-  export let modalOpened = true;
-
-  $: if (!modalOpened) {
-    visiblePreview.set({
-      id: "",
-      data: {},
-      type: undefined,
-      modalOpened: false,
-    });
-  }
 </script>
 
 <img
@@ -19,14 +7,18 @@
   alt="score_rounds"
   src="/img/graphics/score_rounds.png"
 />
-<p id="scoresEventName">{data["Event Name"]}</p>
-<p id="scoresBib">{data["ID"]}</p>
-<img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
-<p id="scoresCountry">{data["Nationality"]}</p>
+<p id="scoresEventName">{$visiblePreview.data["Event Name"]}</p>
+<p id="scoresBib">{$visiblePreview.data["ID"]}</p>
+<img
+  id="scoresFlag"
+  alt={$visiblePreview.data["Flag"]}
+  src="/img/flags/{$visiblePreview.data['Flag']}.png"
+/>
+<p id="scoresCountry">{$visiblePreview.data["Nationality"]}</p>
 <p id="scoresCompetitor">
-  {`${data["First Name"]} ${data["Last Name"]}`}
+  {`${$visiblePreview.data["First Name"]} ${$visiblePreview.data["Last Name"]}`}
 </p>
-{#each data["Scores"] as score, i}
+{#each $visiblePreview.data["Scores"] as score, i}
   <p class="metrics" id="scoresMetric{i + 1}">
     {Object.keys(score)[0]}
   </p>

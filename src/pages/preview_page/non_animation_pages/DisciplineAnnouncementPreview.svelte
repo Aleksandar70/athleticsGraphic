@@ -1,17 +1,5 @@
 <script lant="ts">
   import { visiblePreview } from "../../../stores/preview.store";
-
-  export let data = {};
-  export let modalOpened = true;
-
-  $: if (!modalOpened) {
-    visiblePreview.set({
-      id: "",
-      data: {},
-      type: undefined,
-      modalOpened: false,
-    });
-  }
 </script>
 
 <div id="discipline--wrapper">
@@ -21,13 +9,13 @@
     src="/img/graphics/disciplineAnnouncement.png"
   />
   <p id="disciplineTitle">
-    {#if data["Heat"]}
-      {data["Heat"]}
+    {#if $visiblePreview.data["Heat"]}
+      {$visiblePreview.data["Heat"]}
     {/if}
-    {data["Discipline Name"]}
+    {$visiblePreview.data["Discipline Name"]}
   </p>
-  <p id="disciplineNextNote">{data["Note"]}</p>
-  <p id="disciplineTime">{data["Time"]}</p>
+  <p id="disciplineNextNote">{$visiblePreview.data["Note"]}</p>
+  <p id="disciplineTime">{$visiblePreview.data["Time"]}</p>
 </div>
 
 <style>

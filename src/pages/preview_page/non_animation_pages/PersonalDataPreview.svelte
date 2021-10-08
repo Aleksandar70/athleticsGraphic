@@ -1,17 +1,5 @@
 <script lant="ts">
   import { visiblePreview } from "../../../stores/preview.store";
-
-  export let data = {};
-  export let modalOpened = true;
-
-  $: if (!modalOpened) {
-    visiblePreview.set({
-      id: "",
-      data: {},
-      type: undefined,
-      modalOpened: false,
-    });
-  }
 </script>
 
 <div id="personalData--wrapper">
@@ -20,29 +8,31 @@
     alt="personalDataCompetitorImg"
     src="/img/graphics/personalDataCompetitor.png"
   />
-  <p id="personalDataCompetitorID">{data["ID"]}</p>
+  <p id="personalDataCompetitorID">{$visiblePreview.data["ID"]}</p>
   <img
     id="personalDataCompetitorFlag"
-    alt={data["Flag"]}
-    src="/img/flags/{data['Flag']}.png"
+    alt={$visiblePreview.data["Flag"]}
+    src="/img/flags/{$visiblePreview.data['Flag']}.png"
   />
-  <p id="personalDataCompetitorCountry">{data["Nationality"]}</p>
+  <p id="personalDataCompetitorCountry">
+    {$visiblePreview.data["Nationality"]}
+  </p>
   <p id="personalDataCompetitorName">
-    {`${data["First Name"]} ${data["Last Name"]}`}
+    {`${$visiblePreview.data["First Name"]} ${$visiblePreview.data["Last Name"]}`}
   </p>
   <img
     id="personalDataCompetitorPBImg"
     alt="personalDataCompetitorPBImg"
     src="/img/graphics/pb.png"
   />
-  <p id="personalDataCompetitorPB">{data["Personal Best"]}</p>
+  <p id="personalDataCompetitorPB">{$visiblePreview.data["Personal Best"]}</p>
   <img
     id="personalDataCompetitorSBImg"
     alt="personalDataCompetitorSBImg"
     src="/img/graphics/sb.png"
   />
-  <p id="personalDataCompetitorSB">{data["Season Best"]}</p>
-  <p id="personalDataCompetitorAge">Age: {data["Age"]}</p>
+  <p id="personalDataCompetitorSB">{$visiblePreview.data["Season Best"]}</p>
+  <p id="personalDataCompetitorAge">Age: {$visiblePreview.data["Age"]}</p>
 </div>
 
 <style>

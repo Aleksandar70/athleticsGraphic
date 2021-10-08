@@ -1,17 +1,6 @@
 <script lang="ts">
   import io from "socket.io-client";
-  import { visiblePreview } from "../../../stores/preview.store";
 
-  export let modalOpened = true;
-
-  $: if (!modalOpened) {
-    visiblePreview.set({
-      id: "",
-      data: {},
-      type: undefined,
-      modalOpened: false,
-    });
-  }
   const socket = io("http://localhost:4000");
 
   let time = "";
