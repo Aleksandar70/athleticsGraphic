@@ -112,6 +112,7 @@ export interface ICompetitor {
   flagUrl?: string;
   teamName?: string;
   result?: string;
+  place?: number;
 }
 
 export interface IRelayTeams {

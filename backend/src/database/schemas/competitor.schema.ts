@@ -1,6 +1,11 @@
 import { Schema } from "mongoose";
 
 const CompetitorSchema = new Schema({
+  place: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
   competitorId: {
     type: String,
     required: false,
@@ -17,6 +22,11 @@ const CompetitorSchema = new Schema({
     default: "",
   },
   lastName: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  flagUrl: {
     type: String,
     required: false,
     default: "",
@@ -93,11 +103,6 @@ const CompetitorSchema = new Schema({
     default: "",
   },
   // eventEntered
-  flagUrl: {
-    type: String,
-    required: false,
-    default: "",
-  },
   teamName: {
     type: String,
     required: false,
