@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { io } from "socket.io-client";
   import "./streampage.style.css";
   import { Graphics } from "../../../global/constants/constants";
   import Scores from "../../components/graphics/scores/Score.svelte";
@@ -10,9 +9,7 @@
   import DisciplineAnnouncement from "../../components/graphics/discipline_announcement/DisciplineAnnouncement.svelte";
   import Medals from "../../components/graphics/medals/Medals.svelte";
   import Time from "../../components/graphics/time/Time.svelte";
-  import { Paths } from "../../../global/constants/api";
-
-  const socket = io(`http://${Paths.IPV4}:5002`);
+  import socket from "../../utils/socket.util";
 
   socket.on("graphics", (data) => {
     visibleGraphics.set(data);

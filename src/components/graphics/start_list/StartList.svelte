@@ -1,9 +1,10 @@
 <script lant="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
-  import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+  import { visibleGraphics } from "../../../stores/stream.store";
   import { animateHeader } from "./startListAnimation.helper";
   import { Constants } from "../../../../global/constants/constants";
+  import socket from "../../../utils/socket.util";
 
   export let data;
 
@@ -11,7 +12,8 @@
 
   const timelineHeader = gsap.timeline();
 
-  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+  socket.on("clear", () => (clear = true));
+
   $: numberOfCompetitors = data["Competitors"].length;
   $: iterationNumber = Math.ceil(
     numberOfCompetitors / Constants.ROWS_PER_TABLE
@@ -102,7 +104,7 @@
   $: if (clear) {
     timelineCompetitors.reverse().then(() => {
       timelineHeader.reverse();
-      $clearChannel.postMessage(false);
+      clear = false;
       visibleGraphics.set({ id: "", data: {}, type: undefined });
     });
   }
