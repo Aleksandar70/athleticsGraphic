@@ -9,6 +9,7 @@
   import StartListPreview from "./non_animation_pages/StartListPreview.svelte";
   import ResultListPreview from "./non_animation_pages/ResultListPreview.svelte";
   import ScorePreview from "./non_animation_pages/ScorePreview.svelte";
+  import PersonalDataPreview from "./non_animation_pages/PersonalDataPreview.svelte";
 
   $previewChannel.addEventListener("message", (event) =>
     visiblePreview.set(event.data)
@@ -30,5 +31,7 @@
     <ScorePreview data={$visiblePreview.data} type={$visiblePreview.type} />
   {:else if $visiblePreview.id == Graphics.TIME}
     <TimePreview />
+  {:else if $visiblePreview.id == Graphics.PERSONAL_DATA}
+    <PersonalDataPreview data={$visiblePreview.data} />
   {/if}
 </div>
