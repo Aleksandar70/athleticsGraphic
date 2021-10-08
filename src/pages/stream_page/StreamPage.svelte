@@ -10,6 +10,7 @@
   import Medals from "../../components/graphics/medals/Medals.svelte";
   import Time from "../../components/graphics/time/Time.svelte";
   import socket from "../../utils/socket.util";
+  import PersonalData from "../../components/graphics/personal_data/PersonalData.svelte";
 
   socket.on("graphics", (data) => {
     visibleGraphics.set(data);
@@ -31,5 +32,7 @@
     <Medals data={$visibleGraphics.data} />
   {:else if $visibleGraphics.id == Graphics.TIME}
     <Time />
+  {:else if $visibleGraphics.id == Graphics.PERSONAL_DATA}
+    <PersonalData data={$visibleGraphics.data} />
   {/if}
 </div>

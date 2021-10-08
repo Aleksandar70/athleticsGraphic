@@ -27,6 +27,7 @@ export enum Graphics {
   DISCIPLINE_ANNOUNCEMENT = "discipline announcement",
   MEDALS = "medals",
   TIME = "time",
+  PERSONAL_DATA = "personal_data",
 }
 
 export enum EventType {

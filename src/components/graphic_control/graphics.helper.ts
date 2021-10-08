@@ -32,7 +32,7 @@ export const getDataForPreviewModal = (
       data["Event Name"] = getValueFromTranslation(
         get(currentEventData)["name"]
       );
-      if (isRunningDiscipline()) {
+      if (heatExists()) {
         data["Heat"] = getHeatName();
       }
       data["ID"] = getFieldValueFromParticipant("competitorId");
@@ -52,7 +52,7 @@ export const getDataForPreviewModal = (
       data["Event Name"] = getValueFromTranslation(
         get(currentEventData)["name"]
       );
-      if (isRunningDiscipline()) {
+      if (heatExists()) {
         data["Heat"] = getHeatName();
       }
       data["Description"] = "STARTING LIST";
@@ -66,7 +66,7 @@ export const getDataForPreviewModal = (
       data["Event Name"] = getValueFromTranslation(
         get(currentEventData)["name"]
       );
-      if (isRunningDiscipline()) {
+      if (heatExists()) {
         data["Heat"] = getHeatName();
       }
       data["Description"] = "RESULTS";
@@ -76,7 +76,7 @@ export const getDataForPreviewModal = (
       data["Discipline Name"] = getValueFromTranslation(
         get(currentEventData)["name"]
       );
-      if (isRunningDiscipline()) {
+      if (heatExists()) {
         data["Heat"] = getHeatName();
       }
       data["Note"] = "NEXT";
@@ -92,6 +92,16 @@ export const getDataForPreviewModal = (
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
       data["Medals"] = getBestResults();
+      break;
+    case Graphics.PERSONAL_DATA:
+      data["ID"] = getFieldValueFromParticipant("competitorId");
+      data["Flag"] = getFieldValueFromParticipant("nationality");
+      data["Nationality"] = getFieldValueFromParticipant("nationality");
+      data["First Name"] = getFieldValueFromParticipant("firstName");
+      data["Last Name"] = getFieldValueFromParticipant("lastName");
+      data["Age"] = getCompetitorAge("dateOfBirth");
+      data["Personal Best"] = getFieldValueFromParticipant("pb");
+      data["Season Best"] = getFieldValueFromParticipant("sb");
   }
   return data;
 };
@@ -114,7 +124,7 @@ const getValueFromTranslation = (key: string): string => get(_)(key);
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   let competitorList: ICompetitor[];
-  if (isRunningDiscipline()) {
+  if (heatExists()) {
     competitorList = list
       ? list
       : transformCompetitor(get(heatTableParticipants));
@@ -128,6 +138,13 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
     nationality: competitor.nationality,
     result: competitor.result,
   }));
+};
+
+const getCompetitorAge = (key: string) => {
+  const birthDate = new Date(getFieldValueFromParticipant(key));
+  const timeDiff = Math.abs(Date.now() - birthDate.getTime());
+  const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+  return age;
 };
 
 const getScores = (): unknown[] =>
@@ -190,12 +207,22 @@ const getHeatName = (): string => {
   }
 };
 
-const isRunningDiscipline = (): boolean => {
+const heatExists = (): boolean => {
   const units = get(currentEventData)["units"];
   for (const unit of units) {
-    if (unit.heights.length === 0 && unit.trials.length === 0) {
+    if (unit.heatName) {
       return true;
     }
   }
   return false;
+};
+
+const isRunningDiscipline = (): boolean => {
+  const units = get(currentEventData)["units"];
+  for (const unit of units) {
+    if (unit.heights.length !== 0 || unit.trials.length !== 0) {
+      return false;
+    }
+  }
+  return true;
 };

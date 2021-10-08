@@ -4,17 +4,16 @@
   import VerticalScorePreview from "./VerticalScorePreview.svelte";
   import RunningScorePreview from "./RunningScorePreview.svelte";
 
-  export let data = {};    
   export let type = EventType.HORIZONTAL;
 </script>
 
 <div id="scores--wrapper">
   {#if type === EventType.HORIZONTAL}
-    <HorizontalScorePreview {data} />
+    <HorizontalScorePreview />
   {:else if type === EventType.VERTICAL}
-    <VerticalScorePreview {data} />
+    <VerticalScorePreview />
   {:else}
-    <RunningScorePreview {data} />
+    <RunningScorePreview />
   {/if}
 </div>
 

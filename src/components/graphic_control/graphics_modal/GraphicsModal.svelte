@@ -37,7 +37,10 @@
 
   $: _data = { ...data };
 
-  const toggle = () => (isOpen = !isOpen);
+  const toggle = () => {
+    isOpen = !isOpen;
+    sendPreview(_data);
+  };
 
   $: iterationNumber = Math.ceil(competitors.length / Constants.ROWS_PER_TABLE);
   $: maxIndex = Math.ceil(competitors.length / iterationNumber);
@@ -69,7 +72,12 @@
   };
 
   const sendPreview = (data: Record<string, any>) => {
-    $previewChannel.postMessage({ id: id, data: data, type: type });
+    $previewChannel.postMessage({
+      id: id,
+      data: data,
+      type: type,
+      modalOpened: isOpen,
+    });
   };
 </script>
 
