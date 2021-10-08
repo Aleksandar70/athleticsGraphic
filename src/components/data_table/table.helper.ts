@@ -95,7 +95,7 @@ export const getCompetitorResultsData = async (
       addRoundsOrHeightsToCompetitorsForUnit(tableData as ICompetitor[], unit);
       populateTrialsToCompetitorsForUnit(tableData as ICompetitor[], unit);
     }
-    populateResultsOfTableDataForUnit(tableData, unit);
+    populateResultsAndPlacesOfTableDataForUnit(tableData, unit);
 
     if (units.length === 1) return tableData as ICompetitor[];
 
@@ -171,7 +171,7 @@ const populateTrialsToCompetitorsForUnit = (
   }
 };
 
-const populateResultsOfTableDataForUnit = (
+const populateResultsAndPlacesOfTableDataForUnit = (
   tableData: ICompetitor[] | IRelayTeam[],
   unit: IUnit
 ) => {
@@ -180,12 +180,18 @@ const populateResultsOfTableDataForUnit = (
       data["result"] = unit.results.find(
         (result) => result.bib === data.competitorId
       )?.performance;
+      data["place"] = unit.results.find(
+        (result) => result.bib === data.competitorId
+      )?.place;
     }
   } else {
     for (const data of tableData as IRelayTeam[]) {
       data["result"] = unit.results.find(
         (result) => result.bib === data.relayTeamId
       )?.performance;
+      data["place"] = unit.results.find(
+        (result) => result.bib === data.relayTeamId
+      )?.place;
     }
   }
 };

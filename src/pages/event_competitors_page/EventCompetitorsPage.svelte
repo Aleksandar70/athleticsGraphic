@@ -31,6 +31,7 @@
 
   onMount(async () => {
     tableData = await getCompetitorResultsData(eventId);
+    console.log("table: ", tableData);
     hasHeats = Object.keys(tableData?.[0] ?? {}).includes("heatName");
     if (hasHeats) {
       tableData.forEach((data, idx) => {
