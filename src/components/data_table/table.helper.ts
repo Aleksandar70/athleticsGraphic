@@ -359,48 +359,39 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
     });
   });
   if (Object.keys(get(currentEventData)).length !== 0) {
-    sortTableDataByResult(tableData);
+    sortTableDataByPlace(tableData);
   }
   return tableData;
 };
 
-const sortTableDataByResult = (tableData: TableData): void => {
-  const runningDiscipline = isRunningDiscipline();
+const sortTableDataByPlace = (tableData: TableData): void => {
   tableData.sort((n1: TableRow, n2: TableRow) => {
-    const result1 = getResultValue(n1);
-    const result2 = getResultValue(n2);
-    if (runningDiscipline) {
-      if (result1 < result2) {
-        return -1;
-      }
-      if (result1 > result2) {
-        return 1;
-      }
-    }
-    if (result1 < result2) {
+    const place1 = getPlaceValue(n1);
+    const place2 = getPlaceValue(n2);
+    if (place1 > place2) {
       return 1;
     }
-    if (result1 > result2) {
+    if (place1 < place2) {
       return -1;
     }
     return 0;
   });
 };
 
-const getResultValue = (rowData: TableRow): string => {
-  const result = rowData.find((el) => el.id === "result")?.stringValue;
-  if (isNumeric(result)) {
-    return result;
+const getPlaceValue = (rowData: TableRow): string => {
+  const place = rowData.find((el) => el.id === "place")?.stringValue;
+  if (isNumeric(place)) {
+    return place;
   }
   return "0";
 };
 
-const isRunningDiscipline = (): boolean => {
-  const units = get(currentEventData)["units"];
-  for (const unit of units) {
-    if (unit.heights.length === 0 && unit.trials.length === 0) {
-      return true;
-    }
-  }
-  return false;
-};
+// const isRunningDiscipline = (): boolean => {
+//   const units = get(currentEventData)["units"];
+//   for (const unit of units) {
+//     if (unit.heights.length === 0 && unit.trials.length === 0) {
+//       return true;
+//     }
+//   }
+//   return false;
+// };
