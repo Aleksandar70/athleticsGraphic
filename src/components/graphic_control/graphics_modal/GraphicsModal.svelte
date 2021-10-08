@@ -16,9 +16,9 @@
   } from "../../../../global/constants/constants";
   import { UIText } from "../../../../global/constants/ui_text";
   import { previewChannel } from "../../../stores/preview.store";
-  import { streamChannel } from "../../../stores/stream.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
+  import { sendGraphicsData } from "../../../api/graphics.api";
 
   export let isOpen: boolean;
   export let id: Graphics;
@@ -49,7 +49,7 @@
     : EventType.RUNNING;
 
   const sendGraphics = () => {
-    $streamChannel.postMessage({ id: id, data: _data, type: type });
+    sendGraphicsData({ id: id, data: _data, type: type });
     toggle();
   };
 

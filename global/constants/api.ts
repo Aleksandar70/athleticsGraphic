@@ -31,6 +31,9 @@ export abstract class Paths {
 
   static readonly DATABASE = "database";
   static readonly DATABASE_PATH = `${Paths.ROOT_PATH}${Paths.DATABASE}`;
+
+  static readonly GRAPHICS = "graphics";
+  static readonly GRAPHICS_PATH = `${Paths.ROOT_PATH}${Paths.GRAPHICS}`;
 }
 
 export abstract class OpenTrack {

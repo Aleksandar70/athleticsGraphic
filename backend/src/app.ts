@@ -5,6 +5,7 @@ import EventRouter from "./api/routers/event.router";
 import CompetitorRouter from "./api/routers/competitor.router";
 import ConfigRouter from "./api/routers/config.router";
 import DatabaseRouter from "./api/routers/database.router";
+import GraphicsRouter from "./api/routers/graphics.router";
 import TrialsRouter from "./api/routers/trials.router";
 import ResultsRouter from "./api/routers/results.router";
 import RelayTeamsRouter from "./api/routers/relayTeams.router";
@@ -29,5 +30,6 @@ app.use(Paths.RESULTS_PATH, ResultsRouter);
 app.use(Paths.RELAY_TEAMS_PATH, RelayTeamsRouter);
 app.use(Paths.CONFIG_PATH, ConfigRouter);
 app.use(Paths.DATABASE_PATH, DatabaseRouter);
+app.use(Paths.GRAPHICS_PATH, GraphicsRouter);
 
 app.listen(port, Paths.IPV4, () => console.log(`Server is up at port ${port}`));
