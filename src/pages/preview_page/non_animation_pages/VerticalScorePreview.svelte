@@ -1,10 +1,12 @@
 <script lang="ts">
-  export let data = {};
+  import { visiblePreview } from "../../../stores/preview.store";
 
   const scores =
-    data["Scores"].filter((score: string) => Object.values(score)[0]).length > 6
-      ? data["Scores"].slice(0).slice(-6)
-      : data["Scores"];
+    $visiblePreview.data["Scores"].filter(
+      (score: string) => Object.values(score)[0]
+    ).length > 6
+      ? $visiblePreview.data["Scores"].slice(0).slice(-6)
+      : $visiblePreview.data["Scores"];
 </script>
 
 <img
@@ -12,12 +14,16 @@
   alt="score_rounds"
   src="/img/graphics/score_vertical.png"
 />
-<p id="scoresEventName">{data["Event Name"]}</p>
-<p id="scoresBib">{data["ID"]}</p>
-<img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
-<p id="scoresCountry">{data["Nationality"]}</p>
+<p id="scoresEventName">{$visiblePreview.data["Event Name"]}</p>
+<p id="scoresBib">{$visiblePreview.data["ID"]}</p>
+<img
+  id="scoresFlag"
+  alt={$visiblePreview.data["Flag"]}
+  src="/img/flags/{$visiblePreview.data['Flag']}.png"
+/>
+<p id="scoresCountry">{$visiblePreview.data["Nationality"]}</p>
 <p id="scoresCompetitor">
-  {`${data["First Name"]} ${data["Last Name"]}`}
+  {`${$visiblePreview.data["First Name"]} ${$visiblePreview.data["Last Name"]}`}
 </p>
 {#each scores as score, i}
   <p class="metrics" id="scoresResult{i + 1}">
