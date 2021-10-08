@@ -1,18 +1,22 @@
 <script lang="ts">
+  import { io } from "socket.io-client";
   import "./streampage.style.css";
   import { Graphics } from "../../../global/constants/constants";
   import Scores from "../../components/graphics/scores/Score.svelte";
   import EventAnnouncement from "../../components/graphics/event_announcement/EventAnnouncement.svelte";
-  import { streamChannel, visibleGraphics } from "../../stores/stream.store";
+  import { visibleGraphics } from "../../stores/stream.store";
   import StartList from "../../components/graphics/start_list/StartList.svelte";
   import ResultList from "../../components/graphics/result_list/ResultList.svelte";
   import DisciplineAnnouncement from "../../components/graphics/discipline_announcement/DisciplineAnnouncement.svelte";
   import Medals from "../../components/graphics/medals/Medals.svelte";
   import Time from "../../components/graphics/time/Time.svelte";
+  import { Paths } from "../../../global/constants/api";
 
-  $streamChannel.addEventListener("message", (event) =>
-    visibleGraphics.set(event.data)
-  );
+  const socket = io(`http://${Paths.IPV4}:5002`);
+
+  socket.on("graphics", (data) => {
+    visibleGraphics.set(data);
+  });
 </script>
 
 <div class="graphics--wrapper">
