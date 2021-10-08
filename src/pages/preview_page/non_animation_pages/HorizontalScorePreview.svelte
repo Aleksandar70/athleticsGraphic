@@ -1,5 +1,17 @@
 <script lang="ts">
+  import { visiblePreview } from "../../../stores/preview.store";
+
   export let data = {};
+  export let modalOpened = true;
+
+  $: if (!modalOpened) {
+    visiblePreview.set({
+      id: "",
+      data: {},
+      type: undefined,
+      modalOpened: false,
+    });
+  }
 </script>
 
 <img

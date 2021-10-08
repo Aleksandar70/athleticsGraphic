@@ -1,5 +1,17 @@
 <script lant="ts">
-  export let data;
+  import { visiblePreview } from "../../../stores/preview.store";
+
+  export let data = {};
+  export let modalOpened = true;
+
+  $: if (!modalOpened) {
+    visiblePreview.set({
+      id: "",
+      data: {},
+      type: undefined,
+      modalOpened: false,
+    });
+  }
 
   $: bestCompetitors = data["Medals"];
 </script>

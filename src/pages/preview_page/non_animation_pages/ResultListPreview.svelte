@@ -1,7 +1,18 @@
 <script lant="ts">
   import { Constants } from "../../../../global/constants/constants";
+  import { visiblePreview } from "../../../stores/preview.store";
 
-  export let data;
+  export let data = {};
+  export let modalOpened = true;
+
+  $: if (!modalOpened) {
+    visiblePreview.set({
+      id: "",
+      data: {},
+      type: undefined,
+      modalOpened: false,
+    });
+  }
 
   $: numberOfCompetitors = data["Competitors"].length;
   $: iterationNumber = Math.ceil(

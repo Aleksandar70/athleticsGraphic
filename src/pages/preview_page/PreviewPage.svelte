@@ -18,20 +18,42 @@
 
 <div class="preview--wrapper">
   {#if $visiblePreview.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
-    <DisciplineAnnouncementPreview data={$visiblePreview.data} />
+    <DisciplineAnnouncementPreview
+      data={$visiblePreview.data}
+      modalOpened={$visiblePreview.modalOpened}
+    />
   {:else if $visiblePreview.id == Graphics.EVENT_ANNOUNCEMENT}
-    <EventAnnouncementPreview data={$visiblePreview.data} />
+    <EventAnnouncementPreview
+      data={$visiblePreview.data}
+      modalOpened={$visiblePreview.modalOpened}
+    />
   {:else if $visiblePreview.id == Graphics.START_LIST}
-    <StartListPreview data={$visiblePreview.data} />
+    <StartListPreview
+      data={$visiblePreview.data}
+      modalOpened={$visiblePreview.modalOpened}
+    />
   {:else if $visiblePreview.id == Graphics.RESULT_LIST}
-    <ResultListPreview data={$visiblePreview.data} />
+    <ResultListPreview
+      data={$visiblePreview.data}
+      modalOpened={$visiblePreview.modalOpened}
+    />
   {:else if $visiblePreview.id == Graphics.MEDALS}
-    <MedalsPreview data={$visiblePreview.data} />
+    <MedalsPreview
+      data={$visiblePreview.data}
+      modalOpened={$visiblePreview.modalOpened}
+    />
   {:else if $visiblePreview.id == Graphics.PERSONAL_SCORE}
-    <ScorePreview data={$visiblePreview.data} type={$visiblePreview.type} />
+    <ScorePreview
+      data={$visiblePreview.data}
+      type={$visiblePreview.type}
+      modalOpened={$visiblePreview.modalOpened}
+    />
   {:else if $visiblePreview.id == Graphics.TIME}
-    <TimePreview />
+    <TimePreview modalOpened={$visiblePreview.modalOpened} />
   {:else if $visiblePreview.id == Graphics.PERSONAL_DATA}
-    <PersonalDataPreview data={$visiblePreview.data} />
+    <PersonalDataPreview
+      data={$visiblePreview.data}
+      modalOpened={$visiblePreview.modalOpened}
+    />
   {/if}
 </div>
