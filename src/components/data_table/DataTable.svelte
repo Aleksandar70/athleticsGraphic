@@ -32,6 +32,7 @@
   import "./table.style.css";
   import { onMount } from "svelte";
   import { getMaxPage } from "../pagination/pagination.helper";
+  import type { ITableField } from "../../../global/interfaces";
 
   export let headerData: Headers;
   export let rowData: TableData;
@@ -77,6 +78,17 @@
     sortedRows = setUnchanged(sortedRows);
     updateResult = undefined;
   }
+
+  const changeValue = (target: EventTarget, data: ITableField) => {
+    const newValue = (target as HTMLInputElement).innerText;
+    const column = (target as HTMLInputElement).getAttribute("data-column");
+    data.changed = (data?.value?.[heatName] ?? data.value) != newValue;
+    if (["result", "place"].includes(column)) {
+      data.value[heatName] = newValue;
+    } else {
+      data.stringValue = newValue;
+    }
+  };
 
   const handleKeyArrows = (event: KeyboardEvent): void => {
     const keyPressed = event.key;
@@ -170,14 +182,15 @@
               {#if $currentRow === i && editableColumns[$currentColumn] === data.id}
                 <td
                   class="table-data--{data.changed ? 'changed' : 'unchanged'}"
+                  data-column={data.id}
                   contenteditable="true"
                   spellcheck="false"
                   on:keydown={handleKeyArrows}
                   bind:this={focusCell}
-                  bind:innerHTML={data.stringValue}
-                  on:input={() =>
-                    (data.changed = data.value != data.stringValue)}
-                />
+                  on:input={(event) => {
+                    changeValue(event.target, data);
+                  }}>{data?.value?.[heatName] ?? data.stringValue}</td
+                >
               {:else if data.id.toLowerCase().includes("flag")}
                 <td>
                   <img
@@ -203,10 +216,8 @@
                   spellcheck="false"
                   on:click={(event) =>
                     handleMouseClick(event.target, i, data.id)}
-                  bind:innerHTML={data.stringValue}
-                  on:input={() =>
-                    (data.changed = data.value != data.stringValue)}
-                />
+                  >{data?.value?.[heatName] ?? data.stringValue}</td
+                >
               {/if}
             {/if}
           {/each}

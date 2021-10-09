@@ -83,7 +83,7 @@ export const getCompetitorResultsData = async (
   currentCompetitionData.set(competitionData);
   competitors.set(competitorData);
 
-  const data: IHeatEventData[] = [];
+  let data: IHeatEventData[] = [];
   const units = eventData.units;
 
   for (const unit of units) {
@@ -96,14 +96,16 @@ export const getCompetitorResultsData = async (
       populateTrialsToCompetitorsForUnit(tableData as ICompetitor[], unit);
     }
     populateResultsAndPlacesOfTableDataForUnit(tableData, unit);
-    console.log("sorted ", [...tableData]);
     if (units.length === 1) return tableData as ICompetitor[];
 
     const heatData: IHeatEventData = isTeamEvent
       ? { heatName: unit.heatName, relayTeams: tableData as IRelayTeam[] }
-      : { heatName: unit.heatName, competitors: tableData as ICompetitor[] };
+      : {
+          heatName: unit.heatName,
+          competitors: tableData as ICompetitor[],
+        };
 
-    data.push(heatData);
+    data = [...data, heatData];
   }
 
   return data;
@@ -175,30 +177,38 @@ const populateResultsAndPlacesOfTableDataForUnit = (
   tableData: ICompetitor[] | IRelayTeam[],
   unit: IUnit
 ) => {
-  console.log("results", unit.results);
   if ("competitorId" in tableData?.[0]) {
     for (const data of tableData as ICompetitor[]) {
-      data["result"] = unit.results.find(
+      const result = unit.results.find(
         (result) =>
           result.bib === data.competitorId && result.heatName === unit.heatName
-      )?.performance;
-      data["place"] = unit.results.find(
-        (result) =>
-          result.bib === data.competitorId && result.heatName === unit.heatName
-      )?.place;
+      );
+      data["result"] = {
+        ...(data["result"] ?? {}),
+        [unit.heatName ?? "1"]: result?.performance,
+      };
+      data["place"] = {
+        ...(data["place"] ?? {}),
+        [unit.heatName ?? "x"]: result?.place,
+      };
     }
   } else {
     for (const data of tableData as IRelayTeam[]) {
-      data["result"] = unit.results.find(
+      const result = unit.results.find(
         (result) =>
           result.bib === data.relayTeamId && result.heatName === unit.heatName
-      )?.performance;
-      data["place"] = unit.results.find(
-        (result) =>
-          result.bib === data.relayTeamId && result.heatName === unit.heatName
-      )?.place;
+      );
+      data["result"] = {
+        ...(data["result"] ?? {}),
+        [unit.heatName ?? "1"]: result?.performance,
+      };
+      data["place"] = {
+        ...(data["place"] ?? {}),
+        [unit.heatName ?? "x"]: result?.place,
+      };
     }
   }
+  return tableData;
 };
 
 export const getCompetitorIdFromRow = (row: TableRow): string => {
