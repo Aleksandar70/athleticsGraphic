@@ -130,7 +130,7 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
       : transformCompetitor(get(heatTableParticipants));
   } else {
     competitorList = list ? list : get(competitors);
-    sortCompetitorsByResult(competitorList);
+    sortCompetitorsByPlace(competitorList);
   }
 
   return competitorList.map((competitor: ICompetitor) => ({
@@ -166,37 +166,25 @@ const getBestResults = (): Record<string, string>[] => {
     resultBibsForMedals.includes(competitor.competitorId)
   );
   const bestCompetitors = getCompetitors(filteredBestCompetitors);
-  sortCompetitorsByResult(bestCompetitors);
+  sortCompetitorsByPlace(bestCompetitors);
   return bestCompetitors;
 };
 
-const sortCompetitorsByResult = (
+const sortCompetitorsByPlace = (
   competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    const runningDiscipline = isRunningDiscipline();
-    const result1 = getResultValue(n1.result);
-    const result2 = getResultValue(n2.result);
-    if (runningDiscipline) {
-      if (result1 < result2) {
-        return -1;
-      }
-      if (result1 > result2) {
+    if (n1?.place && n2?.place) {
+      if (n1.place > n2.place) {
         return 1;
       }
-    }
-    if (result1 < result2) {
-      return 1;
-    }
-    if (result1 > result2) {
-      return -1;
+      if (n1.place < n2.place) {
+        return -1;
+      }
     }
     return 0;
   });
 };
-
-const getResultValue = (result: string): string =>
-  isNumeric(result) ? result : "0";
 
 const getHeatName = (): string => {
   const units = get(currentEventData)["units"];
@@ -215,14 +203,4 @@ const heatExists = (): boolean => {
     }
   }
   return false;
-};
-
-const isRunningDiscipline = (): boolean => {
-  const units = get(currentEventData)["units"];
-  for (const unit of units) {
-    if (unit.heights.length !== 0 || unit.trials.length !== 0) {
-      return false;
-    }
-  }
-  return true;
 };

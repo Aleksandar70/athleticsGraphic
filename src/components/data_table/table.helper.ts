@@ -366,8 +366,8 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
 
 const sortTableDataByPlace = (tableData: TableData): void => {
   tableData.sort((n1: TableRow, n2: TableRow) => {
-    const place1 = getPlaceValue(n1);
-    const place2 = getPlaceValue(n2);
+    const place1 = n1.find((el) => el.id === "place")?.value;
+    const place2 = n2.find((el) => el.id === "place")?.value;
     if (place1 > place2) {
       return 1;
     }
@@ -377,21 +377,3 @@ const sortTableDataByPlace = (tableData: TableData): void => {
     return 0;
   });
 };
-
-const getPlaceValue = (rowData: TableRow): string => {
-  const place = rowData.find((el) => el.id === "place")?.stringValue;
-  if (isNumeric(place)) {
-    return place;
-  }
-  return "0";
-};
-
-// const isRunningDiscipline = (): boolean => {
-//   const units = get(currentEventData)["units"];
-//   for (const unit of units) {
-//     if (unit.heights.length === 0 && unit.trials.length === 0) {
-//       return true;
-//     }
-//   }
-//   return false;
-// };
