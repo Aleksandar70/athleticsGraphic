@@ -22,6 +22,7 @@ export abstract class UIText {
   static readonly DISCIPLINE_ANNOUNCEMENT: string = "Discipline Announcement";
   static readonly SHOW_PERSONAL_SCORE: string = "Personal Score";
   static readonly SHOW_PERSONAL_DATA: string = "Personal Data";
+  static readonly SIGNATURE: string = "Signature";
   static readonly PERSONAL_SCORE_ALERT_TEXT: string =
     "Please select one of the competitors in the table!";
   static readonly MEDALS: string = "Medals";

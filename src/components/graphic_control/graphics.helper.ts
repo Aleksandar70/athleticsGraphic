@@ -102,6 +102,10 @@ export const getDataForPreviewModal = (
       data["Age"] = getCompetitorAge("dateOfBirth");
       data["Personal Best"] = getFieldValueFromParticipant("pb");
       data["Season Best"] = getFieldValueFromParticipant("sb");
+      break;
+    case Graphics.SIGNATURE:
+      data["Name"] = "Ime";
+      data["Title"] = "Title";
   }
   return data;
 };
