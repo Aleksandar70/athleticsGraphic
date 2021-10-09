@@ -11,27 +11,35 @@
   import ScorePreview from "./non_animation_pages/ScorePreview.svelte";
   import PersonalDataPreview from "./non_animation_pages/PersonalDataPreview.svelte";
 
-  $previewChannel.addEventListener("message", (event) =>
-    visiblePreview.set(event.data)
-  );
+  $previewChannel.addEventListener("message", (event) => {
+    const dataToSet = event.data.modalOpened
+      ? event.data
+      : {
+          id: "",
+          data: {},
+          type: undefined,
+          modalOpened: false,
+        };
+    visiblePreview.set(dataToSet);
+  });
 </script>
 
 <div class="preview--wrapper">
   {#if $visiblePreview.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
-    <DisciplineAnnouncementPreview data={$visiblePreview.data} />
+    <DisciplineAnnouncementPreview />
   {:else if $visiblePreview.id == Graphics.EVENT_ANNOUNCEMENT}
-    <EventAnnouncementPreview data={$visiblePreview.data} />
+    <EventAnnouncementPreview />
   {:else if $visiblePreview.id == Graphics.START_LIST}
-    <StartListPreview data={$visiblePreview.data} />
+    <StartListPreview />
   {:else if $visiblePreview.id == Graphics.RESULT_LIST}
-    <ResultListPreview data={$visiblePreview.data} />
+    <ResultListPreview />
   {:else if $visiblePreview.id == Graphics.MEDALS}
-    <MedalsPreview data={$visiblePreview.data} />
+    <MedalsPreview />
   {:else if $visiblePreview.id == Graphics.PERSONAL_SCORE}
-    <ScorePreview data={$visiblePreview.data} type={$visiblePreview.type} />
+    <ScorePreview />
   {:else if $visiblePreview.id == Graphics.TIME}
     <TimePreview />
   {:else if $visiblePreview.id == Graphics.PERSONAL_DATA}
-    <PersonalDataPreview data={$visiblePreview.data} />
+    <PersonalDataPreview />
   {/if}
 </div>

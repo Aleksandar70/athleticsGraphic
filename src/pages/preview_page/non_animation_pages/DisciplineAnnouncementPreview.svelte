@@ -1,5 +1,5 @@
 <script lant="ts">
-  export let data;
+  import { visiblePreview } from "../../../stores/preview.store";
 </script>
 
 <div id="discipline--wrapper">
@@ -9,13 +9,13 @@
     src="/img/graphics/disciplineAnnouncement.png"
   />
   <p id="disciplineTitle">
-    {#if data["Heat"]}
-      {data["Heat"]}
+    {#if $visiblePreview.data["Heat"]}
+      {$visiblePreview.data["Heat"]}
     {/if}
-    {data["Discipline Name"]}
+    {$visiblePreview.data["Discipline Name"]}
   </p>
-  <p id="disciplineNextNote">{data["Note"]}</p>
-  <p id="disciplineTime">{data["Time"]}</p>
+  <p id="disciplineNextNote">{$visiblePreview.data["Note"]}</p>
+  <p id="disciplineTime">{$visiblePreview.data["Time"]}</p>
 </div>
 
 <style>

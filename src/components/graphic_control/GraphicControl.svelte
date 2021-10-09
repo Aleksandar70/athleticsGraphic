@@ -44,7 +44,12 @@
           ? EventType.VERTICAL
           : EventType.HORIZONTAL
         : EventType.RUNNING;
-      $previewChannel.postMessage({ id: id, data: displayData, type: type });
+      $previewChannel.postMessage({
+        id: id,
+        data: displayData,
+        type: type,
+        modalOpened: isModalOpen,
+      });
     }
   };
 </script>

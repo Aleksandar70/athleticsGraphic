@@ -1,5 +1,5 @@
 <script lant="ts">
-  export let data;
+  import { visiblePreview } from "../../../stores/preview.store";
 </script>
 
 <div id="event--wrapper">
@@ -8,9 +8,9 @@
     alt="eventAnnouncement"
     src="/img/graphics/eventAnnouncement.png"
   />
-  <p id="eventTitle">{data["Event Name"]}</p>
-  <p id="eventLocation">{data["Location"]}</p>
-  <p id="eventHashtag">{data["Hashtag"]}</p>
+  <p id="eventTitle">{$visiblePreview.data["Event Name"]}</p>
+  <p id="eventLocation">{$visiblePreview.data["Location"]}</p>
+  <p id="eventHashtag">{$visiblePreview.data["Hashtag"]}</p>
 </div>
 
 <style>
