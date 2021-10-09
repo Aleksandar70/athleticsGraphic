@@ -3,8 +3,11 @@ import { IEvent, IResult, IUnit } from "../interfaces";
 import { ResultModel } from "../models/result.model";
 import { getEventLocal } from "./event.repo";
 
-export const createResults = async (unit: IUnit): Promise<IResult[]> =>
-  await ResultModel.insertMany(unit.results);
+export const createResults = async (unit: IUnit): Promise<IResult[]> => {
+  const results = [...(unit.results ?? [])];
+  results.map((result) => (result["heatName"] = unit.heatName ?? "1"));
+  return await ResultModel.insertMany(unit.results);
+};
 
 export const updateResults = async (
   updatedResults: Record<string, string>[]
@@ -38,6 +41,7 @@ export const getResults = async (unit: IUnit): Promise<IResult[]> => {
     const resultModel = await ResultModel.findOneAndUpdate(
       {
         bib: result.bib,
+        heatName: unit.heatName ?? "1",
       },
       result,
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }

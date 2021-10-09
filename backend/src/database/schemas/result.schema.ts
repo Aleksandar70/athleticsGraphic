@@ -36,6 +36,11 @@ const ResultSchema = new Schema({
     required: false,
     default: "",
   },
+  heatName: {
+    type: String,
+    required: false,
+    default: "1",
+  },
 });
 
 export default ResultSchema;
