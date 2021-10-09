@@ -96,7 +96,7 @@ export const getCompetitorResultsData = async (
       populateTrialsToCompetitorsForUnit(tableData as ICompetitor[], unit);
     }
     populateResultsAndPlacesOfTableDataForUnit(tableData, unit);
-
+    console.log("sorted ", [...tableData]);
     if (units.length === 1) return tableData as ICompetitor[];
 
     const heatData: IHeatEventData = isTeamEvent
@@ -175,22 +175,27 @@ const populateResultsAndPlacesOfTableDataForUnit = (
   tableData: ICompetitor[] | IRelayTeam[],
   unit: IUnit
 ) => {
+  console.log("results", unit.results);
   if ("competitorId" in tableData?.[0]) {
     for (const data of tableData as ICompetitor[]) {
       data["result"] = unit.results.find(
-        (result) => result.bib === data.competitorId
+        (result) =>
+          result.bib === data.competitorId && result.heatName === unit.heatName
       )?.performance;
       data["place"] = unit.results.find(
-        (result) => result.bib === data.competitorId
+        (result) =>
+          result.bib === data.competitorId && result.heatName === unit.heatName
       )?.place;
     }
   } else {
     for (const data of tableData as IRelayTeam[]) {
       data["result"] = unit.results.find(
-        (result) => result.bib === data.relayTeamId
+        (result) =>
+          result.bib === data.relayTeamId && result.heatName === unit.heatName
       )?.performance;
       data["place"] = unit.results.find(
-        (result) => result.bib === data.relayTeamId
+        (result) =>
+          result.bib === data.relayTeamId && result.heatName === unit.heatName
       )?.place;
     }
   }
