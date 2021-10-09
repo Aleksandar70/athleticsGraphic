@@ -155,3 +155,9 @@ export interface IConfig {
   selectedLanguage?: string;
   languages?: string[];
 }
+
+export interface ISignature {
+  _id?: ObjectId;
+  name?: string;
+  title: string;
+}
