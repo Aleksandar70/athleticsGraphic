@@ -91,7 +91,7 @@ export const getDataForPreviewModal = (
       );
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
-      data["Medals"] = getBestResults();
+      data["Medals"] = getBestPlaces();
       break;
     case Graphics.PERSONAL_DATA:
       data["ID"] = getFieldValueFromParticipant("competitorId");
@@ -111,20 +111,25 @@ const transformCompetitor = (
 ): Record<string, string>[] =>
   competitorList.map((competitorData) => {
     const competitors = {};
-    competitorData.forEach(
-      (data: TableField) => (competitors[data.id] = data.stringValue)
-    );
+    competitorData.forEach((data: TableField) => {
+      competitors[data.id] = data.value[getHeatName()] ?? data.stringValue;
+    });
     return competitors;
   });
 
-const getFieldValueFromParticipant = (key: string): string =>
-  get(selectedParticipant).find((field) => field.id === key)?.stringValue;
+const getFieldValueFromParticipant = (key: string): string => {
+  const participant = get(selectedParticipant).find(
+    (field) => field.id === key
+  );
+  return participant?.value[getHeatName()] ?? participant?.stringValue;
+};
 
 const getValueFromTranslation = (key: string): string => get(_)(key);
 
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   let competitorList: ICompetitor[];
   if (heatExists()) {
+    console.log("USAO1");
     competitorList = list
       ? list
       : transformCompetitor(get(heatTableParticipants));
@@ -152,7 +157,7 @@ const getScores = (): unknown[] =>
     .filter((field) => isNumeric(field.id))
     .map((score: TableField) => ({ [score.id]: score.stringValue }));
 
-const getBestResults = (): Record<string, string>[] => {
+const getBestPlaces = (): Record<string, string>[] => {
   const units = get(currentEventData)["units"];
   let bestResults = [];
   for (const unit of units) {
@@ -174,13 +179,13 @@ const sortCompetitorsByPlace = (
   competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    if (n1?.place && n2?.place) {
-      if (n1.place > n2.place) {
-        return 1;
-      }
-      if (n1.place < n2.place) {
-        return -1;
-      }
+    const place1 = n1.place?.[getHeatName()];
+    const place2 = n2.place?.[getHeatName()];
+    if (place1 > place2) {
+      return 1;
+    }
+    if (place1 < place2) {
+      return -1;
     }
     return 0;
   });

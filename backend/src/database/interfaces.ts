@@ -111,7 +111,7 @@ export interface ICompetitor {
   sb?: string;
   flagUrl?: string;
   teamName?: string;
-  place?: number;
+  place?: string;
   result?: string;
 }
 
