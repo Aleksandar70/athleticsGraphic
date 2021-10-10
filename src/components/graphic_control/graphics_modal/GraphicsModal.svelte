@@ -167,7 +167,8 @@
                   <Input
                     class="result-input"
                     type="text"
-                    value={bestCompetitor.result[$currentHeatName]}
+                    value={bestCompetitor.result["Final"] ??
+                      bestCompetitor.result["single"]}
                     on:input={(event) =>
                       inputChange(event.target, name, "result", i)}
                   />
