@@ -3,8 +3,9 @@
   import HorizontalScorePreview from "./HorizontalScorePreview.svelte";
   import VerticalScorePreview from "./VerticalScorePreview.svelte";
   import RunningScorePreview from "./RunningScorePreview.svelte";
+  import { visiblePreview } from "../../../stores/preview.store";
 
-  export let type = EventType.HORIZONTAL;
+  const type = $visiblePreview.type;
 </script>
 
 <div id="scores--wrapper">

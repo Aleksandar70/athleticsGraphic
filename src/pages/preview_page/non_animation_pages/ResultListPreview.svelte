@@ -74,7 +74,7 @@
       class="resultListScore"
       id="resultListScore-{i}"
     >
-      {competitor.result}
+      {competitor.result[$visiblePreview.heat]}
     </p>
   {/each}
 </div>

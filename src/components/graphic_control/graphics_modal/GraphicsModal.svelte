@@ -53,7 +53,12 @@
     : EventType.RUNNING;
 
   const sendGraphics = () => {
-    $streamChannel.postMessage({ id: id, data: _data, type: type });
+    $streamChannel.postMessage({
+      id: id,
+      data: _data,
+      type: type,
+      heat: $currentHeatName,
+    });
     toggle();
   };
 
