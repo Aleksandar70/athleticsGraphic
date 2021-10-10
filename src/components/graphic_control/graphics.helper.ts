@@ -140,6 +140,7 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   return competitorList.map((competitor: ICompetitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
+    place: competitor.place,
     result: competitor.result,
   }));
 };
@@ -178,8 +179,14 @@ const sortCompetitorsByPlace = (
   competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    const place1 = n1?.place?.[get(currentHeatName)];
-    const place2 = n2?.place?.[get(currentHeatName)];
+    const place1 =
+      n1?.place?.[get(currentHeatName)] ??
+      n1?.place?.["Final"] ??
+      n1?.place?.["single"];
+    const place2 =
+      n2?.place?.[get(currentHeatName)] ??
+      n2?.place?.["Final"] ??
+      n2?.place?.["single"];
     if (place1 > place2) {
       return 1;
     }
