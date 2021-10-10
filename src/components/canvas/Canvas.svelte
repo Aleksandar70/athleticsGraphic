@@ -37,7 +37,7 @@
     visibleColumns.set(newVisibleColumns);
   }
 
-  const rows = getTableData(tableData);
+  const rows = getTableData(tableData, heatName);
   let rowData = rows;
   let headerData = getHeaderData(tableData);
 

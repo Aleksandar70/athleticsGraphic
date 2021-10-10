@@ -249,7 +249,7 @@ export const getEditableColumns = (
         ...visibleColumns.filter((value: string) => isNumeric(value)),
       ];
 
-export const getTableData = (rawData: RawData): TableData => {
+export const getTableData = (rawData: RawData, heatName: string): TableData => {
   if (!rawData?.length) return [];
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
@@ -269,7 +269,7 @@ export const getTableData = (rawData: RawData): TableData => {
     });
   });
 
-  return filterAndSortRowData(tableData);
+  return filterAndSortRowData(tableData, heatName);
 };
 
 const getRunnersNames = (runners: ICompetitor[]): string =>
@@ -362,7 +362,10 @@ export const filterHeaderData = (headers: Headers): Headers => {
   return headers;
 };
 
-export const filterAndSortRowData = (tableData: TableData): TableData => {
+export const filterAndSortRowData = (
+  tableData: TableData,
+  heatName: string
+): TableData => {
   const columnsForModal = getColumnsForDisplay();
   tableData.forEach((rowData) => {
     const rowDataCopy = [...rowData];
@@ -377,15 +380,21 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
     });
   });
   if (Object.keys(get(currentEventData)).length !== 0) {
-    sortTableDataByPlace(tableData);
+    sortTableDataByPlace(tableData, heatName);
   }
   return tableData;
 };
 
-const sortTableDataByPlace = (tableData: TableData): void => {
+const sortTableDataByPlace = (tableData: TableData, heatName: string): void => {
   tableData.sort((n1: TableRow, n2: TableRow) => {
-    const place1 = n1.find((el) => el.id === "place")?.value;
-    const place2 = n2.find((el) => el.id === "place")?.value;
+    let place1 = n1.find((el) => el.id === "place")?.value[heatName];
+    let place2 = n2.find((el) => el.id === "place")?.value[heatName];
+    if (place1 == "") {
+      place1 = 100;
+    }
+    if (place2 == "") {
+      place2 = 100;
+    }
     if (place1 > place2) {
       return 1;
     }

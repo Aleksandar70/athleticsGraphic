@@ -51,18 +51,18 @@ export const eventCompetitorsColumnsUI = [
 ];
 
 export const eventRelayTeamsColumnsUI = [
+  "place",
   "teamId",
   "name",
   "result",
   "runners",
-  "place",
 ];
 
 export const defaultEventRelayTeamsColumns = [
+  "place",
   "teamId",
   "result",
   "runners",
-  "place",
 ];
 
 export const uneditableFields = [
