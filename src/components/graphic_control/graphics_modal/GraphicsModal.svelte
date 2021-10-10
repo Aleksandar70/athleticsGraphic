@@ -69,7 +69,7 @@
     idx?: number
   ) => {
     if (name === "Scores" || name === "Competitors" || name === "Medals") {
-      if (metric === "result" || metric === "place") {
+      if (metric === "result") {
         _data[name][idx][metric][id === "medals" ? "Final" : $currentHeatName] =
           (target as HTMLInputElement).value;
       } else {
