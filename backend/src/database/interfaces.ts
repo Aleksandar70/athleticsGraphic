@@ -111,8 +111,8 @@ export interface ICompetitor {
   sb?: string;
   flagUrl?: string;
   teamName?: string;
-  result?: string;
   place?: number;
+  result?: string;
 }
 
 export interface IRelayTeams {

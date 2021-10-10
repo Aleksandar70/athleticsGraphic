@@ -1,6 +1,10 @@
 import { Schema } from "mongoose";
 
 const ResultSchema = new Schema({
+  place: {
+    type: Number,
+    required: false,
+  },
   bib: {
     type: String,
     required: false,
@@ -22,10 +26,6 @@ const ResultSchema = new Schema({
     type: String,
     required: false,
     default: "",
-  },
-  place: {
-    type: Number,
-    required: false,
   },
   points: {
     type: Number,

@@ -1,11 +1,6 @@
 import { Schema } from "mongoose";
 
 const CompetitorSchema = new Schema({
-  place: {
-    type: Number,
-    required: false,
-    default: 0,
-  },
   competitorId: {
     type: String,
     required: false,
