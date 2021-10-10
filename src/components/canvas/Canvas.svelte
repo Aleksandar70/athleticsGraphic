@@ -22,7 +22,7 @@
   export let defaultColumns: string[];
   export let setSearch: ISearch = { enable: false };
   export let updateAction: Function;
-  export let heatName: string = "";
+  export let heatName: string = "single";
 
   const currentEvent = $visibleColumns[$currentEventId];
   if (!currentEvent) {
@@ -37,7 +37,7 @@
     visibleColumns.set(newVisibleColumns);
   }
 
-  const rows = getTableData(tableData);
+  const rows = getTableData(tableData, heatName);
   let rowData = rows;
   let headerData = getHeaderData(tableData);
 

@@ -91,7 +91,7 @@ export const getDataForPreviewModal = (
       );
       data["Hashtag"] = "#belgrade2021";
       data["Description"] = "MEDALS";
-      data["Medals"] = getBestResults();
+      data["Medals"] = getBestPlaces();
       break;
     case Graphics.PERSONAL_DATA:
       data["ID"] = getFieldValueFromParticipant("competitorId");
@@ -111,14 +111,18 @@ const transformCompetitor = (
 ): Record<string, string>[] =>
   competitorList.map((competitorData) => {
     const competitors = {};
-    competitorData.forEach(
-      (data: TableField) => (competitors[data.id] = data.stringValue)
-    );
+    competitorData.forEach((data: TableField) => {
+      competitors[data.id] = data?.value;
+    });
     return competitors;
   });
 
-const getFieldValueFromParticipant = (key: string): string =>
-  get(selectedParticipant).find((field) => field.id === key)?.stringValue;
+const getFieldValueFromParticipant = (key: string): string => {
+  const participant = get(selectedParticipant).find(
+    (field) => field.id === key
+  );
+  return participant?.value[get(currentHeatName)] ?? participant?.stringValue;
+};
 
 const getValueFromTranslation = (key: string): string => get(_)(key);
 
@@ -130,12 +134,13 @@ const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
       : transformCompetitor(get(heatTableParticipants));
   } else {
     competitorList = list ? list : get(competitors);
-    sortCompetitorsByResult(competitorList);
+    sortCompetitorsByPlace(competitorList);
   }
 
   return competitorList.map((competitor: ICompetitor) => ({
     name: `${competitor.firstName} ${competitor.lastName}`,
     nationality: competitor.nationality,
+    place: competitor.place,
     result: competitor.result,
   }));
 };
@@ -152,7 +157,7 @@ const getScores = (): unknown[] =>
     .filter((field) => isNumeric(field.id))
     .map((score: TableField) => ({ [score.id]: score.stringValue }));
 
-const getBestResults = (): Record<string, string>[] => {
+const getBestPlaces = (): Record<string, string>[] => {
   const units = get(currentEventData)["units"];
   let bestResults = [];
   for (const unit of units) {
@@ -166,37 +171,37 @@ const getBestResults = (): Record<string, string>[] => {
     resultBibsForMedals.includes(competitor.competitorId)
   );
   const bestCompetitors = getCompetitors(filteredBestCompetitors);
-  sortCompetitorsByResult(bestCompetitors);
+  sortCompetitorsByPlace(bestCompetitors);
   return bestCompetitors;
 };
 
-const sortCompetitorsByResult = (
+const sortCompetitorsByPlace = (
   competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    const runningDiscipline = isRunningDiscipline();
-    const result1 = getResultValue(n1.result);
-    const result2 = getResultValue(n2.result);
-    if (runningDiscipline) {
-      if (result1 < result2) {
-        return -1;
-      }
-      if (result1 > result2) {
-        return 1;
-      }
+    let place1 =
+      n1?.place?.[get(currentHeatName)] ??
+      n1?.place?.["Final"] ??
+      n1?.place?.["single"];
+    let place2 =
+      n2?.place?.[get(currentHeatName)] ??
+      n2?.place?.["Final"] ??
+      n2?.place?.["single"];
+    if (place1 == "") {
+      place1 = Number.MAX_SAFE_INTEGER;
     }
-    if (result1 < result2) {
+    if (place2 == "") {
+      place2 = Number.MAX_SAFE_INTEGER;
+    }
+    if (place1 > place2) {
       return 1;
     }
-    if (result1 > result2) {
+    if (place1 < place2) {
       return -1;
     }
     return 0;
   });
 };
-
-const getResultValue = (result: string): string =>
-  isNumeric(result) ? result : "0";
 
 const getHeatName = (): string => {
   const units = get(currentEventData)["units"];
@@ -215,14 +220,4 @@ const heatExists = (): boolean => {
     }
   }
   return false;
-};
-
-const isRunningDiscipline = (): boolean => {
-  const units = get(currentEventData)["units"];
-  for (const unit of units) {
-    if (unit.heights.length !== 0 || unit.trials.length !== 0) {
-      return false;
-    }
-  }
-  return true;
 };

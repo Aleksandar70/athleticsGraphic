@@ -104,7 +104,7 @@
     } else {
       timelineCompetitors.reverse().then(() => {
         timelineHeader.reverse();
-        visibleGraphics.set({ id: "", data: {}, type: undefined });
+        visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
       });
     }
   };
@@ -113,7 +113,7 @@
     timelineCompetitors.reverse().then(() => {
       timelineHeader.reverse();
       $clearChannel.postMessage(false);
-      visibleGraphics.set({ id: "", data: {}, type: undefined });
+      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
     });
   }
 </script>
@@ -176,7 +176,7 @@
       class="resultListScore"
       id="resultListScore-{i}"
     >
-      {competitor.result}
+      {competitor.result[$visibleGraphics.heat] ?? competitor.result}
     </p>
   {/each}
 </div>

@@ -83,7 +83,7 @@ export const getCompetitorResultsData = async (
   currentCompetitionData.set(competitionData);
   competitors.set(competitorData);
 
-  const data: IHeatEventData[] = [];
+  let data: IHeatEventData[] = [];
   const units = eventData.units;
 
   for (const unit of units) {
@@ -95,15 +95,17 @@ export const getCompetitorResultsData = async (
       addRoundsOrHeightsToCompetitorsForUnit(tableData as ICompetitor[], unit);
       populateTrialsToCompetitorsForUnit(tableData as ICompetitor[], unit);
     }
-    populateResultsOfTableDataForUnit(tableData, unit);
-
+    populateResultsAndPlacesOfTableDataForUnit(tableData, unit);
     if (units.length === 1) return tableData as ICompetitor[];
 
     const heatData: IHeatEventData = isTeamEvent
       ? { heatName: unit.heatName, relayTeams: tableData as IRelayTeam[] }
-      : { heatName: unit.heatName, competitors: tableData as ICompetitor[] };
+      : {
+          heatName: unit.heatName,
+          competitors: tableData as ICompetitor[],
+        };
 
-    data.push(heatData);
+    data = [...data, heatData];
   }
 
   return data;
@@ -128,7 +130,7 @@ const getRelayTeamsForUnit = (
 };
 
 const getCompetitorsForUnit = (unit: IUnit): ICompetitor[] => {
-  const resultBibs = unit.results.map((result) => result.bib);
+  const resultBibs = unit?.results?.map((result) => result?.bib);
   return get(competitors).filter((competitor) =>
     resultBibs.includes(competitor.competitorId)
   );
@@ -171,23 +173,45 @@ const populateTrialsToCompetitorsForUnit = (
   }
 };
 
-const populateResultsOfTableDataForUnit = (
+const populateResultsAndPlacesOfTableDataForUnit = (
   tableData: ICompetitor[] | IRelayTeam[],
   unit: IUnit
 ) => {
   if ("competitorId" in tableData?.[0]) {
     for (const data of tableData as ICompetitor[]) {
-      data["result"] = unit.results.find(
-        (result) => result.bib === data.competitorId
-      )?.performance;
+      const result = unit.results.find(
+        (result) =>
+          result.bib === data.competitorId &&
+          (result.heatName === unit.heatName || result.heatName === "single")
+      );
+
+      data["result"] = {
+        ...(data["result"] ?? {}),
+        [result?.heatName ?? "single"]: result?.performance ?? "",
+      };
+      data["place"] = {
+        ...(data["place"] ?? {}),
+        [result?.heatName ?? "single"]: result?.place ?? "",
+      };
     }
   } else {
     for (const data of tableData as IRelayTeam[]) {
-      data["result"] = unit.results.find(
-        (result) => result.bib === data.relayTeamId
-      )?.performance;
+      const result = unit.results.find(
+        (result) =>
+          result.bib === data.relayTeamId &&
+          (result.heatName === unit.heatName || result.heatName === "single")
+      );
+      data["result"] = {
+        ...(data["result"] ?? {}),
+        [result?.heatName ?? "single"]: result?.performance ?? "",
+      };
+      data["place"] = {
+        ...(data["place"] ?? {}),
+        [result?.heatName ?? "single"]: result?.place ?? "",
+      };
     }
   }
+  return tableData;
 };
 
 export const getCompetitorIdFromRow = (row: TableRow): string => {
@@ -225,7 +249,7 @@ export const getEditableColumns = (
         ...visibleColumns.filter((value: string) => isNumeric(value)),
       ];
 
-export const getTableData = (rawData: RawData): TableData => {
+export const getTableData = (rawData: RawData, heatName: string): TableData => {
   if (!rawData?.length) return [];
   const links = getFieldLinks(rawData);
   const tableData = rawData?.map((row) => {
@@ -245,7 +269,7 @@ export const getTableData = (rawData: RawData): TableData => {
     });
   });
 
-  return filterAndSortRowData(tableData);
+  return filterAndSortRowData(tableData, heatName);
 };
 
 const getRunnersNames = (runners: ICompetitor[]): string =>
@@ -338,7 +362,10 @@ export const filterHeaderData = (headers: Headers): Headers => {
   return headers;
 };
 
-export const filterAndSortRowData = (tableData: TableData): TableData => {
+const filterAndSortRowData = (
+  tableData: TableData,
+  heatName: string
+): TableData => {
   const columnsForModal = getColumnsForDisplay();
   tableData.forEach((rowData) => {
     const rowDataCopy = [...rowData];
@@ -353,48 +380,27 @@ export const filterAndSortRowData = (tableData: TableData): TableData => {
     });
   });
   if (Object.keys(get(currentEventData)).length !== 0) {
-    sortTableDataByResult(tableData);
+    sortTableDataByPlace(tableData, heatName);
   }
   return tableData;
 };
 
-const sortTableDataByResult = (tableData: TableData): void => {
-  const runningDiscipline = isRunningDiscipline();
+const sortTableDataByPlace = (tableData: TableData, heatName: string): void => {
   tableData.sort((n1: TableRow, n2: TableRow) => {
-    const result1 = getResultValue(n1);
-    const result2 = getResultValue(n2);
-    if (runningDiscipline) {
-      if (result1 < result2) {
-        return -1;
-      }
-      if (result1 > result2) {
-        return 1;
-      }
+    let place1 = n1.find((el) => el.id === "place")?.value[heatName];
+    let place2 = n2.find((el) => el.id === "place")?.value[heatName];
+    if (place1 == "") {
+      place1 = Number.MAX_SAFE_INTEGER;
     }
-    if (result1 < result2) {
+    if (place2 == "") {
+      place2 = Number.MAX_SAFE_INTEGER;
+    }
+    if (place1 > place2) {
       return 1;
     }
-    if (result1 > result2) {
+    if (place1 < place2) {
       return -1;
     }
     return 0;
   });
-};
-
-const getResultValue = (rowData: TableRow): string => {
-  const result = rowData.find((el) => el.id === "result")?.stringValue;
-  if (isNumeric(result)) {
-    return result;
-  }
-  return "0";
-};
-
-const isRunningDiscipline = (): boolean => {
-  const units = get(currentEventData)["units"];
-  for (const unit of units) {
-    if (unit.heights.length === 0 && unit.trials.length === 0) {
-      return true;
-    }
-  }
-  return false;
 };
