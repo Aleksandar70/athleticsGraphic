@@ -53,7 +53,7 @@
   $: if (clear) {
     timeline.reverse().then(() => {
       $clearChannel.postMessage(false);
-      visibleGraphics.set({ id: "", data: {}, type: undefined });
+      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
     });
   }
 </script>
@@ -64,7 +64,9 @@
   src="/img/graphics/score_running.png"
 />
 <p id="scoresEventName">
-  {data["Heat"]}
+  {#if data["Heat"]}
+    {data["Heat"]}
+  {/if}
   {data["Event Name"]}
 </p>
 <p id="scoresBib">{data["ID"]}</p>
