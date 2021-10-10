@@ -34,6 +34,11 @@
 
   $: if (data["Medals"]) {
     bestCompetitors = data["Medals"];
+    bestCompetitors.map(
+      (competitor) =>
+        (competitor["result"] =
+          competitor["result"]["Final"] ?? competitor["result"]["single"])
+    );
   }
 
   $: _data = { ...data };
@@ -69,13 +74,7 @@
     idx?: number
   ) => {
     if (name === "Scores" || name === "Competitors" || name === "Medals") {
-      if (metric === "result" || metric === "place") {
-        _data[name][idx][metric][id === "medals" ? "Final" : $currentHeatName] =
-          (target as HTMLInputElement).value;
-      } else {
-        _data[name][idx][metric] = (target as HTMLInputElement).value;
-      }
-
+      _data[name][idx][metric] = (target as HTMLInputElement).value;
       sendPreview(_data);
       return;
     }
@@ -96,9 +95,9 @@
 
 <Modal {isOpen} {toggle} scrollable>
   <ModalBody>
-    {#if Object.keys(data).length}
+    {#if Object.keys(_data).length}
       <Form>
-        {#each Object.entries(data) as [name, value]}
+        {#each Object.entries(_data) as [name, value]}
           <FormGroup>
             <Label for={name}>{name}</Label>
             {#if name === "Flag"}
@@ -179,8 +178,7 @@
                   <Input
                     class="result-input"
                     type="text"
-                    value={bestCompetitor.result["Final"] ??
-                      bestCompetitor.result["single"]}
+                    value={bestCompetitor.result}
                     on:input={(event) =>
                       inputChange(event.target, name, "result", i)}
                   />

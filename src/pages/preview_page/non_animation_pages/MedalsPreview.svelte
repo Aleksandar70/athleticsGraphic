@@ -42,7 +42,9 @@
       class="medalsPerformance"
       id="medalsPerformance-{i}"
     >
-      {bestCompetitor.result["Final"] ?? bestCompetitor.result["single"]}
+      {bestCompetitor.result["Final"] ??
+        bestCompetitor.result["single"] ??
+        bestCompetitor.result}
     </p>
     <p style="top: {805 + 58 * i}px" class="medalsMedal" id="medalsMedal-{i}">
       {#if i == 0}
