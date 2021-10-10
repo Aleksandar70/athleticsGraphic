@@ -390,10 +390,10 @@ const sortTableDataByPlace = (tableData: TableData, heatName: string): void => {
     let place1 = n1.find((el) => el.id === "place")?.value[heatName];
     let place2 = n2.find((el) => el.id === "place")?.value[heatName];
     if (place1 == "") {
-      place1 = 100;
+      place1 = Number.MAX_SAFE_INTEGER;
     }
     if (place2 == "") {
-      place2 = 100;
+      place2 = Number.MAX_SAFE_INTEGER;
     }
     if (place1 > place2) {
       return 1;
