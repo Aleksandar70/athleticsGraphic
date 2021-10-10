@@ -112,16 +112,27 @@ const transformCompetitor = (
   competitorList.map((competitorData) => {
     const competitors = {};
     competitorData.forEach((data: TableField) => {
-      competitors[data.id] = data.value[getHeatName()] ?? data.stringValue;
+      competitors[data.id] =
+        data?.value?.[get(currentHeatName)] ?? data?.stringValue;
     });
     return competitors;
   });
+
+const transformListOfCompetitors = (
+  competitors: ICompetitor[]
+): ICompetitor[] => {
+  competitors.map((data) => {
+    data["result"] = data?.result?.[get(currentHeatName)];
+    data["place"] = data?.place?.[get(currentHeatName)];
+  });
+  return competitors;
+};
 
 const getFieldValueFromParticipant = (key: string): string => {
   const participant = get(selectedParticipant).find(
     (field) => field.id === key
   );
-  return participant?.value[getHeatName()] ?? participant?.stringValue;
+  return participant?.value[get(currentHeatName)] ?? participant?.stringValue;
 };
 
 const getValueFromTranslation = (key: string): string => get(_)(key);
@@ -129,12 +140,11 @@ const getValueFromTranslation = (key: string): string => get(_)(key);
 const getCompetitors = (list?: ICompetitor[]): Record<string, string>[] => {
   let competitorList: ICompetitor[];
   if (heatExists()) {
-    console.log("USAO1");
     competitorList = list
-      ? list
+      ? transformListOfCompetitors(list)
       : transformCompetitor(get(heatTableParticipants));
   } else {
-    competitorList = list ? list : get(competitors);
+    competitorList = transformListOfCompetitors(list ? list : get(competitors));
     sortCompetitorsByPlace(competitorList);
   }
 
@@ -179,8 +189,8 @@ const sortCompetitorsByPlace = (
   competitors: Record<string, string>[] | ICompetitor[]
 ): void => {
   competitors.sort((n1: ICompetitor, n2: ICompetitor) => {
-    const place1 = n1.place?.[getHeatName()];
-    const place2 = n2.place?.[getHeatName()];
+    const place1 = n1.place;
+    const place2 = n2.place;
     if (place1 > place2) {
       return 1;
     }
