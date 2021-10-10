@@ -17,6 +17,7 @@
   import { UIText } from "../../../../global/constants/ui_text";
   import { previewChannel } from "../../../stores/preview.store";
   import { streamChannel } from "../../../stores/stream.store";
+  import { currentHeatName } from "../../../stores/table.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
 
@@ -130,7 +131,7 @@
                   {#if id === Graphics.RESULT_LIST}
                     <Input
                       class="result-input"
-                      value={competitor.result}
+                      value={competitor.result[$currentHeatName]}
                       on:input={(event) =>
                         inputChange(event.target, name, "result", i)}
                     />
@@ -166,7 +167,7 @@
                   <Input
                     class="result-input"
                     type="text"
-                    value={bestCompetitor.result}
+                    value={bestCompetitor.result[$currentHeatName]}
                     on:input={(event) =>
                       inputChange(event.target, name, "result", i)}
                   />

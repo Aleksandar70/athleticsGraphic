@@ -362,7 +362,7 @@ export const filterHeaderData = (headers: Headers): Headers => {
   return headers;
 };
 
-export const filterAndSortRowData = (
+const filterAndSortRowData = (
   tableData: TableData,
   heatName: string
 ): TableData => {
