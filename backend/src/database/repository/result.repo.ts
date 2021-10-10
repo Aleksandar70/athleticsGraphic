@@ -5,7 +5,10 @@ import { getEventLocal } from "./event.repo";
 
 export const createResults = async (unit: IUnit): Promise<IResult[]> => {
   const results = [...(unit.results ?? [])];
-  results.map((result) => (result["heatName"] = unit.heatName ?? "single"));
+  results.map((result) => {
+    result["heatName"] = unit.heatName ?? "single";
+    result["eventId"] = unit.eventId;
+  });
   return await ResultModel.insertMany(unit.results);
 };
 
@@ -42,6 +45,7 @@ export const getResults = async (unit: IUnit): Promise<IResult[]> => {
       {
         bib: result.bib,
         heatName: unit.heatName ?? "single",
+        eventId: unit.eventId,
       },
       result,
       { omitUndefined: true, upsert: true, setDefaultsOnInsert: true }

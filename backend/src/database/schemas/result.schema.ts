@@ -41,6 +41,11 @@ const ResultSchema = new Schema({
     required: false,
     default: "single",
   },
+  eventId: {
+    type: String,
+    required: false,
+    default: "",
+  },
 });
 
 export default ResultSchema;
