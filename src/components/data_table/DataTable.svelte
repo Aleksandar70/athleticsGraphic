@@ -38,7 +38,7 @@
   export let rowData: TableData;
   export let updateResult: boolean;
   export let currentPage: number;
-  export let heatName: string = "";
+  export let heatName: string;
 
   let focusCell: HTMLTableCellElement;
   let editableColumns: string[] = [];

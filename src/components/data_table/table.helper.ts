@@ -130,7 +130,7 @@ const getRelayTeamsForUnit = (
 };
 
 const getCompetitorsForUnit = (unit: IUnit): ICompetitor[] => {
-  const resultBibs = unit.results.map((result) => result.bib);
+  const resultBibs = unit?.results?.map((result) => result?.bib);
   return get(competitors).filter((competitor) =>
     resultBibs.includes(competitor.competitorId)
   );
@@ -181,30 +181,33 @@ const populateResultsAndPlacesOfTableDataForUnit = (
     for (const data of tableData as ICompetitor[]) {
       const result = unit.results.find(
         (result) =>
-          result.bib === data.competitorId && result.heatName === unit.heatName
+          result.bib === data.competitorId &&
+          (result.heatName === unit.heatName || result.heatName === "single")
       );
+
       data["result"] = {
         ...(data["result"] ?? {}),
-        [unit.heatName ?? "1"]: result?.performance,
+        [result?.heatName ?? "single"]: result?.performance ?? "",
       };
       data["place"] = {
         ...(data["place"] ?? {}),
-        [unit.heatName ?? "x"]: result?.place,
+        [result?.heatName ?? "single"]: result?.place ?? "",
       };
     }
   } else {
     for (const data of tableData as IRelayTeam[]) {
       const result = unit.results.find(
         (result) =>
-          result.bib === data.relayTeamId && result.heatName === unit.heatName
+          result.bib === data.relayTeamId &&
+          (result.heatName === unit.heatName || result.heatName === "single")
       );
       data["result"] = {
         ...(data["result"] ?? {}),
-        [unit.heatName ?? "1"]: result?.performance,
+        [result?.heatName ?? "single"]: result?.performance ?? "",
       };
       data["place"] = {
         ...(data["place"] ?? {}),
-        [unit.heatName ?? "x"]: result?.place,
+        [result?.heatName ?? "single"]: result?.place ?? "",
       };
     }
   }

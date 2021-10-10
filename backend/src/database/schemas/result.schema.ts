@@ -39,7 +39,7 @@ const ResultSchema = new Schema({
   heatName: {
     type: String,
     required: false,
-    default: "1",
+    default: "single",
   },
 });
 
