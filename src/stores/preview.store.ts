@@ -8,4 +8,5 @@ export const visiblePreview = writable({
   data: {},
   type: undefined,
   modalOpened: false,
+  heat: "",
 });

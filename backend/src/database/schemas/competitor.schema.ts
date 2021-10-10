@@ -21,6 +21,11 @@ const CompetitorSchema = new Schema({
     required: false,
     default: "",
   },
+  flagUrl: {
+    type: String,
+    required: false,
+    default: "",
+  },
   gender: {
     type: String,
     required: false,
@@ -93,11 +98,6 @@ const CompetitorSchema = new Schema({
     default: "",
   },
   // eventEntered
-  flagUrl: {
-    type: String,
-    required: false,
-    default: "",
-  },
   teamName: {
     type: String,
     required: false,

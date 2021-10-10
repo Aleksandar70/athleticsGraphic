@@ -17,7 +17,10 @@
   import { clearChannel, streamChannel } from "../../stores/stream.store";
   import { Alert } from "sveltestrap";
   import { get } from "svelte/store";
-  import { selectedParticipant } from "../../stores/table.store";
+  import {
+    currentHeatName,
+    selectedParticipant,
+  } from "../../stores/table.store";
   import { isHeight } from "../../utils/event.utils";
   import { previewChannel } from "../../stores/preview.store";
 
@@ -49,6 +52,7 @@
         data: displayData,
         type: type,
         modalOpened: isModalOpen,
+        heat: $currentHeatName,
       });
     }
   };

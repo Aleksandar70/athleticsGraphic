@@ -16,7 +16,7 @@
 
   $: if (clear) {
     $clearChannel.postMessage(false);
-    visibleGraphics.set({ id: "", data: {}, type: undefined });
+    visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
   }
 </script>
 
