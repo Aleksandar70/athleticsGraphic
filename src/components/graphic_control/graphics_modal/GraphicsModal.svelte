@@ -69,7 +69,13 @@
     idx?: number
   ) => {
     if (name === "Scores" || name === "Competitors" || name === "Medals") {
-      _data[name][idx][metric] = (target as HTMLInputElement).value;
+      if (metric === "result" || metric === "place") {
+        _data[name][idx][metric][id === "medals" ? "Final" : $currentHeatName] =
+          (target as HTMLInputElement).value;
+      } else {
+        _data[name][idx][metric] = (target as HTMLInputElement).value;
+      }
+
       sendPreview(_data);
       return;
     }
@@ -83,6 +89,7 @@
       data: data,
       type: type,
       modalOpened: isOpen,
+      heat: $currentHeatName,
     });
   };
 </script>
