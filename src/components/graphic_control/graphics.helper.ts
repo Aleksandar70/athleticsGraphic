@@ -104,7 +104,7 @@ export const getDataForPreviewModal = (
       data["Season Best"] = getFieldValueFromParticipant("sb");
       break;
     case Graphics.SIGNATURE:
-      data["Name"] = "Ime";
+      data["Name"] = "Name";
       data["Title"] = "Title";
   }
   return data;

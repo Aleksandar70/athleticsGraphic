@@ -1,7 +1,7 @@
 import { ISignature } from "../interfaces";
 import { SignatureModel } from "../models/signature.model";
 
-export const createSignatures = async (
+export const addSignature = async (
   signatures: ISignature[]
 ): Promise<ISignature[]> => {
   const signatureModels: ISignature[] = [];
@@ -15,4 +15,8 @@ export const createSignatures = async (
   }
 
   return await SignatureModel.insertMany(signatureModels);
+};
+
+export const getSignatures = async (): Promise<ISignature[]> => {
+  return await SignatureModel.find({});
 };

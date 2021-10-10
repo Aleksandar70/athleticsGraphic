@@ -2,6 +2,7 @@ export abstract class UIText {
   static readonly CLOSE: string = "Close";
   static readonly TABLE_SAVE: string = "Save";
   static readonly SOURCES_HEADER: string = "Select data source";
+  static readonly SIGNATURE_HEADER: string = "Select signature";
   static readonly FOOTER_TEXT: string = "© Elegra 2021";
   static readonly NO_RESULTS: string = "No Results 😐";
   static readonly NO_RESULTS_INIT: string = "Please initialize the database.";
@@ -34,6 +35,7 @@ export abstract class UIText {
   static readonly LABEL_PERSONAL: string = "Personal";
   static readonly BUTTON_SHOW: string = "Show";
   static readonly BUTTON_CANCEL: string = "Cancel";
+  static readonly BUTTON_ADD: string = "Add";
   static readonly TIME_MESSAGE: string = "You are about to show graphics for";
 
   static readonly INIT_WARNING: string = "⚠️ All existing data will be lost";

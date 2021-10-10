@@ -8,6 +8,10 @@
     Input,
     Form,
     Button,
+    Dropdown,
+    DropdownItem,
+    DropdownToggle,
+    DropdownMenu,
   } from "sveltestrap";
   import {
     Constants,
@@ -54,6 +58,10 @@
   const sendGraphics = () => {
     $streamChannel.postMessage({ id: id, data: _data, type: type });
     toggle();
+  };
+
+  const addSignature = () => {
+    console.log("_data ", _data);
   };
 
   const inputChange = (
@@ -186,6 +194,18 @@
       <p class="body-info">
         {UIText.TIME_MESSAGE} <span class="id-span">{id}</span>
       </p>
+    {/if}
+    {#if id === Graphics.SIGNATURE}
+    <Button on:click={() => addSignature()}>{UIText.BUTTON_ADD}</Button>
+      <hr />
+      <Dropdown>
+        <DropdownToggle class="data-source--dropdown text-dark" caret />
+        <DropdownMenu class="data-source--dropdown">
+          <DropdownItem header>{UIText.SIGNATURE_HEADER}</DropdownItem>
+          <DropdownItem class="source-item">NESTO</DropdownItem>
+          <DropdownItem class="source-item">NESTO2</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
     {/if}
   </ModalBody>
   <ModalFooter>
