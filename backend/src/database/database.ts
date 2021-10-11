@@ -17,7 +17,7 @@ export const connectDatabase = async (): Promise<void> => {
     return;
   }
   await mongoose.connect(
-    `mongodb://127.0.0.1:27017/athletics-${OpenTrack.COMPETITION_ID}${OpenTrack.COMPETITION_YEAR}`,
+    `mongodb://0.0.0.0:27017/athletics-${OpenTrack.COMPETITION_ID}${OpenTrack.COMPETITION_YEAR}`,
     {
       useNewUrlParser: true,
       useFindAndModify: false,
