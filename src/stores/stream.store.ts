@@ -1,10 +1,4 @@
-import { readable, writable } from "svelte/store";
-
-const channel = new BroadcastChannel("graphics");
-export const streamChannel = readable(channel);
-
-const clear = new BroadcastChannel("clear");
-export const clearChannel = readable(clear);
+import { writable } from "svelte/store";
 
 export const visibleGraphics = writable({
   id: "",

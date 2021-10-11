@@ -1,3 +1,4 @@
+import { Document } from "mongoose";
 import { IRelayTeam } from "../../../../global/interfaces";
 import { IRelayTeams } from "../interfaces";
 import { RelayTeamModel } from "../models/relayTeams.model";

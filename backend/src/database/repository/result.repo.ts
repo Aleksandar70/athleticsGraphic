@@ -9,7 +9,7 @@ export const createResults = async (unit: IUnit): Promise<IResult[]> => {
     result["heatName"] = unit.heatName ?? "single";
     result["eventId"] = unit.eventId;
   });
-  return await ResultModel.insertMany(unit.results);
+  return await ResultModel.insertMany(unit.results as IResult[]);
 };
 
 export const updateResults = async (

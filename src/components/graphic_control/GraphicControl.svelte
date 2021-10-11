@@ -14,7 +14,6 @@
   import { EventType, Graphics } from "../../../global/constants/constants";
   import { getDataForPreviewModal } from "./graphics.helper";
   import GraphicsModal from "./graphics_modal/GraphicsModal.svelte";
-  import { clearChannel, streamChannel } from "../../stores/stream.store";
   import { Alert } from "sveltestrap";
   import { get } from "svelte/store";
   import {
@@ -23,6 +22,7 @@
   } from "../../stores/table.store";
   import { isHeight } from "../../utils/event.utils";
   import { previewChannel } from "../../stores/preview.store";
+  import { clearGraphics, sendGraphicsData } from "../../api/graphics.api";
 
   let displayData = {};
   let action_id: Graphics;
@@ -65,13 +65,13 @@
         >{UIText.TV_GRAPHIC_CONTROL} <Icon name="tv" /></CardTitle
       >
       <div class="graphic-clear">
-        <Button color="danger" on:click={() => $clearChannel.postMessage(true)}
+        <Button color="danger" on:click={() => clearGraphics()}
           >{UIText.CLEAR_SEQUENCE}</Button
         >
         <Button
           color="danger"
           on:click={() =>
-            $streamChannel.postMessage({ id: "", data: {}, type: undefined })}
+            sendGraphicsData({ id: "", data: {}, type: undefined })}
           >{UIText.CLEAR_ALL}</Button
         >
       </div>
