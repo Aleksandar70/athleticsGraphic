@@ -12,6 +12,6 @@ const io = new Server(httpServer, {
   },
 });
 
-httpServer.listen(5002);
+httpServer.listen(Paths.STREAMING_PORT);
 
 export default io;

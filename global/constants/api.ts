@@ -1,5 +1,6 @@
 export abstract class Paths {
   static readonly SERVER_PORT = 5001;
+  static readonly STREAMING_PORT = 5002;
   static readonly IPV4 = "192.168.0.15";
   static readonly SERVER_URL = `http://${Paths.IPV4}:${Paths.SERVER_PORT}/`;
   static readonly CLIENT_URL = `http://${Paths.IPV4}:5000/`;

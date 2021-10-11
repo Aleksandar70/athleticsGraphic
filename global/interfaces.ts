@@ -71,6 +71,6 @@ export interface ICompetitor {
 }
 
 export interface IRelayTeam {
-  relayTeamId: string;
-  runners: ICompetitor[];
+  relayTeamId?: string;
+  runners?: ICompetitor[];
 }

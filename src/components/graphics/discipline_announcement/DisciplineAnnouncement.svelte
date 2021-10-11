@@ -39,7 +39,7 @@
   $: if (clear) {
     timeline.reverse().then(() => {
       clear = false;
-      visibleGraphics.set({ id: "", data: {} });
+      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: ""  });
     });
   }
 </script>
