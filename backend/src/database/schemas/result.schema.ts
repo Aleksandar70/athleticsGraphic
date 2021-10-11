@@ -1,6 +1,10 @@
 import { Schema } from "mongoose";
 
 const ResultSchema = new Schema({
+  place: {
+    type: Number,
+    required: false,
+  },
   bib: {
     type: String,
     required: false,
@@ -23,15 +27,21 @@ const ResultSchema = new Schema({
     required: false,
     default: "",
   },
-  place: {
-    type: Number,
-    required: false,
-  },
   points: {
     type: Number,
     required: false,
   },
   rawTime: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  heatName: {
+    type: String,
+    required: false,
+    default: "single",
+  },
+  eventId: {
     type: String,
     required: false,
     default: "",

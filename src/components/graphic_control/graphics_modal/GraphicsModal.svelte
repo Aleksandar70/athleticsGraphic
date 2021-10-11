@@ -16,6 +16,7 @@
   } from "../../../../global/constants/constants";
   import { UIText } from "../../../../global/constants/ui_text";
   import { previewChannel } from "../../../stores/preview.store";
+  import { currentHeatName } from "../../../stores/table.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
   import { sendGraphicsData } from "../../../api/graphics.api";
@@ -33,6 +34,11 @@
 
   $: if (data["Medals"]) {
     bestCompetitors = data["Medals"];
+    bestCompetitors.map(
+      (competitor) =>
+        (competitor["result"] =
+          competitor["result"]["Final"] ?? competitor["result"]["single"])
+    );
   }
 
   $: _data = { ...data };
@@ -52,7 +58,12 @@
     : EventType.RUNNING;
 
   const sendGraphics = () => {
-    sendGraphicsData({ id: id, data: _data, type: type });
+    sendGraphicsData({
+      id: id,
+      data: _data,
+      type: type,
+      heat: $currentHeatName,
+    });
     toggle();
   };
 
@@ -77,15 +88,16 @@
       data: data,
       type: type,
       modalOpened: isOpen,
+      heat: $currentHeatName,
     });
   };
 </script>
 
 <Modal {isOpen} {toggle} scrollable>
   <ModalBody>
-    {#if Object.keys(data).length}
+    {#if Object.keys(_data).length}
       <Form>
-        {#each Object.entries(data) as [name, value]}
+        {#each Object.entries(_data) as [name, value]}
           <FormGroup>
             <Label for={name}>{name}</Label>
             {#if name === "Flag"}
@@ -130,7 +142,7 @@
                   {#if id === Graphics.RESULT_LIST}
                     <Input
                       class="result-input"
-                      value={competitor.result}
+                      value={competitor.result[$currentHeatName]}
                       on:input={(event) =>
                         inputChange(event.target, name, "result", i)}
                     />

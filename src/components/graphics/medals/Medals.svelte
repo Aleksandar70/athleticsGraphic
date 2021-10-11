@@ -79,7 +79,7 @@
   $: if (clear) {
     timeline.reverse().then(() => {
       clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined });
+      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
     });
   }
 </script>
@@ -122,7 +122,9 @@
       class="medalsPerformance"
       id="medalsPerformance-{i}"
     >
-      {bestCompetitor.result}
+      {bestCompetitor.result["Final"] ??
+        bestCompetitor.result["single"] ??
+        bestCompetitor.result}
     </p>
     <p style="top: {805 + 58 * i}px" class="medalsMedal" id="medalsMedal-{i}">
       {#if i == 0}

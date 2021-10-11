@@ -96,7 +96,7 @@
     } else {
       timelineCompetitors.reverse().then(() => {
         timelineHeader.reverse();
-        visibleGraphics.set({ id: "", data: {}, type: undefined });
+        visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
       });
     }
   };
@@ -105,7 +105,7 @@
     timelineCompetitors.reverse().then(() => {
       timelineHeader.reverse();
       clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined });
+      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
     });
   }
 </script>

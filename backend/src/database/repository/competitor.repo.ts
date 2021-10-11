@@ -111,6 +111,7 @@ const unwrapCompetitor = ({
   sb,
   flagUrl,
   teamName,
+  place,
 }: ICompetitor): ICompetitor => ({
   competitorId,
   nationalId,
@@ -131,4 +132,5 @@ const unwrapCompetitor = ({
   sb,
   flagUrl,
   teamName,
+  place,
 });

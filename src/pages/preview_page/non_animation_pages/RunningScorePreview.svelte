@@ -8,7 +8,9 @@
   src="/img/graphics/score_running.png"
 />
 <p id="scoresEventName">
-  {$visiblePreview.data["Heat"]}
+  {#if $visiblePreview.data["Heat"]}
+    {$visiblePreview.data["Heat"]}
+  {/if}
   {$visiblePreview.data["Event Name"]}
 </p>
 <p id="scoresBib">{$visiblePreview.data["ID"]}</p>

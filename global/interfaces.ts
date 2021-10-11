@@ -59,6 +59,8 @@ export interface IHeatEventData {
 export interface IResult {
   bib: string;
   performance: string;
+  place: number;
+  heatName?: string;
 }
 
 export interface ICompetitor {
