@@ -1,4 +1,4 @@
-import { ISignatures } from "../interfaces";
+import { ISignature } from "../interfaces";
 import { SignatureModel } from "../models/signature.model";
 
 export const createSignatures = async (): Promise<void> => {
@@ -6,20 +6,9 @@ export const createSignatures = async (): Promise<void> => {
 };
 
 export const addNewSignature = async (
-  signatures: ISignatures[]
-): Promise<ISignatures[]> => {
-  const signatureModels: ISignatures[] = [];
+  signature: ISignature
+): Promise<ISignature> => await SignatureModel.create(signature);
 
-  for (const signature of signatures) {
-    const signatureModel = new SignatureModel({
-      ...signature,
-    });
-    signatureModels.push(signatureModel);
-  }
-
-  return await SignatureModel.insertMany(signatureModels);
-};
-
-export const getSignatures = async (): Promise<ISignatures[]> => {
+export const getSignatures = async (): Promise<ISignature[]> => {
   return await SignatureModel.find({});
 };

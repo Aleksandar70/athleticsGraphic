@@ -73,7 +73,6 @@
   };
 
   const addSignature = () => {
-    console.log("_data ", _data);
     addNewSignature(_data);
   };
 
@@ -213,7 +212,7 @@
       {#await getSignatures()}
         <Spinner />
       {:then signatures}
-        <Button on:click={() => addSignature()}>{UIText.BUTTON_ADD}</Button>
+        <Button on:click={() => addNewSignature(_data)}>{UIText.BUTTON_ADD}</Button>
         <hr />
         <Dropdown>
           <DropdownToggle class="data-source--dropdown text-dark" caret />
