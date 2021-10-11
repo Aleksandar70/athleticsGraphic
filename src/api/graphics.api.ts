@@ -1,7 +1,7 @@
 import { Paths } from "../../global/constants/api";
 import { postRequest } from "../utils/api.utils";
 
-export const sendGraphicsData = (data: unknown): void => {
+export const sendGraphicsData = (data: Record<string, unknown>): void => {
   postRequest(Paths.GRAPHICS, { data: data });
 };
 
