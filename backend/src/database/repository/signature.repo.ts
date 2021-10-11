@@ -7,7 +7,13 @@ export const createSignatures = async (): Promise<void> => {
 
 export const addNewSignature = async (
   signature: ISignature
-): Promise<ISignature> => await SignatureModel.create(signature);
+): Promise<ISignature> => {
+  return await SignatureModel.updateOne(
+    { name: signature.name, title: signature.title },
+    signature,
+    { upsert: true }
+  );
+};
 
 export const getSignatures = async (): Promise<ISignature[]> => {
   return await SignatureModel.find({});

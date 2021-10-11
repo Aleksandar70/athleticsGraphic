@@ -3,7 +3,11 @@ import { Paths } from "../../global/constants/api";
 import { getRequest, putRequest } from "../utils/api.utils";
 
 export const addNewSignature = async (data: any): Promise<ISignature[]> => {
-  const response = await putRequest(`${Paths.SIGNATURE}`, { data: data });
+  const formattedData = {};
+  Object.entries(data).forEach(
+    ([key, value]) => (formattedData[key.toLowerCase()] = value)
+  );
+  const response = await putRequest(`${Paths.SIGNATURE}`, { data: formattedData });
   return response.data as ISignature[];
 };
 
