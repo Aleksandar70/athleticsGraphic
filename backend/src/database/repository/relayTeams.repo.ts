@@ -1,5 +1,3 @@
-import { Document } from "mongoose";
-import { IRelayTeam } from "../../../../global/interfaces";
 import { IRelayTeams } from "../interfaces";
 import { RelayTeamModel } from "../models/relayTeams.model";
 
@@ -27,7 +25,7 @@ export const getRelayTeamsForEvent = async (
 
 //NOT USED AT THE MOMENT.
 export const updateRelayTeams = async (
-  relayTeams: IRelayTeam[]
+  relayTeams: IRelayTeams[]
 ): Promise<boolean> => {
   let result = true;
   for (const relayTeam of relayTeams) {

@@ -1,17 +1,15 @@
-import type { ISignature } from "../../backend/src/database/interfaces";
+import type { ISignatures } from "../../backend/src/database/interfaces";
 import { Paths } from "../../global/constants/api";
 import { getRequest, putRequest } from "../utils/api.utils";
 
-export const addSignature = async (
-  name: string
-): Promise<ISignature[]> => {
-  const response = await putRequest(`${Paths.SIGNATURE}/${name}`, {
-    name: name,
-  });
-  return response.data as ISignature[];
+export const addNewSignature = async (
+data: any
+): Promise<ISignatures[]> => {
+  const response = await putRequest(`${Paths.SIGNATURE}`, {data});
+  return response.data as ISignatures[];
 };
 
-export const getSignatures = async (): Promise<ISignature[]> => {
+export const getSignatures = async (): Promise<ISignatures[]> => {
     const response = await getRequest(`${Paths.SIGNATURE}`);
-    return response.data as ISignature[];
+    return response.data as ISignatures[];
   };
