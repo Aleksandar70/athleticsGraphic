@@ -19,6 +19,7 @@
     Graphics,
   } from "../../../../global/constants/constants";
   import { UIText } from "../../../../global/constants/ui_text";
+  import { getSignatures } from "../../../api/signature.api";
   import { previewChannel } from "../../../stores/preview.store";
   import { streamChannel } from "../../../stores/stream.store";
   import { currentHeatName } from "../../../stores/table.store";
@@ -31,7 +32,8 @@
 
   let competitors: Record<string, string>[] = [];
   let bestCompetitors: Record<string, string>[] = [];
-
+  let signatures = getSignatures();
+  console.log("signatures ", signatures);
   $: if (data["Competitors"]) {
     competitors = data["Competitors"];
   }
@@ -208,14 +210,15 @@
       </p>
     {/if}
     {#if id === Graphics.SIGNATURE}
-    <Button on:click={() => addSignature()}>{UIText.BUTTON_ADD}</Button>
+      <Button on:click={() => addSignature()}>{UIText.BUTTON_ADD}</Button>
       <hr />
       <Dropdown>
         <DropdownToggle class="data-source--dropdown text-dark" caret />
         <DropdownMenu class="data-source--dropdown">
           <DropdownItem header>{UIText.SIGNATURE_HEADER}</DropdownItem>
-          <DropdownItem class="source-item">NESTO</DropdownItem>
-          <DropdownItem class="source-item">NESTO2</DropdownItem>
+          <!-- {#each signatures as signature}
+            <DropdownItem class="source-item">{signature}</DropdownItem>
+          {/each} -->
         </DropdownMenu>
       </Dropdown>
     {/if}

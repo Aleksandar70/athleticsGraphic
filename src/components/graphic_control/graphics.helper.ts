@@ -225,3 +225,7 @@ const heatExists = (): boolean => {
   }
   return false;
 };
+
+const addSignature = (): void => {
+
+};
