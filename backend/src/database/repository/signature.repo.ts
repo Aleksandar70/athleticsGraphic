@@ -1,21 +1,21 @@
 import { ISignature } from "../interfaces";
 import { SignatureModel } from "../models/signature.model";
 
-export const addSignature = async (
-  signatures: ISignature[]
-): Promise<ISignature[]> => {
-  const signatureModels: ISignature[] = [];
+// export const addSignature = async (
+//   signatures: ISignature[]
+// ): Promise<ISignature[]> => {
+//   const signatureModels: ISignature[] = [];
 
-  for (const signature of signatures) {
-    const signatureModel = new SignatureModel({
-      ...signature,
-    });
+//   for (const signature of signatures) {
+//     const signatureModel = new SignatureModel({
+//       ...signature,
+//     });
 
-    signatureModels.push(signatureModel);
-  }
+//     signatureModels.push(signatureModel);
+//   }
 
-  return await SignatureModel.insertMany(signatureModels);
-};
+//   return await SignatureModel.insertMany(signatureModels);
+// };
 
 export const getSignatures = async (): Promise<ISignature[]> => {
   return await SignatureModel.find({});
