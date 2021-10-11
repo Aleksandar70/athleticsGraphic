@@ -1,9 +1,10 @@
 <script lang="ts">
   import io from "socket.io-client";
+  import { Paths } from "../../../../global/constants/api";
   import { visibleGraphics } from "../../../stores/stream.store";
   import clearSocket from "../../../utils/socket.util";
 
-  const socket = io("http://localhost:4000");
+  const socket = io(`http://${Paths.IPV4}:4000`);
 
   let time = "";
 
