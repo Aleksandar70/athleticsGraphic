@@ -1,8 +1,10 @@
 <script lang="ts">
   import io from "socket.io-client";
-  import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+  import { Paths } from "../../../../global/constants/api";
+  import { visibleGraphics } from "../../../stores/stream.store";
+  import clearSocket from "../../../utils/socket.util";
 
-  const socket = io("http://localhost:4000");
+  const socket = io(`http://${Paths.IPV4}:4000`);
 
   let time = "";
 
@@ -12,10 +14,10 @@
   socket.on("time", (data) => (time = data));
 
   let clear = false;
-  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+  clearSocket.on("clear", () => (clear = true));
 
   $: if (clear) {
-    $clearChannel.postMessage(false);
+    clear = false;
     visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
   }
 </script>

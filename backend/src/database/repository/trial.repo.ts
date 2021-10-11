@@ -73,7 +73,7 @@ const mergeTrialResults = (trials: ITrial[]): ITrial[] => {
   const formattedTrials: ITrial[] = [];
   for (const trial of trials) {
     const metric = trial.height ?? trial.round;
-    const bibData = done.get(trial.bib);
+    const bibData = done.get(trial?.bib ?? "");
     if (bibData?.includes(metric as string)) continue;
     const mergedResults = trials
       .filter(
@@ -87,8 +87,8 @@ const mergeTrialResults = (trials: ITrial[]): ITrial[] => {
       );
     formattedTrials.push({ ...trial, result: mergedResults });
     bibData
-      ? done.set(trial.bib, [...bibData, metric as string])
-      : done.set(trial.bib, [metric as string]);
+      ? done.set(trial.bib ?? "", [...bibData, metric as string])
+      : done.set(trial.bib ?? "", [metric as string]);
   }
   return formattedTrials;
 };

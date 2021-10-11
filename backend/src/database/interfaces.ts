@@ -82,7 +82,7 @@ export interface IResult {
 }
 export interface ITrial {
   _id?: ObjectId;
-  bib: string;
+  bib?: string;
   competitorId?: string;
   result?: string;
   height?: string;
@@ -118,11 +118,11 @@ export interface ICompetitor {
 export interface IRelayTeams {
   _id?: ObjectId;
   eventId?: string;
-  name: string;
-  nonScorer: false;
-  relayTeamId: string;
-  teamId: string;
-  runners: ICompetitor[];
+  name?: string;
+  nonScorer?: false;
+  relayTeamId?: string;
+  teamId?: string;
+  runners?: ICompetitor[];
 }
 
 export interface ICompetition {

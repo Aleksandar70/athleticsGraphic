@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
-  import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+  import { visibleGraphics } from "../../../stores/stream.store";
+  import socket from "../../../utils/socket.util";
 
   export let data = {};
 
@@ -53,11 +54,11 @@
   });
 
   let clear = false;
-  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+  socket.on("clear", () => (clear = true));
 
   $: if (clear) {
     timeline.reverse().then(() => {
-      $clearChannel.postMessage(false);
+      clear = false;
       visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
     });
   }

@@ -1,13 +1,14 @@
 <script lant="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
-  import { clearChannel, visibleGraphics } from "../../../stores/stream.store";
+  import { visibleGraphics } from "../../../stores/stream.store";
+  import socket from "../../../utils/socket.util";
 
   export let data;
 
   let clear = false;
 
-  $clearChannel.addEventListener("message", (event) => (clear = event.data));
+  socket.on("clear", () => (clear = true));
 
   const timeline = gsap.timeline();
 
@@ -38,8 +39,8 @@
 
   $: if (clear) {
     timeline.reverse().then(() => {
-      $clearChannel.postMessage(false);
-      visibleGraphics.set({ id: "", data: {} });
+      clear = false;
+      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
     });
   }
 </script>
