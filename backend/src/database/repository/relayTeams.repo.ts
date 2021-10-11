@@ -1,10 +1,10 @@
-import { IRelayTeams } from "../interfaces";
+import { IRelayTeam } from "../interfaces";
 import { RelayTeamModel } from "../models/relayTeams.model";
 
 export const createRelayTeams = async (
-  relayTeams: IRelayTeams[]
-): Promise<IRelayTeams[]> => {
-  const relayTeamModels: IRelayTeams[] = [];
+  relayTeams: IRelayTeam[]
+): Promise<IRelayTeam[]> => {
+  const relayTeamModels: IRelayTeam[] = [];
 
   for (const relayTeam of relayTeams) {
     const relayTeamModel = new RelayTeamModel({
@@ -19,13 +19,13 @@ export const createRelayTeams = async (
 
 export const getRelayTeamsForEvent = async (
   eventId: string
-): Promise<IRelayTeams[]> => {
+): Promise<IRelayTeam[]> => {
   return await RelayTeamModel.find({ eventId: eventId });
 };
 
 //NOT USED AT THE MOMENT.
 export const updateRelayTeams = async (
-  relayTeams: IRelayTeams[]
+  relayTeams: IRelayTeam[]
 ): Promise<boolean> => {
   let result = true;
   for (const relayTeam of relayTeams) {
