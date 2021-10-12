@@ -19,7 +19,10 @@
     Graphics,
   } from "../../../../global/constants/constants";
   import { UIText } from "../../../../global/constants/ui_text";
-  import { addOrUpdateSignature, getSignatures } from "../../../api/signature.api";
+  import {
+    addOrUpdateSignature,
+    getSignatures,
+  } from "../../../api/signature.api";
   import { previewChannel } from "../../../stores/preview.store";
   import { currentHeatName } from "../../../stores/table.store";
   import { isHeight } from "../../../utils/event.utils";
@@ -98,11 +101,20 @@
       heat: $currentHeatName,
     });
   };
+  //TODO: when adding new signature automatically add it in dropdown
+  //TODO: dropdown should have preselected value
 
   const valueChange = async (signature: ISignature) => {
     selectedSignature.set(signature);
     data["Name"] = signature.name;
     data["Title"] = signature.title;
+  };
+
+  const addToDropdown = async (_data: any) => {
+    addOrUpdateSignature(_data);
+    console.log("data ", _data["Name"]);
+    data["Name"] = _data["Name"];
+    data["Title"] = _data["Title"];
   };
 
   $: isActive = (value: ISignature) => $selectedSignature === value;
@@ -218,13 +230,14 @@
       {#await getSignatures()}
         <Spinner />
       {:then signatures}
-        <Button on:click={() => addOrUpdateSignature(_data)}
+        <Button on:click={() => addToDropdown(_data)}
           >{UIText.BUTTON_ADD}</Button
         >
         <hr />
         <Dropdown>
           <DropdownToggle class="signature--dropdown text-dark" caret
-            >{$selectedSignature ?? ""}</DropdownToggle
+            >{$selectedSignature["name"] ?? ""}
+            {$selectedSignature["title"] ?? ""}</DropdownToggle
           >
           <DropdownMenu class="signature--dropdown">
             <DropdownItem header>{UIText.SIGNATURE_HEADER}</DropdownItem>
