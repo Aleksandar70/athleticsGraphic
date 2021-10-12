@@ -103,6 +103,8 @@
   const valueChange = async (signature: string) => {
     await updateConfig({ selectedSignature: signature });
     selectedSignature.set(signature);
+    data["Name"] = signature.split(" ")[0];
+    data["Title"] = signature.split(" ")[1];
   };
 
   $: isActive = (value: ISignature) => $selectedSignature === value;
