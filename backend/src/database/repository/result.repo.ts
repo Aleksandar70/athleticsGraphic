@@ -1,7 +1,6 @@
 import { getLockedFields } from "../database";
-import { IEvent, IResult, IUnit } from "../interfaces";
+import { IResult, IUnit } from "../interfaces";
 import { ResultModel } from "../models/result.model";
-import { getEventLocal } from "./event.repo";
 
 export const createResults = async (unit: IUnit): Promise<IResult[]> => {
   const results = [...(unit.results ?? [])];
@@ -15,20 +14,15 @@ export const createResults = async (unit: IUnit): Promise<IResult[]> => {
 export const updateResults = async (
   updatedResults: Record<string, string>[]
 ): Promise<void> => {
-  const eventId = updatedResults?.[0].eventId;
-  const event: IEvent = await getEventLocal(eventId);
-  const units: IUnit[] = event.units ?? [];
-  const allResults = units.reduce(
-    (product, current) => product.concat(current.results as IResult),
-    [] as IResult[]
-  );
-
   for (const updatedResult of updatedResults) {
-    const { competitorId, teamId, result } = updatedResult;
-    const id = competitorId ?? teamId;
-    const resultId = allResults.find((_result) => _result.bib === id)?._id;
+    const { competitorId, teamId, eventId, heatName, result, place } =
+      updatedResult;
 
-    await ResultModel.findByIdAndUpdate(resultId, { performance: result });
+    await ResultModel.findOneAndUpdate(
+      { bib: competitorId ?? teamId, eventId: eventId, heatName: heatName },
+      { performance: result, place: place },
+      { omitUndefined: true }
+    );
   }
 };
 

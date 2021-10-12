@@ -27,6 +27,7 @@ import {
   currentCompetitionData,
   currentEventData,
   currentEventId,
+  currentHeatName,
   isRelayTeamEvent,
   lockedColumns,
   selectedParticipant,
@@ -331,11 +332,17 @@ export const updatedTableValues = (tableData: TableData): RawData => {
               _row.id === "teamId"
           )
           .map((field) => {
-            const parsedValue =
-              field.value instanceof Number
-                ? Number(field.stringValue)
-                : field.stringValue;
-            field.value = parsedValue;
+            let parsedValue;
+            const result = field?.value?.[get(currentHeatName)];
+            if (result) {
+              parsedValue = result instanceof Number ? Number(result) : result;
+            } else {
+              parsedValue =
+                field.value instanceof Number
+                  ? Number(field.stringValue)
+                  : field.stringValue;
+              field.value = parsedValue;
+            }
             return [field.id, parsedValue];
           })
       )
