@@ -334,7 +334,7 @@ export const updatedTableValues = (tableData: TableData): RawData => {
           .map((field) => {
             let parsedValue;
             const result = field?.value?.[get(currentHeatName)];
-            if (result) {
+            if (result !== undefined) {
               parsedValue = result instanceof Number ? Number(result) : result;
             } else {
               parsedValue =

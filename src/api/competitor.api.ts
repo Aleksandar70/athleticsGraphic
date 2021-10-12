@@ -68,5 +68,5 @@ const getResultData = (tableData: RawData): Record<string, string>[] => {
       delete data.result;
       return resultData;
     })
-    .filter((data) => data.result || data.place);
+    .filter((data) => data.result != undefined || data.place != undefined);
 };
