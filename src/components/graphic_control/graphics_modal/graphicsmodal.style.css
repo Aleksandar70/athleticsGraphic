@@ -38,3 +38,17 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.signature--dropdown {
+  background-color: var(--main-light) !important;
+  color: black;
+}
+
+.signature.active,
+.signature:active {
+  background-color: var(--main-dark) !important;
+}
+
+.signature-item:hover {
+  background-color: var(--hover-color) !important;
+}

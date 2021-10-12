@@ -223,14 +223,14 @@
         >
         <hr />
         <Dropdown>
-          <DropdownToggle class="data-source--dropdown text-dark" caret
+          <DropdownToggle class="signature--dropdown text-dark" caret
             >{$selectedSignature ?? ""}</DropdownToggle
           >
-          <DropdownMenu class="data-source--dropdown">
+          <DropdownMenu class="signature--dropdown">
             <DropdownItem header>{UIText.SIGNATURE_HEADER}</DropdownItem>
             {#each signatures as signature}
               <DropdownItem
-                class="source-item"
+                class="signature-item"
                 active={isActive(signature)}
                 on:click={() =>
                   valueChange(signature.name.concat(" " + signature.title))}

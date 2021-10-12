@@ -15,6 +15,7 @@ import {
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
 import { _ } from "svelte-i18n";
+import { selectedSignature } from "../../stores/config.store";
 
 export const getDataForPreviewModal = (
   id: Graphics
@@ -104,8 +105,8 @@ export const getDataForPreviewModal = (
       data["Season Best"] = getFieldValueFromParticipant("sb");
       break;
     case Graphics.SIGNATURE:
-      data["Name"] = "Name";
-      data["Title"] = "Title";
+      data["Name"] = get(selectedSignature).split(" ")[0];
+      data["Title"] = get(selectedSignature).split(" ")[1];
   }
   return data;
 };
@@ -224,8 +225,4 @@ const heatExists = (): boolean => {
     }
   }
   return false;
-};
-
-const addSignature = (): void => {
-
 };
