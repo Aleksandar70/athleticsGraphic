@@ -5,7 +5,7 @@ export const createSignatures = async (): Promise<void> => {
   await SignatureModel.create({});
 };
 
-export const addNewSignature = async (
+export const addOrUpdateSignature = async (
   signature: ISignature
 ): Promise<ISignature> => {
   return await SignatureModel.updateOne(

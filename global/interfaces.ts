@@ -23,7 +23,6 @@ export interface IConfig {
   dataSource?: string;
   selectedLanguage?: string;
   languages?: string[];
-  selectedSignature?: string;
 }
 
 export interface ISearch {

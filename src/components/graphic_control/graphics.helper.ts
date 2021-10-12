@@ -15,7 +15,7 @@ import {
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
 import { _ } from "svelte-i18n";
-import { selectedSignature } from "../../stores/config.store";
+import { selectedSignature } from "../../stores/signature.store";
 
 export const getDataForPreviewModal = (
   id: Graphics
@@ -105,8 +105,8 @@ export const getDataForPreviewModal = (
       data["Season Best"] = getFieldValueFromParticipant("sb");
       break;
     case Graphics.SIGNATURE:
-      data["Name"] = get(selectedSignature).split(" ")[0];
-      data["Title"] = get(selectedSignature).split(" ")[1];
+      data["Name"] = get(selectedSignature)["name"];
+      data["Title"] = get(selectedSignature)["title"];
   }
   return data;
 };

@@ -19,7 +19,7 @@
     Graphics,
   } from "../../../../global/constants/constants";
   import { UIText } from "../../../../global/constants/ui_text";
-  import { addNewSignature, getSignatures } from "../../../api/signature.api";
+  import { addOrUpdateSignature, getSignatures } from "../../../api/signature.api";
   import { previewChannel } from "../../../stores/preview.store";
   import { currentHeatName } from "../../../stores/table.store";
   import { isHeight } from "../../../utils/event.utils";
@@ -27,8 +27,7 @@
   import { sendGraphicsData } from "../../../api/graphics.api";
   import Spinner from "../../spinner/Spinner.svelte";
   import type { ISignature } from "../../../../backend/src/database/interfaces";
-  import { selectedSignature } from "../../../stores/config.store";
-  import { updateConfig } from "../../../api/config.api";
+  import { selectedSignature } from "../../../stores/signature.store";
 
   export let isOpen: boolean;
   export let id: Graphics;
@@ -100,11 +99,10 @@
     });
   };
 
-  const valueChange = async (signature: string) => {
-    await updateConfig({ selectedSignature: signature });
+  const valueChange = async (signature: ISignature) => {
     selectedSignature.set(signature);
-    data["Name"] = signature.split(" ")[0];
-    data["Title"] = signature.split(" ")[1];
+    data["Name"] = signature.name;
+    data["Title"] = signature.title;
   };
 
   $: isActive = (value: ISignature) => $selectedSignature === value;
@@ -220,7 +218,7 @@
       {#await getSignatures()}
         <Spinner />
       {:then signatures}
-        <Button on:click={() => addNewSignature(_data)}
+        <Button on:click={() => addOrUpdateSignature(_data)}
           >{UIText.BUTTON_ADD}</Button
         >
         <hr />
@@ -234,8 +232,7 @@
               <DropdownItem
                 class="signature-item"
                 active={isActive(signature)}
-                on:click={() =>
-                  valueChange(signature.name.concat(" " + signature.title))}
+                on:click={() => valueChange(signature)}
                 >{signature.name} {signature.title}</DropdownItem
               >
             {/each}

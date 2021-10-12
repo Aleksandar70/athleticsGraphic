@@ -2,7 +2,7 @@ import type { ISignature } from "../../backend/src/database/interfaces";
 import { Paths } from "../../global/constants/api";
 import { getRequest, putRequest } from "../utils/api.utils";
 
-export const addNewSignature = async (data: any): Promise<ISignature[]> => {
+export const addOrUpdateSignature = async (data: any): Promise<ISignature[]> => {
   const formattedData = {};
   Object.entries(data).forEach(
     ([key, value]) => (formattedData[key.toLowerCase()] = value)
