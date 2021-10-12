@@ -2,7 +2,7 @@ import { get } from "svelte/store";
 import { Paths } from "../../global/constants/api";
 import type { ICompetitor } from "../../global/interfaces";
 import type { RawData } from "../../global/types";
-import { currentEventId } from "../stores/table.store";
+import { currentEventId, currentHeatName } from "../stores/table.store";
 import { getRequest, putRequest } from "../utils/api.utils";
 import { isNumeric } from "../utils/string.utils";
 
@@ -63,6 +63,7 @@ const getResultData = (tableData: RawData): Record<string, string>[] => {
       resultData["teamId"] = data.teamId as string;
       resultData["result"] = data.result as string;
       resultData["eventId"] = get(currentEventId);
+      resultData["heatName"] = get(currentHeatName);
       delete data.result;
       return resultData;
     })

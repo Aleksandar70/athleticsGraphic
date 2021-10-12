@@ -24,11 +24,12 @@ export const updateResults = async (
   );
 
   for (const updatedResult of updatedResults) {
-    const { competitorId, teamId, result } = updatedResult;
-    const id = competitorId ?? teamId;
-    const resultId = allResults.find((_result) => _result.bib === id)?._id;
+    const { competitorId, teamId, eventId, result, heatName } = updatedResult;
 
-    await ResultModel.findByIdAndUpdate(resultId, { performance: result });
+    await ResultModel.findOneAndUpdate(
+      { bib: competitorId ?? teamId, eventId: eventId, heatName: heatName },
+      { performance: result }
+    );
   }
 };
 
