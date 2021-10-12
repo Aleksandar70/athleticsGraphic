@@ -26,6 +26,9 @@
   import "./graphicsmodal.style.css";
   import { sendGraphicsData } from "../../../api/graphics.api";
   import Spinner from "../../spinner/Spinner.svelte";
+  import type { ISignature } from "../../../../backend/src/database/interfaces";
+  import { selectedSignature } from "../../../stores/config.store";
+  import { updateConfig } from "../../../api/config.api";
 
   export let isOpen: boolean;
   export let id: Graphics;
@@ -72,10 +75,6 @@
     toggle();
   };
 
-  const addSignature = () => {
-    addNewSignature(_data);
-  };
-
   const inputChange = (
     target: EventTarget,
     name: string,
@@ -100,6 +99,13 @@
       heat: $currentHeatName,
     });
   };
+
+  const valueChange = async (signature: string) => {
+    await updateConfig({ selectedSignature: signature });
+    selectedSignature.set(signature);
+  };
+
+  $: isActive = (value: ISignature) => $selectedSignature === value;
 </script>
 
 <Modal {isOpen} {toggle} scrollable>
@@ -212,14 +218,24 @@
       {#await getSignatures()}
         <Spinner />
       {:then signatures}
-        <Button on:click={() => addNewSignature(_data)}>{UIText.BUTTON_ADD}</Button>
+        <Button on:click={() => addNewSignature(_data)}
+          >{UIText.BUTTON_ADD}</Button
+        >
         <hr />
         <Dropdown>
-          <DropdownToggle class="data-source--dropdown text-dark" caret />
+          <DropdownToggle class="data-source--dropdown text-dark" caret
+            >{$selectedSignature ?? ""}</DropdownToggle
+          >
           <DropdownMenu class="data-source--dropdown">
             <DropdownItem header>{UIText.SIGNATURE_HEADER}</DropdownItem>
             {#each signatures as signature}
-              <DropdownItem class="source-item">{signature}</DropdownItem>
+              <DropdownItem
+                class="source-item"
+                active={isActive(signature)}
+                on:click={() =>
+                  valueChange(signature.name.concat(" " + signature.title))}
+                >{signature.name} {signature.title}</DropdownItem
+              >
             {/each}
           </DropdownMenu>
         </Dropdown>

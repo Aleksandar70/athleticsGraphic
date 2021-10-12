@@ -7,7 +7,9 @@ export const addNewSignature = async (data: any): Promise<ISignature[]> => {
   Object.entries(data).forEach(
     ([key, value]) => (formattedData[key.toLowerCase()] = value)
   );
-  const response = await putRequest(`${Paths.SIGNATURE}`, { data: formattedData });
+  const response = await putRequest(`${Paths.SIGNATURE}`, {
+    data: formattedData,
+  });
   return response.data as ISignature[];
 };
 

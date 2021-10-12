@@ -23,6 +23,7 @@ export interface IConfig {
   dataSource?: string;
   selectedLanguage?: string;
   languages?: string[];
+  selectedSignature?: string;
 }
 
 export interface ISearch {
@@ -77,5 +78,5 @@ export interface IRelayTeam {
 
 export interface ISignature {
   name?: string;
-  title: string;
+  title?: string;
 }
