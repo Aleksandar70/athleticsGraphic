@@ -62,10 +62,11 @@ const getResultData = (tableData: RawData): Record<string, string>[] => {
       resultData["competitorId"] = data.competitorId as string;
       resultData["teamId"] = data.teamId as string;
       resultData["result"] = data.result as string;
+      resultData["place"] = data.place as string;
       resultData["eventId"] = get(currentEventId);
       resultData["heatName"] = get(currentHeatName);
       delete data.result;
       return resultData;
     })
-    .filter((data) => data.result);
+    .filter((data) => data.result || data.place);
 };

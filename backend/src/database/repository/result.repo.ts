@@ -15,20 +15,14 @@ export const createResults = async (unit: IUnit): Promise<IResult[]> => {
 export const updateResults = async (
   updatedResults: Record<string, string>[]
 ): Promise<void> => {
-  const eventId = updatedResults?.[0].eventId;
-  const event: IEvent = await getEventLocal(eventId);
-  const units: IUnit[] = event.units ?? [];
-  const allResults = units.reduce(
-    (product, current) => product.concat(current.results as IResult),
-    [] as IResult[]
-  );
-
   for (const updatedResult of updatedResults) {
-    const { competitorId, teamId, eventId, result, heatName } = updatedResult;
+    const { competitorId, teamId, eventId, heatName, result, place } =
+      updatedResult;
 
     await ResultModel.findOneAndUpdate(
       { bib: competitorId ?? teamId, eventId: eventId, heatName: heatName },
-      { performance: result }
+      { performance: result, place: place },
+      { omitUndefined: true }
     );
   }
 };
