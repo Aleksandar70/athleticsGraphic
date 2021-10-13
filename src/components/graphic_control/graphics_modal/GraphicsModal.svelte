@@ -38,6 +38,7 @@
   export let data: Record<string, any> = {};
 
   let isAlertVisible = false;
+  let signatures = [];
   let competitors: Record<string, string>[] = [];
   let bestCompetitors: Record<string, string>[] = [];
   $: if (data["Competitors"]) {
@@ -116,12 +117,17 @@
       return;
     }
     const response = await addOrUpdateSignature(data);
-    if (response) {
+    if (response["upserted"]) {
       isAlertVisible = true;
+      signatures = await getSignatures();
       return;
     }
-    isAlertVisible = false;
   };
+
+  const getAllSignatures = async () => {
+    signatures = await getSignatures();
+  };
+
   $: isActive = (value: ISignature) => $selectedSignature === value;
 </script>
 
@@ -232,9 +238,9 @@
       </p>
     {/if}
     {#if id === Graphics.SIGNATURE}
-      {#await getSignatures()}
+      {#await getAllSignatures()}
         <Spinner />
-      {:then signatures}
+      {:then}
         <Button on:click={() => addSignatureToDropdown(_data)}
           >{UIText.BUTTON_SAVE}</Button
         >
@@ -260,7 +266,7 @@
                 class="signature-item"
                 active={isActive(signature)}
                 on:click={() => valueChange(signature)}
-                >{signature.name} {signature.title}</DropdownItem
+                >{signature["name"]} {signature["title"]}</DropdownItem
               >
             {/each}
           </DropdownMenu>
