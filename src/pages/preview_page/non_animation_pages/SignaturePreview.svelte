@@ -4,8 +4,12 @@
 
 <div id="signature--wrapper">
   <img id="signature" alt="signature" src="/img/graphics/signature.png" />
-  <p id="signatureName">{$visiblePreview.data["Name"]}</p>
-  <p id="signatureTitle">{$visiblePreview.data["Title"]}</p>
+  {#if $visiblePreview.data["Name"]}
+    <p id="signatureName">{$visiblePreview.data["Name"]}</p>
+  {/if}
+  {#if $visiblePreview.data["Name"]}
+    <p id="signatureTitle">{$visiblePreview.data["Title"]}</p>
+  {/if}
 </div>
 
 <style>

@@ -31,11 +31,13 @@
   import Spinner from "../../spinner/Spinner.svelte";
   import type { ISignature } from "../../../../backend/src/database/interfaces";
   import { selectedSignature } from "../../../stores/signature.store";
+  import { Alert } from "sveltestrap";
 
   export let isOpen: boolean;
   export let id: Graphics;
   export let data: Record<string, any> = {};
 
+  let isAlertVisible = false;
   let competitors: Record<string, string>[] = [];
   let bestCompetitors: Record<string, string>[] = [];
   $: if (data["Competitors"]) {
@@ -106,15 +108,17 @@
     selectedSignature.set(signature);
     data["Name"] = signature.name;
     data["Title"] = signature.title;
+    sendPreview(data);
   };
 
-  const addToDropdown = async (_data: any) => {
-    addOrUpdateSignature(_data);
-    console.log("data ", _data["Name"]);
-    data["Name"] = _data["Name"];
-    data["Title"] = _data["Title"];
+  const addSignatureToDropdown = async (data) => {
+    const response = await addOrUpdateSignature(data);
+    if (response) {
+      isAlertVisible = true;
+      return;
+    }
+    isAlertVisible = false;
   };
-
   $: isActive = (value: ISignature) => $selectedSignature === value;
 </script>
 
@@ -228,14 +232,23 @@
       {#await getSignatures()}
         <Spinner />
       {:then signatures}
-        <Button on:click={() => addToDropdown(_data)}
+        <Button on:click={() => addSignatureToDropdown(_data)}
           >{UIText.BUTTON_ADD}</Button
         >
+        <Alert
+          class="signature-control-alert"
+          bind:isOpen={isAlertVisible}
+          color="success"
+          fade={true}
+          dismissible
+        >
+          {UIText.SIGNATURE_ALERT_TEXT}
+        </Alert>
         <hr />
         <Dropdown>
           <DropdownToggle class="signature--dropdown text-dark" caret
-            >{$selectedSignature["name"] ?? ""}
-            {$selectedSignature["title"] ?? ""}</DropdownToggle
+            >{$selectedSignature["name"] ?? "Choose"}
+            {$selectedSignature["title"] ?? "signature"}</DropdownToggle
           >
           <DropdownMenu class="signature--dropdown">
             <DropdownItem header>{UIText.SIGNATURE_HEADER}</DropdownItem>

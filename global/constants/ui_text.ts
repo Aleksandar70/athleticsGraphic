@@ -26,6 +26,8 @@ export abstract class UIText {
   static readonly SIGNATURE: string = "Signature";
   static readonly PERSONAL_SCORE_ALERT_TEXT: string =
     "Please select one of the competitors in the table!";
+  static readonly SIGNATURE_ALERT_TEXT: string =
+    "Signature is successfully added!";
   static readonly MEDALS: string = "Medals";
   static readonly TIME: string = "Time";
   static readonly CLEAR_ALL: string = "Clear all";

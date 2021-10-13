@@ -52,3 +52,7 @@
 .signature-item:hover {
   background-color: var(--hover-color) !important;
 }
+
+.signature-control-alert {
+  text-align: center;
+}
