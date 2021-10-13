@@ -101,8 +101,6 @@
       heat: $currentHeatName,
     });
   };
-  //TODO: when adding new signature automatically add it in dropdown
-  //TODO: dropdown should have preselected value
 
   const valueChange = async (signature: ISignature) => {
     selectedSignature.set(signature);
