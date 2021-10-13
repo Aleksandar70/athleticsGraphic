@@ -34,15 +34,19 @@
   $: if (clear) {
     timeline.reverse().then(() => {
       clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: ""  });
+      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
     });
   }
 </script>
 
 <div id="signature--wrapper">
   <img id="signature" alt="signature" src="/img/graphics/signature.png" />
-  <p id="signatureName">{data["Name"]}</p>
-  <p id="signatureTitle">{data["Title"]}</p>
+  {#if $visibleGraphics.data["Name"]}
+    <p id="signatureName">{$visibleGraphics.data["Name"]}</p>
+  {/if}
+  {#if $visibleGraphics.data["Name"]}
+    <p id="signatureTitle">{$visibleGraphics.data["Title"]}</p>
+  {/if}
 </div>
 
 <style>
