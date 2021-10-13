@@ -36,6 +36,6 @@
   {:else if $visibleGraphics.id == Graphics.PERSONAL_DATA}
     <PersonalData data={$visibleGraphics.data} />
   {:else if $visibleGraphics.id == Graphics.SIGNATURE}
-    <Signature data={$visibleGraphics.data} />
+    <Signature />
   {/if}
 </div>
