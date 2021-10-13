@@ -4,8 +4,6 @@
   import { visibleGraphics } from "../../../stores/stream.store";
   import socket from "../../../utils/socket.util";
 
-  export let data;
-
   let clear = false;
 
   socket.on("clear", () => (clear = true));
