@@ -112,7 +112,7 @@
     sendPreview(data);
   };
 
-  const addSignatureToDropdown = async (data) => {
+  const addSignatureToDropdown = async (data: ISignature) => {
     if (!data["Name"] || !data["Title"]) {
       return;
     }

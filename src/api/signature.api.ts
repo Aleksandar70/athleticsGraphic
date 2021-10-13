@@ -3,7 +3,7 @@ import { Paths } from "../../global/constants/api";
 import { getRequest, putRequest } from "../utils/api.utils";
 
 export const addOrUpdateSignature = async (
-  data: any
+  data: ISignature
 ): Promise<ISignature[]> => {
   const formattedData = {};
   Object.entries(data).forEach(
