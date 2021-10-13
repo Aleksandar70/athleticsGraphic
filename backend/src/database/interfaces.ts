@@ -4,7 +4,7 @@ export interface IOTCompetitionData {
   competitionData: ICompetition;
   competitorsData: ICompetitor[];
   eventsData: IEvent[];
-  relayTeamsData: IRelayTeams[];
+  relayTeamsData: IRelayTeam[];
 }
 
 export interface IEvent {
@@ -115,7 +115,7 @@ export interface ICompetitor {
   result?: string;
 }
 
-export interface IRelayTeams {
+export interface IRelayTeam {
   _id?: ObjectId;
   eventId?: string;
   name?: string;
@@ -140,7 +140,7 @@ export interface ICompetition {
   latitude?: number;
   longitude?: number;
   organiser?: string;
-  relayTeams?: IRelayTeams[];
+  relayTeams?: IRelayTeam[];
   shortName?: string;
   slug?: string;
   teamTypes?: string;
@@ -155,4 +155,10 @@ export interface IConfig {
   dataSource?: string;
   selectedLanguage?: string;
   languages?: string[];
+}
+
+export interface ISignature {
+  _id?: ObjectId;
+  name?: string;
+  title?: string;
 }

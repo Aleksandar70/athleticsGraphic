@@ -332,7 +332,7 @@ export const updatedTableValues = (tableData: TableData): RawData => {
               _row.id === "teamId"
           )
           .map((field) => {
-            let parsedValue;
+            let parsedValue: number | string;
             const result = field?.value?.[get(currentHeatName)];
             if (result !== undefined) {
               parsedValue = result instanceof Number ? Number(result) : result;

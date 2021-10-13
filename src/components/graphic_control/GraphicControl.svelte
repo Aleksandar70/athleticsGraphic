@@ -107,6 +107,9 @@
         <Button color="primary" on:click={() => action(Graphics.PERSONAL_DATA)}
           >{UIText.SHOW_PERSONAL_DATA}</Button
         >
+        <Button color="primary" on:click={() => action(Graphics.SIGNATURE)}
+          >{UIText.SIGNATURE}</Button
+        >
       </div>
     </CardBody>
     <CardFooter>

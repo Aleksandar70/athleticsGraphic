@@ -5,6 +5,7 @@ import { createCompetition } from "./repository/competition.repo";
 import { createCompetitors } from "./repository/competitor.repo";
 import { createRelayTeams } from "./repository/relayTeams.repo";
 import { createDefaultConfig } from "./repository/config.repo";
+import { createSignatures } from "./repository/signature.repo";
 import { createEvents } from "./repository/event.repo";
 import level from "level-ts";
 
@@ -43,6 +44,7 @@ export const initialize = async (): Promise<void> => {
   }
 
   await createDefaultConfig();
+  await createSignatures();
   const otCompetitionData = await getOTCompetitionData();
   await createCompetition(otCompetitionData.competitionData);
   await createEvents(otCompetitionData.eventsData);

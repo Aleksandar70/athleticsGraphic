@@ -74,3 +74,8 @@ export interface IRelayTeam {
   relayTeamId?: string;
   runners?: ICompetitor[];
 }
+
+export interface ISignature {
+  name?: string;
+  title?: string;
+}

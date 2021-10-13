@@ -35,7 +35,7 @@
     await initializeData();
     location.reload();
   };
-
+  
   $: isActive = (value: string) => $dataSource === value;
 </script>
 

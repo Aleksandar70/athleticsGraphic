@@ -42,7 +42,6 @@ export const eventCompetitorsColumnsUI = [
   "lastName",
   "dateOfBirth",
   "nationality",
-  "event",
   "pb",
   "sb",
   "flagUrl",
@@ -67,7 +66,6 @@ export const defaultEventRelayTeamsColumns = [
 
 export const uneditableFields = [
   "competitorId",
-  "event",
   "eventId",
   "relayTeamId",
   "teamId",

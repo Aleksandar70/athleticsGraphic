@@ -1,7 +1,7 @@
 export abstract class Paths {
   static readonly SERVER_PORT = 5001;
   static readonly STREAMING_PORT = 5002;
-  static readonly IPV4 = "192.168.0.15";
+  static readonly IPV4 = "192.168.100.2";
   static readonly SERVER_URL = `http://${Paths.IPV4}:${Paths.SERVER_PORT}/`;
   static readonly CLIENT_URL = `http://${Paths.IPV4}:5000/`;
   static readonly ROOT_PATH = "/";
@@ -20,6 +20,9 @@ export abstract class Paths {
 
   static readonly RELAY_TEAMS = "relayTeams";
   static readonly RELAY_TEAMS_PATH = `${Paths.ROOT_PATH}${Paths.RELAY_TEAMS}`;
+
+  static readonly SIGNATURE = "signature";
+  static readonly SIGNATURE_PATH = `${Paths.ROOT_PATH}${Paths.SIGNATURE}`;
 
   static readonly CONFIG = "config";
   static readonly CONFIG_PATH = `${Paths.ROOT_PATH}${Paths.CONFIG}`;

@@ -8,6 +8,10 @@
     Input,
     Form,
     Button,
+    Dropdown,
+    DropdownItem,
+    DropdownToggle,
+    DropdownMenu,
   } from "sveltestrap";
   import {
     Constants,
@@ -15,19 +19,28 @@
     Graphics,
   } from "../../../../global/constants/constants";
   import { UIText } from "../../../../global/constants/ui_text";
+  import {
+    addOrUpdateSignature,
+    getSignatures,
+  } from "../../../api/signature.api";
   import { previewChannel } from "../../../stores/preview.store";
   import { currentHeatName } from "../../../stores/table.store";
   import { isHeight } from "../../../utils/event.utils";
   import "./graphicsmodal.style.css";
   import { sendGraphicsData } from "../../../api/graphics.api";
+  import Spinner from "../../spinner/Spinner.svelte";
+  import type { ISignature } from "../../../../backend/src/database/interfaces";
+  import { selectedSignature } from "../../../stores/signature.store";
+  import { Alert } from "sveltestrap";
 
   export let isOpen: boolean;
   export let id: Graphics;
   export let data: Record<string, any> = {};
 
+  let isAlertVisible = false;
+  let signatures = [];
   let competitors: Record<string, string>[] = [];
   let bestCompetitors: Record<string, string>[] = [];
-
   $: if (data["Competitors"]) {
     competitors = data["Competitors"];
   }
@@ -91,6 +104,31 @@
       heat: $currentHeatName,
     });
   };
+
+  const valueChange = async (signature: ISignature) => {
+    selectedSignature.set(signature);
+    data["Name"] = signature.name;
+    data["Title"] = signature.title;
+    sendPreview(data);
+  };
+
+  const addSignatureToDropdown = async (data: ISignature) => {
+    if (!data["Name"] || !data["Title"]) {
+      return;
+    }
+    const response = await addOrUpdateSignature(data);
+    if (response["upserted"]) {
+      isAlertVisible = true;
+      signatures = await getSignatures();
+      return;
+    }
+  };
+
+  const getAllSignatures = async () => {
+    signatures = await getSignatures();
+  };
+
+  $: isActive = (value: ISignature) => $selectedSignature === value;
 </script>
 
 <Modal {isOpen} {toggle} scrollable>
@@ -198,6 +236,42 @@
       <p class="body-info">
         {UIText.TIME_MESSAGE} <span class="id-span">{id}</span>
       </p>
+    {/if}
+    {#if id === Graphics.SIGNATURE}
+      {#await getAllSignatures()}
+        <Spinner />
+      {:then}
+        <Button on:click={() => addSignatureToDropdown(_data)}
+          >{UIText.BUTTON_SAVE}</Button
+        >
+        <Alert
+          class="signature-control-alert"
+          bind:isOpen={isAlertVisible}
+          color="success"
+          fade={true}
+          dismissible
+        >
+          {UIText.SIGNATURE_ALERT_TEXT}
+        </Alert>
+        <hr />
+        <Dropdown>
+          <DropdownToggle class="signature--dropdown text-dark" caret
+            >{$selectedSignature["name"] ?? "Choose"}
+            {$selectedSignature["title"] ?? "signature"}</DropdownToggle
+          >
+          <DropdownMenu class="signature--dropdown">
+            <DropdownItem header>{UIText.SIGNATURE_HEADER}</DropdownItem>
+            {#each signatures as signature}
+              <DropdownItem
+                class="signature-item"
+                active={isActive(signature)}
+                on:click={() => valueChange(signature)}
+                >{signature["name"]} {signature["title"]}</DropdownItem
+              >
+            {/each}
+          </DropdownMenu>
+        </Dropdown>
+      {/await}
     {/if}
   </ModalBody>
   <ModalFooter>

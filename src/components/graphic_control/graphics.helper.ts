@@ -15,6 +15,7 @@ import {
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
 import { _ } from "svelte-i18n";
+import { selectedSignature } from "../../stores/signature.store";
 
 export const getDataForPreviewModal = (
   id: Graphics
@@ -102,6 +103,10 @@ export const getDataForPreviewModal = (
       data["Age"] = getCompetitorAge("dateOfBirth");
       data["Personal Best"] = getFieldValueFromParticipant("pb");
       data["Season Best"] = getFieldValueFromParticipant("sb");
+      break;
+    case Graphics.SIGNATURE:
+      data["Name"] = get(selectedSignature)["name"];
+      data["Title"] = get(selectedSignature)["title"];
   }
   return data;
 };

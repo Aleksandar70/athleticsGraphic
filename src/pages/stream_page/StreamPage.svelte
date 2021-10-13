@@ -11,6 +11,7 @@
   import Time from "../../components/graphics/time/Time.svelte";
   import socket from "../../utils/socket.util";
   import PersonalData from "../../components/graphics/personal_data/PersonalData.svelte";
+  import Signature from "../../components/graphics/signature/Signature.svelte";
 
   socket.on("graphics", (data) => {
     visibleGraphics.set(data);
@@ -34,5 +35,7 @@
     <Time />
   {:else if $visibleGraphics.id == Graphics.PERSONAL_DATA}
     <PersonalData data={$visibleGraphics.data} />
+  {:else if $visibleGraphics.id == Graphics.SIGNATURE}
+    <Signature />
   {/if}
 </div>

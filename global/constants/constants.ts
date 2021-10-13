@@ -28,6 +28,7 @@ export enum Graphics {
   MEDALS = "medals",
   TIME = "time",
   PERSONAL_DATA = "personal_data",
+  SIGNATURE = "signature",
 }
 
 export enum EventType {

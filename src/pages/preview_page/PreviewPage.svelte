@@ -10,6 +10,7 @@
   import ResultListPreview from "./non_animation_pages/ResultListPreview.svelte";
   import ScorePreview from "./non_animation_pages/ScorePreview.svelte";
   import PersonalDataPreview from "./non_animation_pages/PersonalDataPreview.svelte";
+  import SignaturePreview from "./non_animation_pages/SignaturePreview.svelte";
 
   $previewChannel.addEventListener("message", (event) => {
     const dataToSet = event.data.modalOpened
@@ -41,5 +42,7 @@
     <TimePreview />
   {:else if $visiblePreview.id == Graphics.PERSONAL_DATA}
     <PersonalDataPreview />
+  {:else if $visiblePreview.id == Graphics.SIGNATURE}
+    <SignaturePreview />
   {/if}
 </div>
