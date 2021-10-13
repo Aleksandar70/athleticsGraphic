@@ -1,4 +1,4 @@
-# Elegra - Animation Graphics
+# Elegra - Athletics Graphics
 
 ## Requirements
 
