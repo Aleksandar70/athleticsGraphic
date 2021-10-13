@@ -5,9 +5,6 @@ import { getRequest, putRequest } from "../utils/api.utils";
 export const addOrUpdateSignature = async (
   data: any
 ): Promise<ISignature[]> => {
-  if (!data["Name"] || !data["Title"]) {
-    return;
-  }
   const formattedData = {};
   Object.entries(data).forEach(
     ([key, value]) => (formattedData[key.toLowerCase()] = value)

@@ -112,6 +112,9 @@
   };
 
   const addSignatureToDropdown = async (data) => {
+    if (!data["Name"] || !data["Title"]) {
+      return;
+    }
     const response = await addOrUpdateSignature(data);
     if (response) {
       isAlertVisible = true;
@@ -233,7 +236,7 @@
         <Spinner />
       {:then signatures}
         <Button on:click={() => addSignatureToDropdown(_data)}
-          >{UIText.BUTTON_ADD}</Button
+          >{UIText.BUTTON_SAVE}</Button
         >
         <Alert
           class="signature-control-alert"

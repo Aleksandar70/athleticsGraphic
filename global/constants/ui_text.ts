@@ -27,7 +27,7 @@ export abstract class UIText {
   static readonly PERSONAL_SCORE_ALERT_TEXT: string =
     "Please select one of the competitors in the table!";
   static readonly SIGNATURE_ALERT_TEXT: string =
-    "Signature is successfully added!";
+    "Signature is successfully saved!";
   static readonly MEDALS: string = "Medals";
   static readonly TIME: string = "Time";
   static readonly CLEAR_ALL: string = "Clear all";
@@ -37,7 +37,7 @@ export abstract class UIText {
   static readonly LABEL_PERSONAL: string = "Personal";
   static readonly BUTTON_SHOW: string = "Show";
   static readonly BUTTON_CANCEL: string = "Cancel";
-  static readonly BUTTON_ADD: string = "Add";
+  static readonly BUTTON_SAVE: string = "Save";
   static readonly TIME_MESSAGE: string = "You are about to show graphics for";
 
   static readonly INIT_WARNING: string = "⚠️ All existing data will be lost";
