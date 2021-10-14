@@ -78,13 +78,14 @@ Unzip time-ticker.zip -> npm install -> change `localhost` value to your public 
 year - competitionID
 country = SRB
 
-1. 2021 - srbopenindoor
-2. 2020 - ps-u20
-3. 2021 - ec21_0640
-4. 2021 - ps_10km
-5. 2021 - ps_hod_put
-6. 2021 - balkan_u18
-7. 2021 - 2021seniorski-miting
+* 2021 - srbopenindoor
+* 2020 - ps-u20
+* 2021 - ec21_0640
+* 2021 - ps_10km
+* 2021 - ps_hod_put
+* 2021 - balkan_u18
+* 2021 - 2021seniorski-miting
 
 country = NOR 
-1. 2021 - 2021vintersprinten-2021
+
+* 2021 - 2021vintersprinten-2021
