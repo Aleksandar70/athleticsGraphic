@@ -17,7 +17,7 @@ To find your IP address, open terminal and type `ipconfig` if on Windows (`ifcon
 
 It should look like this `192.168.0.15`. It will always start with `192.168.`, other numbers may differ.
 
-After finding your IP address, there are two palces in the code where the currently set IP address has to be changed:
+After finding your IP address, there are two places in the code where the currently set IP address has to be changed:
 
 1. `package.json` - Change it for the line `"start": "sirv public --host 192.168.100.2 --no-clear --single"`,
 2. `global\constants\api.ts` - Change it for the line `static readonly IPV4 = "192.168.100.2";`
