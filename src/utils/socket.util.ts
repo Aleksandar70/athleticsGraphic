@@ -11,17 +11,7 @@ import {
 
 const socket = io(`http://${Paths.IPV4}:${Paths.STREAMING_PORT}`);
 
-socket.on("clear", () =>
-  get(timeline)
-    .reverse()
-    .then(() => {
-      get(headerTimeline)
-        .reverse()
-        .then(() => headerTimeline.set(gsap.timeline()));
-      visibleGraphics.set(emptyGraphics);
-      timeline.set(gsap.timeline());
-    })
-);
+socket.on("clear", () => reverseTimelines());
 
 export const reverseTimelines = (): void => {
   get(timeline)

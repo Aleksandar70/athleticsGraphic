@@ -1,14 +1,10 @@
 <script lant="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
-  import {
-    visibleGraphics,
-    timeline,
-    headerTimeline,
-    emptyGraphics,
-  } from "../../../stores/stream.store";
+  import { visibleGraphics, timeline } from "../../../stores/stream.store";
   import { animateHeader } from "./resultListAnimation.helper";
   import { Constants } from "../../../../global/constants/constants";
+  import { reverseTimelines } from "../../../utils/socket.util";
 
   $: numberOfCompetitors = $visibleGraphics?.data?.["Competitors"]?.length;
   $: iterationNumber = Math.ceil(
@@ -101,13 +97,7 @@
         animateCompetitors();
       });
     } else {
-      $timeline.reverse().then(() => {
-        $headerTimeline
-          .reverse()
-          .then(() => headerTimeline.set(gsap.timeline()));
-        visibleGraphics.set(emptyGraphics);
-        timeline.set(gsap.timeline());
-      });
+      reverseTimelines();
     }
   };
 </script>
