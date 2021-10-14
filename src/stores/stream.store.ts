@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import { writable } from "svelte/store";
 
 export const visibleGraphics = writable({
@@ -6,3 +7,7 @@ export const visibleGraphics = writable({
   type: undefined,
   heat: "",
 });
+
+export const timeline = writable(gsap.timeline());
+
+export const selectedSignature = writable({});

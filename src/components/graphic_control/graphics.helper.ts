@@ -15,7 +15,7 @@ import {
 } from "../../stores/table.store";
 import { isNumeric } from "../../utils/string.utils";
 import { _ } from "svelte-i18n";
-import { selectedSignature } from "../../stores/signature.store";
+import { selectedSignature } from "../../stores/stream.store";
 
 export const getDataForPreviewModal = (
   id: Graphics

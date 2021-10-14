@@ -1,15 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import gsap from "gsap";
-  import { visibleGraphics } from "../../../stores/stream.store";
-  import socket from "../../../utils/socket.util";
-
-  export let data = {};
-
-  const timeline = gsap.timeline();
+  import { timeline, visibleGraphics } from "../../../stores/stream.store";
 
   onMount(() => {
-    timeline
+    $timeline
       .to("#scoresBackground", {
         duration: 1,
         opacity: 1,
@@ -52,16 +46,6 @@
         "<0.15"
       );
   });
-
-  let clear = false;
-  socket.on("clear", () => (clear = true));
-
-  $: if (clear) {
-    timeline.reverse().then(() => {
-      clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
-    });
-  }
 </script>
 
 <img
@@ -69,14 +53,18 @@
   alt="score_rounds"
   src="/img/graphics/score_rounds.png"
 />
-<p id="scoresEventName">{data["Event Name"]}</p>
-<p id="scoresBib">{data["ID"]}</p>
-<img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
-<p id="scoresCountry">{data["Nationality"]}</p>
+<p id="scoresEventName">{$visibleGraphics.data["Event Name"]}</p>
+<p id="scoresBib">{$visibleGraphics.data["ID"]}</p>
+<img
+  id="scoresFlag"
+  alt={$visibleGraphics.data["Flag"]}
+  src="/img/flags/{$visibleGraphics.data['Flag']}.png"
+/>
+<p id="scoresCountry">{$visibleGraphics.data["Nationality"]}</p>
 <p id="scoresCompetitor">
-  {`${data["First Name"]} ${data["Last Name"]}`}
+  {`${$visibleGraphics.data["First Name"]} ${$visibleGraphics.data["Last Name"]}`}
 </p>
-{#each data["Scores"] as score, i}
+{#each $visibleGraphics.data["Scores"] as score, i}
   <p class="metrics" id="scoresMetric{i + 1}">
     {Object.keys(score)[0]}
   </p>

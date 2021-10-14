@@ -30,7 +30,7 @@
   import { sendGraphicsData } from "../../../api/graphics.api";
   import Spinner from "../../spinner/Spinner.svelte";
   import type { ISignature } from "../../../../backend/src/database/interfaces";
-  import { selectedSignature } from "../../../stores/signature.store";
+  import { selectedSignature } from "../../../stores/stream.store";
   import { Alert } from "sveltestrap";
 
   export let isOpen: boolean;

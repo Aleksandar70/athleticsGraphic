@@ -20,21 +20,21 @@
 
 <div class="graphics--wrapper">
   {#if $visibleGraphics.id == Graphics.PERSONAL_SCORE}
-    <Scores data={$visibleGraphics.data} type={$visibleGraphics.type} />
+    <Scores />
   {:else if $visibleGraphics.id == Graphics.EVENT_ANNOUNCEMENT}
-    <EventAnnouncement data={$visibleGraphics.data} />
+    <EventAnnouncement />
   {:else if $visibleGraphics.id == Graphics.START_LIST}
-    <StartList data={$visibleGraphics.data} />
+    <StartList />
   {:else if $visibleGraphics.id == Graphics.RESULT_LIST}
-    <ResultList data={$visibleGraphics.data} />
+    <ResultList />
   {:else if $visibleGraphics.id == Graphics.DISCIPLINE_ANNOUNCEMENT}
-    <DisciplineAnnouncement data={$visibleGraphics.data} />
+    <DisciplineAnnouncement />
   {:else if $visibleGraphics.id == Graphics.MEDALS}
-    <Medals data={$visibleGraphics.data} />
+    <Medals />
   {:else if $visibleGraphics.id == Graphics.TIME}
     <Time />
   {:else if $visibleGraphics.id == Graphics.PERSONAL_DATA}
-    <PersonalData data={$visibleGraphics.data} />
+    <PersonalData />
   {:else if $visibleGraphics.id == Graphics.SIGNATURE}
     <Signature />
   {/if}

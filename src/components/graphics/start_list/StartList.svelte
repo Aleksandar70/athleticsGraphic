@@ -6,15 +6,13 @@
   import { Constants } from "../../../../global/constants/constants";
   import socket from "../../../utils/socket.util";
 
-  export let data;
-
   let clear = false;
 
   const timelineHeader = gsap.timeline();
 
   socket.on("clear", () => (clear = true));
 
-  $: numberOfCompetitors = data["Competitors"].length;
+  $: numberOfCompetitors = $visibleGraphics?.data?.["Competitors"]?.length;
   $: iterationNumber = Math.ceil(
     numberOfCompetitors / Constants.ROWS_PER_TABLE
   );
@@ -22,7 +20,8 @@
   let minIndex = 0;
   $: maxIndex = Math.ceil(numberOfCompetitors / iterationNumber);
 
-  $: competitorsRange = data["Competitors"].slice(minIndex, maxIndex);
+  $: competitorsRange =
+    $visibleGraphics?.data?.["Competitors"]?.slice(minIndex, maxIndex) ?? [];
 
   onMount(() => {
     animateHeader(timelineHeader);
@@ -116,15 +115,15 @@
     src="/img/graphics/listHeader.png"
     alt="listHeader"
   />
-  <p id="startListCompetitonTitle">{data["Competition"]}</p>
+  <p id="startListCompetitonTitle">{$visibleGraphics.data["Competition"]}</p>
   <p id="startListDiscipline">
-    {#if data["Heat"]}
-      {data["Heat"]}
+    {#if $visibleGraphics.data["Heat"]}
+      {$visibleGraphics.data["Heat"]}
     {/if}
-    {data["Event Name"]}
+    {$visibleGraphics.data["Event Name"]}
   </p>
-  <p id="startListHash">{data["Hashtag"]}</p>
-  <p id="startListDescription">{data["Description"]}</p>
+  <p id="startListHash">{$visibleGraphics.data["Hashtag"]}</p>
+  <p id="startListDescription">{$visibleGraphics.data["Description"]}</p>
 
   {#each competitorsRange as competitor, i}
     <img
