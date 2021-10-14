@@ -2,8 +2,8 @@
   import { onMount } from "svelte";
   import { timeline, visibleGraphics } from "../../../stores/stream.store";
 
-  $: numberOfBestCompetitors = $visibleGraphics.data["Medals"].length;
-  $: bestCompetitors = $visibleGraphics.data["Medals"];
+  $: numberOfBestCompetitors = $visibleGraphics?.data?.["Medals"]?.length;
+  $: bestCompetitors = $visibleGraphics?.data?.["Medals"] ?? [];
 
   onMount(() => {
     for (let index = 0; index < numberOfBestCompetitors; index++) {

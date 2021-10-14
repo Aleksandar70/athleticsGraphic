@@ -1,15 +1,14 @@
 <script lant="ts">
   import { onMount } from "svelte";
   import gsap from "gsap";
-  import { visibleGraphics } from "../../../stores/stream.store";
+  import {
+    visibleGraphics,
+    timeline,
+    headerTimeline,
+    emptyGraphics,
+  } from "../../../stores/stream.store";
   import { animateHeader } from "./resultListAnimation.helper";
   import { Constants } from "../../../../global/constants/constants";
-  import socket from "../../../utils/socket.util";
-
-  let clear = false;
-  const timelineHeader = gsap.timeline();
-
-  socket.on("clear", () => (clear = true));
 
   $: numberOfCompetitors = $visibleGraphics?.data?.["Competitors"]?.length;
   $: iterationNumber = Math.ceil(
@@ -23,15 +22,15 @@
     $visibleGraphics?.data?.["Competitors"]?.slice(minIndex, maxIndex) ?? [];
 
   onMount(() => {
-    animateHeader(timelineHeader);
+    animateHeader();
     animateCompetitors();
   });
 
   export const animateCompetitors = () => {
-    const timelineCompetitors = gsap.timeline();
+    timeline.set(gsap.timeline());
     if (minIndex < numberOfCompetitors) {
       for (let index = 0; index < Constants.ROWS_PER_TABLE; index++) {
-        timelineCompetitors
+        $timeline
           .to(
             `#competitor-info-${index}`,
             {
@@ -94,7 +93,7 @@
           );
       }
       gsap.delayedCall(7, () => {
-        timelineCompetitors.reverse();
+        $timeline.reverse();
       });
       gsap.delayedCall(10, () => {
         minIndex = maxIndex;
@@ -102,20 +101,15 @@
         animateCompetitors();
       });
     } else {
-      timelineCompetitors.reverse().then(() => {
-        timelineHeader.reverse();
-        visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
+      $timeline.reverse().then(() => {
+        $headerTimeline
+          .reverse()
+          .then(() => headerTimeline.set(gsap.timeline()));
+        visibleGraphics.set(emptyGraphics);
+        timeline.set(gsap.timeline());
       });
     }
   };
-
-  $: if (clear) {
-    timelineCompetitors.reverse().then(() => {
-      timelineHeader.reverse();
-      clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
-    });
-  }
 </script>
 
 <div id="resultList" class="resultList">
@@ -182,7 +176,6 @@
 </div>
 
 <style>
-  /* START LIST */
   #resultList {
     width: 1920px;
     height: 1080px;

@@ -2,17 +2,37 @@ import gsap from "gsap";
 import { io } from "socket.io-client";
 import { get } from "svelte/store";
 import { Paths } from "../../global/constants/api";
-import { timeline, visibleGraphics } from "../stores/stream.store";
+import {
+  emptyGraphics,
+  headerTimeline,
+  timeline,
+  visibleGraphics,
+} from "../stores/stream.store";
 
 const socket = io(`http://${Paths.IPV4}:${Paths.STREAMING_PORT}`);
 
-socket.on("clear", () => {
+socket.on("clear", () =>
   get(timeline)
     .reverse()
     .then(() => {
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
+      get(headerTimeline)
+        .reverse()
+        .then(() => headerTimeline.set(gsap.timeline()));
+      visibleGraphics.set(emptyGraphics);
+      timeline.set(gsap.timeline());
+    })
+);
+
+export const reverseTimelines = (): void => {
+  get(timeline)
+    .reverse()
+    .then(() => {
+      get(headerTimeline)
+        .reverse()
+        .then(() => headerTimeline.set(gsap.timeline()));
+      visibleGraphics.set(emptyGraphics);
       timeline.set(gsap.timeline());
     });
-});
+};
 
 export default socket;
