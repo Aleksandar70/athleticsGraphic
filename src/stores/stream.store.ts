@@ -5,6 +5,7 @@ export const emptyGraphics = {
   id: "",
   data: {},
   type: undefined,
+  modalOpen: false,
   heat: "",
 };
 export const visibleGraphics = writable(emptyGraphics);

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { EventType } from "../../../../global/constants/constants";
+  import { EventType } from "../../../../../global/constants/constants";
   import HorizontalScore from "./HorizontalScore.svelte";
   import VerticalScore from "./VerticalScore.svelte";
   import RunningScore from "./RunningScore.svelte";
-  import { visibleGraphics } from "../../../stores/stream.store";
+  import { visibleGraphics } from "../../../../stores/stream.store";
 </script>
 
 <div id="scores--wrapper">

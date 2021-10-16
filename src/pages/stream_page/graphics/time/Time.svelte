@@ -1,6 +1,6 @@
 <script lang="ts">
   import io from "socket.io-client";
-  import { Paths } from "../../../../global/constants/api";
+  import { Paths } from "../../../../../global/constants/api";
 
   const socket = io(`http://${Paths.IPV4}:4000`);
 

@@ -1,31 +1,31 @@
 import { get } from "svelte/store";
-import { headerTimeline } from "../../../stores/stream.store";
+import { headerTimeline } from "../../../../stores/stream.store";
 
 export const animateHeader = (): void => {
   get(headerTimeline)
-    .to("#resultListHeader", {
+    .to("#startListHeader", {
       duration: 0.2,
       opacity: 1,
       scaleY: 1,
       ease: "power2.out",
     })
     .to(
-      "#resultListCompetitionTitle",
+      "#startListCompetitonTitle",
       { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
       "<"
     )
     .to(
-      "#resultListDiscipline",
+      "#startListDiscipline",
       { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
       "<.1"
     )
     .to(
-      "#resultListHash",
+      "#startListHash",
       { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
       "<"
     )
     .to(
-      "#resultListDescription",
+      "#startListDescription",
       { duration: 0.15, opacity: 1, scaleY: 1, ease: "power2.out" },
       "<"
     );

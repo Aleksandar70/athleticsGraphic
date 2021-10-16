@@ -1,6 +1,6 @@
 <script lant="ts">
   import { onMount } from "svelte";
-  import { timeline, visibleGraphics } from "../../../stores/stream.store";
+  import { timeline, visibleGraphics } from "../../../../stores/stream.store";
 
   $: numberOfBestCompetitors = $visibleGraphics?.data?.["Medals"]?.length;
   $: bestCompetitors = $visibleGraphics?.data?.["Medals"] ?? [];
