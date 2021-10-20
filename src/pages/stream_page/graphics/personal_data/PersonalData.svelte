@@ -1,19 +1,9 @@
 <script lant="ts">
   import { onMount } from "svelte";
-  import gsap from "gsap";
-  import { visibleGraphics } from "../../../stores/stream.store";
-  import socket from "../../../utils/socket.util";
-
-  export let data;
-
-  let clear = false;
-
-  socket.on("clear", () => (clear = true));
-
-  const timeline = gsap.timeline();
+  import { timeline, visibleGraphics } from "../../../../stores/stream.store";
 
   onMount(() => {
-    timeline
+    $timeline
       .to("#personalDataCompetitorImg", {
         duration: 0.5,
         opacity: 1,
@@ -66,13 +56,6 @@
         "<"
       );
   });
-
-  $: if (clear) {
-    timeline.reverse().then(() => {
-      clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: ""  });
-    });
-  }
 </script>
 
 <div id="personalData--wrapper">
@@ -81,29 +64,31 @@
     alt="personalDataCompetitorImg"
     src="/img/graphics/personalDataCompetitor.png"
   />
-  <p id="personalDataCompetitorID">{data["ID"]}</p>
+  <p id="personalDataCompetitorID">{$visibleGraphics.data["ID"]}</p>
   <img
     id="personalDataCompetitorFlag"
-    alt={data["Flag"]}
-    src="/img/flags/{data['Flag']}.png"
+    alt={$visibleGraphics.data["Flag"]}
+    src="/img/flags/{$visibleGraphics.data['Flag']}.png"
   />
-  <p id="personalDataCompetitorCountry">{data["Nationality"]}</p>
+  <p id="personalDataCompetitorCountry">
+    {$visibleGraphics.data["Nationality"]}
+  </p>
   <p id="personalDataCompetitorName">
-    {`${data["First Name"]} ${data["Last Name"]}`}
+    {`${$visibleGraphics.data["First Name"]} ${$visibleGraphics.data["Last Name"]}`}
   </p>
   <img
     id="personalDataCompetitorPBImg"
     alt="personalDataCompetitorPBImg"
     src="/img/graphics/pb.png"
   />
-  <p id="personalDataCompetitorPB">{data["Personal Best"]}</p>
+  <p id="personalDataCompetitorPB">{$visibleGraphics.data["Personal Best"]}</p>
   <img
     id="personalDataCompetitorSBImg"
     alt="personalDataCompetitorSBImg"
     src="/img/graphics/sb.png"
   />
-  <p id="personalDataCompetitorSB">{data["Season Best"]}</p>
-  <p id="personalDataCompetitorAge">Age: {data["Age"]}</p>
+  <p id="personalDataCompetitorSB">{$visibleGraphics.data["Season Best"]}</p>
+  <p id="personalDataCompetitorAge">Age: {$visibleGraphics.data["Age"]}</p>
 </div>
 
 <style>

@@ -1,8 +1,6 @@
 <script lang="ts">
   import io from "socket.io-client";
-  import { Paths } from "../../../../global/constants/api";
-  import { visibleGraphics } from "../../../stores/stream.store";
-  import clearSocket from "../../../utils/socket.util";
+  import { Paths } from "../../../../../global/constants/api";
 
   const socket = io(`http://${Paths.IPV4}:4000`);
 
@@ -12,14 +10,6 @@
   $: doc = parser.parseFromString(time, "text/xml");
 
   socket.on("time", (data) => (time = data));
-
-  let clear = false;
-  clearSocket.on("clear", () => (clear = true));
-
-  $: if (clear) {
-    clear = false;
-    visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
-  }
 </script>
 
 <div id="runTime" class="runTime">

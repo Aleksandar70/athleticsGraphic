@@ -1,28 +1,16 @@
 <script lang="ts">
   import "./previewpage.style.css";
   import { Graphics } from "../../../global/constants/constants";
-  import { previewChannel, visiblePreview } from "../../stores/preview.store";
-  import DisciplineAnnouncementPreview from "./non_animation_pages/DisciplineAnnouncementPreview.svelte";
-  import EventAnnouncementPreview from "./non_animation_pages/EventAnnouncementPreview.svelte";
-  import TimePreview from "./non_animation_pages/TimePreview.svelte";
-  import MedalsPreview from "./non_animation_pages/MedalsPreview.svelte";
-  import StartListPreview from "./non_animation_pages/StartListPreview.svelte";
-  import ResultListPreview from "./non_animation_pages/ResultListPreview.svelte";
-  import ScorePreview from "./non_animation_pages/ScorePreview.svelte";
-  import PersonalDataPreview from "./non_animation_pages/PersonalDataPreview.svelte";
-  import SignaturePreview from "./non_animation_pages/SignaturePreview.svelte";
-
-  $previewChannel.addEventListener("message", (event) => {
-    const dataToSet = event.data.modalOpened
-      ? event.data
-      : {
-          id: "",
-          data: {},
-          type: undefined,
-          modalOpened: false,
-        };
-    visiblePreview.set(dataToSet);
-  });
+  import { visiblePreview } from "../../stores/preview.store";
+  import DisciplineAnnouncementPreview from "./graphics/DisciplineAnnouncementPreview.svelte";
+  import EventAnnouncementPreview from "./graphics/EventAnnouncementPreview.svelte";
+  import TimePreview from "./graphics/TimePreview.svelte";
+  import MedalsPreview from "./graphics/MedalsPreview.svelte";
+  import StartListPreview from "./graphics/StartListPreview.svelte";
+  import ResultListPreview from "./graphics/ResultListPreview.svelte";
+  import ScorePreview from "./graphics/ScorePreview.svelte";
+  import PersonalDataPreview from "./graphics/PersonalDataPreview.svelte";
+  import SignaturePreview from "./graphics/SignaturePreview.svelte";
 </script>
 
 <div class="preview--wrapper">

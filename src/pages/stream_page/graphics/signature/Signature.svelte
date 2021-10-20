@@ -1,16 +1,9 @@
 <script lant="ts">
   import { onMount } from "svelte";
-  import gsap from "gsap";
-  import { visibleGraphics } from "../../../stores/stream.store";
-  import socket from "../../../utils/socket.util";
-
-  let clear = false;
-
-  socket.on("clear", () => (clear = true));
-  const timeline = gsap.timeline();
+  import { timeline, visibleGraphics } from "../../../../stores/stream.store";
 
   onMount(() => {
-    timeline
+    $timeline
       .to("#signature", {
         duration: 0.5,
         opacity: 1,
@@ -28,13 +21,6 @@
         "<"
       );
   });
-
-  $: if (clear) {
-    timeline.reverse().then(() => {
-      clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
-    });
-  }
 </script>
 
 <div id="signature--wrapper">

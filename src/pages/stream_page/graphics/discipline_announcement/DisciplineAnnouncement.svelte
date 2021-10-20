@@ -1,18 +1,9 @@
 <script lant="ts">
   import { onMount } from "svelte";
-  import gsap from "gsap";
-  import { visibleGraphics } from "../../../stores/stream.store";
-  import socket from "../../../utils/socket.util";
-
-  export let data;
-
-  let clear = false;
-
-  socket.on("clear", () => (clear = true));
-  const timeline = gsap.timeline();
+  import { timeline, visibleGraphics } from "../../../../stores/stream.store";
 
   onMount(() => {
-    timeline
+    $timeline
       .to("#disciplineAnnouncement", {
         duration: 0.5,
         opacity: 1,
@@ -35,13 +26,6 @@
         "<"
       );
   });
-
-  $: if (clear) {
-    timeline.reverse().then(() => {
-      clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: ""  });
-    });
-  }
 </script>
 
 <div id="discipline--wrapper">
@@ -51,17 +35,16 @@
     src="/img/graphics/disciplineAnnouncement.png"
   />
   <p id="disciplineTitle">
-    {#if data["Heat"]}
-      {data["Heat"]}
+    {#if $visibleGraphics.data["Heat"]}
+      {$visibleGraphics.data["Heat"]}
     {/if}
-    {data["Discipline Name"]}
+    {$visibleGraphics.data["Discipline Name"]}
   </p>
-  <p id="disciplineNextNote">{data["Note"]}</p>
-  <p id="disciplineTime">{data["Time"]}</p>
+  <p id="disciplineNextNote">{$visibleGraphics.data["Note"]}</p>
+  <p id="disciplineTime">{$visibleGraphics.data["Time"]}</p>
 </div>
 
 <style>
-  /* DISCIPLINE ANNOUNCEMENT */
   #discipline--wrapper {
     width: 1920px;
     height: 1080px;
@@ -94,22 +77,7 @@
     opacity: 0;
     transform: scaleX(0);
   }
-  /* #disciplinetNote {
-      font-family: "Montserrat-MediumItalic";
-      font-size: 22pt;
-      position: fixed;
-      text-align: center;
-      width: 500px;
-      height: 48px;
-      line-height: 48px;
-      top: 890px;
-      left: 330px;
-      color: rgb(255, 255, 255);
-      z-index: 1;
-      transform-origin: left center;
-      opacity: 0;
-      transform: scaleX(0);
-    } */
+
   #disciplineTime {
     font-family: "Montserrat-MediumItalic";
     font-size: 22pt;

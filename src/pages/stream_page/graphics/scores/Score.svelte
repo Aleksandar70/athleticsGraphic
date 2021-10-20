@@ -1,20 +1,18 @@
 <script lang="ts">
-  import { EventType } from "../../../../global/constants/constants";
+  import { EventType } from "../../../../../global/constants/constants";
   import HorizontalScore from "./HorizontalScore.svelte";
   import VerticalScore from "./VerticalScore.svelte";
   import RunningScore from "./RunningScore.svelte";
-
-  export let data = {};
-  export let type = EventType.HORIZONTAL;
+  import { visibleGraphics } from "../../../../stores/stream.store";
 </script>
 
 <div id="scores--wrapper">
-  {#if type === EventType.HORIZONTAL}
-    <HorizontalScore {data} />
-  {:else if type === EventType.VERTICAL}
-    <VerticalScore {data} />
+  {#if $visibleGraphics.type === EventType.HORIZONTAL}
+    <HorizontalScore />
+  {:else if $visibleGraphics.type === EventType.VERTICAL}
+    <VerticalScore />
   {:else}
-    <RunningScore {data} />
+    <RunningScore />
   {/if}
 </div>
 

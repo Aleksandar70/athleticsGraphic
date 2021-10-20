@@ -1,19 +1,9 @@
 <script lant="ts">
   import { onMount } from "svelte";
-  import gsap from "gsap";
-  import { visibleGraphics } from "../../../stores/stream.store";
-  import socket from "../../../utils/socket.util";
-
-  export let data;
-
-  let clear = false;
-
-  socket.on("clear", () => (clear = true));
-
-  const timeline = gsap.timeline();
+  import { timeline, visibleGraphics } from "../../../../stores/stream.store";
 
   onMount(() => {
-    timeline
+    $timeline
       .to("#eventBackground", {
         duration: 0.5,
         opacity: 1,
@@ -36,13 +26,6 @@
         "<.1"
       );
   });
-
-  $: if (clear) {
-    timeline.reverse().then(() => {
-      clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
-    });
-  }
 </script>
 
 <div id="event--wrapper">
@@ -51,9 +34,9 @@
     alt="eventAnnouncement"
     src="/img/graphics/eventAnnouncement.png"
   />
-  <p id="eventTitle">{data["Event Name"]}</p>
-  <p id="eventLocation">{data["Location"]}</p>
-  <p id="eventHashtag">{data["Hashtag"]}</p>
+  <p id="eventTitle">{$visibleGraphics.data["Event Name"]}</p>
+  <p id="eventLocation">{$visibleGraphics.data["Location"]}</p>
+  <p id="eventHashtag">{$visibleGraphics.data["Hashtag"]}</p>
 </div>
 
 <style>

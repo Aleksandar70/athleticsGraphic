@@ -1,15 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import gsap from "gsap";
-  import { visibleGraphics } from "../../../stores/stream.store";
-  import socket from "../../../utils/socket.util";
-
-  export let data = {};
-
-  const timeline = gsap.timeline();
+  import { timeline, visibleGraphics } from "../../../../stores/stream.store";
 
   onMount(() => {
-    timeline
+    $timeline
       .to("#scoresBackground", {
         duration: 1,
         opacity: 1,
@@ -42,48 +36,35 @@
         "<"
       )
       .to(
-        ".metrics",
-        { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
-        "<0.15"
-      )
-      .to(
-        ".scores",
+        "#score",
         { duration: 0.1, opacity: 1, scaleX: 1, ease: "power2.out" },
         "<0.15"
       );
   });
-
-  let clear = false;
-  socket.on("clear", () => (clear = true));
-
-  $: if (clear) {
-    timeline.reverse().then(() => {
-      clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
-    });
-  }
 </script>
 
 <img
   id="scoresBackground"
   alt="score_rounds"
-  src="/img/graphics/score_rounds.png"
+  src="/img/graphics/score_running.png"
 />
-<p id="scoresEventName">{data["Event Name"]}</p>
-<p id="scoresBib">{data["ID"]}</p>
-<img id="scoresFlag" alt={data["Flag"]} src="/img/flags/{data['Flag']}.png" />
-<p id="scoresCountry">{data["Nationality"]}</p>
-<p id="scoresCompetitor">
-  {`${data["First Name"]} ${data["Last Name"]}`}
+<p id="scoresEventName">
+  {#if $visibleGraphics.data["Heat"]}
+    {$visibleGraphics.data["Heat"]}
+  {/if}
+  {$visibleGraphics.data["Event Name"]}
 </p>
-{#each data["Scores"] as score, i}
-  <p class="metrics" id="scoresMetric{i + 1}">
-    {Object.keys(score)[0]}
-  </p>
-  <p class="scores" id="scoresResult{i + 1}">
-    {Object.values(score)[0]}
-  </p>
-{/each}
+<p id="scoresBib">{$visibleGraphics.data["ID"]}</p>
+<img
+  id="scoresFlag"
+  alt={$visibleGraphics.data["Flag"]}
+  src="/img/flags/{$visibleGraphics.data['Flag']}.png"
+/>
+<p id="scoresCountry">{$visibleGraphics.data["Nationality"]}</p>
+<p id="scoresCompetitor">
+  {`${$visibleGraphics.data["First Name"]} ${$visibleGraphics.data["Last Name"]}`}
+</p>
+<p id="score">{$visibleGraphics.data["Result"]}</p>
 
 <style>
   #scoresBackground {
@@ -170,81 +151,19 @@
     transform: scaleX(0);
   }
 
-  .metrics {
+  #score {
     font-family: "Montserrat-SemiBold";
-    font-size: 18pt;
+    font-size: 24pt;
     position: fixed;
     text-align: center;
     width: 68px;
     height: 48px;
     line-height: 48px;
-    top: 922px;
+    top: 912px;
+    left: 769px;
     color: white;
     transform-origin: left center;
     opacity: 0;
     transform: scaleX(0);
-  }
-
-  #scoresMetric1 {
-    left: 355px;
-  }
-
-  #scoresMetric2 {
-    left: 475px;
-  }
-
-  #scoresMetric3 {
-    left: 595px;
-  }
-
-  #scoresMetric4 {
-    left: 720px;
-  }
-
-  #scoresMetric5 {
-    left: 840px;
-  }
-
-  #scoresMetric6 {
-    left: 960px;
-  }
-
-  .scores {
-    font-family: "Montserrat-SemiBold";
-    font-size: 18pt;
-    position: fixed;
-    text-align: center;
-    width: 68px;
-    height: 48px;
-    line-height: 48px;
-    top: 922px;
-    color: rgb(28, 59, 113);
-    transform-origin: left center;
-    opacity: 0;
-    transform: scaleX(0);
-  }
-
-  #scoresResult1 {
-    left: 409px;
-  }
-
-  #scoresResult2 {
-    left: 529px;
-  }
-
-  #scoresResult3 {
-    left: 649px;
-  }
-
-  #scoresResult4 {
-    left: 769px;
-  }
-
-  #scoresResult5 {
-    left: 889px;
-  }
-
-  #scoresResult6 {
-    left: 1009px;
   }
 </style>

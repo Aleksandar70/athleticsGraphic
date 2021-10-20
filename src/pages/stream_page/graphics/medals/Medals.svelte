@@ -1,22 +1,13 @@
 <script lant="ts">
   import { onMount } from "svelte";
-  import gsap from "gsap";
-  import { visibleGraphics } from "../../../stores/stream.store";
-  import socket from "../../../utils/socket.util";
+  import { timeline, visibleGraphics } from "../../../../stores/stream.store";
 
-  export let data;
-  let clear = false;
-
-  const timeline = gsap.timeline();
-
-  socket.on("clear", () => (clear = true));
-
-  $: numberOfBestCompetitors = data["Medals"].length;
-  $: bestCompetitors = data["Medals"];
+  $: numberOfBestCompetitors = $visibleGraphics?.data?.["Medals"]?.length;
+  $: bestCompetitors = $visibleGraphics?.data?.["Medals"] ?? [];
 
   onMount(() => {
     for (let index = 0; index < numberOfBestCompetitors; index++) {
-      timeline
+      $timeline
         .to("#medalsBG", {
           duration: 0.2,
           opacity: 1,
@@ -75,22 +66,15 @@
         );
     }
   });
-
-  $: if (clear) {
-    timeline.reverse().then(() => {
-      clear = false;
-      visibleGraphics.set({ id: "", data: {}, type: undefined, heat: "" });
-    });
-  }
 </script>
 
 <div id="medals" class="medals">
   <img id="medalsBG" src="/img/graphics/medals.png" alt="medals" />
 
-  <p id="medalsCompetition">{data["Competition"]}</p>
-  <p id="medalsEvent">{data["Event Name"]}</p>
-  <p id="medalsHash">{data["Hashtag"]}</p>
-  <p id="medalsTitle">{data["Description"]}</p>
+  <p id="medalsCompetition">{$visibleGraphics.data["Competition"]}</p>
+  <p id="medalsEvent">{$visibleGraphics.data["Event Name"]}</p>
+  <p id="medalsHash">{$visibleGraphics.data["Hashtag"]}</p>
+  <p id="medalsTitle">{$visibleGraphics.data["Description"]}</p>
 
   {#each bestCompetitors as bestCompetitor, i}
     <p style="top: {805 + 59 * i}px" class="medalsPlace" id="medalsPlace-{i}">
