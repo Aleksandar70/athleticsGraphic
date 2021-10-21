@@ -17,6 +17,7 @@
   import { currentEventId, visibleColumns } from "../../stores/table.store";
   import ColumnLockOptions from "../column_lock_options/ColumnLockOptions.svelte";
   import "./canvas.style.css";
+  import Search from "../search/Search.svelte";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
@@ -37,18 +38,12 @@
     visibleColumns.set(newVisibleColumns);
   }
 
-  const rows = getTableData(tableData, heatName);
-  let rowData = rows;
+  let rowData = getTableData(tableData, heatName);
   let headerData = getHeaderData(tableData);
 
   let currentPage = 0;
 
   let updateResult: boolean;
-
-  const doSearch = (target: EventTarget) => {
-    currentPage = 0;
-    rowData = search((target as HTMLInputElement).value, setSearch.key, rows);
-  };
 
   const onUpdate = async (): Promise<void> => {
     if (!checkIfChanged(rowData)) return;
@@ -59,13 +54,7 @@
 
 <div class="canvas">
   {#if setSearch.enable}
-    <Input
-      class="input-search"
-      type="search"
-      bsSize="sm"
-      placeholder="🔎 Search by {setSearch.key}"
-      on:input={(event) => doSearch(event.target)}
-    />
+    <Search key={setSearch.key} bind:rowData bind:currentPage />
   {/if}
   <DataTable
     {heatName}

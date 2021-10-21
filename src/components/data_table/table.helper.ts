@@ -294,6 +294,7 @@ export const search = (
   searchKey: string,
   tableData: TableData
 ): TableData => {
+  console.log("searchValue -> ", searchValue);
   return tableData.filter((row) =>
     (
       row.find(

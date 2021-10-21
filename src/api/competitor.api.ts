@@ -1,10 +1,11 @@
-import { get } from "svelte/store";
 import { Paths } from "../../global/constants/api";
 import type { ICompetitor } from "../../global/interfaces";
 import type { RawData } from "../../global/types";
-import { currentEventId, currentHeatName } from "../stores/table.store";
 import { getRequest, putRequest } from "../utils/api.utils";
-import { isNumeric } from "../utils/string.utils";
+import {
+  getResultsToUpdateFromTable,
+  getTrialsToUpdateFromTable,
+} from "../utils/table.utils";
 
 export const getCompetitorsForEvent = async (
   eventId: string
@@ -16,23 +17,9 @@ export const getCompetitorsForEvent = async (
 export const updateCompetitors = async (
   tableData: RawData
 ): Promise<boolean> => {
-  const trialNumbers = getTrialData(tableData);
-  let trialsUpdated = true;
+  const trialsUpdated = updateTrials(tableData);
+  const resultsUpdated = updateResults(tableData);
 
-  if (trialNumbers?.length) {
-    trialsUpdated = (await putRequest(
-      Paths.TRIALS,
-      trialNumbers
-    )) as unknown as boolean;
-  }
-  const result = getResultData(tableData);
-  let resultsUpdated = true;
-  if (result?.length) {
-    resultsUpdated = (await putRequest(
-      Paths.RESULTS,
-      result
-    )) as unknown as boolean;
-  }
   return (
     trialsUpdated &&
     resultsUpdated &&
@@ -40,33 +27,18 @@ export const updateCompetitors = async (
   );
 };
 
-const getTrialData = (tableData: RawData): Record<string, string>[] => {
-  return tableData
-    .map((data) => {
-      const trialData = {};
-      const numbers = Object.keys(data).filter((key) => isNumeric(key));
-      trialData["competitorId"] = data.competitorId;
-      numbers.forEach((number) => {
-        trialData[number] = data[number];
-        delete data[number];
-      });
-      return trialData;
-    })
-    .filter((data) => Object.keys(data)?.length > 1);
+const updateTrials = async (tableData: RawData): Promise<boolean> => {
+  const trialNumbers = getTrialsToUpdateFromTable(tableData);
+  if (trialNumbers?.length) {
+    return (await putRequest(Paths.TRIALS, trialNumbers)) as unknown as boolean;
+  }
+  return true;
 };
 
-const getResultData = (tableData: RawData): Record<string, string>[] => {
-  return tableData
-    .map((data) => {
-      const resultData: Record<string, string> = {};
-      resultData["competitorId"] = data.competitorId as string;
-      resultData["teamId"] = data.teamId as string;
-      resultData["result"] = data.result as string;
-      resultData["place"] = data.place as string;
-      resultData["eventId"] = get(currentEventId);
-      resultData["heatName"] = get(currentHeatName);
-      delete data.result;
-      return resultData;
-    })
-    .filter((data) => data.result != undefined || data.place != undefined);
+const updateResults = async (tableData: RawData): Promise<boolean> => {
+  const result = getResultsToUpdateFromTable(tableData);
+  if (result?.length) {
+    return (await putRequest(Paths.RESULTS, result)) as unknown as boolean;
+  }
+  return true;
 };
