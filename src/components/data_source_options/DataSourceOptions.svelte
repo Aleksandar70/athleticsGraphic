@@ -7,17 +7,12 @@
     DropdownItem,
     DropdownMenu,
     DropdownToggle,
-    Modal,
-    ModalBody,
-    ModalFooter,
-    ModalHeader,
   } from "sveltestrap";
   import { SOURCE } from "../../../global/constants/constants";
   import { UIText } from "../../../global/constants/ui_text";
   import { updateConfig } from "../../api/config.api";
   import { dataSource } from "../../stores/config.store";
-  import { initializeData } from "../../api/database.api";
-  import Spinner from "../spinner/Spinner.svelte";
+  import DataSourceOptionsModal from "./modal/DataSourceOptionsModal.svelte";
   import "./datasourceoptions.style.css";
 
   const valueChange = async (selectedSource: string) => {
@@ -26,16 +21,9 @@
     location.reload();
   };
 
-  let isInitializing = false;
   let isInitModalOpen = false;
   let toggleInitMoal = () => (isInitModalOpen = !isInitModalOpen);
 
-  const initialize = async (): Promise<void> => {
-    isInitializing = true;
-    await initializeData();
-    location.reload();
-  };
-  
   $: isActive = (value: string) => $dataSource === value;
 </script>
 
@@ -69,24 +57,4 @@
     </Button>
   </div>
 </div>
-<Modal isOpen={isInitModalOpen} backdrop="static" toggle={toggleInitMoal}>
-  {#if isInitializing}
-    <ModalHeader toggle={toggleInitMoal}>{UIText.INIT_IN_PROGRESS}</ModalHeader>
-    <ModalBody class="init-modal--spin-body">
-      <Spinner />
-    </ModalBody>
-  {:else}
-    <ModalHeader toggle={toggleInitMoal}>{UIText.INIT_WARNING}</ModalHeader>
-    <ModalBody>
-      {UIText.INIT_BODY}
-    </ModalBody>
-    <ModalFooter>
-      <Button color="danger" on:click={() => initialize()}
-        >{UIText.INIT_BUTTON}</Button
-      >
-      <Button color="secondary" on:click={toggleInitMoal}
-        >{UIText.INIT_CANCEL}</Button
-      >
-    </ModalFooter>
-  {/if}
-</Modal>
+<DataSourceOptionsModal {isInitModalOpen} {toggleInitMoal} />
