@@ -5,11 +5,10 @@
   import {
     getTableData,
     getHeaderData,
-    search,
     updatedTableValues,
     checkIfChanged,
   } from "../data_table/table.helper";
-  import { Button, Input } from "sveltestrap";
+  import { Button } from "sveltestrap";
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";

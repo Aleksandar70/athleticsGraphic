@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Input } from "sveltestrap";
   import type { TableData } from "../../../global/types";
-  import { search } from "../data_table/table.helper";
+  import { search } from "../search/search.helper";
 
   export let key: string;
   export let currentPage: number;

@@ -289,22 +289,6 @@ export const getHeaderData = (rawData: RawData): Headers => {
   return filterHeaderData(tableColumns);
 };
 
-export const search = (
-  searchValue: string,
-  searchKey: string,
-  tableData: TableData
-): TableData => {
-  console.log("searchValue -> ", searchValue);
-  return tableData.filter((row) =>
-    (
-      row.find(
-        (field) =>
-          (field.id as string).toLowerCase() === searchKey.toLowerCase()
-      ).value as string
-    ).includes(searchValue.toLowerCase())
-  );
-};
-
 export const setUnchanged = (tableData: TableData): TableData => {
   tableData.forEach((tableRow) =>
     tableRow.forEach((row) => (row.changed = false))

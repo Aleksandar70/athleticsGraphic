@@ -7,7 +7,12 @@
 
 ## Get started
 
+Use [MongDBCompass](https://www.mongodb.com/products/compass) to create and manage database.
+Create new connection with the following link: - `mongodb://0.0.0.0:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`
+
 If you just cloned/downloaded the project, run `npm i && cd backend && npm i && cd ..` to install all the needed dependencies.
+
+Additionally, run `npm i --global ts-node nodemon` to install some dependencies globally
 
 ### IP Address
 
@@ -78,14 +83,14 @@ Unzip time-ticker.zip -> npm install -> change `localhost` value to your public 
 year - competitionID
 country = SRB
 
-* 2021 - srbopenindoor
-* 2020 - ps-u20
-* 2021 - ec21_0640
-* 2021 - ps_10km
-* 2021 - ps_hod_put
-* 2021 - balkan_u18
-* 2021 - 2021seniorski-miting
+- 2021 - srbopenindoor
+- 2020 - ps-u20
+- 2021 - ec21_0640
+- 2021 - ps_10km
+- 2021 - ps_hod_put
+- 2021 - balkan_u18
+- 2021 - 2021seniorski-miting
 
-country = NOR 
+country = NOR
 
-* 2021 - 2021vintersprinten-2021
+- 2021 - 2021vintersprinten-2021
