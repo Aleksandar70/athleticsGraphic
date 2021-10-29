@@ -12,11 +12,11 @@
   import type { ISearch } from "../../../global/interfaces";
   import type { RawData } from "../../../global/types";
   import FadingText from "../fading_text/FadingText.svelte";
-  import { isNumeric } from "../../utils/string.utils";
-  import { currentEventId, visibleColumns } from "../../stores/table.store";
   import ColumnLockOptions from "../column_lock_options/ColumnLockOptions.svelte";
   import "./canvas.style.css";
   import Search from "../search/Search.svelte";
+  import { setVisibleColumns } from "./canvas.helper";
+  import { currentEventId, visibleColumns } from "../../stores/table.store";
 
   export let tableData: RawData;
   export let defaultColumns: string[];
@@ -26,15 +26,7 @@
 
   const currentEvent = $visibleColumns[$currentEventId];
   if (!currentEvent) {
-    const newVisibleColumns = $visibleColumns;
-    const trialNumbers = Object.keys(tableData[0]).filter((key) =>
-      isNumeric(key)
-    );
-    newVisibleColumns[$currentEventId] = {
-      showAll: false,
-      columns: [...defaultColumns, ...trialNumbers],
-    };
-    visibleColumns.set(newVisibleColumns);
+    setVisibleColumns(tableData, defaultColumns);
   }
 
   let rowData = getTableData(tableData, heatName);

@@ -43,8 +43,8 @@
   let focusCell: HTMLTableCellElement;
   let editableColumns: string[] = [];
 
-  $: shouldShowAllColumns = $visibleColumns[$currentEventId].showAll;
-  $: _visibleColumns = $visibleColumns[$currentEventId].columns;
+  $: shouldShowAllColumns = $visibleColumns[$currentEventId]?.showAll;
+  $: _visibleColumns = $visibleColumns[$currentEventId]?.columns;
 
   onMount(() => {
     focusCell?.focus();
