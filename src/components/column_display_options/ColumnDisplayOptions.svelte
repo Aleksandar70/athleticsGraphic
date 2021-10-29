@@ -11,11 +11,13 @@
   } from "sveltestrap";
   import { UIText } from "../../../global/constants/ui_text";
   import type { Headers } from "../../../global/types";
-  import { getDefaultColumns } from "../data_table/table.helper";
   import Switch from "../switch/Switch.svelte";
   import "./columndisplayoptions.style.css";
   import { currentEventId, visibleColumns } from "../../stores/table.store";
-  import { isNumeric } from "../../utils/string.utils";
+  import {
+    toggleColumn,
+    toggleDefaultColumns,
+  } from "./columnDisplayOptions.helper";
 
   export let headerData: Headers;
 
@@ -24,36 +26,6 @@
   $: _visibleColumns = $visibleColumns[$currentEventId].columns as string[];
 
   const toggle = () => (isOpen = !isOpen);
-
-  const toggleColumn = (value: string) => {
-    const columnData = $visibleColumns[$currentEventId];
-    let columns = columnData.columns;
-
-    if (columnData.showAll) {
-      const allColumns = headerData.map((data) => data.value);
-      columns = allColumns;
-      columnData.showAll = false;
-    }
-
-    columns = columns.includes(value)
-      ? columns.filter((column: string) => column !== value)
-      : [...columns, value];
-    $visibleColumns[$currentEventId].columns = columns;
-    visibleColumns.set($visibleColumns);
-  };
-
-  const toggleDefaultColumns = () => {
-    const trialNumbers = headerData
-      .filter((data) => isNumeric(data.value))
-      .map((data) => data.value);
-    const _defaultColumns = getDefaultColumns();
-    $visibleColumns[$currentEventId].columns = [
-      ..._defaultColumns,
-      ...trialNumbers,
-    ];
-
-    $visibleColumns[$currentEventId].showAll = false;
-  };
 </script>
 
 <Modal {isOpen} size="sm" {toggle} scrollable>
@@ -70,13 +42,16 @@
       />
       <label for="toggle-all--checkbox">{UIText.TOGGLE_ALL_COLUMNS}</label>
     </div>
-    <Button on:click={() => toggleDefaultColumns()}
+    <Button on:click={() => toggleDefaultColumns(headerData)}
       >{UIText.TOGGLE_DEFAULT_COLUMNS}</Button
     >
   </ModalHeader>
   <ModalBody class="modal-body">
     {#each headerData as field}
-      <div class="modal-field" on:click={() => toggleColumn(field.value)}>
+      <div
+        class="modal-field"
+        on:click={() => toggleColumn(field.value, headerData)}
+      >
         <span class="field-value">{field.value.toUpperCase()}</span>
         <Switch
           checked={_visibleColumns.includes(field.value) ||
