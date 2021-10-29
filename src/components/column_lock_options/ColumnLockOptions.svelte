@@ -16,30 +16,14 @@
   import { currentEventId, lockedColumns } from "../../stores/table.store";
   import "./columnlockoptions.style.css";
   import { uneditableFields } from "../../../global/defaults";
+  import { toggleColumn } from "./columnLockOption.helper";
 
   export let headerData: Headers;
 
   let isOpen = false;
-  $: _lockedColumns = $lockedColumns[$currentEventId] as string[];
+  $: currentLockedColumns = $lockedColumns[$currentEventId] as string[];
 
   const toggle = () => (isOpen = !isOpen);
-
-  const toggleColumn = (value: string) => {
-    if (!_lockedColumns) {
-      lockedColumns.set({
-        ...$lockedColumns,
-        [$currentEventId]: [] as string[],
-      });
-    }
-
-    let columnData = $lockedColumns[$currentEventId];
-
-    columnData = columnData?.includes(value)
-      ? columnData.filter((column: string) => column !== value)
-      : [...columnData, value];
-    $lockedColumns[$currentEventId] = columnData;
-    lockedColumns.set($lockedColumns);
-  };
 </script>
 
 <Modal {isOpen} size="sm" {toggle} scrollable>
@@ -55,9 +39,12 @@
   <ModalBody class="modal-body">
     {#each headerData as field}
       {#if !uneditableFields.includes(field.value)}
-        <div class="modal-field" on:click={() => toggleColumn(field.value)}>
+        <div
+          class="modal-field"
+          on:click={() => toggleColumn(field.value, currentLockedColumns)}
+        >
           <span class="field-value">{field.value.toUpperCase()}</span>
-          <Switch checked={_lockedColumns?.includes(field.value)} />
+          <Switch checked={currentLockedColumns?.includes(field.value)} />
         </div>
       {/if}
     {/each}
