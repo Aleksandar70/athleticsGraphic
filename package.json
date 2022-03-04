@@ -5,6 +5,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
+    "setup": "npm i && cd backend && npm i && cd ..",
     "start": "sirv public --host 192.168.0.15 --no-clear --single",
     "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx,.svelte",
     "client": "npm run dev",

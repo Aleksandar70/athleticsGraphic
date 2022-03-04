@@ -7,7 +7,7 @@
 
 ## Get started
 
-If you just cloned/downloaded the project, run `npm i && cd backend && npm i && cd ..` to install all the needed dependencies.
+If you just cloned/downloaded the project, run `npm run setup` to install all the needed dependencies.
 
 ### IP Address
 
